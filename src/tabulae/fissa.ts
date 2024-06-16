@@ -4,11 +4,11 @@ import Tabula from './tabula';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { Multiplex } from '../praebeunda/verba';
-import { type Percolamen } from '../praebeunda/agenda';
+import { type Colamen } from '../praebeunda/agenda';
 
 type Optanda<Hoc extends Multiplex> = {
   relata: Ignavum<Tabula<Hoc>>,
-  tabula: Percolamen<Hoc>[];
+  tabula: Colamen<Hoc>[];
 };
 
 @Nuntius.factum('TabulaFissa')

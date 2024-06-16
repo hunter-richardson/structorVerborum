@@ -2,16 +2,16 @@ import TabulaDefecta from './defecta';
 import Ignavum from '../../miscella/ignavum';
 import { Nomen } from '../../praebeunda/verba';
 import Tabula from '../tabula';
-import { type Percolamen } from '../../praebeunda/agenda';
+import { type Colamen } from '../../praebeunda/agenda';
 
 export default class TabulaProna extends TabulaDefecta<Nomen> {
-  static apponatur (): Percolamen<Nomen>[] {
-    const colamina: Percolamen<Nomen>[] = [
+  static apponatur (): Colamen<Nomen>[] {
+    const colamina: Colamen<Nomen>[] = [
       {
         factum: 'infinitivum',
         numeralis: '',
         casus: ''
-      } as Percolamen<Nomen>
+      } as Colamen<Nomen>
     ];
 
     [
@@ -23,7 +23,7 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
       colamina.push({
         factum: 'gerundium',
         casus: casus
-      } as Percolamen<Nomen>);
+      } as Colamen<Nomen>);
     });
 
     return colamina;
@@ -33,7 +33,7 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
     super(relata);
   }
 
-  referatur (colamen: Percolamen<Nomen>): Percolamen<Nomen> | null {
+  referatur (colamen: Colamen<Nomen>): Colamen<Nomen> | null {
     return colamen.factum === 'supinum' ? null : colamen;
   }
 }

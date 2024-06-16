@@ -21,7 +21,7 @@ export class Verbum {
   }
 
   set scriptum (valor: string) {
-    if (!!valor.trim()) {
+    if (valor.trim()) {
       this._scriptum = valor;
     } else {
       throw Verbum.Errator('scriptum', valor);

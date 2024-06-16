@@ -1,12 +1,12 @@
 import TabulaDefecta from './defecta';
 import { numerales, personae, tempora } from '../../miscella/enumerationes';
 import { Actus } from '../../praebeunda/verba';
-import { type Percolamen } from '../../praebeunda/agenda';
+import { type Colamen } from '../../praebeunda/agenda';
 
 export default class TabulaPerfecta extends TabulaDefecta<Actus> {
-  static apponatur (): Percolamen<Actus>[] {
-    const colamina: Percolamen<Actus>[] = [
-      { modus: 'infinitivus' } as Percolamen<Actus>
+  static apponatur (): Colamen<Actus>[] {
+    const colamina: Colamen<Actus>[] = [
+      { modus: 'infinitivus' } as Colamen<Actus>
     ];
 
     [
@@ -25,7 +25,7 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
                 tempus: tempus,
                 numeralis: numeralis,
                 persona: persona
-              } as Percolamen<Actus>);
+              } as Colamen<Actus>);
             });
           });
         }
@@ -35,7 +35,7 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
     return colamina;
   }
 
-  protected referatur (colamen: Percolamen<Actus>): Percolamen<Actus> | null {
+  protected referatur (colamen: Colamen<Actus>): Colamen<Actus> | null {
     switch (colamen.modus) {
       case 'infinitivus':
         if ([

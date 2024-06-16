@@ -10,9 +10,11 @@ import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
 
+@Nuntius.factum('Pronomina')
 export default class Pronomina extends Anomala<Pronomen> {
   static se: Ignavum<Pronomina> = new Ignavum(() => new Pronomina);
 
+  @Nuntius.futurus('Pronomina')
   protected async numeretur (): Promise<void> {
     const ego: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(() =>
       new TabulaScapalis({ via: '/res/scapales/pronomina/ego', positor: Pronomen.positor }));

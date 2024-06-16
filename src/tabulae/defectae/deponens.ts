@@ -3,7 +3,7 @@ import { numerales, personae, tempora } from '../../miscella/enumerationes';
 import Ignavum from '../../miscella/ignavum';
 import { Actus } from '../../praebeunda/verba';
 import Tabula from '../tabula';
-import { type Percolamen } from '../../praebeunda/agenda';
+import { type Colamen } from '../../praebeunda/agenda';
 
 type Optanda = {
   relata: Ignavum<Tabula<Actus>>,
@@ -11,9 +11,9 @@ type Optanda = {
 };
 
 export default class TabulaDeponens extends TabulaDefecta<Actus> {
-  static apponatur (ut: string): Percolamen<Actus>[] {
-    const colamina: Percolamen<Actus>[] = [
-      { modus: 'infinitivus' } as Percolamen<Actus>
+  static apponatur (ut: string): Colamen<Actus>[] {
+    const colamina: Colamen<Actus>[] = [
+      { modus: 'infinitivus' } as Colamen<Actus>
     ];
 
     switch (ut) {
@@ -24,14 +24,14 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           colamina.push({
             modus: 'participalis',
             tempus: tempus
-          } as Percolamen<Actus>);
+          } as Colamen<Actus>);
         });
         break;
       case 'semideponensActiva':
         colamina.push({
           modus: 'participalis',
           tempus: 'futurum'
-        } as Percolamen<Actus>);
+        } as Colamen<Actus>);
         break;
       default:
         [
@@ -40,7 +40,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           colamina.push({
             modus: 'participalis',
             tempus: tempus
-          } as Percolamen<Actus>);
+          } as Colamen<Actus>);
         });
         break;
     }
@@ -53,7 +53,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           modus: 'imperativus',
           tempus: tempus,
           numeralis: numeralis
-        } as Percolamen<Actus>);
+        } as Colamen<Actus>);
       })
     });
 
@@ -73,7 +73,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
                 tempus: tempus,
                 numeralis: numeralis,
                 persona: persona
-              } as Percolamen<Actus>);
+              } as Colamen<Actus>);
             });
           });
         }
@@ -90,7 +90,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
     this._ut = optanda.ut;
   }
 
-  protected referatur (colamen: Percolamen<Actus>): Percolamen<Actus> | null {
+  protected referatur (colamen: Colamen<Actus>): Colamen<Actus> | null {
     switch (this._ut) {
       case 'semideponens':
         if (colamen.modus === 'particpalis') {
@@ -98,6 +98,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
         } else if (colamen.vox === 'passiva') {
           return null;
         }
+        break;
       case 'semideponensActiva':
         if ([
           colamen.modus === 'participalis',
@@ -108,6 +109,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
         } else if (colamen.vox === 'passiva') {
           return null;
         }
+        break;
       default:
         if ([
           colamen.modus === 'participalis',
@@ -117,6 +119,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
         } else {
           return null;
         }
+        break;
     }
 
     return colamen;

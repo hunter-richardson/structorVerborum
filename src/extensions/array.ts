@@ -29,11 +29,11 @@ Array.prototype.last = function<T>(predicate?: (param: any) => boolean): T {
   }
 }
 
-Array.prototype.random = function<T>(): T {
+Array.prototype.random = function(): any {
   return this[ Math.floor(Math.random() * this.length) ];
 }
 
-Array.prototype.none = function<T>(predicate?: (param: any) => boolean): boolean {
+Array.prototype.none = function(predicate?: (param: any) => boolean): boolean {
   if (predicate) {
     return !this.some(predicate);
   } else {
@@ -41,10 +41,10 @@ Array.prototype.none = function<T>(predicate?: (param: any) => boolean): boolean
   }
 }
 
-Array.prototype.all = function<T>(): boolean {
+Array.prototype.all = function(): boolean {
   return this.every((status) => !!status);
 }
 
-Array.prototype.any = function<T>(): boolean {
+Array.prototype.any = function(): boolean {
   return this.some((status) => !!status);
 }

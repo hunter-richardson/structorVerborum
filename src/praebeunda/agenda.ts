@@ -16,7 +16,7 @@ import TabulaNumeraminis from '../tabulae/numeraminis';
 import Tabula from '../tabulae/tabula';
 
 export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, "categoria | enclicitum | unicum">;
-export type Percolamen<Hoc> = Omit<Hoc, "categoria | scriptum | encliticum">;
+export type Colamen<Hoc> = Omit<Hoc, "categoria | scriptum | encliticum">;
 export type Positor<Hoc extends Verba.Multiplex> = ((agendum: Agendum<Hoc>) => Hoc);
 
 export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfecta.Lectum {
@@ -35,7 +35,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
       return await nomina.feratur(this.infinitivum) ?? null;
     } else {
       const versioNova: string = this.versio.split('/').first()
-              .concat(!!this.supinum?.trim() ? '' : '//prona');
+              .concat(this.supinum?.trim() ? '' : '//prona');
       const radix: string = this.infinitivum.chop(3);
       let suffixumGeriundii: string;
       switch (this.versio.split('/').first()) {

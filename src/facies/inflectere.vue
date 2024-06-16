@@ -129,9 +129,10 @@
   </template>
   <template v-else>
     <v-chip-group selected-class='text-primary'>
-      <v-chip :text="lingua === 'anglica' ? anglicum(Object.values(colamen).first()).toString() : Object.values(colamen).first().toString()"
-              v-for='colamen in colamina' v-model='selecta' @change='cole();'
-              prepend-icon='category' filter />
+      <template v-for='colamen in colamina'>
+        <v-chip :text="lingua === 'anglica' ? anglicum(Object.values(colamen).first()).toString() : Object.values(colamen).first().toString()"
+                @change='cole();' prepend-icon='category' filter />
+      </template>
     </v-chip-group>
     <v-data-table :items='verba' v-for='ullum in verba' :key='ullum' :loading='onerans'
                   :headers='columnae' density='compact' items-per-page='10' item-selectable=false>

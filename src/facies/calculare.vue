@@ -36,8 +36,12 @@
     },
 
     methods: {
+      operat (actus: string): boolean {
+        return /^\+-•÷%=$/.test(actus);
+      },
+
       licta(actus: string): boolean {
-        return /^\+\-•÷%=$/.test(actus) ||
+        return this.operat(actus) ||
             !!this.praesentes.anglicus;
       },
 
@@ -57,29 +61,35 @@
           } catch {
             this.praesentes = nihil;
           }
-        } else if (/^\+\-•÷%=$/.test(actus)) {
+        } else if (this.operat(actus)) {
           if (this.praevii.anglicus === 0) {
             this.praevii = this.praesentes;
           } else {
-            switch ((this.operator ?? '').trim()) {
+            switch ((this.operat ?? '').trim()) {
               case '+':
                 this.praevii.anglicus += this.praesentes.anglicus;
+                break;
               case '-':
                 this.praevii.anglicus -= this.praesentes.anglicus;
+                break;
               case '•':
                 this.praevii.anglicus *= this.praesentes.anglicus;
+                break;
               case '÷':
                 this.praevii.anglicus /= this.praesentes.anglicus;
+                break;
               case '%':
                 this.praevii.anglicus %= this.praesentes.anglicus;
+                break;
               default:
                 this.praevii.anglicus = this.praesentes.anglicus;
+                break;
             }
 
             this.praevii.romanus = Numeral.romanus(this.praevii.anglicus);
           }
 
-          this.operator = actus === '=' ? '' : ` ${actus} `;
+          this.operat = actus === '=' ? '' : ` ${actus} `;
           this.praesentes = nihil;
         }
       },
@@ -102,8 +112,8 @@
         <v-btn icon='equal' @click='refer();' />
       </template>
       <v-card :text='praevii.romanus' />
-      <template v-if='operator'>
-        <v-card :text='operator' />
+      <template v-if='operat'>
+        <v-card :text='operat' />
       </template>
     </div>
   </template>

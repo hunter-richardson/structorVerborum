@@ -135,7 +135,7 @@
                          :loadingText="lingua === 'anglica' ? 'Loading words...' : 'Lemmae onerantur...'" />
     </template>
     <template v-else>
-      <template v-for='lemma in lemmae' :key='lemma' :items='lemmae'>
+      <template v-for='lemma in lemmae' :key='lemma'>
         <tr>
           <td>{{ lemma.categoria }}</td>
         </tr>

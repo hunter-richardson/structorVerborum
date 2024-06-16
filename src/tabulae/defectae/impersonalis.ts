@@ -8,7 +8,7 @@ import {
 import Ignavum from '../../miscella/ignavum';
 import { Actus } from '../../praebeunda/verba';
 import Tabula from '../tabula';
-import { type Percolamen } from '../../praebeunda/agenda';
+import { type Colamen } from '../../praebeunda/agenda';
 
 type Optanda = {
   relata: Ignavum<Tabula<Actus>>,
@@ -16,14 +16,14 @@ type Optanda = {
 };
 
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
-  static apponatur (et: string): Percolamen<Actus>[] {
-    const colamina: Percolamen<Actus>[] = [
+  static apponatur (et: string): Colamen<Actus>[] {
+    const colamina: Colamen<Actus>[] = [
       'praesens', 'perfectum'
     ].map(tempus => {
       return {
         modus: 'infinitivus',
         tempus: tempus
-      } as Percolamen<Actus>;
+      } as Colamen<Actus>;
     });
 
     [
@@ -32,13 +32,13 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
       colamina.push({
         modus: 'participalis',
         tempus: tempus
-      } as Percolamen<Actus>);
+      } as Colamen<Actus>);
 
       if (tempus !== 'perfectum') {
         colamina.push({
           modus: 'imperativus',
           tempus: tempus
-        } as Percolamen<Actus>);
+        } as Colamen<Actus>);
       }
     });
 
@@ -60,7 +60,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
                   tempus: tempus,
                   numeralis: numeralis,
                   persona: persona
-                } as Percolamen<Actus>);
+                } as Colamen<Actus>);
               });
             });
 
@@ -68,7 +68,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
               modus: modus,
               vox: 'passiva',
               tempus: tempus
-            } as Percolamen<Actus>);
+            } as Colamen<Actus>);
           }
         });
       });
@@ -89,7 +89,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
                 modus: modus,
                 vox: vox,
                 tempus: tempus
-              } as Percolamen<Actus>);
+              } as Colamen<Actus>);
             }
           });
         });
@@ -106,7 +106,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
     this._et = optanda.et;
   }
 
-  protected referatur (colamen: Percolamen<Actus>): Percolamen<Actus> | null {
+  protected referatur (colamen: Colamen<Actus>): Colamen<Actus> | null {
     if (this._et === 'semideponens') {
       if (colamen.modus === 'particpalis') {
         colamen.vox = '';

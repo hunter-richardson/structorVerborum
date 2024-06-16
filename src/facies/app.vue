@@ -191,8 +191,10 @@
       </v-card>
     </v-app-bar>
     <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
-      <v-tab v-for='annulus in annuli' :value='annulus' selected-class='text-primary'
-             density='compact' :text='annulus.titula' tile />
+      <template v-for='annulus in annuli'>
+        <v-tab :value='annulus' selected-class='text-primary' density='compact'
+               :text='annulus.titula' tile />
+      </template>
     </v-tabs>
     <v-tabs-window v-model='annulus'>
       <v-tabs-window-item value='quaerere'>

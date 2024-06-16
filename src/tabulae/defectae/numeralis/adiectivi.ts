@@ -3,7 +3,7 @@ import Ignavum from '../../../miscella/ignavum';
 import { Adiectivum } from '../../../praebeunda/verba';
 import Tabula from '../../tabula';
 import TabulaDefecta from '../defecta';
-import { type Percolamen } from '../../../praebeunda/agenda';
+import { type Colamen } from '../../../praebeunda/agenda';
 
 type Optanda = {
   relata: Ignavum<Tabula<Adiectivum>>,
@@ -11,7 +11,7 @@ type Optanda = {
 };
 
 export default class TabulaAdiectiviNumeralis extends TabulaDefecta<Adiectivum> {
-  static apponatur (): Percolamen<Adiectivum>[] {
+  static apponatur (): Colamen<Adiectivum>[] {
     return gradi.map(gradus => {
       return genera.map(genus => {
         return casus.map(casus => {
@@ -19,7 +19,7 @@ export default class TabulaAdiectiviNumeralis extends TabulaDefecta<Adiectivum> 
             gradus: gradus,
             genus: genus,
             casus: casus
-          } as Percolamen<Adiectivum>;
+          } as Colamen<Adiectivum>;
         });
       }).flat();
     }).flat();
@@ -32,7 +32,7 @@ export default class TabulaAdiectiviNumeralis extends TabulaDefecta<Adiectivum> 
     this._numeralis = optanda.numeralis;
   }
 
-  protected referatur (colamen: Percolamen<Adiectivum>): Percolamen<Adiectivum> | null {
+  protected referatur (colamen: Colamen<Adiectivum>): Colamen<Adiectivum> | null {
     return colamen.numeralis === this._numeralis ? {
       ...colamen,
       numeralis: ''

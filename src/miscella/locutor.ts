@@ -32,10 +32,13 @@ export default class Locutor {
     switch (this.cocutor.edatur('separator')) {
       case 'interpunctum':
         this.separator = '·';
+        break;
       case 'nullum':
         this.separator = '';
+        break;
       default:
         this.separator = ' ';
+        break;
     }
   }
 

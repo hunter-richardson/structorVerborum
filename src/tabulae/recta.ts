@@ -2,10 +2,10 @@ import TabulaScapalis from './scapalis';
 import Tabula from './tabula';
 import Nuntius from '../miscella/nuntius';
 import { Multiplex } from '../praebeunda/verba';
-import type { Percolamen, Positor } from '../praebeunda/agenda';
+import type { Colamen, Positor } from '../praebeunda/agenda';
 import { type Faciendum } from '../praebeunda/interfecta';
 
-type Radicator<Hoc, Illud> = (hoc: Hoc, colamen: Percolamen<Illud>) => string;
+type Radicator<Hoc, Illud> = (hoc: Hoc, colamen: Colamen<Illud>) => string;
 
 type Optanda<Hoc extends Faciendum<Illud>, Illud extends Multiplex> = {
   radicator: Radicator<Hoc, Illud>;
