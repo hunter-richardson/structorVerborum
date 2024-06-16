@@ -4,8 +4,6 @@ import { createVuetify } from 'vuetify';
 import { VDataTableHeaders } from 'vuetify/components';
 import App from './facies/app.vue';
 
-const app: App = createApp(App);
-
 useFavicon('/res/picta/favicon.png')
 
 export default createVuetify({
@@ -46,3 +44,5 @@ export default createVuetify({
     }
   }
 });
+
+export const app: App = createApp(App);
