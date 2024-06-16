@@ -7,7 +7,6 @@
   import Loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
-  import { VDataTableHeaders } from 'vuetify/components';
 
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
