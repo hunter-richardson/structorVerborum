@@ -89,7 +89,7 @@
             this.praevii.romanus = Numeral.romanus(this.praevii.anglicus);
           }
 
-          this.operat = actus === '=' ? '' : ` ${actus} `;
+          this.operator = actus === '=' ? '' : ` ${actus} `;
           this.praesentes = nihil;
         }
       },
@@ -112,8 +112,8 @@
         <v-btn icon='equal' @click='refer();' />
       </template>
       <v-card :text='praevii.romanus' />
-      <template v-if='operat'>
-        <v-card :text='operat' />
+      <template v-if='operator'>
+        <v-card :text='operator' />
       </template>
     </div>
   </template>
