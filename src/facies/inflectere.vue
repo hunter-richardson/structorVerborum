@@ -113,7 +113,7 @@
         }
       },
 
-      seliga (verbum: Verbum): void {
+      selige (verbum: Verbum): void {
         this.verbum = verbum;
       },
 
@@ -150,11 +150,9 @@
   </template>
   <template v-else>
     <v-chip-group selected-class='text-primary'>
-      <template v-for='seligendum in seligenda'>
-        <v-chip :v-bind:key='seligendum'
-                :text="lingua === 'anglica' ? anglicum(seligendum) : seligendum" @change='cole();'
-                prepend-icon='category' filter />
-      </template>
+      <v-chip v-for='seligendum in seligenda' :key='seligendum'
+              :text="lingua === 'anglica' ? anglicum(seligendum) : seligendum" @change='cole();'
+              prepend-icon='category' filter />
     </v-chip-group>
     <v-data-table v-for='ullum in verba' :items='verba' :v-bind:key='ullum' :loading='onerans'
                   :headers='columnae' density='compact' items-per-page='10' item-selectable=false>
@@ -168,7 +166,7 @@
       </template>
       <template v-else>
         <v-btn :text="lingua === 'anglica' ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-               @click='seliga(ullum)' />
+               @click='selige(ullum)' />
       </template>
     </v-data-table>
     <template v-if="figura === 'actusAgendus'">
