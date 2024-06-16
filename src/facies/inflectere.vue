@@ -8,14 +8,10 @@
 
   defineProps<{ id: Hoc; }>();
 
-  const eventus = defineModel<Eventus>('eventus');
-  const verbum = defineModel<Verbum>('verbum');
-
   const categoria: string = eventus.value?.categoria ?? '';
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
   const tabula: Tabula<Hoc> | null = agendum?.putetur();
   const verba: Hoc[] = [];
-  const colamina: Agenda.Colamen<Hoc>[] = [];
   const seligenda: string[] = []
   const selecta: string[] = [];
 
@@ -40,10 +36,13 @@
 </script>
 
 <script lang='ts'>
-  import { defineComponent } from 'vue';
+  import { defineComponent, defineModel } from 'vue';
   import Spectere from './specere.vue';
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
+
+  const eventus = defineModel<Eventus>('eventus');
+  const verbum = defineModel<Verbum>('verbum');
 
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
 
@@ -53,7 +52,6 @@
         lingua: lingua,
         categoria: categoria,
         figura: figura,
-        colamina: colamina,
         seligenda: seligenda,
         selecta: selecta,
         verba: verba,
@@ -69,7 +67,11 @@
           return {
             title: (lingua === 'anglica' ? anglicum(columna) : columna).toUpperCase(),
             align: 'start',
-            key: columna
+            key: columna,
+
+            filter: (verbum: Multiplex, colamen: string): boolean => {
+              return verbum.valores().includes(colamen);
+            }
           };
         })
       };
@@ -154,44 +156,19 @@
               :text="lingua === 'anglica' ? anglicum(seligendum) : seligendum" @change='cole();'
               prepend-icon='category' filter />
     </v-chip-group>
-    <v-data-table v-for='ullum in verba' :items='verba' :v-bind:key='ullum' :loading='onerans'
-                  :headers='columnae' density='compact' items-per-page='10' item-selectable=false>
-      <template v-if='onerans'>
-        <v-skeleton-loader :loading-text="lingua === 'anglica' ? 'Loading words...' : 'Verba onerantur...'"
-                           :loading='onerans' type='table-tbody' />
-      </template>
-      <template v-if="figura === 'numeramenAgendum'">
-        <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" append-icon='open_in_full'
-               @click='numeramen(ullum as Numeramen);' />
-      </template>
-      <template v-else>
-        <v-btn :text="lingua === 'anglica' ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-               @click='selige(ullum)' />
-      </template>
-    </v-data-table>
     <template v-if="figura === 'actusAgendus'">
       <v-btn-toggle>
-        <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'" @click="refer({
-          categoria: 'nomen',
-  referendum: (agendum as Agenda.ActusAgendus).nomen() ?? undefined
-});" />
+        <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'"
+               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).nomen() ?? undefined });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (masculine)' : 'Actor'"
-               @click="refer({
-                categoria: 'nomen',
-                referendum: (agendum as Agenda.ActusAgendus).actor('masculinum') ?? undefined
-              });" />
+               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).actor('masculinum') ?? undefined });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (feminine)' : 'Actrix'"
-               @click="refer({
-                categoria: 'nomen',
-                referendum: (agendum as Agenda.ActusAgendus).actor('femininum') ?? undefined
-              });" />
+               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).actor('femininum') ?? undefined });" />
       </v-btn-toggle>
     </template>
     <template v-else-if="figura === 'nomenFactum'">
-      <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'" @click="refer({
-        categoria: 'actus',
-        referendum: (agendum as Agenda.NomenFactum).actus() ?? undefined
-      });" />
+      <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'"
+             @click="refer({ categoria: 'actus', referendum: (agendum as Agenda.NomenFactum).actus() ?? undefined });" />
     </template>
     <template v-if="[
       'adiectivumAgendum', 'incomparabile'
@@ -223,12 +200,27 @@
         </template>
         <template v-else-if="figura === 'incomparabile'">
           <v-btn append-icon='open_in_full'
-                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="refer({
-                  categoria: 'adiectivum',
-                  referendum: (agendum as Agenda.Incomparabile).probetur(et.genus) ?? undefined
-                });" />
+                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'"
+                 @click="refer({ categoria: 'adiectivum', referendum: (agendum as Agenda.Incomparabile).probetur(et.genus) ?? undefined });" />
         </template>
       </span>
     </template>
+    <v-data-table :items='verba' :loading='onerans' :headers='columnae' density='compact'
+                  items-per-page='10' item-selectable=false>
+      <template v-if='onerans'>
+        <v-skeleton-loader :loading-text="lingua === 'anglica' ? 'Loading words...' : 'Verba onerantur...'"
+                           :loading='onerans' type='table-tbody' />
+      </template>
+      <template v-if='!onerans' v-slot:item='item'>
+        <template v-if="figura === 'numeramenAgendum'">
+          <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" append-icon='open_in_full'
+                 @click='numeramen(item.item as Numeramen);' />
+        </template>
+        <template v-else>
+          <v-btn :text="lingua === 'anglica' ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
+                 @click='selige(item.item as Verbum)' />
+        </template>
+      </template>
+    </v-data-table>
   </template>
 </template>
