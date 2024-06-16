@@ -1,7 +1,6 @@
 import { useFavicon } from '@vueuse/core';
 import { createApp } from 'vue';
 import { createVuetify } from 'vuetify';
-import { VDataTableHeaders } from 'vuetify/components';
 import App from './facies/app.vue';
 
 useFavicon('/res/picta/favicon.png')
