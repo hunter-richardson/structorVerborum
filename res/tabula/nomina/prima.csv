@@ -1,0 +1,15 @@
+numeralis,casus,scriptum
+singularis,nominatius,a
+singularis,genitivus,ae
+singularis,dativus,ae
+singularis,accusativus,am
+singularis,ablativus,ā
+singularis,locativus,ā
+singularis,vocativus,a
+pluralis,nominatius,ae
+pluralis,genitivus,ārum
+pluralis,dativus,īs
+pluralis,accusativus,ās
+pluralis,ablativus,īs
+pluralis,locativus,īs
+pluralis,vocativus,ae
