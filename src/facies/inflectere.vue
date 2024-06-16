@@ -66,7 +66,6 @@
         columnae: Multiplex.colamina(categoria).map(columna => {
           return {
             title: (lingua === 'anglica' ? anglicum(columna) : columna).toUpperCase(),
-            align: 'start',
             key: columna,
 
             filter: (verbum: Multiplex, colamen: string): boolean => {
