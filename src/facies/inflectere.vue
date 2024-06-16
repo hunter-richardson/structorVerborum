@@ -16,6 +16,7 @@
   const tabula: Tabula<Hoc> | null = agendum?.putetur();
   const verba: Hoc[] = [];
   const colamina: Agenda.Colamen<Hoc>[] = [];
+  const seligenda: string[] = []
   const selecta: string[] = [];
 
   let figura: string;
@@ -53,6 +54,7 @@
         categoria: categoria,
         figura: figura,
         colamina: colamina,
+        seligenda: seligenda,
         selecta: selecta,
         verba: verba,
         eventus: eventus,
@@ -130,9 +132,10 @@
 
     async mounted (): Promise<void> {
       this.verba = await this.omnes();
-      this.colamina = [
+      this.seligenda = [
         ...new Set((this.verba as Hoc[])
           .map(verbum => verbum.valores())
+          .map(valor => Object.values(valor))
           .flat())
       ];
 
@@ -147,10 +150,10 @@
   </template>
   <template v-else>
     <v-chip-group selected-class='text-primary'>
-      <template v-for='colamen in colamina'>
-        <v-chip :v-bind:key='colamen'
-                :text="lingua === 'anglica' ? anglicum(Object.values(colamen).first()).toString() : Object.values(colamen).first().toString()"
-                @change='cole();' prepend-icon='category' filter />
+      <template v-for='seligendum in seligenda'>
+        <v-chip :v-bind:key='seligendum'
+                :text="lingua === 'anglica' ? anglicum(seligendum) : seligendum" @change='cole();'
+                prepend-icon='category' filter />
       </template>
     </v-chip-group>
     <v-data-table v-for='ullum in verba' :items='verba' :v-bind:key='ullum' :loading='onerans'

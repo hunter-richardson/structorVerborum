@@ -17,8 +17,7 @@
         lingua: Cocutor.se.ipse().edatur('lingua'),
         multiplex: verbum.value instanceof Multiplex,
         valores: (verbum.value as Multiplex)?.valores() ?? [],
-        locutor: Locutor.se.ipse(),
-        eventus: eventus
+        locutor: Locutor.se.ipse()
       };
     },
 
