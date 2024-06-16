@@ -3,7 +3,7 @@
 
   import type { Faciendum, Referendum } from '../praebeunda/interfecta';
   import { type Eventus } from '../miscella/dictionarium';
-  import { Multiplex, Numeramen, Numerus } from '../praebeunda/verba';
+  import { Multiplex, Numeramen, Numerus, Verbum } from '../praebeunda/verba';
   import Tabula from '../tabulae/tabula';
 
   defineProps<{ id: Hoc; }>();
@@ -13,7 +13,7 @@
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
   const tabula: Tabula<Hoc> | null = agendum?.putetur();
   const verba: Hoc[] = [];
-  const colamina: Agenda.Percolamen<Hoc>[] = [];
+  const colamina: Agenda.Colamen<Hoc>[] = [];
   const selecta: string[] = [];
 
   let figura: string;
@@ -107,7 +107,16 @@
             };
           }
         }
+      },
+
+      seliga (verbum: Verbum): void {
+        this.verbum = verbum;
+      },
+
+      refer (eventus: Eventus): void {
+        this.eventus = eventus;
       }
+
     },
 
     async mounted (): Promise<void> {
@@ -134,7 +143,7 @@
                 @change='cole();' prepend-icon='category' filter />
       </template>
     </v-chip-group>
-    <v-data-table :items='verba' v-for='ullum in verba' :key='ullum' :loading='onerans'
+    <v-data-table :items='verba' v-for='ullum in verba' :v-bind:key='ullum' :loading='onerans'
                   :headers='columnae' density='compact' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
         <v-skeleton-loader :loading-text="lingua === 'anglica' ? 'Loading words...' : 'Verba onerantur...'"
@@ -146,32 +155,32 @@
       </template>
       <template v-else>
         <v-btn :text="lingua === 'anglica' ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-               @click='verbum = ullum' />
+               @click='seliga(ullum)' />
       </template>
     </v-data-table>
     <template v-if="figura === 'actusAgendus'">
       <v-btn-toggle>
-        <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'" @click="eventus = {
+        <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'" @click="refer({
           categoria: 'nomen',
           referendum: (agendum as Agenda.ActusAgendus).nomen()
-        };" />
+        });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (masculine)' : 'Actor'"
-               @click="eventus = {
+               @click="refer({
                 categoria: 'nomen',
                 referendum: (agendum as Agenda.ActusAgendus).actor('masculinum')
-              };" />
+              });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (feminine)' : 'Actrix'"
-               @click="eventus = {
+               @click="refer({
                 categoria: 'nomen',
                 referendum: (agendum as Agenda.ActusAgendus).actor('femininum')
-              };" />
+              });" />
       </v-btn-toggle>
     </template>
     <template v-else-if="figura === 'nomenFactum'">
-      <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'" @click="eventus = {
+      <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'" @click="refer({
         categoria: 'actus',
         referendum: (agendum as Agenda.NomenFactum).actus()
-      };" />
+      });" />
     </template>
     <template v-if="[
       'adiectivumAgendum', 'incomparabile'
@@ -193,20 +202,20 @@
                       };
                     })" />
           <v-btn append-icon='open_in_full'
-                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="eventus = {
+                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="refer({
                   categoria: 'adiectivum',
                   referendum: (agendum as Agenda.AdiectivumAgendum).probetur({
                     gradus: et.gradus,
                     genus: et.genus
                   })
-                };" />
+                });" />
         </template>
         <template v-else-if="figura === 'incomparabile'">
           <v-btn append-icon='open_in_full'
-                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="eventus = {
+                 :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="refer({
                   categoria: 'adiectivum',
                   referendum: (agendum as Agenda.Incomparabile).probetur(et.genus)
-                };" />
+                });" />
         </template>
       </span>
     </template>

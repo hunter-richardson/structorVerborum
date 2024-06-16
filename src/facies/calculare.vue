@@ -65,7 +65,7 @@
           if (this.praevii.anglicus === 0) {
             this.praevii = this.praesentes;
           } else {
-            switch ((this.operat ?? '').trim()) {
+            switch ((this.operator ?? '').trim()) {
               case '+':
                 this.praevii.anglicus += this.praesentes.anglicus;
                 break;
