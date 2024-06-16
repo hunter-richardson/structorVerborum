@@ -2,6 +2,7 @@
   import { useTheme } from 'vuetify';
   import { defineComponent } from 'vue';
   import { referretne, referatur } from '../scriptura/referre';
+  import { transducatur, transduceretne } from '../scriptura/transducere';
   import Quaerere from './quaerere.vue';
   import Numerare from './numerare.vue';
   import Calculare from './calculare.vue';
@@ -25,7 +26,9 @@
       return {
         annulus: '',
         titulus: { latinus: '', anglicus: '' },
-        locutionis: referretne() && locutor.locutust(),
+        locutionis: locutor.locutust(),
+        referret: referretne(),
+        transduceret: transduceretne(),
         crustula: crustula,
 
         annuli: [
@@ -47,6 +50,12 @@
       refer (): void {
         if (referretne()) {
           referatur(locutor.scribantur());
+        }
+      },
+
+      transduc (): void {
+        if (transduceretne()) {
+          transducatur(locutor.scribantur());
         }
       },
 
@@ -175,7 +184,14 @@
       <v-app-bar-title text='StructorVerborum' />
       <v-card location='left'>
         <template v-if='locutionis'>
-          <v-btn icon='content_copy' @click='refer()' />
+          <v-btn-toggle density='compact'>
+            <template v-if='referret'>
+              <v-btn icon='content_copy' @click='refer()' />
+            </template>
+            <template v-if='transduceret'>
+              <v-btn icon='file_open' @click='transduc()' />
+            </template>
+          </v-btn-toggle>
         </template>
         <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
           <v-hover>
@@ -193,7 +209,7 @@
     <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
         <v-tab :value='annulus' selected-class='text-primary' density='compact'
-               :text='annulus.titula' tile />
+               :v-bind:key='annulus' :text='annulus.titula' tile />
       </template>
     </v-tabs>
     <v-tabs-window v-model='annulus'>
