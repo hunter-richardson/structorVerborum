@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent } from 'vue';
+  import { defineComponent, defineModel } from 'vue';
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae } from '../miscella/enumerationes';
   import Inflectere from './inflectere.vue';
@@ -7,6 +7,7 @@
   import Loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
+  import { VDataTableHeaders } from 'vuetify/components';
 
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
@@ -25,10 +26,10 @@
         lingua: lingua,
         lemmae: lemmae,
         onerans: true,
+        error: false,
         verbum: verbum.value,
         eventus: eventus.value,
         quaerenda: quaerenda,
-
         categoriae: categoriae.map(categoria => {
           return {
             title: (lingua === 'anglica' ? anglicum(categoria) : categoria).capitalize(),
@@ -38,17 +39,34 @@
 
         columnae: [
           {
-            title: lingua === 'anglica' ? 'Term' : 'Lemma',
-            key: 'lemma',
-            removable: false,
-            sortable: true,
-            align: 'start'
+            latinum: 'lemma',
+            anglicum: 'term',
+            cultor: (verbum: Verbum, quaerendum: string): boolean => {
+              return verbum.scriptum.includes(quaerendum);
+            }
           }, {
-            title: lingua === 'anglica' ? 'Categories' : 'Categoriae',
-            key: 'categoriae',
-            removable: false,
-            sortable: true,
-            align: 'start'
+            latinum: 'categoriae',
+            anglicum: 'categories',
+            cultor: (verbum: Verbum, selecta: string[]): boolean => {
+              return selecta.includes(verbum.categoria);
+            }
+          }
+        ].map(columna => {
+          return {
+            title: (lingua === 'anglica' ? columna.anglicum : columna.latinum).capitalize(),
+            filter: columna.cultor,
+            key: columna.latinum
+          };
+        }),
+
+
+        validator: [
+          (pars: string): boolean | string => {
+            const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz\|]/;
+            const validum: boolean = licta.test(pars.toLowerCase());
+            const error: string = lingua === 'anglica' ?
+              'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
+            return validum || error;
           }
         ]
       };
@@ -70,19 +88,12 @@
       },
 
       removeApices (): void {
-        this.quaerenda.pars = this.quaerenda.pars.toLowerCase().removeMacra();
-      },
-
-      valida (): boolean | string {
-        const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz\|]/;
-        const validum: boolean = licta.test(this.quaerenda.pars.toLowerCase());
-        if (!validum) {
-          this.onerans = false;
+        if (this.validator[ 0 ](this.quaerenda.pars) === true) {
+          this.quaerenda.pars = this.quaerenda.pars.toLowerCase().removeMacra();
+          this.error = false;
+        } else {
+          this.error = true;
         }
-
-        const error: string = lingua === 'anglica' ?
-          'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
-        return validum || error;
       },
 
       async refer (lemma: Lemma): Promise<void> {
@@ -124,7 +135,7 @@
             </template>
             <template v-if="columna.key === 'lemma'">
               <v-text-field :label='columna.title' v-model='quaerenda.pars' :disabled='onerans'
-                            :loading='onerans' validate-on='input' :rules='valida()'
+                            :loading='onerans' validate-on='input' :rules='validator'
                             id='quaerenda.pars' density='compact' @blur='removeApices();' autofocus
                             flat single-line />
             </template>
@@ -152,8 +163,8 @@
         </tr>
         <tr>
           <td>
-            <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" append-icon='open_in_full'
-                   @click='refer(lemma);' />
+            <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" :disabled='error'
+                   append-icon='open_in_full' @click='refer(lemma);' />
           </td>
         </tr>
       </template>

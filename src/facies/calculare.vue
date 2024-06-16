@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent } from 'vue';
+  import { defineComponent, defineModel } from 'vue';
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
   import Spectere from './specere.vue';
