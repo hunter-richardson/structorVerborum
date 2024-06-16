@@ -9,7 +9,7 @@
     romanus: string
   };
 
-  const numerus: Numerus | null = null;
+  const numerus = defineModel<Numerus>();
   const operator: string = '';
 
   const nihil: numeri = {

@@ -5,7 +5,7 @@
   import Spectere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
 
-  const numerus: Numerus | null = null;
+  const numerus = defineModel<Numerus>();
 
   export default defineComponent({
     data () {
@@ -46,8 +46,7 @@
 
 <template>
   <template v-if='numerus'>
-    <Specere v-model='numerus'
-             @blur='numerus = null' />
+    <Specere v-model='numerus' @blur='numerus = undefined' />
   </template>
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
@@ -56,15 +55,12 @@
     </template>
   </div>
   <div class='text-center'>
-    <v-number-input @change='effiat();' id='integer'
-                    :rules='valida(anglicus.integer)'
-                    validateOn='input' v-model='anglicus.integer'
-                    autofocus clearable flat reverse />
+    <v-number-input @change='effiat();' id='integer' :rules='valida(anglicus.integer)'
+                    validateOn='input' v-model='anglicus.integer' autofocus clearable flat
+                    reverse />
     <v-card text=' + ' />
-    <v-number-input @change='effiat();' id='numerator'
-                    :rules='valida(anglicus.numerator)'
-                    validateOn='input' v-model='anglicus.numerator'
-                    clearable flat />
+    <v-number-input @change='effiat();' id='numerator' :rules='valida(anglicus.numerator)'
+                    validateOn='input' v-model='anglicus.numerator' clearable flat />
     <v-card :text="' ÷ '.concat(anglicus.denominator.toString())" />
   </div>
 </template>

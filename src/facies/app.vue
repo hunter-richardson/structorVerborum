@@ -208,8 +208,8 @@
     </v-app-bar>
     <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
-        <v-tab :value='annulus' selected-class='text-primary' density='compact'
-               :v-bind:key='annulus' :text='annulus.titula' tile />
+        <v-tab :value='annulus' :v-bind:key='annulus' selected-class='text-primary'
+               density='compact' :text='annulus.titula' tile />
       </template>
     </v-tabs>
     <v-tabs-window v-model='annulus'>

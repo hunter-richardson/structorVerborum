@@ -1,27 +1,33 @@
 <script lang='ts'>
   import { defineComponent } from 'vue';
-  import Dictionarium, { type Lemma, type Eventus } from '../miscella/dictionarium';
+  import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae } from '../miscella/enumerationes';
   import Inflectere from './inflectere.vue';
   import Specere from './specere.vue';
   import Loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
+  import type { Verbum } from '../praebeunda/verba';
 
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+
+  const lemmae: Lemma[] = [];
+  const verbum = defineModel<Verbum>('verbum');
+  const eventus = defineModel<Eventus>('eventus');
+  const quaerenda: Quaerenda = {
+    categoriae: [],
+    pars: ''
+  };
 
   export default defineComponent({
     data () {
       return {
         lingua: lingua,
-        lemmae: [],
+        lemmae: lemmae,
         onerans: true,
-        verbum: null,
-        eventus: null,
-        quaeranda: {
-          categoriae: [],
-          pars: ''
-        },
+        verbum: verbum.value,
+        eventus: eventus.value,
+        quaerenda: quaerenda,
 
         categoriae: categoriae.map(categoria => {
           return {
@@ -51,20 +57,20 @@
     methods: {
       async sarci (): Promise<void> {
         this.onerans = true;
-        this.lemmae = await dictionarium.quaeratur(this.quaerenda)
-          .then(() => this.onerans = false);
+        this.lemmae = await dictionarium.quaeratur(this.quaerenda);
+        return new Promise(() => this.onerans = false);
       },
 
       async omnes (): Promise<void> {
         this.onerans = true;
-        this.quaeranda.categoriae = [];
-        this.quaeranda.pars = '';
+        this.quaerenda.categoriae = [];
+        this.quaerenda.pars = '';
 
         this.sarci();
       },
 
       removeApices (): void {
-        this.quaeranda.pars = this.quaeranda.pars.toLowerCase().removeMacra();
+        this.quaerenda.pars = this.quaerenda.pars.toLowerCase().removeMacra();
       },
 
       valida (): boolean | string {
@@ -80,14 +86,16 @@
       },
 
       async refer (lemma: Lemma): Promise<void> {
-        const eventus: Eventus = await dictionarium.referatur(lemma);
-        if ([
-          'actus', 'adiectiva', 'adverbia',
-          'nomen', 'numeramen', 'pronomen'
-        ].includes(eventus.categoria)) {
-          this.eventus = eventus;
-        } else {
-          this.verbum = eventus.referendum;
+        const eventus: Eventus | null = await dictionarium.referatur(lemma);
+        if (eventus) {
+          if ([
+            'actus', 'adiectiva', 'adverbia',
+            'nomen', 'numeramen', 'pronomen'
+          ].includes(eventus.categoria)) {
+            this.eventus = eventus;
+          } else {
+            this.verbum = eventus.referendum as Verbum;
+          }
         }
       }
     }
@@ -97,10 +105,10 @@
 <template>
   <Loqui />
   <template v-if='verbum'>
-    <Specere v-model='verbum' @blur='verbum = null;' />
+    <Specere v-model='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else-if='eventus'>
-    <Inflectere v-model='eventus' @blur='eventus = null;' />
+    <Inflectere v-model='eventus' @blur='eventus = undefined;' />
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
@@ -115,14 +123,14 @@
               <v-icon :icon='getSortIcon(columna)' />
             </template>
             <template v-if="columna.key === 'lemma'">
-              <v-text-field :label='columna.title' v-model='quaeranda.pars' :disabled='onerans'
+              <v-text-field :label='columna.title' v-model='quaerenda.pars' :disabled='onerans'
                             :loading='onerans' validate-on='input' :rules='valida()'
                             id='quaerenda.pars' density='compact' @blur='removeApices();' autofocus
                             flat single-line />
             </template>
             <template v-else-if="columna.key === 'categoriae'">
               <v-select :loading='onerans' density='compact' id='quaerenda.categoriae'
-                        v-model='quaeranda.categoriae' :disabled='onerans' :label='columna.title'
+                        v-model='quaerenda.categoriae' :disabled='onerans' :label='columna.title'
                         :items='categoriae' chips flat multiple open-on-clear />
             </template>
             <span class='mr-2 cursor-pointer' @click='() => toggleSort(columna)' />

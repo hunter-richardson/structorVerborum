@@ -8,7 +8,9 @@
 
   defineProps<{ id: Hoc; }>();
 
-  const eventus = defineModel<Eventus>();
+  const eventus = defineModel<Eventus>('eventus');
+  const verbum = defineModel<Verbum>('verbum');
+
   const categoria: string = eventus.value?.categoria ?? '';
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
   const tabula: Tabula<Hoc> | null = agendum?.putetur();
@@ -54,8 +56,8 @@
         selecta: selecta,
         verba: verba,
         eventus: eventus,
+        verbum: verbum,
         onerans: true,
-        verbum: null,
         et: {
           gradus: '',
           genus: ''
@@ -89,7 +91,7 @@
         if (this.figura === 'numeramenAgendum') {
           const referendum: Referendum = (this.agendum as Agenda.NumeramenAgendum).referatur(numeramen.numerium);
           if (referendum instanceof Numerus) {
-            this.verba = referendum as Numerus;
+            this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
             this.eventus = {
               referendum: referendum as Agenda.NomenAgendum,
@@ -113,10 +115,17 @@
         this.verbum = verbum;
       },
 
-      refer (eventus: Eventus): void {
-        this.eventus = eventus;
+      refer (eventus: {
+        referendum?: Referendum;
+        categoria: string;
+      }): void {
+        if (eventus.referendum) {
+          this.eventus = {
+            referendum: eventus.referendum,
+            categoria: eventus.categoria
+          };
+        };
       }
-
     },
 
     async mounted (): Promise<void> {
@@ -134,22 +143,23 @@
 
 <template>
   <template v-if='verbum'>
-    <Spectere v-model='verbum' @blur='verbum = null;' />
+    <Spectere v-model='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else>
     <v-chip-group selected-class='text-primary'>
       <template v-for='colamen in colamina'>
-        <v-chip :text="lingua === 'anglica' ? anglicum(Object.values(colamen).first()).toString() : Object.values(colamen).first().toString()"
+        <v-chip :v-bind:key='colamen'
+                :text="lingua === 'anglica' ? anglicum(Object.values(colamen).first()).toString() : Object.values(colamen).first().toString()"
                 @change='cole();' prepend-icon='category' filter />
       </template>
     </v-chip-group>
-    <v-data-table :items='verba' v-for='ullum in verba' :v-bind:key='ullum' :loading='onerans'
+    <v-data-table v-for='ullum in verba' :items='verba' :v-bind:key='ullum' :loading='onerans'
                   :headers='columnae' density='compact' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
         <v-skeleton-loader :loading-text="lingua === 'anglica' ? 'Loading words...' : 'Verba onerantur...'"
                            :loading='onerans' type='table-tbody' />
       </template>
-      <template v-else-if="figura === 'numeramenAgendum'">
+      <template v-if="figura === 'numeramenAgendum'">
         <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" append-icon='open_in_full'
                @click='numeramen(ullum as Numeramen);' />
       </template>
@@ -162,24 +172,24 @@
       <v-btn-toggle>
         <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'" @click="refer({
           categoria: 'nomen',
-          referendum: (agendum as Agenda.ActusAgendus).nomen()
-        });" />
+  referendum: (agendum as Agenda.ActusAgendus).nomen() ?? undefined
+});" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (masculine)' : 'Actor'"
                @click="refer({
                 categoria: 'nomen',
-                referendum: (agendum as Agenda.ActusAgendus).actor('masculinum')
+                referendum: (agendum as Agenda.ActusAgendus).actor('masculinum') ?? undefined
               });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (feminine)' : 'Actrix'"
                @click="refer({
                 categoria: 'nomen',
-                referendum: (agendum as Agenda.ActusAgendus).actor('femininum')
+                referendum: (agendum as Agenda.ActusAgendus).actor('femininum') ?? undefined
               });" />
       </v-btn-toggle>
     </template>
     <template v-else-if="figura === 'nomenFactum'">
       <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'" @click="refer({
         categoria: 'actus',
-        referendum: (agendum as Agenda.NomenFactum).actus()
+        referendum: (agendum as Agenda.NomenFactum).actus() ?? undefined
       });" />
     </template>
     <template v-if="[
@@ -207,14 +217,14 @@
                   referendum: (agendum as Agenda.AdiectivumAgendum).probetur({
                     gradus: et.gradus,
                     genus: et.genus
-                  })
+                  }) ?? undefined
                 });" />
         </template>
         <template v-else-if="figura === 'incomparabile'">
           <v-btn append-icon='open_in_full'
                  :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="refer({
                   categoria: 'adiectivum',
-                  referendum: (agendum as Agenda.Incomparabile).probetur(et.genus)
+                  referendum: (agendum as Agenda.Incomparabile).probetur(et.genus) ?? undefined
                 });" />
         </template>
       </span>

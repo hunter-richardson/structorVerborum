@@ -4,33 +4,45 @@
   import Locutor from '../miscella/locutor';
   import Inflectere from './inflectere.vue';
   import Cocutor from '../miscella/cocutor';
+  import type { Eventus } from '../miscella/dictionarium';
 
-  const verbum = defineModel<Verbum>();
+  const verbum = defineModel<Verbum>('verbum');
+  const eventus = defineModel<Eventus>('eventus');
 
   export default defineComponent({
     data () {
       return {
-        verbum: verbum,
+        verbum: verbum.value,
+        eventus: eventus.value,
         lingua: Cocutor.se.ipse().edatur('lingua'),
         multiplex: verbum.value instanceof Multiplex,
         valores: (verbum.value as Multiplex)?.valores() ?? [],
         locutor: Locutor.se.ipse(),
-        eventus: null
+        eventus: eventus
       };
     },
 
     methods: {
-      refer (): void {
+      async refer (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus':
             const actus: Actus = this.verbum as Actus;
             if (actus.modus === 'participium') {
-              this.eventus = actus.participialis();
+              this.eventus = {
+                referendum: await actus.participialis(),
+                categoria: 'adiectivum'
+              };
             }
             break;
           case 'numerus':
             const numerus: Numerus = this.verbum as Numerus;
-            this.eventus = numerus.numeramen();
+            const agendum = await numerus.numeramen();
+            if (agendum) {
+              this.eventus = {
+                referendum: agendum,
+                categoria: 'numeramen'
+              };
+            }
             break;
         }
       }
@@ -40,7 +52,7 @@
 
 <template>
   <template v-if='eventus'>
-    <Inflectere v-model='eventus' @blur='eventus = null;' />
+    <Inflectere v-model='eventus' @blur='eventus = undefined;' />
   </template>
   <v-dialog v-if'verbum'>
     <v-card :title='verbum?.scriptum'>
@@ -55,7 +67,7 @@
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on'
                  :text="lingua === 'anglica' ? 'Add this to my phrase' : 'Adde hoc locutioni'"
-                 @click='locutor.addatur(verbum);' />
+                 @click='locutor.addatur(verbum as Verbum);' />
         </template>
         <template v-if="verbum?.categoria === 'numerus'">
           <v-btn icon='quick_reference' @click='refer();'
