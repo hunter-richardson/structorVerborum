@@ -15,7 +15,7 @@
       return {
         verbum: verbum.value,
         eventus: eventus.value,
-        anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica',
+        anglica: lingua === 'anglica',
         multiplex: verbum.value instanceof Multiplex,
         valores: (verbum.value as Multiplex)?.valores() ?? [],
         locutor: Locutor.se.ipse()
