@@ -22,7 +22,7 @@
   export default defineComponent({
     data () {
       return {
-        lingua: lingua,
+        anglica: lingua === 'anglica',
         lemmae: lemmae,
         onerans: true,
         error: false,
@@ -31,7 +31,7 @@
         quaerenda: quaerenda,
         categoriae: categoriae.map(categoria => {
           return {
-            title: (lingua === 'anglica' ? anglicum(categoria) : categoria).capitalize(),
+            title: (this.anglica ? anglicum(categoria) : categoria).capitalize(),
             value: categoria
           };
         }),
@@ -52,7 +52,7 @@
           }
         ].map(columna => {
           return {
-            title: (lingua === 'anglica' ? columna.anglicum : columna.latinum).capitalize(),
+            title: (this.anglica ? columna.anglicum : columna.latinum).capitalize(),
             filter: columna.cultor,
             key: columna.latinum
           };
@@ -61,9 +61,9 @@
 
         validator: [
           (pars: string): boolean | string => {
-            const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz\|]/;
+            const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/;
             const validum: boolean = licta.test(pars.toLowerCase());
-            const error: string = lingua === 'anglica' ?
+            const error: string = this.anglica ?
               'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
             return validum || error;
           }
@@ -122,7 +122,7 @@
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
-           :text="lingua === 'anglica' ? 'Search' : 'Sarci'" />
+           :text="anglica ? 'Search' : 'Sarci'" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' density='compact' :headers='columnae'>
     <template v-slot:headers='{ headers, isSorted, getSortIcon, toggleSort }'>
@@ -150,7 +150,7 @@
     </template>
     <template v-if='onerans'>
       <v-skeleton-loader :loading='onerans' type='table-tbody'
-                         :loadingText="lingua === 'anglica' ? 'Loading words...' : 'Lemmae onerantur...'" />
+                         :loadingText="anglica ? 'Loading words...' : 'Lemmae onerantur...'" />
     </template>
     <template v-else>
       <template v-for='lemma in lemmae' :key='lemma'>
@@ -162,8 +162,8 @@
         </tr>
         <tr>
           <td>
-            <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" :disabled='error'
-                   append-icon='open_in_full' @click='refer(lemma);' />
+            <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' append-icon='open_in_full'
+                   @click='refer(lemma);' />
           </td>
         </tr>
       </template>

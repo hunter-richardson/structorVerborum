@@ -8,13 +8,14 @@
 
   const verbum = defineModel<Verbum>('verbum');
   const eventus = defineModel<Eventus>('eventus');
+  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
 
   export default defineComponent({
     data () {
       return {
         verbum: verbum.value,
         eventus: eventus.value,
-        lingua: Cocutor.se.ipse().edatur('lingua'),
+        anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica',
         multiplex: verbum.value instanceof Multiplex,
         valores: (verbum.value as Multiplex)?.valores() ?? [],
         locutor: Locutor.se.ipse()
@@ -64,18 +65,16 @@
       </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
-          <v-btn icon='chat_add_on'
-                 :text="lingua === 'anglica' ? 'Add this to my phrase' : 'Adde hoc locutioni'"
+          <v-btn icon='chat_add_on' :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'"
                  @click='locutor.addatur(verbum as Verbum);' />
         </template>
         <template v-if="verbum?.categoria === 'numerus'">
-          <v-btn icon='quick_reference' @click='refer();'
-                 :text="lingua === 'anglica' ? 'Open' : 'Refer'" />
+          <v-btn icon='quick_reference' @click='refer();' :text="anglica ? 'Open' : 'Refer'" />
         </template>
         <template v-else-if="verbum?.categoria === 'actus' &&
           valores.includes('participalis')">
           <v-btn icon='quick_reference' @click='refer();'
-                 :text="lingua === 'anglica' ? 'Particple' : 'Participalis'" />
+                 :text="anglica ? 'Particple' : 'Participalis'" />
         </template>
       </v-btn-toggle>
     </v-card>

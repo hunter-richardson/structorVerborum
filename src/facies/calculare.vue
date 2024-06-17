@@ -2,7 +2,7 @@
   import { defineComponent, defineModel } from 'vue';
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
-  import Spectere from './specere.vue';
+  import Specere from './specere.vue';
 
   type numeri = {
     anglicus: number,
@@ -49,7 +49,7 @@
         if (actus === 'N') {
           this.praevii = nihil;
           this.praesentes = nihil;
-        } else if (/^[IVXLCDM\|S·:∴×]$/.test(actus)) {
+        } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
           if (this.praesentes.anglicus) {
             this.praesentes.romanus += actus;
           } else {

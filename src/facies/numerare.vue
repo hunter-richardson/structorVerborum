@@ -2,7 +2,7 @@
   import { defineComponent, defineModel } from 'vue';
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
-  import Spectere from './specere.vue';
+  import Specere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
 
   const numerus = defineModel<Numerus>();
@@ -12,7 +12,7 @@
     data () {
       return {
         romanus: '',
-        lingua: cocutor.edatur('lingua') === 'anglica',
+        anglica: cocutor.edatur('lingua') === 'anglica',
         numerus: numerus,
         anglicus: {
           integer: 0,
@@ -22,7 +22,7 @@
 
         validator: [
           (anglicus: number): boolean | string => {
-            const error: string = this.lingua ?
+            const error: string = this.anglica ?
               'Only Roman numerals allowed' : 'Romani numeri soli licuntur';
             return Number.isInteger(anglicus) || error;
           }
