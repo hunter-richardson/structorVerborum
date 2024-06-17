@@ -8,7 +8,7 @@
 
   defineProps<{ id: Hoc; }>();
 
-  const verba = defineModel<Hoc[]>('verba');
+  const verba: ModelRef<Hoc[] | undefined, string> = defineModel<Hoc[]>('verba');
 
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
@@ -38,6 +38,7 @@
   import Spectere from './specere.vue';
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
+  import type { ModelRef } from 'vue';
 
   const eventus = defineModel<Eventus>('eventus');
   const verbum = defineModel<Verbum>('verbum');

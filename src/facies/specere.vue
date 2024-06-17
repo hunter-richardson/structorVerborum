@@ -5,9 +5,12 @@
   import Inflectere from './inflectere.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Eventus } from '../miscella/dictionarium';
+  import type { NumeramenAgendum } from '../praebeunda/agenda';
+  import type { ModelRef } from 'vue';
 
-  const verbum = defineModel<Verbum>('verbum');
-  const eventus = defineModel<Eventus>('eventus');
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
 
   export default defineComponent({
@@ -36,7 +39,7 @@
             break;
           case 'numerus':
             const numerus: Numerus = this.verbum as Numerus;
-            const agendum = await numerus.numeramen();
+            const agendum: NumeramenAgendum | null = await numerus.numeramen();
             if (agendum) {
               this.eventus = {
                 referendum: agendum,

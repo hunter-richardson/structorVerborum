@@ -4,9 +4,11 @@
   import { Numerus } from '../praebeunda/verba';
   import Specere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
+  import type { ModelRef } from 'vue';
 
-  const numerus = defineModel<Numerus>();
   const cocutor: Cocutor = Cocutor.se.ipse();
+
+  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
 
   export default defineComponent({
     data () {

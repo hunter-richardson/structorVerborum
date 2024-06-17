@@ -3,13 +3,14 @@
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
   import Specere from './specere.vue';
+  import type { ModelRef } from 'vue';
 
   type numeri = {
     anglicus: number,
     romanus: string
   };
 
-  const numerus = defineModel<Numerus>();
+  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
   const operator: string = '';
 
   const nihil: numeri = {

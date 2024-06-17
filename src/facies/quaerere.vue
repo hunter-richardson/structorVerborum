@@ -7,13 +7,15 @@
   import Loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
+  import type { ModelRef } from 'vue';
 
-  const dictionarium: Dictionarium = Dictionarium.se.ipse();
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+  const dictionarium: Dictionarium = Dictionarium.se.ipse();
 
   const lemmae: Lemma[] = [];
-  const verbum = defineModel<Verbum>('verbum');
-  const eventus = defineModel<Eventus>('eventus');
   const quaerenda: Quaerenda = {
     categoriae: [],
     pars: ''
