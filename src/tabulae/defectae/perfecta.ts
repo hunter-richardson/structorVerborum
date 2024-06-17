@@ -63,6 +63,7 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
           default:
             return null;
         }
+        break;
       default:
         return null;
     }
