@@ -8,10 +8,11 @@
 
   defineProps<{ id: Hoc; }>();
 
+  const verba = defineModel<Hoc[]>('verba');
+
   const categoria: string = eventus.value?.categoria ?? '';
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
-  const tabula: Tabula<Hoc> | null = agendum?.putetur();
-  const verba: Hoc[] = [];
+  const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
   const seligenda: string[] = []
   const selecta: string[] = [];
 
@@ -40,6 +41,8 @@
   import Spectere from './specere.vue';
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
+  import { ref } from 'vue';
+  import { NumeramenAgendum } from '../praebeunda/agenda';
 
   const eventus = defineModel<Eventus>('eventus');
   const verbum = defineModel<Verbum>('verbum');
@@ -77,22 +80,28 @@
     },
 
     methods: {
-      async omnes (): Promise<Hoc[] | null> {
-        return await tabula?.tabulentur() ?? null;
+      async omnes (): Promise<Hoc[]> {
+        return await tabula?.tabulentur() ?? [];
       },
 
       async cole (): Promise<void> {
         this.onerans = true;
-        this.verba = ((await this.omnes()) as Hoc[])
-          .filter(verbum =>
+        const omnia: Hoc[] = await this.omnes();
+        if (omnia) {
+          this.verba = omnia.filter(verbum =>
             (this.selecta as string[]).every(selectum =>
               verbum.valores().includes(selectum)));
-        await new Promise(() => this.onerans = false);
+        }
+
+        return await new Promise(() => this.onerans = !!omnia);
+
       },
 
-      async numeramen (numeramen: Numeramen): Promise<void> {
-        if (this.figura === 'numeramenAgendum') {
-          const referendum: Referendum = (this.agendum as Agenda.NumeramenAgendum).referatur(numeramen.numerium);
+      async numeramen (numeramen: Hoc): Promise<void> {
+        if (this.figura === 'numeramenAgendum' &&
+          numeramen instanceof Numeramen &&
+          agendum instanceof Agenda.NumeramenAgendum) {
+          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.numerium);
           if (referendum instanceof Numerus) {
             this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
@@ -114,17 +123,53 @@
         }
       },
 
-      selige (verbum: Verbum): void {
+      selige (verbum: Hoc): void {
         this.verbum = verbum;
       },
 
       refer (eventus: {
-        referendum?: Referendum;
-        categoria: string;
+        categoria: string,
+        referendum?: string,
+        gradus?: string,
+        genus?: string;
       }): void {
-        if (eventus.referendum) {
+        let referendum: Referendum | null = null;
+        switch (figura) {
+          case 'actusAgendus':
+            if (agendum instanceof Agenda.ActusAgendus) {
+              switch (eventus.referendum) {
+                case 'nomen':
+                  referendum = (agendum as Agenda.ActusAgendus).nomen();
+                  break;
+                case 'actor':
+                  referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
+                  break;
+              }
+            }
+            break;
+          case 'nomenFactum':
+            if (agendum instanceof Agenda.NomenFactum) {
+              referendum = (agendum as Agenda.NomenFactum).actus();
+            }
+            break;
+          case 'adiectivumAgendum':
+            if (agendum instanceof Agenda.AdiectivumAgendum) {
+              referendum = (agendum as Agenda.AdiectivumAgendum).probetur({
+                gradus: eventus.gradus ?? '',
+                genus: eventus.genus ?? ''
+              });
+            }
+            break;
+          case 'incomparabile':
+            if (agendum instanceof Agenda.Incomparabile) {
+              referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
+            }
+            break;
+        }
+
+        if (referendum) {
           this.eventus = {
-            referendum: eventus.referendum,
+            referendum: referendum,
             categoria: eventus.categoria
           };
         };
@@ -133,6 +178,7 @@
 
     async mounted (): Promise<void> {
       this.verba = await this.omnes();
+
       this.seligenda = [
         ...new Set((this.verba as Hoc[])
           .map(verbum => verbum.valores())
@@ -158,16 +204,16 @@
     <template v-if="figura === 'actusAgendus'">
       <v-btn-toggle>
         <v-btn append-icon='subject' :text="lingua === 'anglica' ? 'Noun' : 'Nomen'"
-               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).nomen() ?? undefined });" />
+               @click="refer({ categoria: 'nomen', referendum: 'nomen' });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (masculine)' : 'Actor'"
-               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).actor('masculinum') ?? undefined });" />
+               @click="refer({ categoria: 'nomen', referendum: 'actor', genus: 'masculinum' });" />
         <v-btn append-icon='person' :text="lingua === 'anglica' ? 'Agent (feminine)' : 'Actrix'"
-               @click="refer({ categoria: 'nomen', referendum: (agendum as Agenda.ActusAgendus).actor('femininum') ?? undefined });" />
+               @click="refer({ categoria: 'nomen', referendum: 'actor', genus: 'femininum' });" />
       </v-btn-toggle>
     </template>
     <template v-else-if="figura === 'nomenFactum'">
       <v-btn append-icon='sprint' :text="lingua === 'anglica' ? 'Verb' : 'Actus'"
-             @click="refer({ categoria: 'actus', referendum: (agendum as Agenda.NomenFactum).actus() ?? undefined });" />
+             @click="refer({ categoria: 'actus' });" />
     </template>
     <template v-if="[
       'adiectivumAgendum', 'incomparabile'
@@ -191,16 +237,14 @@
           <v-btn append-icon='open_in_full'
                  :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'" @click="refer({
                   categoria: 'adiectivum',
-                  referendum: (agendum as Agenda.AdiectivumAgendum).probetur({
-                    gradus: et.gradus,
-                    genus: et.genus
-                  }) ?? undefined
+                  gradus: et.gradus,
+                  genus: et.genus
                 });" />
         </template>
         <template v-else-if="figura === 'incomparabile'">
           <v-btn append-icon='open_in_full'
                  :text="lingua === 'anglica' ? 'Substantiate' : 'Probetur'"
-                 @click="refer({ categoria: 'adiectivum', referendum: (agendum as Agenda.Incomparabile).probetur(et.genus) ?? undefined });" />
+                 @click="refer({ categoria: 'adiectivum', genus: et.genus });" />
         </template>
       </span>
     </template>
@@ -213,11 +257,11 @@
       <template v-if='!onerans' v-slot:item='item'>
         <template v-if="figura === 'numeramenAgendum'">
           <v-btn :text="lingua === 'anglica' ? 'Open' : 'Refer'" append-icon='open_in_full'
-                 @click='numeramen(item.item as Numeramen);' />
+                 @click='numeramen(item.item);' />
         </template>
         <template v-else>
           <v-btn :text="lingua === 'anglica' ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-                 @click='selige(item.item as Verbum)' />
+                 @click='selige(item.item)' />
         </template>
       </template>
     </v-data-table>

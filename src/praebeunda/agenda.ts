@@ -15,8 +15,8 @@ import TabulaAdverbii from '../tabulae/adverbii';
 import TabulaNumeraminis from '../tabulae/numeraminis';
 import Tabula from '../tabulae/tabula';
 
-export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, "categoria | enclicitum | unicum">;
-export type Colamen<Hoc> = Omit<Hoc, "categoria | scriptum | encliticum">;
+export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, "categoria" | "enclicitum" | "unicum">;
+export type Colamen<Hoc> = Omit<Hoc, "categoria" | "scriptum" | "encliticum">;
 export type Positor<Hoc extends Verba.Multiplex> = ((agendum: Agendum<Hoc>) => Hoc);
 
 export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfecta.Lectum {
