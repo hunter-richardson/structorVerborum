@@ -34,7 +34,7 @@
     "outDir": "./wwwroot/js",
     "paths": {
       "facies": [ "./src/facies/*.vue" ],
-      "figura": [ "src/figura.ts" ],
+      "figura": [ "./src/figura.ts" ],
       "scriptura": [ "./src/scriptura/*.ts" ]
     },
     "sourceMap": true,
