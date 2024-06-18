@@ -1,4 +1,4 @@
-# StructorVerborum [![CodeFactor](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum/badge)](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum)  ![GitHub Issues](https://img.shields.io/github/issues-raw/hunter-richardson/structorVerborum?style=for-the-badge&logo=github)
+# StructorVerborum [![CodeFactor](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum/badge)](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum)  ![GitHub Issues](https://img.shields.io/github/issues-raw/hunter-richardson/structorVerborum?style=for-the-badge&logo=github&logoSize=small)
 
 
 
