@@ -12,7 +12,6 @@
     "composite": true,
     "declaration": true,
     "downlevelIteration": true,
-    "emitDeclarationOnly": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,

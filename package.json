@@ -50,6 +50,7 @@
     "classifyx": "^1.1.0",
     "codeql-agent": "^0.3.4",
     "cypress": "^13.7.2",
+    "dependabot": "^0.1.1",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-vue": "^9.23.0",
