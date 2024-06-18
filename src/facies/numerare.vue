@@ -50,10 +50,10 @@
   });
 </script>
 
-<template>
-  <template v-if='numerus'>
-    <Specere v-model='numerus' @blur='numerus = undefined' />
-  </template>
+<template lang='vue'>
+	<template v-if='numerus'>
+		<Specere v-model='numerus' @blur='numerus = undefined' />
+	</template>
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
     <template v-if='anglicus.numerator === 0'>

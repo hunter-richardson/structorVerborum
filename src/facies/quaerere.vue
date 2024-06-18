@@ -114,7 +114,7 @@
   });
 </script>
 
-<template>
+<template lang='vue'>
   <Loqui />
   <template v-if='verbum'>
     <Specere v-model='verbum' @blur='verbum = undefined;' />
@@ -129,7 +129,7 @@
   <v-data-table :items-per-page='10' :loading='onerans' density='compact' :headers='columnae'>
     <template v-slot:headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
-        <template v-for='columna in columnae' :key='columna.key'>
+        <template v-for='columna in headers.flat()' :key='columna.key'>
           <td>
             <template v-if='isSorted(columna)'>
               <v-icon :icon='getSortIcon(columna)' />
@@ -154,21 +154,19 @@
       <v-skeleton-loader :loading='onerans' type='table-tbody'
                          :loadingText="anglica ? 'Loading words...' : 'Lemmae onerantur...'" />
     </template>
-    <template v-else>
-      <template v-for='lemma in lemmae' :key='lemma'>
-        <tr>
-          <td>{{ lemma.categoria }}</td>
-        </tr>
-        <tr>
-          <td>{{ lemma.scriptum }}</td>
-        </tr>
-        <tr>
-          <td>
-            <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' append-icon='open_in_full'
-                   @click='refer(lemma);' />
-          </td>
-        </tr>
-      </template>
+    <template v-else v-for='lemma in lemmae' :key='lemma'>
+      <tr>
+        <td>{{ lemma.categoria }}</td>
+      </tr>
+      <tr>
+        <td>{{ lemma.scriptum }}</td>
+      </tr>
+      <tr>
+        <td>
+          <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' append-icon='open_in_full'
+                  @click='refer(lemma);' />
+        </td>
+      </tr>
     </template>
   </v-data-table>
 </template>

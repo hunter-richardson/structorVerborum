@@ -1,11 +1,13 @@
 import { useFavicon } from '@vueuse/core';
 import { createApp } from 'vue';
 import { createVuetify } from 'vuetify';
+import { md3 } from 'vuetify/blueprints';
 import Index from './facies/index.vue';
 
 useFavicon('/res/picta/favicon.png')
 
 export default createVuetify({
+  blueprint: md3,
   defaults: {
     global: {
       ripple: true,

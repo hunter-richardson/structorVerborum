@@ -24,6 +24,7 @@
   export default defineComponent({
     data () {
       return {
+        name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
         annulus: '',
         locutionis: locutor.locutust(),
         referret: referretne(),
@@ -125,6 +126,7 @@
     },
 
     async mounted (): Promise<void> {
+      document.title = this.name;
       if (cocutor.edatur('assensus') === 'assensit') {
         this.crustula = {
           assensus: cocutor.edatur('assensus') ?? 'assensit',
@@ -140,7 +142,7 @@
   });
 </script>
 
-<template>
+<template lang='vue'>
   <template v-if="crustula.assensus === 'assensit'">
     <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
       <template v-slot:activator='{ props: activator }'>

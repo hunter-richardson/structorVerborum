@@ -46,6 +46,8 @@
     "@vue/test-utils": "^2.4.5",
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/core": "^10.11.0",
+    "amphtml-validator": "^1.0.38",
+    "classifyx": "^1.1.0",
     "codeql-agent": "^0.3.4",
     "cypress": "^13.7.2",
     "eslint": "^8.57.0",
@@ -61,6 +63,8 @@
     "vite": "^5.2.8",
     "vite-plugin-vue-devtools": "^7.0.25",
     "vitest": "^1.4.0",
-    "vue-tsc": "^2.0.11"
+    "vue-horizontal-scroll": "^0.2.4",
+    "vue-tsc": "^2.0.11",
+    "vuedraggable": "^4.1.0"
   }
 }

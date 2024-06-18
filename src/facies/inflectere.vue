@@ -49,7 +49,11 @@
   const seligenda: string[] = [];
   const selecta: string[] = [];
 
+  const HorizontalScroll = require('vue-horizontal-scroll')
+
   export default defineComponent({
+    components: { HorizontalScroll },
+
     data () {
       return {
         anglica: lingua === 'anglica',
@@ -191,16 +195,20 @@
   });
 </script>
 
-<template>
+<template lang='vue'>
   <template v-if='verbum'>
     <Spectere v-model='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else>
-    <v-chip-group selected-class='text-primary'>
-      <v-chip v-for='seligendum in seligenda' :key='seligendum'
-              :text="anglica ? anglicum(seligendum) : seligendum" @change='cole();'
-              prepend-icon='category' filter />
-    </v-chip-group>
+    <div id='colamina'>
+      <horizontal-scroll>
+        <v-chip-group v-for='seligendum in seligenda' :key='seligendum'
+                      selected-class='text-primary'>
+          <v-chip :text="anglica ? anglicum(seligendum) : seligendum" @change='cole();'
+                  prepend-icon='category' filter />
+        </v-chip-group>
+      </horizontal-scroll>
+    </div>
     <template v-if="figura === 'actusAgendus'">
       <v-btn-toggle>
         <v-btn append-icon='subject' :text="anglica ? 'Noun' : 'Nomen'"

@@ -11,11 +11,11 @@ export default class Gustularium {
   readonly visibile: boolean;
 
   constructor (optanda: Optanda) {
-    const make_color = require('@types/pleasej').make_color;
+    const Please = require('pleasejs');
 
     this.nuntium = optanda.nuntium ?? '';
     this.vita = optanda.vita ?? 0;
-    this.color = optanda.color ?? make_color();
+    this.color = optanda.color ?? Please.make_color();
     this.visibile = !!optanda.vita && (optanda.vita > 0);
   }
 }

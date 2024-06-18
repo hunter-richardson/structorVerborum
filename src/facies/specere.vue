@@ -53,10 +53,10 @@
   });
 </script>
 
-<template>
-  <template v-if='eventus'>
-    <Inflectere v-model='eventus' @blur='eventus = undefined;' />
-  </template>
+<template lang='vue'>
+	<template v-if='eventus'>
+		<Inflectere v-model='eventus' @blur='eventus = undefined;' />
+	</template>
   <v-dialog v-if'verbum'>
     <v-card :title='verbum?.scriptum'>
       <span id='categoria'>{{ verbum?.categoria.capitalize() }}</span>

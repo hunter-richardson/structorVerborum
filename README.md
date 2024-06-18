@@ -1,4 +1,7 @@
-# StructorVerborum [![CodeFactor](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum/badge)](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum)
+# StructorVerborum [![CodeFactor](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum/badge)](https://www.codefactor.io/repository/github/hunter-richardson/structorverborum)  ![GitHub Issues](https://img.shields.io/github/issues-raw/hunter-richardson/structorVerborum?style=for-the-badge&logo=github)
+
+
+
 
 This template should help get you started developing with Vue 3 in Vite.
 
