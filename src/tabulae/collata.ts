@@ -6,6 +6,7 @@ import { Multiplex } from '../praebeunda/verba';
 import { type Agendum } from '../praebeunda/agenda';
 
 export function valedictor<Hoc extends Multiplex> (hoc: Hoc): Agendum<Hoc> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { scriptum: scriptum, categoria: categoria, ...valores } = hoc;
   return valores as any;
 }

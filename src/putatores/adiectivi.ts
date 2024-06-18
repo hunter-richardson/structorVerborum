@@ -37,6 +37,7 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
           }
         };
       case 'positivaAutPrimaAutSecunda/nominativusDirectus':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => adiectivum.positivum;
       case 'positivaAutPrimaAutSecunda/cumLitteraR':
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
@@ -127,6 +128,7 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
 
   @Nuntius.modus('PutatorAdiectivi')
   putetur (agendum: AdiectivumAgendum): Tabula<Adiectivum> {
+    // eslint-disable-next-line prefer-const
     let [ fundamen, vices, defectus ] = agendum.versio.split('/');
     if ([
       'singularis',

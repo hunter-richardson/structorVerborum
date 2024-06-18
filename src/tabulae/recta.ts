@@ -33,7 +33,8 @@ export default class TabulaRecta<Hoc extends Faciendum<Illud>, Illud extends Mul
     });
 
     this.tabula = (await scapalis.tabulentur()).map(illud => {
-      let { scriptum, categoria, ...valores } = illud;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { scriptum, categoria, ...valores } = illud;
       illud.scriptum = this._.radicator(this._.hoc, valores as any)
         .concat(scriptum);
       return illud;

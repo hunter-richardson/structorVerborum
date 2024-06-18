@@ -141,6 +141,7 @@ export default class Nuntius implements Disposable {
   }
 
   static finitus(nomen?: string) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return function(modus: any, contextus: ClassMethodDecoratorContext) {
       return function (...parametra: any[]) {
         modus(parametra);

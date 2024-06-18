@@ -25,11 +25,14 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'quinta':
       case 'secundaMasculina':
       case 'secundaNeutra':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (nomen: NomenAgendum, colamen: Percolamen): string => nomen.nominativum.chop(2);
       case 'primus':
       case 'quartaVaria':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (nomen: NomenAgendum, colamen: Percolamen): string => nomen.genitivum.chop(1);
       case 'secundaMasculina/nominativusDirectus':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (nomen: NomenAgendum, colamen: Percolamen): string => nomen.nominativum;
       case 'secundaMasculina/cumLitteraR':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
@@ -78,6 +81,7 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
 
   @Nuntius.modus('PutatorNominis')
   putetur (agendum: NomenAgendum): Tabula<Nomen> {
+    // eslint-disable-next-line prefer-const
     let [ fundamen, vices, defectus ] = agendum.versio.split('/');
     if ([
       'singularis', 'pluralis'

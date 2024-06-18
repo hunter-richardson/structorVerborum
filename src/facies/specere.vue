@@ -29,6 +29,7 @@
       async refer (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus':
+            // eslint-disable-next-line no-case-declarations
             const actus: Actus = this.verbum as Actus;
             if (actus.modus === 'participium') {
               this.eventus = {
@@ -38,7 +39,9 @@
             }
             break;
           case 'numerus':
+            // eslint-disable-next-line no-case-declarations
             const numerus: Numerus = this.verbum as Numerus;
+            // eslint-disable-next-line no-case-declarations
             const agendum: NumeramenAgendum | null = await numerus.numeramen();
             if (agendum) {
               this.eventus = {

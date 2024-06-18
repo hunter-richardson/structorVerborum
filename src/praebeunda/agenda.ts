@@ -358,17 +358,21 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
     const lectorAdiectivum: LectorVerbalis<Incomparabile> = LectorVerbalis.Incomparabilium.ipse();
     switch (numerium) {
       case 'adverbium':
+        // eslint-disable-next-line no-case-declarations
         const lectorAdverbiorum: LectorVerbalis<AdverbiumAgendum> = LectorVerbalis.Adverbiorum.ipse();
         return await lectorAdverbiorum.legatur(this.adverbium);
       case 'fractionale':
+        // eslint-disable-next-line no-case-declarations
         using nomina: Nomina = Nomina.se.ipse();
         if ((await nomina.omnia()).includes(this.fractionale)) {
           return await nomina.feratur(this.fractionale) ?? null;
         } else {
+          // eslint-disable-next-line no-case-declarations
           const lectorNominum: LectorVerbalis<NomenAgendum> = LectorVerbalis.Nominum.ipse();
           return await lectorNominum.legatur(this.fractionale);
         }
       case 'numerus':
+        // eslint-disable-next-line no-case-declarations
         const anglicus: number = Numeral.anglicus(this.numerus);
         return anglicus === null ? null : Verba.Numerus.numerator(anglicus);
       case 'ordinale':

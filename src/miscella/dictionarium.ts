@@ -187,14 +187,18 @@ export default class Dictionarium {
     switch (lemma.categoria.toLowerCase()) {
       case 'actus':
         if (lecta) {
+          // eslint-disable-next-line no-case-declarations
           const lectorActuum: LectorVerbalis<Agenda.ActusAgendus> = this._lectorActuum.ipse();
+          // eslint-disable-next-line no-case-declarations
           const actus: Referendum | null = await lectorActuum.legatur(lemma.scriptum);
           return actus ? {
             referendum: actus,
             categoria: lemma.categoria.toLowerCase()
           } : null;
         } else {
+          // eslint-disable-next-line no-case-declarations
           using actus: Actus = this._actus.ipse();
+          // eslint-disable-next-line no-case-declarations
           const referendum: Referendum | null = await actus.feratur(lemma.scriptum) ?? null;
           return referendum ? {
             referendum: referendum,
@@ -203,15 +207,19 @@ export default class Dictionarium {
         }
       case 'adiectivum':
         if (lecta) {
+          // eslint-disable-next-line no-case-declarations
           const lectorAdiectivorum: LectorVerbalis<Agenda.AdiectivumAgendum> = this._lectorAdiectivorum.ipse();
           if ((await lectorAdiectivorum.omnia()).includes(lemma.scriptum)) {
+            // eslint-disable-next-line no-case-declarations
             const adiectivum: Referendum | null = await lectorAdiectivorum.legatur(lemma.scriptum);
             return adiectivum ? {
               referendum: adiectivum,
               categoria: lemma.categoria.toLowerCase()
             } : null;
           } else {
+            // eslint-disable-next-line no-case-declarations
             const lectorIncomparabilium: LectorVerbalis<Agenda.Incomparabile> = this._lectorIncomparabilium.ipse();
+            // eslint-disable-next-line no-case-declarations
             const incomparabile: Referendum | null = await lectorIncomparabilium.legatur(lemma.scriptum);
             return incomparabile ? {
               referendum: incomparabile,
@@ -219,7 +227,9 @@ export default class Dictionarium {
             } : null;
           }
         } else {
+          // eslint-disable-next-line no-case-declarations
           using adiectiva: Adiectiva = this._adiectiva.ipse();
+          // eslint-disable-next-line no-case-declarations
           const referendum: Referendum | null = await adiectiva.feratur(lemma.scriptum) ?? null;
           return referendum ? {
             referendum: referendum,
@@ -227,7 +237,9 @@ export default class Dictionarium {
           } : null;
         }
       case 'adverbium':
+        // eslint-disable-next-line no-case-declarations
         const lectorAdverbium: LectorVerbalis<Agenda.AdverbiumAgendum> = this._lectorAdverbiorum.ipse();
+        // eslint-disable-next-line no-case-declarations
         const adverbium: Referendum | null = await lectorAdverbium.legatur(lemma.scriptum);
         return adverbium ? {
           referendum: adverbium,
@@ -235,15 +247,19 @@ export default class Dictionarium {
         } : null;
       case 'nomen':
         if (lecta) {
+          // eslint-disable-next-line no-case-declarations
           const lectorActuum: LectorVerbalis<Agenda.ActusAgendus> = this._lectorActuum.ipse();
           if ((await lectorActuum.omnia()).includes(lemma.scriptum)) {
+            // eslint-disable-next-line no-case-declarations
             const nomen: Referendum | null = await (await lectorActuum.legatur(lemma.scriptum))?.nomen() ?? null;
             return nomen ? {
               referendum: nomen,
               categoria: lemma.categoria.toLowerCase()
             } : null;
           } else {
+            // eslint-disable-next-line no-case-declarations
             const lectorNominis: LectorVerbalis<Agenda.NomenAgendum> = this._lectorNominis.ipse();
+            // eslint-disable-next-line no-case-declarations
             const nomen: Referendum | null = await lectorNominis.legatur(lemma.scriptum);
             return nomen ? {
               referendum: nomen,
@@ -251,7 +267,9 @@ export default class Dictionarium {
             } : null;
           }
         } else {
+          // eslint-disable-next-line no-case-declarations
           using nomina: Nomina = this._nomina.ipse();
+          // eslint-disable-next-line no-case-declarations
           const nomen: Referendum | null = await nomina.feratur(lemma.scriptum) ?? null;
           return nomen ? {
             referendum: nomen,
@@ -259,21 +277,27 @@ export default class Dictionarium {
           } : null;
         }
       case 'numeramen':
+        // eslint-disable-next-line no-case-declarations
         const lectorNumeraminis: LectorVerbalis<Agenda.NumeramenAgendum> = this._lectorNumeraminis.ipse();
+        // eslint-disable-next-line no-case-declarations
         const numeramen: Referendum | null = await lectorNumeraminis.legatur(lemma.scriptum);
         return numeramen ? {
           referendum: numeramen,
           categoria: lemma.categoria.toLowerCase()
         } : null;
       case 'promomen':
+        // eslint-disable-next-line no-case-declarations
         using pronomina: Pronomina = this._pronomina.ipse();
+        // eslint-disable-next-line no-case-declarations
         const pronomen: Mantela<Pronomen> | null = await pronomina.feratur(lemma.scriptum) ?? null;
         return pronomen ? {
           referendum: pronomen,
           categoria: lemma.categoria.toLowerCase()
         } : null;
       default:
+        // eslint-disable-next-line no-case-declarations
         const lector: LectorVerbalis<Verbum> = this._lector.ipse();
+        // eslint-disable-next-line no-case-declarations
         const verbum: Verbum | null = await lector.legatur(lemma.scriptum);
         return verbum ? {
           referendum: verbum,

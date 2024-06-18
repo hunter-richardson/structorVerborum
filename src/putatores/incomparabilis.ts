@@ -22,9 +22,11 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
     switch (versio) {
       case 'autPrimaAutSecunda':
       case 'pronominalis':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (adiectivum: Incomparabile, colamen: Percolamen): string => adiectivum.nominativum.chop(2);
       case 'autPrimaAutSecunda/nominativusDirectus':
       case 'pronominalis/nominativusDirectus':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (adiectivum: Incomparabile, colamen: Percolamen): string => adiectivum.nominativum;
       case 'autPrimaAutSecunda/cumLitteraR':
       case 'pronominalis/cumLitteraR':
@@ -85,6 +87,7 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
 
   @Nuntius.modus('PutatorIncomparabilis')
   putetur (agendum: Incomparabile): Tabula<Adiectivum> {
+    // eslint-disable-next-line prefer-const
     let [ fundamen, vices, defectus ] = agendum.versio.split('/');
     if ([
       'singularis',

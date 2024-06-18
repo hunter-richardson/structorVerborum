@@ -34,6 +34,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
       case 'quarta//perfecta':
       case 'tertia/perfecta':
       case 'tertia//perfecta':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (actus: ActusAgendus, colamen: Percolamen): string => actus.perfectum.chop(4);
       case 'quartus':
         return (actus: ActusAgendus, colamen: Percolamen): string => {
@@ -116,6 +117,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
       case 'secunda//semideponensActiva':
       case 'tertia/semideponensActiva':
       case 'tertia//semideponensActiva':
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         return (actus: ActusAgendus, colamen: Percolamen): string => actus.infinitivum.chop(3);
       case 'prima/impersonalis/semideponensActiva':
       case 'prima//impersonalis/semideponensActiva':
@@ -142,6 +144,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
 
   @Nuntius.modus('PutatorActus')
   putetur (agendus: ActusAgendus): Tabula<Actus> {
+    // eslint-disable-next-line prefer-const
     const [ fundamen, vices, defectus, defectusSecundus ] = agendus.versio.split('/');
     if (defectus) {
       agendus.versio = [ fundamen, vices ].join('/');

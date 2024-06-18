@@ -75,6 +75,7 @@ export default class Numeral {
     } else if (romanus === 'N') {
       return 0;
     } else if (romanus.startsWith('|')) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [ _, superior, inferior ] = romanus.split('|');
       return (10 * this.anglicus(superior)) + this.anglicus(inferior);
     } else {
