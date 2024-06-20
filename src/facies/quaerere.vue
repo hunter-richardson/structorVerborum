@@ -3,8 +3,8 @@
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae } from '../miscella/enumerationes';
   import Inflectere from './inflectere.vue';
-  import Specere from './specere.vue';
-  import Loqui from './loqui.vue';
+  import * as Specere from './specere.vue';
+  import * as Loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
   import type { ModelRef } from 'vue';
@@ -97,7 +97,7 @@
         }
       },
 
-      async refer (lemma: Lemma): Promise<void> {
+      async aperi (lemma: Lemma): Promise<void> {
         const eventus: Eventus | null = await dictionarium.referatur(lemma);
         if (eventus) {
           if ([
@@ -124,9 +124,9 @@
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
-           :text="anglica ? 'Search' : 'Sarci'" />
+           id='sarci' :text="anglica ? 'Search' : 'Sarci'" />
   </div>
-  <v-data-table :items-per-page='10' :loading='onerans' density='compact' :headers='columnae'>
+  <v-data-table :items-per-page='10' :loading='onerans' density='compact' id='tabula' :headers='columnae'>
     <template v-slot:headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <template v-for='columna in headers.flat()' :key='columna.key'>
@@ -145,14 +145,14 @@
                         v-model='quaerenda.categoriae' :disabled='onerans' :label='columna.title'
                         :items='categoriae' chips flat multiple open-on-clear />
             </template>
-            <span class='mr-2 cursor-pointer' @click='() => toggleSort(columna)' />
+            <span class='mr-2 cursor-pointer' :id="`ordina_${columna.key}`" @click='toggleSort(columna)' />
           </td>
         </template>
       </tr>
     </template>
     <template v-if='onerans'>
-      <v-skeleton-loader :loading='onerans' type='table-tbody'
-                         :loadingText="anglica ? 'Loading words...' : 'Lemmae onerantur...'" />
+      <v-skeleton-loader :loadingText="anglica ? 'Loading words...' : 'Lemmae onerantur...'"
+                         :loading='onerans' type='table-tbody' />
     </template>
     <template v-else v-for='lemma in lemmae' :key='lemma'>
       <tr>
@@ -163,8 +163,8 @@
       </tr>
       <tr>
         <td>
-          <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' append-icon='open_in_full'
-                  @click='refer(lemma);' />
+          <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error'
+                 id='aperi' append-icon='open_in_full' @click='aperi(lemma);' />
         </td>
       </tr>
     </template>

@@ -1,5 +1,5 @@
 import TabulaDefecta from './defecta';
-import { numerales, personae, tempora } from '../../miscella/enumerationes';
+import { numeri, personae, tempora } from '../../miscella/enumerationes';
 import { Actus } from '../../praebeunda/verba';
 import { type Colamen } from '../../praebeunda/agenda';
 
@@ -18,12 +18,12 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
             'praesens', 'infectum'
           ].includes(tempus)
         ].all()) {
-          numerales.forEach(numeralis => {
+          numeri.forEach(numerus => {
             personae.forEach(persona => {
               colamina.push({
                 modus: modus,
                 tempus: tempus,
-                numeralis: numeralis,
+                numerus: numerus,
                 persona: persona
               } as Colamen<Actus>);
             });

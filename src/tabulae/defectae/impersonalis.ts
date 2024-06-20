@@ -1,6 +1,6 @@
 import TabulaDefecta from './defecta';
 import {
-  numerales,
+  numeri,
   personae,
   tempora,
   voces
@@ -52,13 +52,13 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
               'praesens', 'infectum', 'perfectum', 'plusquamperfectum'
             ].includes(tempus)
           ].all()) {
-            numerales.forEach(numeralis => {
+            numeri.forEach(numerus => {
               personae.forEach(persona => {
                 colamina.push({
                   modus: modus,
                   vox: 'activa',
                   tempus: tempus,
-                  numeralis: numeralis,
+                  numerus: numerus,
                   persona: persona
                 } as Colamen<Actus>);
               });
@@ -135,12 +135,12 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
       return colamen;
     } else {
       return [
-        colamen.numeralis === 'pluralis',
+        colamen.numerus === 'pluralis',
         colamen.persona === 'prima',
         colamen.persona === 'secunda'
       ].any() ? null : {
         ...colamen,
-        numeralis: '',
+        numerus: '',
         persona: ''
       };
     }

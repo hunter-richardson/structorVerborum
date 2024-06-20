@@ -2,7 +2,7 @@
   import { defineComponent, defineModel } from 'vue';
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
-  import Specere from './specere.vue';
+  import * as Specere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
 
@@ -57,7 +57,7 @@
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
     <template v-if='anglicus.numerator === 0'>
-      <v-btn icon='equal' @click='refer();' />
+      <v-btn icon='equal' id='aequa' @click='refer();' />
     </template>
   </div>
   <div class='text-center'>

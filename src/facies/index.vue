@@ -4,9 +4,9 @@
   import { transducatur, transduceretne } from '../scriptura/transducere';
   import { referretne, referatur } from '../scriptura/referre';
   import Cocutor, { type Crustulum } from '../miscella/cocutor';
-  import Quaerere from './quaerere.vue';
-  import Numerare from './numerare.vue';
-  import Calculare from './calculare.vue';
+  import * as Quaerere from './quaerere.vue';
+  import * as Numerare from './numerare.vue';
+  import * as Calculare from './calculare.vue';
   import Locutor from '../miscella/locutor';
 
   const locutor: Locutor = Locutor.se.ipse();
@@ -148,32 +148,44 @@
       <template v-slot:activator='{ props: activator }'>
         <v-fab v-bind='activator' size='medium' icon='cake' />
       </template>
-      <v-fab key='facies' :icon="crustula.facies === 'fuscum' ? 'light_mode' : 'dark_mode'"
+      <v-fab key='facies' id='crustula.facies'
+             :icon="crustula.facies === 'fuscum' ? 'light_mode' : 'dark_mode'"
              @click="coque({ nomen: 'facies', valor: crustula.facies === 'fuscum' ? 'fuscum' : 'illustre' });" />
-      <v-fab key='apices' :text="crustula.apices === 'ita' ? 'ā' : 'a'"
+      <v-fab key='apices' id='crustula.apices'
+             :text="crustula.apices === 'ita' ? 'ā' : 'a'"
              @click="coque({ nomen: 'apices', valor: crustula.apices === 'ita' ? 'non' : 'ita' });" />
-      <v-fab key='magnae' :text="crustula.magnas === 'ita' ? 'A' : 'a'"
+      <v-fab key='magnas' id='crustula.magnas'
+             :text="crustula.magnas === 'ita' ? 'A' : 'a'"
              @click="coque({ nomen: 'magnas', valor: crustula.magnas === 'ita' ? 'non' : 'ita' });" />
-      <v-fab key='utendaU' :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
+      <v-fab key='utendaU' id='crustula.utendaU'
+             :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
              @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
       <v-btn-toggle key='separator'>
-        <v-btn @click="coque({ nomen: 'separator', valor: 'inane' });" text=' _ ' />
-        <v-btn @click="coque({ nomen: 'separator', valor: 'interpunctum' });" text=' · ' />
-        <v-btn @click="coque({ nomen: 'separator', valor: 'nullum' });" text='   ' />
+        <v-btn @click="coque({ nomen: 'separator', valor: 'inane' });"
+               text=' _ ' id='crustula.separator.inane' />
+        <v-btn @click="coque({ nomen: 'separator', valor: 'interpunctum' });"
+               text=' · ' id='crustula.separator.interpunctum' />
+        <v-btn @click="coque({ nomen: 'separator', valor: 'nullum' });"
+               text='   ' id='crustula.separator.nullum' />
       </v-btn-toggle>
     </v-speed-dial>
   </template>
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title text='StructorVerborum' />
-      <v-card location='left'>
+      <template v-if='!locutionis'>
+        <div id='subiciendum' class='text-center'>
+          <v-card :text="lingua === 'anglica' ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
+        </div>
+      </template>
+      <v-card location='right'>
         <template v-if='locutionis'>
           <v-btn-toggle density='compact'>
             <template v-if='referret'>
-              <v-btn icon='content_copy' @click='refer()' />
+              <v-btn icon='content_copy' id='refer' @click='refer()' />
             </template>
             <template v-if='transduceret'>
-              <v-btn icon='file_open' @click='transduc()' />
+              <v-btn icon='file_open' id='transduc' @click='transduc()' />
             </template>
           </v-btn-toggle>
         </template>
@@ -183,7 +195,7 @@
               <a v-if='isHovering' target='_blank'
                  href='https://github.com/hunter-richardson/structorverborum/issues'>
                 <v-card v-bind='props'
-                        :text="crustula.lingua === 'anglica' ? 'Let\'s talk!' : 'Colloquamur mihi'" />
+                        :text="crustula.lingua === 'anglica' ? 'Let\'s talk!' : 'Colloquamur'" />
               </a>
             </template>
           </v-hover>
@@ -193,7 +205,7 @@
     <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
         <v-tab :v-bind:key='annulus' :value='annulus' selected-class='text-primary'
-               density='compact' :text='annulus.titula' tile />
+               :id="`annulus_${annulus}`" density='compact' :text='annulus.titula' tile />
       </template>
     </v-tabs>
     <v-tabs-window v-model='annulus'>
@@ -219,9 +231,9 @@
             infidum esset vertere huc illucque.
           </div>
           <v-btn-toggle>
-            <v-btn text='Assentio' append-icon='handshake'
+            <v-btn text='Assentio' id='assentio' append-icon='handshake'
                    @click="coque({ nomen: 'assensus', valor: 'assensit' });" />
-            <v-btn text='Nego' append-icon='block'
+            <v-btn text='Nego' id='nego' append-icon='block'
                    @click="coque({ nomen: 'assessus', valor: 'negavit' });" />
           </v-btn-toggle>
         </span>
@@ -235,7 +247,8 @@
           </div>
           <v-btn-toggle>
             <v-btn text='Agree' append-icon='handshake'
-                   @click="coque({ nomen: 'assensus', valor: 'assensit' });" />
+                   @click="coque({ nomen: 'assensus', valor: 'assensit' });
+                           coque({ nomen: 'lingua', valor: 'anglica' });" />
             <v-btn text='Refuse' append-icon='block'
                    @click="coque({ nomen: 'assessus', valor: 'negavit' });" />
           </v-btn-toggle>

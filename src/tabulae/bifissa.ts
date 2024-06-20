@@ -20,16 +20,16 @@ export default class TabulaBifissa extends Tabula<Nomen> {
   async plenetur (): Promise<void> {
     [
       {
-        numeralis: 'singularis',
+        numerus: 'singularis',
         agendum: this._.singularis
       }, {
-        numeralis: 'pluralis',
+        numerus: 'pluralis',
         agendum: this._.pluralis
       }
     ].forEach(async res => {
       const tabula: Tabula<Nomen> | null = res.agendum.putetur();
       if (tabula) {
-        (await tabula.tabulentur()).filter(nomen => nomen.numeralis === res.numeralis)
+        (await tabula.tabulentur()).filter(nomen => nomen.numerus === res.numerus)
           .forEach(nomen => this.tabula.push(nomen));
       }
     });

@@ -3,7 +3,7 @@ import Nuntius from '../miscella/nuntius';
 import { AdiectivumAgendum } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
 import { Adiectivum } from '../praebeunda/verba';
-import TabulaAdiectiviNumeralis from '../tabulae/defectae/numeralis/adiectivi';
+import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi';
 import TabulaInflexibilis from '../tabulae/inflexibilis';
 import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
@@ -13,7 +13,7 @@ import type { Putaturum, Radicator } from './putaturum';
 type Percolamen = {
   gradus: string,
   genus: string,
-  numeralis: string,
+  numerus: string,
   casus: string;
 };
 
@@ -45,7 +45,7 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
             case 'positivus':
               if ([
                 colamen.genus === 'masculinum',
-                colamen.numeralis === 'singularis',
+                colamen.numerus === 'singularis',
                 [ 'nominativus', 'vocativus' ].includes(colamen.casus)
               ].all()) {
                 return adiectivum.positivum;
@@ -75,7 +75,7 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
               switch (true) {
                 case [
                   colamen.genus === 'neutrum',
-                  colamen.numeralis === 'singularis',
+                  colamen.numerus === 'singularis',
                   colamen.casus === 'accusativus'
                 ].all():
                   return adiectivum.positivum;
@@ -101,12 +101,12 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
               switch (true) {
                 case [
                   colamen.genus === 'neutrum',
-                  colamen.numeralis === 'singularis',
+                  colamen.numerus === 'singularis',
                   colamen.casus === 'accusativus'
                 ].all():
                   return adiectivum.positivum;
                 case [
-                  colamen.numeralis === 'singularis',
+                  colamen.numerus === 'singularis',
                   [ 'nominativus', 'vocativus' ].includes(colamen.casus)
                 ].all():
                   return adiectivum.positivum;
@@ -135,9 +135,9 @@ export default class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Ad
       'pluralis'
     ].includes(defectus)) {
       agendum.versio = [ fundamen, vices ].join('/');
-      return new TabulaAdiectiviNumeralis({
+      return new TabulaAdiectiviNumerata({
         relata: new Ignavum(() => this.putetur(agendum)),
-        numeralis: defectus
+        numerus: defectus
       });
     } else if ([
       'nominativusDirectus', 'cumLitteraR', 'nominativusUnigener',

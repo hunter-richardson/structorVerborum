@@ -2,7 +2,7 @@ import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { Incomparabile } from '../praebeunda/agenda';
 import { Adiectivum } from '../praebeunda/verba';
-import TabulaAdiectiviNumeralis from '../tabulae/defectae/numeralis/adiectivi';
+import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi';
 import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
@@ -10,7 +10,7 @@ import type { Putaturum, Radicator } from './putaturum';
 
 type Percolamen = {
   genus: string,
-  numeralis: string,
+  numerus: string,
   casus: string;
 };
 
@@ -33,7 +33,7 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
           if ([
             colamen.genus === 'masculinum',
-            colamen.numeralis === 'singularis',
+            colamen.numerus === 'singularis',
             [ 'nominativus', 'vocativus' ].includes(colamen.casus)
           ].all()) {
             return adiectivum.nominativum;
@@ -51,7 +51,7 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
             case [
               [ 'masculinum', 'femininum' ].includes(colamen.genus),
               [ 'nominativus', 'vocativus' ].includes(colamen.casus),
-              colamen.numeralis === 'singularis'
+              colamen.numerus === 'singularis'
             ].all():
               return adiectivum.nominativum;
             default:
@@ -67,13 +67,13 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
           switch (true) {
             case [
               [ 'nominativus', 'vocativus' ].includes(colamen.casus),
-              colamen.numeralis === 'singularis'
+              colamen.numerus === 'singularis'
             ].all():
               return adiectivum.nominativum;
             case [
               colamen.genus === 'neutrum',
               colamen.casus === 'accusativus',
-              colamen.numeralis === 'singularis'
+              colamen.numerus === 'singularis'
             ].all():
               return adiectivum.nominativum;
             default:
@@ -94,9 +94,9 @@ export default class PutatorIncomparabilis implements Putaturum<Incomparabile, A
       'pluralis'
     ].includes(defectus)) {
       agendum.versio = [ fundamen, vices ].join('/');
-      return new TabulaAdiectiviNumeralis({
+      return new TabulaAdiectiviNumerata({
         relata: new Ignavum(() => this.putetur(agendum)),
-        numeralis: defectus
+        numerus: defectus
       });
     } else if ([
       'nominativusDirectus', 'cumLitteraR', 'nominativusUnigener',

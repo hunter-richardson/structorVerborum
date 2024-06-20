@@ -1,5 +1,5 @@
 import TabulaDefecta from './defecta';
-import { numerales, personae, tempora } from '../../miscella/enumerationes';
+import { numeri, personae, tempora } from '../../miscella/enumerationes';
 import Ignavum from '../../miscella/ignavum';
 import { Actus } from '../../praebeunda/verba';
 import Tabula from '../tabula';
@@ -48,11 +48,11 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
     [
       'praesens', 'futurum'
     ].forEach(tempus => {
-      numerales.forEach(numeralis => {
+      numeri.forEach(numerus => {
         colamina.push({
           modus: 'imperativus',
           tempus: tempus,
-          numeralis: numeralis
+          numerus: numerus
         } as Colamen<Actus>);
       })
     });
@@ -66,12 +66,12 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
             'praesens', 'infectum'
           ].includes(tempus)
         ].all()) {
-          numerales.forEach(numeralis => {
+          numeri.forEach(numerus => {
             personae.forEach(persona => {
               colamina.push({
                 modus: modus,
                 tempus: tempus,
-                numeralis: numeralis,
+                numerus: numerus,
                 persona: persona
               } as Colamen<Actus>);
             });

@@ -49,15 +49,9 @@
 			<span :class="'mr-2'.concat(trahens ? 'cursor-grab' : 'cursor-grabbing')">
 				<template v-for='verbum in verba'>
 					<v-chip :v-bind:key='verbum' @click:close='remove(verbum.unicum);' close-icon='remove'
-						:text='verbum.scriptum' selected-class='text-primary' />
+						      :text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
 				</template>
 </span>
 </draggable>
 </v-chip-group>
 </template>
-
-<style lang='css'>
-  .pellucidum {
-    opacity: 0.5;
-  }
-</style>

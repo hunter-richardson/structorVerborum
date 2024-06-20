@@ -29,6 +29,15 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
     return PutatorActus.se.ipse().putetur(this);
   }
 
+  frequentativus(): ActusAgendus | null {
+    return this.supinum ? new Structor(() => new ActusAgendus)
+    .ponatur(actus => actus.infinitivum = this.supinum.replace('um$', 'āre'))
+    .ponatur(actus => actus.perfectum = this.supinum.replace('um$', 'āvisse'))
+    .ponatur(actus => actus.supinum = this.supinum.replace('um$', 'ātum'))
+    .ponatur(actus => actus.versio = 'prima')
+    .struatur() : null;
+  }
+
   async nomen (): Promise<Interfecta.Faciendum<Verba.Nomen> | null> {
     using nomina: Nomina = Nomina.se.ipse();
     if ((await nomina.omnia()).includes(this.infinitivum)) {
@@ -52,7 +61,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
           break;
       }
 
-      return new Structor(() => new NomenFactum)
+      return new Structor(() => new NomenActum)
         .ponatur(nomen => nomen.infinitivum = this.infinitivum)
         .ponatur(nomen => nomen.gerundium = radix.concat(suffixumGeriundii))
         .ponatur(nomen => nomen.supinum = this.supinum)
@@ -102,7 +111,7 @@ export class NomenAgendum implements Interfecta.Faciendum<Verba.Nomen>, Interfec
   }
 }
 
-export class NomenFactum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
+export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
   versio: string = '';
   infinitivum: string = '';
   gerundium: string = '';
@@ -229,14 +238,14 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
       const nominativus: string = adiectiva.first(adiectivum => [
               adiectivum.gradus = colamen.gradus,
               adiectivum.genus = colamen.genus,
-              adiectivum.numeralis = 'singularis',
+              adiectivum.numerus = 'singularis',
               adiectivum.casus = 'nominativus'
             ].all()).scriptum;
 
       const genitivus: string = adiectiva.first(adiectivum => [
               adiectivum.gradus = colamen.gradus,
               adiectivum.genus = colamen.genus,
-              adiectivum.numeralis = 'singularis',
+              adiectivum.numerus = 'singularis',
               adiectivum.casus = 'genitivus'
             ].all()).scriptum;
 
@@ -353,10 +362,10 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
     return new TabulaNumeraminis(this);
   }
 
-  async referatur (numerium: string): Promise<Interfecta.Referendum | null> {
+  async referatur (referendum: string): Promise<Interfecta.Referendum | null> {
     using adiectiva: Adiectiva = Adiectiva.se.ipse();
     const lectorAdiectivum: LectorVerbalis<Incomparabile> = LectorVerbalis.Incomparabilium.ipse();
-    switch (numerium) {
+    switch (referendum) {
       case 'adverbium':
         // eslint-disable-next-line no-case-declarations
         const lectorAdverbiorum: LectorVerbalis<AdverbiumAgendum> = LectorVerbalis.Adverbiorum.ipse();

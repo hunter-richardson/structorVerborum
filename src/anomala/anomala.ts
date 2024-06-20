@@ -37,10 +37,6 @@ export default abstract class Anomala<Hoc extends Multiplex> implements Disposab
     return this.contenta.get(lemma);
   }
 
-  async forsFerat (): Promise<Mantela<Hoc> | undefined> {
-    return this.feratur((await this.omnia()).random());
-  }
-
   @Nuntius.finitus('Anomala')
   [ Symbol.dispose ] (): void {
     this.contenta.clear();

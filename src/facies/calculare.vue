@@ -2,7 +2,7 @@
   import { defineComponent, defineModel } from 'vue';
   import Numeral from '../miscella/numeral';
   import { Numerus } from '../praebeunda/verba';
-  import Specere from './specere.vue';
+  import * as Specere from './specere.vue';
   import type { ModelRef } from 'vue';
 
   type numeri = {
@@ -96,7 +96,7 @@
         }
       },
 
-      refer(): void {
+      aequa(): void {
         this.numerus = Numerus.numerator(this.praevii.anglicus);
       }
     }
@@ -111,19 +111,20 @@
   <template v-if='this.praevii.anglicus'>
     <div class='text-center'>
       <template v-if='Number.isInteger(praevii.anglicus)'>
-        <v-btn icon='equal' @click='refer();' />
+        <v-btn id='refer' icon='aequa' @click='aequa();' />
       </template>
       <v-card :text='praevii.romanus' />
       <template v-if='operator'>
-        <v-card :text='operator' />
+        <v-card id='operator' :text='operator' />
       </template>
     </div>
   </template>
   <v-card :text='this.praesentes.romanus' />
   <div class='text-center' v-for='linea in this.actus' :key='linea'>
     <span class='text-center' v-for='littera in this.linea' :key='littera'>
-      <v-card :text='littera' :disabled='this.licta(littera)'
-              @click='ponatur(littera.trim());' density='comfortable'
+      <v-card :text='littera' :id='`actus_${littera.trim()}`'
+              :disabled='this.licta(littera)' density='comfortable'
+              @click='ponatur(littera.trim());'
               position='absolute' border hover />
     </span>
   </div>

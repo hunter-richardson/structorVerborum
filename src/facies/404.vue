@@ -19,7 +19,7 @@
     mounted(): void {
       if ([
         location.href,
-        !location.href.includes('404')
+        location.href !== '404'
       ].all()) {
         Nuntius.timeo({
           nomen: '404.vue',

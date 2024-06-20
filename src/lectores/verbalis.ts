@@ -23,8 +23,8 @@ export default class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {
 
   static Nominum: Ignavum<LectorVerbalis<Agenda.NomenAgendum>> = new Ignavum(() =>
     new LectorVerbalis<Agenda.NomenAgendum>('/res/lemmae/nomina'));
-  static NominumFactorum: Ignavum<LectorVerbalis<Agenda.NomenFactum>> = new Ignavum(() =>
-    new LectorVerbalis<Agenda.NomenFactum>('/res/lemmae/nomina/facta'));
+  static NominumFactorum: Ignavum<LectorVerbalis<Agenda.NomenActum>> = new Ignavum(() =>
+    new LectorVerbalis<Agenda.NomenActum>('/res/lemmae/nomina/facta'));
 
   protected constructor (scapum?: string) {
     super(scapum);
@@ -34,10 +34,5 @@ export default class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {
   async omnia (): Promise<string[]> {
     return (await listFiles.listFiles(this._scapum, 'csv'))
       .map(res => path.parse(res).name).sort();
-  }
-
-  @Nuntius.futurus('LectorVerbalis')
-  async forsLegat (): Promise<Hoc | null> {
-    return await this.legatur((await this.omnia()).random());
   }
 }

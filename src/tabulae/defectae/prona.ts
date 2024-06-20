@@ -8,8 +8,8 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
   static apponatur (): Colamen<Nomen>[] {
     const colamina: Colamen<Nomen>[] = [
       {
-        factum: 'infinitivum',
-        numeralis: '',
+        actum: 'infinitivum',
+        numerus: '',
         casus: ''
       } as Colamen<Nomen>
     ];
@@ -21,7 +21,7 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
       'ablativus'
     ].forEach(casus => {
       colamina.push({
-        factum: 'gerundium',
+        actum: 'gerundium',
         casus: casus
       } as Colamen<Nomen>);
     });
@@ -34,6 +34,6 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
   }
 
   referatur (colamen: Colamen<Nomen>): Colamen<Nomen> | null {
-    return colamen.factum === 'supinum' ? null : colamen;
+    return colamen.actum === 'supinum' ? null : colamen;
   }
 }

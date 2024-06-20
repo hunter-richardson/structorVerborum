@@ -3,6 +3,7 @@ import Gustularium from './gustularium';
 export function referretne (): boolean {
   return !!navigator.clipboard;
 }
+
 export async function referatur (valor?: string): Promise<Gustularium> {
   if (valor) {
     if (referretne()) {

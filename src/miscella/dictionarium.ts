@@ -55,22 +55,31 @@ export default class Dictionarium {
   private readonly _adiectiva: Ignavum<Adiectiva> = Adiectiva.se;
   private readonly _nomina: Ignavum<Nomina> = Nomina.se;
 
-  relata: Relatum[] = [];
+  private readonly _relata: Relatum[] = [];
+
+  private get relata(): Promise<Relatum[]> {
+    return new Promise(async () => {
+      if (!this._relata.length) {
+        await this.perscribantur();
+      }
+
+      return this._relata;
+    });
+  }
 
   @Nuntius.futurus('Dictionarium')
   async perscribantur (): Promise<void> {
-    if (!(this.relata?.length)) {
-      this.relata = [];
+    if (!this._relata.length) {
       const lectorActus: LectorVerbalis<Agenda.ActusAgendus> = this._lectorActuum.ipse();
       (await lectorActus.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Actus',
             scriptum: res
           }, lecta: true
         });
 
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Nomen',
             scriptum: res
@@ -80,7 +89,7 @@ export default class Dictionarium {
 
       const lectorAdverbiorum: LectorVerbalis<Agenda.AdverbiumAgendum> = this._lectorAdverbiorum.ipse();
       (await lectorAdverbiorum.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Adverbium',
             scriptum: res
@@ -90,7 +99,7 @@ export default class Dictionarium {
 
       const lectorAdiectivorum: LectorVerbalis<Agenda.AdiectivumAgendum> = this._lectorAdiectivorum.ipse();
       (await lectorAdiectivorum.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Adiectivum',
             scriptum: res
@@ -100,7 +109,7 @@ export default class Dictionarium {
 
       const lectorIncomparabilium: LectorVerbalis<Agenda.Incomparabile> = this._lectorIncomparabilium.ipse();
       (await lectorIncomparabilium.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Adiectivum',
             scriptum: res
@@ -110,7 +119,7 @@ export default class Dictionarium {
 
       const lectorNominis: LectorVerbalis<Agenda.NomenAgendum> = this._lectorNominis.ipse();
       (await lectorNominis.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Nomen',
             scriptum: res
@@ -120,7 +129,7 @@ export default class Dictionarium {
 
       const lectorNumeraminis: LectorVerbalis<Agenda.NumeramenAgendum> = this._lectorNumeraminis.ipse();
       (await lectorNumeraminis.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Numeramen',
             scriptum: res
@@ -130,7 +139,7 @@ export default class Dictionarium {
 
       const pronomina: Pronomina = this._pronomina.ipse();
       (await pronomina.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Pronomen',
             scriptum: res
@@ -140,7 +149,7 @@ export default class Dictionarium {
 
       const actus: Actus = this._actus.ipse();
       (await actus.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Actus',
             scriptum: res
@@ -150,7 +159,7 @@ export default class Dictionarium {
 
       const adiectiva: Adiectiva = this._adiectiva.ipse();
       (await adiectiva.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Adiectivum',
             scriptum: res
@@ -160,7 +169,7 @@ export default class Dictionarium {
 
       const nomina: Nomina = this._nomina.ipse();
       (await nomina.omnia()).forEach(res => {
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: 'Nomen',
             scriptum: res
@@ -171,7 +180,7 @@ export default class Dictionarium {
       const lector: LectorVerbalis<Verbum> = this._lector.ipse();
       (await lector.omnia()).forEach(res => {
         const [ categoria, scriptum ] = res.split('/');
-        this.relata.push({
+        this._relata.push({
           lemma: {
             categoria: categoria,
             scriptum: scriptum
@@ -183,7 +192,7 @@ export default class Dictionarium {
 
   @Nuntius.futurus('Dictionarium')
   async referatur (lemma: Lemma): Promise<Eventus | null> {
-    const lecta: boolean = this.relata.first(relatum => deepEqual(lemma, relatum.lemma))?.lecta ?? false;
+    const lecta: boolean = (await this.relata).first(relatum => deepEqual(lemma, relatum.lemma))?.lecta ?? false;
     switch (lemma.categoria.toLowerCase()) {
       case 'actus':
         if (lecta) {
@@ -310,24 +319,38 @@ export default class Dictionarium {
   async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
       case [ !!quaerenda.categoriae, !!quaerenda.pars ].all():
-        return this.relata
+        return (await this.relata)
           .filter(relatum => [
               relatum.lemma.scriptum.includes(quaerenda.pars),
               quaerenda.categoriae.includes(relatum.lemma.categoria)
             ].all()).map(relatum => relatum.lemma);
       case [ !!quaerenda.categoriae, !quaerenda.pars ].all():
-        return this.relata
+        return (await this.relata)
           .filter(relatum => quaerenda.categoriae.includes(relatum.lemma.categoria))
           .map(relatum => relatum.lemma);
       case [ !quaerenda.categoriae, !!quaerenda.pars ].all():
-        return this.relata
+        return (await this.relata)
           .filter(relatum => relatum.lemma.scriptum.includes(quaerenda.pars))
           .map(relatum => relatum.lemma);
       case [ !quaerenda.categoriae, !quaerenda.pars ].all():
-        return this.relata
+        return (await this.relata)
           .map(relatum => relatum.lemma);
       default:
         return [];
     }
+  }
+
+  @Nuntius.futurus('Dictionarium')
+  async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
+    let eventus: Eventus | null = null;
+    do {
+      if (quaerenda) {
+        eventus = await this.referatur((await this.quaeratur(quaerenda)).random())
+      } else {
+        eventus = await this.referatur((await this.relata).random().lemma);
+      }
+    } while (!eventus)
+
+    return eventus;
   }
 }

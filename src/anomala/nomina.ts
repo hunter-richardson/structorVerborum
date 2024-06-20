@@ -1,6 +1,6 @@
 import Anomala, { Mantela } from './anomala';
 import Ignavum from '../miscella/ignavum';
-import { NomenAgendum, NomenFactum } from '../praebeunda/agenda';
+import { NomenActum, NomenAgendum } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
 import { Nomen } from '../praebeunda/verba';
 import TabulaBifissa from '../tabulae/bifissa';
@@ -137,7 +137,7 @@ export default class Nomina extends Anomala<Nomen> {
       new TabulaPraefixa({ relata: dare, praefixum: 'ē' }));
 
     const venireRectum: Ignavum<Tabula<Nomen>> = new Ignavum(() =>
-      new Structor(() => new NomenFactum)
+      new Structor(() => new NomenActum)
         .ponatur(nomen => nomen.infinitivum = 'venīre')
         .ponatur(nomen => nomen.supinum = 'ventum')
         .ponatur(nomen => nomen.versio = 'quartus')

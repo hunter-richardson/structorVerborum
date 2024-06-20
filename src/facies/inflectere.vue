@@ -24,7 +24,7 @@
     case agendum instanceof Agenda.Incomparabile:
       figura = 'incomparabile';
       break;
-    case agendum instanceof Agenda.NomenFactum:
+    case agendum instanceof Agenda.NomenActum:
       figura = 'nomenFactum';
       break;
     case agendum instanceof Agenda.NumeramenAgendum:
@@ -105,7 +105,7 @@
         if (this.figura === 'numeramenAgendum' &&
           numeramen instanceof Numeramen &&
           agendum instanceof Agenda.NumeramenAgendum) {
-          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.numerium);
+          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
           if (referendum instanceof Numerus) {
             this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
@@ -142,6 +142,9 @@
           case 'actusAgendus':
             if (agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
+                case 'frequentativus':
+                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
+                  break;
                 case 'nomen':
                   referendum = (agendum as Agenda.ActusAgendus).nomen();
                   break;
@@ -152,8 +155,8 @@
             }
             break;
           case 'nomenFactum':
-            if (agendum instanceof Agenda.NomenFactum) {
-              referendum = (agendum as Agenda.NomenFactum).actus();
+            if (agendum instanceof Agenda.NomenActum) {
+              referendum = (agendum as Agenda.NomenActum).actus();
             }
             break;
           case 'adiectivumAgendum':
@@ -205,22 +208,25 @@
         <v-chip-group v-for='seligendum in seligenda' :key='seligendum'
                       selected-class='text-primary'>
           <v-chip :text="anglica ? anglicum(seligendum) : seligendum" @change='cole();'
-                  prepend-icon='category' filter />
+                  :id="`colamen_${seligendum}`" prepend-icon='category' filter />
         </v-chip-group>
       </horizontal-scroll>
     </div>
     <template v-if="figura === 'actusAgendus'">
       <v-btn-toggle>
-        <v-btn append-icon='subject' :text="anglica ? 'Noun' : 'Nomen'"
+        <v-btn append-icon='sprint' id='frequentativus'
+               :text="anglica ? 'Frequentative' : 'Frequentativus'"
+               @click="refer({ categoria: 'nomen', referendum: 'frequentativus' });" />
+        <v-btn append-icon='subject' id='nomen' :text="anglica ? 'Noun' : 'Nomen'"
                @click="refer({ categoria: 'nomen', referendum: 'nomen' });" />
-        <v-btn append-icon='person' :text="anglica ? 'Agent (masculine)' : 'Actor'"
+        <v-btn append-icon='person' id='actor' :text="anglica ? 'Agent (masculine)' : 'Actor'"
                @click="refer({ categoria: 'nomen', referendum: 'actor', genus: 'masculinum' });" />
-        <v-btn append-icon='person' :text="anglica ? 'Agent (feminine)' : 'Actrix'"
+        <v-btn append-icon='person' id='actrix' :text="anglica ? 'Agent (feminine)' : 'Actrix'"
                @click="refer({ categoria: 'nomen', referendum: 'actor', genus: 'femininum' });" />
       </v-btn-toggle>
     </template>
     <template v-else-if="figura === 'nomenFactum'">
-      <v-btn append-icon='sprint' :text="anglica ? 'Verb' : 'Actus'"
+      <v-btn append-icon='sprint' id='actus' :text="anglica ? 'Verb' : 'Actus'"
              @click="refer({ categoria: 'actus' });" />
     </template>
     <template v-if="[
@@ -242,29 +248,31 @@
                         value: gradus
                       };
                     })" />
-          <v-btn append-icon='open_in_full' :text="anglica ? 'Substantiate' : 'Probetur'"
+          <v-btn append-icon='open_in_full' id='probetur'
+                 :text="anglica ? 'Substantiate' : 'Probetur'"
                  @click="refer({ categoria: 'adiectivum', gradus: et.gradus, genus: et.genus });" />
         </template>
         <template v-else-if="figura === 'incomparabile'">
-          <v-btn append-icon='open_in_full' :text="anglica ? 'Substantiate' : 'Probetur'"
+          <v-btn append-icon='open_in_full' id='probetur'
+                 :text="anglica ? 'Substantiate' : 'Probetur'"
                  @click="refer({ categoria: 'adiectivum', genus: et.genus });" />
         </template>
       </span>
     </template>
     <v-data-table :items='verba' :loading='onerans' :headers='columnae' density='compact'
-                  items-per-page='10' item-selectable=false>
+                  id='tabula' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
         <v-skeleton-loader :loading-text="anglica ? 'Loading words...' : 'Verba onerantur...'"
                            :loading='onerans' type='table-tbody' />
       </template>
       <template v-if='!onerans' v-slot:item='item'>
         <template v-if="figura === 'numeramenAgendum'">
-          <v-btn :text="anglica ? 'Open' : 'Refer'" append-icon='open_in_full'
+          <v-btn :text="anglica ? 'Open' : 'Refer'" append-icon='open_in_full' id='numeramen'
                  @click='numeramen(item.item);' />
         </template>
         <template v-else>
           <v-btn :text="anglica ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-                 @click='selige(item.item)' />
+                 :id="`selige_${item.item.unicum.toString()}`" @click='selige(item.item)' />
         </template>
       </template>
     </v-data-table>

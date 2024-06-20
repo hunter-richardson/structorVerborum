@@ -14,7 +14,7 @@ type Percolamen = {
   modus: string,
   vox: string,
   tempus: string,
-  numeralis: string,
+  numerus: string,
   persona: string;
 };
 

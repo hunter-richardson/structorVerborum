@@ -1,5 +1,5 @@
 import Tabula from './tabula';
-import { numeria } from '../miscella/enumerationes';
+import { referenda } from '../miscella/enumerationes';
 import Nuntius from '../miscella/nuntius';
 import { NumeramenAgendum } from '../praebeunda/agenda';
 import { Numeramen } from '../praebeunda/verba';
@@ -15,9 +15,9 @@ export default class TabulaNumeraminis extends Tabula<Numeramen> {
 
   @Nuntius.futurus('TabulaNumeraminis')
   async plenetur (): Promise<void> {
-    numeria.forEach(numerium => {
+    referenda.forEach(referendum => {
       let scriptum: string = '';
-      switch (numerium) {
+      switch (referendum) {
         case 'numerus':
           scriptum = this._agendum.numerus;
           break;
@@ -44,7 +44,7 @@ export default class TabulaNumeraminis extends Tabula<Numeramen> {
 
       if (scriptum) {
         this.tabula.push(Object.assign({}, {
-          numerium: numerium,
+          referendum: referendum,
           scriptum: scriptum
         } as any));
       }

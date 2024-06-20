@@ -2,7 +2,7 @@
   import { defineComponent, defineModel } from 'vue';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';
   import Locutor from '../miscella/locutor';
-  import Inflectere from './inflectere.vue';
+  import * as Inflectere from './inflectere.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Eventus } from '../miscella/dictionarium';
   import type { NumeramenAgendum } from '../praebeunda/agenda';
@@ -26,7 +26,7 @@
     },
 
     methods: {
-      async refer (): Promise<void> {
+      async aperi (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus':
             // eslint-disable-next-line no-case-declarations
@@ -65,21 +65,21 @@
       <span id='categoria'>{{ verbum?.categoria.capitalize() }}</span>
       <template v-if='multiplex'>
         <v-chip-group>
-          <v-chip v-for='valor in valores' :key='valor' :text='valor' selected-class='text-primary'
-                  prepend-icon='category' />
+          <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"
+                  selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
       </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on' :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'"
-                 @click='locutor.addatur(verbum as Verbum);' />
+                 id='adde' @click='locutor.addatur(verbum as Verbum);' />
         </template>
         <template v-if="verbum?.categoria === 'numerus'">
-          <v-btn icon='quick_reference' @click='refer();' :text="anglica ? 'Open' : 'Refer'" />
+          <v-btn icon='quick_reference' id='aperi' @click='aperi();' :text="anglica ? 'Open' : 'Refer'" />
         </template>
         <template v-else-if="verbum?.categoria === 'actus' &&
           valores.includes('participalis')">
-          <v-btn icon='quick_reference' @click='refer();'
+          <v-btn icon='quick_reference' id='aperi' @click='aperi();'
                  :text="anglica ? 'Particple' : 'Participalis'" />
         </template>
       </v-btn-toggle>

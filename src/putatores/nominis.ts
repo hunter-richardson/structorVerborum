@@ -3,7 +3,7 @@ import Nuntius from '../miscella/nuntius';
 import { NomenAgendum } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
 import { Nomen } from '../praebeunda/verba';
-import TabulaNominisNumeralis from '../tabulae/defectae/numeralis/nominis';
+import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis';
 import TabulaInflexibilis from '../tabulae/inflexibilis';
 import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
@@ -11,7 +11,7 @@ import TabulaVicaria from '../tabulae/vicaria';
 import type { Putaturum, Radicator } from './putaturum';
 
 type Percolamen = {
-  numeralis: string,
+  numerus: string,
   casus: string;
 };
 
@@ -37,7 +37,7 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'secundaMasculina/cumLitteraR':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           if ([
-            colamen.numeralis === 'singularis',
+            colamen.numerus === 'singularis',
             [ 'nominativus', 'vocativus' ].includes(colamen.casus)
           ].all()) {
             return nomen.nominativum;
@@ -51,7 +51,7 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'tertiaAnimata/cumGenitivoAblativoqueVario':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           if ([
-            colamen.numeralis === 'singularis',
+            colamen.numerus === 'singularis',
             [ 'nominativus', 'vocativus' ].includes(colamen.casus)
           ].all()) {
             return nomen.nominativum;
@@ -66,7 +66,7 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'tertiaNeutra/cumTruncoVario':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           if ([
-            colamen.numeralis === 'singularis',
+            colamen.numerus === 'singularis',
             [ 'nominativus', 'accusativus', 'vocativus' ].includes(colamen.casus)
           ].all()) {
             return nomen.nominativum;
@@ -87,9 +87,9 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       'singularis', 'pluralis'
     ].includes(defectus)) {
       agendum.versio = [ fundamen, vices ].join('/');
-      return new TabulaNominisNumeralis({
+      return new TabulaNominisNumerata({
         relata: new Ignavum(() => this.putetur(agendum)),
-        numeralis: defectus
+        numerus: defectus
       });
     } else if ([
       'nominativusDirectus', 'cumLitteraR', 'nominativusUnigener',

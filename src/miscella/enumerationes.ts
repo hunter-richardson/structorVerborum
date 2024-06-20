@@ -20,16 +20,14 @@ export enum Mensa {
   December
 }
 
-// Operator
-
 export const categoriae: string[] = [ 'actus', 'adiectivum', 'adverbium', 'coniunctio', 'nomen', 'numeramen', 'numerus', 'praepositio', 'pronomen' ];
 export const casus: string[] = [ 'derectus', 'nominativus', 'genitivus', 'dativus', 'accusativus', 'ablativus', 'vocativus', 'locativus' ];
-export const facta: string[] = [ 'infintivus', 'gerundium', 'supinum' ];
+export const acta: string[] = [ 'infintivus', 'gerundium', 'supinum' ];
 export const genera: string[] = [ 'neutrum', 'masculinum', 'femininum' ];
 export const gradi: string[] = [ 'positivus', 'comparativus', 'superlativus' ];
 export const modi: string[] = [ 'indicativus', 'subiunctivus', 'infinitivus', 'imperativus', 'participalis' ];
-export const numerales: string[] = [ 'singularis', 'pluralis' ];
-export const numeria: string[] = [ 'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum', 'distributivum', 'fractionale' ];
+export const numeri: string[] = [ 'singularis', 'pluralis' ];
+export const referenda: string[] = [ 'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum', 'distributivum', 'fractionale' ];
 export const personae: string[] = [ 'prima', 'secunda', 'tertia' ];
 export const tempora: string[] = [ 'praesens', 'infectum', 'futurum', 'perfectum', 'plusquamperfectum', 'exigendum' ];
 export const voces: string[] = [ 'activa', 'passiva' ];
@@ -48,7 +46,6 @@ export function anglicum(valor: string) {
       return 'noun'
     case 'numeramen':
     case 'numerus':
-    case 'numeralis':
       return 'numeral'
     case 'praepositio':
       return 'preposition'
@@ -146,8 +143,8 @@ export function anglicum(valor: string) {
       return 'grade'
     case 'casus':
       return 'case'
-    case 'factum':
-    case 'numerium':
+    case 'actum':
+    case 'referendum':
       return 'reference'
     default:
       return '';

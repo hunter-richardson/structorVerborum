@@ -7,10 +7,10 @@ import { type Colamen } from '../../../praebeunda/agenda';
 
 type Optanda = {
   relata: Ignavum<Tabula<Adiectivum>>,
-  numeralis: string;
+  numerus: string;
 };
 
-export default class TabulaAdiectiviNumeralis extends TabulaDefecta<Adiectivum> {
+export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
   static apponatur (): Colamen<Adiectivum>[] {
     return gradi.map(gradus => {
       return genera.map(genus => {
@@ -25,17 +25,17 @@ export default class TabulaAdiectiviNumeralis extends TabulaDefecta<Adiectivum> 
     }).flat();
   }
 
-  private readonly _numeralis: string;
+  private readonly _numerus: string;
 
   constructor (optanda: Optanda) {
     super(optanda.relata);
-    this._numeralis = optanda.numeralis;
+    this._numerus = optanda.numerus;
   }
 
   protected referatur (colamen: Colamen<Adiectivum>): Colamen<Adiectivum> | null {
-    return colamen.numeralis === this._numeralis ? {
+    return colamen.numerus === this._numerus ? {
       ...colamen,
-      numeralis: ''
+      numerus: ''
     } : null;
   }
 }
