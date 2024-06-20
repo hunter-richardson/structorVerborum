@@ -40,8 +40,8 @@
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
 
-  const eventus = defineModel<Eventus>('eventus');
-  const verbum = defineModel<Verbum>('verbum');
+  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
 
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
   const categoria: string = eventus.value?.categoria ?? '';
