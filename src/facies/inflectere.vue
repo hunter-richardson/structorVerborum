@@ -35,7 +35,7 @@
 
 <script lang='ts'>
   import { defineComponent, defineModel } from 'vue';
-  import Spectere from './specere.vue';
+  import * as Spectere from './specere.vue';
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
