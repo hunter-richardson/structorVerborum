@@ -16,34 +16,26 @@ jobs:
         with:
           node-version: latest
       - name: inaugurare
-          run: |
-            npm install
+          run: npm install
           continue-on-error: false
       - name: fundare
-          run: |
-            npm run type-check
+          run: npm run type-check
           continue-on-error: false
       - name: struere
-          run: |
-            npm run build
+          run: npm run build
           continue-on-error: false
       - name: verificare
-          run: |
-            tsc --build --clean
+          run: tsc --build --clean
           continue-on-error: false
 #      - name: tentare
-#          run: |
-#            npm test --passWithNoTests
+#          run: npm test --passWithNoTests
 #          env:
 #            CI: true
 #          continue-on-error: false
 #      - name: invenire
-#          run: |
-#            local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
+#          run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
 #      - name: emissa
-#          run: |
-#            find ${locus} -type f
+#          run: find ${locus} -type f
 #      - name: delere
 #          if: failure()
-#          run: |
-#            exit 1
+#          run: exit 1
