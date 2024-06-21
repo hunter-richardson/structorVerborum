@@ -19,18 +19,18 @@ jobs:
         with:
           node-version: latest
       - name: inaugurare
-          run: npm ci
+        run: npm clean-install
       - name: fundere
-          run: npm run type-check
+        run: npm run type-check
       - name: struere
-          run: npm run build
+        run: npm run build
       - name: verificare
-          run: tsc --build --clean
+        run: tsc --build --clean
 #      - name: tentare
-#          run: npm test --passWithNoTests
-#          env:
-#            CI: true
+#        run: npm test --passWithNoTests
+#        env:
+#          CI: true
 #      - name: invenire
-#          run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
+#        run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
 #      - name: emissa
-#          run: find ${locus} -type f
+#        run: find ${locus} -type f
