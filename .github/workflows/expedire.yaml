@@ -2,8 +2,7 @@ name: expedire
 
 on:
   push:
-    branches:
-      - princeps:
+    branches: [ "princeps" ]
 
 jobs:
   call-workflow:
@@ -11,12 +10,12 @@ jobs:
   deploy:
     runs-on:  ubuntu-latest
     name: expedire
+    continue-on-error: false
+    stategy:
+      fail-fast: true
     steps:
       - name: inaugurare
           run: npm install @vue/cli
           continue-on-error: false
 #      - name: expedire
 #          run: npm run deploy
-#      - name: delere
-#          if: failure()
-#          run: exit 1
