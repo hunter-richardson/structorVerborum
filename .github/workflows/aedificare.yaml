@@ -1,0 +1,38 @@
+name: aedificare
+
+on: [push, pull_request]
+jobs:
+  build_vue:
+    runs-on:  ubuntu-latest
+    name: aedificare
+    steps:
+      - uses: actions/checkout
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node
+        with:
+          node-version: latest
+      - name: inaugurare
+          run: npm clean-install
+          continue-on-error: false
+      - name: fundamen-struere
+          run: npm run build
+          continue-on-error: false
+      - name: verificare
+          run: tsc --build --clean
+          continue-on-error: false
+      - name: structura-struere
+          run: npm run type-check
+          continue-on-error: false
+#      - name: tentare
+#          run: npm test --passWithNoTests
+#          env:
+#            CI: true
+#          continue-on-error: false
+#      - name: invenire
+#          run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
+#      - name: emissa
+#          run: find ${locus} -type f
+#      - name: delere
+#          if: failure()
+#          run: exit 1

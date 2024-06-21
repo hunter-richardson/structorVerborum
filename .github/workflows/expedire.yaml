@@ -1,0 +1,22 @@
+name: expedire
+
+on:
+  push:
+    branches:
+      - princeps:
+
+jobs:
+  call-workflow:
+    uses: ./.github/workflows/aedificare.yml
+  deploy:
+    runs-on:  ubuntu-latest
+    name: expedire
+    steps:
+      - name: inaugurare
+          run: npm install @vue/cli
+          continue-on-error: false
+#      - name: expedire
+#          run: npm run deploy
+#      - name: delere
+#          if: failure()
+#          run: exit 1
