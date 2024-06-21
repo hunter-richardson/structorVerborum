@@ -6,7 +6,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: ./.github/workflows/aedificare.yml
+    uses: /.github/workflows/aedificare.yml
   deploy:
     runs-on:  ubuntu-latest
     name: expedire
