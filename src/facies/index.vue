@@ -49,6 +49,19 @@
             titula: crustula.lingua === 'anglica' ? 'Calculate' : 'Calculare',
             valor: 'calculare'
           }
+        ],
+
+        separatores: [
+          {
+            clavis: 'inane',
+            valor: '_'
+          }, {
+            clavis: 'interpunctum',
+            valor: '·'
+          }, {
+            clavis: 'nullum',
+            valor: ' '
+          },
         ]
       };
     },
@@ -169,12 +182,10 @@
              :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
              @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
       <v-btn-toggle key='separator'>
-        <v-btn @click="coque({ nomen: 'separator', valor: 'inane' });"
-               text=' _ ' id='crustula.separator.inane' />
-        <v-btn @click="coque({ nomen: 'separator', valor: 'interpunctum' });"
-               text=' · ' id='crustula.separator.interpunctum' />
-        <v-btn @click="coque({ nomen: 'separator', valor: 'nullum' });"
-               text='   ' id='crustula.separator.nullum' />
+        <v-btn v-for='separator in separatores' :key='separator'
+               @click="coque({ nomen: 'separator', valor: separator.clavis })"
+               :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
+               selected-class='text-primary'>
       </v-btn-toggle>
     </v-speed-dial>
   </template>
