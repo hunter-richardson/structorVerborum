@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: latest
       - name: inaugurare
-          run: npm clean-install
+          run: npm install
           continue-on-error: false
       - name: fundamen-struere
           run: npm run build
