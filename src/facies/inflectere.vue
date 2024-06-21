@@ -55,7 +55,7 @@
 
   export default defineComponent({
     components: {
-      HorizontalScroll, gustulare, specere
+      HorizontalScroll, gustulare, spectere
     },
 
     data () {
