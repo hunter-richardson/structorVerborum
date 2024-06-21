@@ -24,6 +24,6 @@ module.exports = {
     ecmaVersion: 'latest'
   },
   rules: {
-    "multi-word-component-names": "ignore"
+    "multi-word-component-names": "off"
   }
 }
