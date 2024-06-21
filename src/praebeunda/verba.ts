@@ -1,7 +1,7 @@
 import Structor from './structor';
 import LectorVerbalis from '../lectores/verbalis';
 import * as Enumerationes from '../miscella/enumerationes';
-import Numeral from '../miscella/numeral';
+import Numerator from '../miscella/numerator';
 import {
   AdiectivumAgendum,
   NumeramenAgendum,
@@ -39,7 +39,7 @@ export class Numerus extends Verbum {
   private _anglicus: number = -1;
 
   private latinum (): string {
-    return Numeral.romanus(this._anglicus);
+    return Numerator.romanus(this._anglicus);
   }
 
   get anglicus (): number {
@@ -47,7 +47,7 @@ export class Numerus extends Verbum {
   }
 
   set anglicus (valor: number) {
-    if (Numeral.convertibilis(valor)) {
+    if (Numerator.convertibilis(valor)) {
       this._anglicus = valor;
     } else {
       throw Numerus.Errator('anclicus', valor.toString());

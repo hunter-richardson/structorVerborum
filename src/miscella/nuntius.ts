@@ -1,7 +1,7 @@
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes';
-import Numeral from './numeral';
+import Numerator from './numerator';
 
 
 const scribatur = (parametra: {
@@ -233,9 +233,9 @@ class Temporis {
   static hodie (): string {
     const hodie: Date = new Date;
     return [
-      Numeral.romanus(hodie.getUTCDay()),
+      Numerator.romanus(hodie.getUTCDay()),
       Mensa[ hodie.getUTCMonth() ],
-      Numeral.romanus(hodie.getUTCFullYear())
+      Numerator.romanus(hodie.getUTCFullYear())
     ].join('');
   }
 
@@ -246,7 +246,7 @@ class Temporis {
       nunc.getUTCMinutes(),
       nunc.getUTCSeconds(),
       nunc.getUTCMilliseconds()
-    ].map(numerus => Numeral.romanus(numerus))
+    ].map(numerus => Numerator.romanus(numerus))
       .join(':');
   }
 }

@@ -1,12 +1,12 @@
 <script lang='ts'>
   import { defineComponent, defineModel } from 'vue';
-  import Numeral from '../miscella/numeral';
+  import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import * as Specere from './specere.vue';
   import type { ModelRef } from 'vue';
 
   type numeri = {
-    anglicus: number,
+    arabicus: number,
     romanus: string
   };
 
@@ -14,7 +14,7 @@
   const operator: string = '';
 
   const nihil: numeri = {
-    anglicus: 0,
+    arabicus: 0,
     romanus: 'N'
   };
 
@@ -44,7 +44,7 @@
 
       licta(actus: string): boolean {
         return this.operat(actus) ||
-            !!this.praesentes.anglicus;
+          !!this.praesentes.arabicus;
       },
 
       ponatur(actus: string): void {
@@ -52,43 +52,43 @@
           this.praevii = nihil;
           this.praesentes = nihil;
         } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
-          if (this.praesentes.anglicus) {
+          if (this.praesentes.arabicus) {
             this.praesentes.romanus += actus;
           } else {
             this.praesentes.romanus = actus;
           }
 
           try {
-            this.praesentes.anglicus = Numeral.anglicus(this.praesentes.romanus);
+            this.praesentes.arabicus = Numerator.arabicus(this.praesentes.romanus);
           } catch {
             this.praesentes = nihil;
           }
         } else if (this.operat(actus)) {
-          if (this.praevii.anglicus === 0) {
+          if (this.praevii.arabicus === 0) {
             this.praevii = this.praesentes;
           } else {
             switch ((this.operator ?? '').trim()) {
               case '+':
-                this.praevii.anglicus += this.praesentes.anglicus;
+                this.praevii.arabicus += this.praesentes.arabicus;
                 break;
               case '-':
-                this.praevii.anglicus -= this.praesentes.anglicus;
+                this.praevii.arabicus -= this.praesentes.arabicus;
                 break;
               case '•':
-                this.praevii.anglicus *= this.praesentes.anglicus;
+                this.praevii.arabicus *= this.praesentes.arabicus;
                 break;
               case '÷':
-                this.praevii.anglicus /= this.praesentes.anglicus;
+                this.praevii.arabicus /= this.praesentes.arabicus;
                 break;
               case '%':
-                this.praevii.anglicus %= this.praesentes.anglicus;
+                this.praevii.arabicus %= this.praesentes.arabicus;
                 break;
               default:
-                this.praevii.anglicus = this.praesentes.anglicus;
+                this.praevii.arabicus = this.praesentes.arabicus;
                 break;
             }
 
-            this.praevii.romanus = Numeral.romanus(this.praevii.anglicus);
+            this.praevii.romanus = Numerator.romanus(this.praevii.arabicus);
           }
 
           this.operator = actus === '=' ? '' : ` ${actus} `;
@@ -97,7 +97,7 @@
       },
 
       aequa(): void {
-        this.numerus = Numerus.numerator(this.praevii.anglicus);
+        this.numerus = Numerus.numerator(this.praevii.arabicus);
       }
     }
   });
@@ -110,7 +110,7 @@
   </template>
   <template v-if='this.praevii.anglicus'>
     <div class='text-center'>
-      <template v-if='Number.isInteger(praevii.anglicus)'>
+      <template v-if='Number.isInteger(praevii.arabicus)'>
         <v-btn id='refer' icon='aequa' @click='aequa();' />
       </template>
       <v-card :text='praevii.romanus' />

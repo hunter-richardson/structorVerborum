@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { defineComponent, defineModel } from 'vue';
-  import Numeral from '../miscella/numeral';
+  import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import * as Specere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
@@ -16,17 +16,17 @@
         romanus: '',
         anglica: cocutor.edatur('lingua') === 'anglica',
         numerus: numerus,
-        anglicus: {
+        arabicus: {
           integer: 0,
           numerator: 0,
           denominator: 12
         },
 
         validator: [
-          (anglicus: number): boolean | string => {
+          (arabicus: number): boolean | string => {
             const error: string = this.anglica ?
               'Only Roman numerals allowed' : 'Romani numeri soli licuntur';
-            return Number.isInteger(anglicus) || error;
+            return Number.isInteger(arabicus) || error;
           }
         ]
       };
@@ -34,12 +34,12 @@
 
     methods: {
       effiat (): void {
-        this.romanus = Numeral.romanus(this.anglicus.integer + (this.anglicus.numerator / this.anglicus.denominator));
+        this.romanus = Numerator.romanus(this.arabicus.integer + (this.arabicus.numerator / this.arabicus.denominator));
       },
 
       refer (): void {
-        if (this.anglicus.numerator === 0) {
-          this.numerus = Numerus.numerator(this.anglicus.integer);
+        if (this.arabicus.numerator === 0) {
+          this.numerus = Numerus.numerator(this.arabicus.integer);
         }
       }
     },

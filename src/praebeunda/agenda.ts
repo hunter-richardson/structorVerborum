@@ -5,7 +5,7 @@ import Adiectiva from '../anomala/adiectiva';
 import Nomina from '../anomala/nomina';
 import LectorVerbalis from '../lectores/verbalis';
 import Dictionarium from '../miscella/dictionarium';
-import Numeral from '../miscella/numeral';
+import Numerator from '../miscella/numerator';
 import PutatorActus from '../putatores/actus';
 import PutatorAdiectivi from '../putatores/adiectivi';
 import PutatorIncomparabilis from '../putatores/incomparabilis';
@@ -382,7 +382,7 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
         }
       case 'numerus':
         // eslint-disable-next-line no-case-declarations
-        const anglicus: number = Numeral.anglicus(this.numerus);
+        const anglicus: number = Numerator.arabicus(this.numerus);
         return anglicus === null ? null : Verba.Numerus.numerator(anglicus);
       case 'ordinale':
         if ((await adiectiva.omnia()).includes(this.ordinale)) {
