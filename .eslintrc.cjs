@@ -22,5 +22,8 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  rules: {
+    "multi-word-component-names": "ignore"
   }
 }
