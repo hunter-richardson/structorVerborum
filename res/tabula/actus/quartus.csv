@@ -1,106 +1,106 @@
-modus        ,vox     ,tempus       ,numerus  ,persona ,scriptum
-infinitivus  ,activa  ,praesens     ,           ,        ,īre
-infinitivus  ,activa  ,perfectum    ,           ,        ,isse
-infinitivus  ,passiva ,praesens     ,           ,        ,īrī
-participalis ,activa  ,praesens     ,           ,        ,iēns
-participalis ,passiva ,perfectum    ,           ,        ,um
-participalis ,passiva ,futurum      ,           ,        ,iendum
-participalis ,activa  ,futurum      ,           ,        ,ūrum
-imperativus  ,activa  ,praesens     ,singularis ,        ,ī
-imperativus  ,activa  ,praesens     ,pluralis   ,        ,īte
-imperativus  ,activa  ,futurum      ,singularis ,        ,ītō
-imperativus  ,activa  ,futurum      ,pluralis   ,        ,ītōte
-imperativus  ,passiva ,praesens     ,singularis ,        ,īre
-imperativus  ,passiva ,praesens     ,pluralis   ,        ,īminī
-imperativus  ,passiva ,futurum      ,singularis ,        ,ītor
-imperativus  ,passiva ,futurum      ,pluralis   ,        ,iuntor
-indicativus  ,activa  ,praesens     ,singularis ,prima   ,iō
-indicativus  ,activa  ,praesens     ,singularis ,secunda ,īs
-indicativus  ,activa  ,praesens     ,singularis ,tertia  ,it
-indicativus  ,activa  ,praesens     ,pluralis   ,prima   ,īmus
-indicativus  ,activa  ,praesens     ,pluralis   ,secunda ,ītis
-indicativus  ,activa  ,praesens     ,pluralis   ,tertia  ,iunt
-indicativus  ,activa  ,infectum     ,singularis ,prima   ,iēbam
-indicativus  ,activa  ,infectum     ,singularis ,secunda ,iēbās
-indicativus  ,activa  ,infectum     ,singularis ,tertia  ,iēbat
-indicativus  ,activa  ,infectum     ,pluralis   ,prima   ,iēbāmus
-indicativus  ,activa  ,infectum     ,pluralis   ,secunda ,iēbātis
-indicativus  ,activa  ,infectum     ,pluralis   ,tertia  ,iēbant
-indicativus  ,activa  ,futurum      ,singularis ,prima   ,iam
-indicativus  ,activa  ,futurum      ,singularis ,secunda ,iēs
-indicativus  ,activa  ,futurum      ,singularis ,tertia  ,iet
-indicativus  ,activa  ,futurum      ,pluralis   ,prima   ,iēmus
-indicativus  ,activa  ,futurum      ,pluralis   ,secunda ,iētis
-indicativus  ,activa  ,futurum      ,pluralis   ,tertia  ,ient
-indicativus  ,activa  ,perfectum    ,singularis ,prima   ,ī
-indicativus  ,activa  ,perfectum    ,singularis ,secunda ,istī
-indicativus  ,activa  ,perfectum    ,singularis ,tertia  ,it
-indicativus  ,activa  ,perfectum    ,pluralis   ,prima   ,imus
-indicativus  ,activa  ,perfectum    ,pluralis   ,secunda ,istis
-indicativus  ,activa  ,perfectum    ,pluralis   ,tertia  ,ērunt
-indicativus  ,activa  ,pluperfectum ,singularis ,prima   ,eram
-indicativus  ,activa  ,pluperfectum ,singularis ,secunda ,erās
-indicativus  ,activa  ,pluperfectum ,singularis ,tertia  ,erat
-indicativus  ,activa  ,pluperfectum ,pluralis   ,prima   ,erāmus
-indicativus  ,activa  ,pluperfectum ,pluralis   ,secunda ,erāstis
-indicativus  ,activa  ,pluperfectum ,pluralis   ,tertia  ,erant
-indicativus  ,activa  ,exigendum    ,singularis ,prima   ,erō
-indicativus  ,activa  ,exigendum    ,singularis ,secunda ,eris
-indicativus  ,activa  ,exigendum    ,singularis ,tertia  ,erit
-indicativus  ,activa  ,exigendum    ,pluralis   ,prima   ,erimus
-indicativus  ,activa  ,exigendum    ,pluralis   ,secunda ,eristis
-indicativus  ,activa  ,exigendum    ,pluralis   ,tertia  ,erint
-indicativus  ,passiva ,praesens     ,singularis ,prima   ,ior
-indicativus  ,passiva ,praesens     ,singularis ,secunda ,eris
-indicativus  ,passiva ,praesens     ,singularis ,tertia  ,ītur
-indicativus  ,passiva ,praesens     ,pluralis   ,prima   ,īmur
-indicativus  ,passiva ,praesens     ,pluralis   ,secunda ,iminī
-indicativus  ,passiva ,praesens     ,pluralis   ,tertia  ,iuntur
-indicativus  ,passiva ,infectum     ,singularis ,prima   ,iēbar
-indicativus  ,passiva ,infectum     ,singularis ,secunda ,iēbāris
-indicativus  ,passiva ,infectum     ,singularis ,tertia  ,iēbātur
-indicativus  ,passiva ,infectum     ,pluralis   ,prima   ,iēbāmur
-indicativus  ,passiva ,infectum     ,pluralis   ,secunda ,iēbāminī
-indicativus  ,passiva ,infectum     ,pluralis   ,tertia  ,iēbantur
-indicativus  ,passiva ,futurum      ,singularis ,prima   ,iar
-indicativus  ,passiva ,futurum      ,singularis ,secunda ,iēris
-indicativus  ,passiva ,futurum      ,singularis ,tertia  ,iētur
-indicativus  ,passiva ,futurum      ,pluralis   ,prima   ,iēmur
-indicativus  ,passiva ,futurum      ,pluralis   ,secunda ,iēminī
-indicativus  ,passiva ,futurum      ,pluralis   ,tertia  ,ientur
-subiunctivus ,activa  ,praesens     ,singularis ,prima   ,iam
-subiunctivus ,activa  ,praesens     ,singularis ,secunda ,iās
-subiunctivus ,activa  ,praesens     ,singularis ,tertia  ,iat
-subiunctivus ,activa  ,praesens     ,pluralis   ,prima   ,iāmus
-subiunctivus ,activa  ,praesens     ,pluralis   ,secunda ,iātis
-subiunctivus ,activa  ,praesens     ,pluralis   ,tertia  ,iant
-subiunctivus ,activa  ,infectum     ,singularis ,prima   ,īrem
-subiunctivus ,activa  ,infectum     ,singularis ,secunda ,īrēs
-subiunctivus ,activa  ,infectum     ,singularis ,tertia  ,īret
-subiunctivus ,activa  ,infectum     ,pluralis   ,prima   ,īrēmus
-subiunctivus ,activa  ,infectum     ,singularis ,secunda ,īrētis
-subiunctivus ,activa  ,infectum     ,pluralis   ,tertia  ,īrent
-subiunctivus ,activa  ,perfectum    ,singularis ,prima   ,erim
-subiunctivus ,activa  ,perfectum    ,singularis ,secunda ,erīs
-subiunctivus ,activa  ,perfectum    ,singularis ,tertia  ,erit
-subiunctivus ,activa  ,perfectum    ,pluralis   ,prima   ,erīmus
-subiunctivus ,activa  ,perfectum    ,singularis ,secunda ,erītis
-subiunctivus ,activa  ,perfectum    ,pluralis   ,tertia  ,erint
-subiunctivus ,activa  ,pluperfectum ,singularis ,prima   ,issem
-subiunctivus ,activa  ,pluperfectum ,singularis ,secunda ,issēs
-subiunctivus ,activa  ,pluperfectum ,singularis ,tertia  ,isset
-subiunctivus ,activa  ,pluperfectum ,pluralis   ,prima   ,issēmus
-subiunctivus ,activa  ,pluperfectum ,pluralis   ,secunda ,issētis
-subiunctivus ,activa  ,pluperfectum ,pluralis   ,tertia  ,issent
-subiunctivus ,passiva ,praesens     ,singularis ,prima   ,iar
-subiunctivus ,passiva ,praesens     ,singularis ,secunda ,iāris
-subiunctivus ,passiva ,praesens     ,singularis ,tertia  ,iātur
-subiunctivus ,passiva ,praesens     ,pluralis   ,prima   ,iāmur
-subiunctivus ,passiva ,praesens     ,pluralis   ,secunda ,iāminī
-subiunctivus ,passiva ,praesens     ,pluralis   ,tertia  ,iantur
-subiunctivus ,passiva ,infectum     ,singularis ,prima   ,īrer
-subiunctivus ,passiva ,infectum     ,singularis ,secunda ,īrēris
-subiunctivus ,passiva ,infectum     ,singularis ,tertia  ,īrētur
-subiunctivus ,passiva ,infectum     ,pluralis   ,prima   ,īrēmur
-subiunctivus ,passiva ,infectum     ,pluralis   ,secunda ,īrēminī
-subiunctivus ,passiva ,infectum     ,pluralis   ,tertia  ,īrentur
+modus,vox,tempus,scriptum,numerus,persona
+infinitivus,activa,praesens,īre
+infinitivus,activa,perfectum,isse
+infinitivus,passiva,praesens,īrī
+participalis,activa,praesens,iēns
+participalis,passiva,perfectum,um
+participalis,passiva,futurum,iendum
+participalis,activa,futurum,ūrum
+imperativus,activa,praesens,ī,singularis
+imperativus,activa,praesens,īte,pluralis
+imperativus,activa,futurum,ītō,singularis
+imperativus,activa,futurum,ītōte,pluralis
+imperativus,passiva,praesens,īre,singularis
+imperativus,passiva,praesens,īminī,pluralis
+imperativus,passiva,futurum,ītor,singularis
+imperativus,passiva,futurum,iuntor,pluralis
+indicativus,activa,praesens,iō,singularis,prima
+indicativus,activa,praesens,īmus,pluralis,prima
+indicativus,activa,infectum,iēbam,singularis,prima
+indicativus,activa,infectum,iēbāmus,pluralis,prima
+indicativus,activa,futurum,iam,singularis,prima
+indicativus,activa,futurum,iēmus,pluralis,prima
+indicativus,activa,perfectum,ī,singularis,prima
+indicativus,activa,perfectum,imus,pluralis,prima
+indicativus,activa,pluperfectum,eram,singularis,prima
+indicativus,activa,pluperfectum,erāmus,pluralis,prima
+indicativus,activa,exigendum,erō,singularis,prima
+indicativus,activa,exigendum,erimus,pluralis,prima
+indicativus,passiva,praesens,ior,singularis,prima
+indicativus,passiva,praesens,īmur,pluralis,prima
+indicativus,passiva,infectum,iēbar,singularis,prima
+indicativus,passiva,infectum,iēbāmur,pluralis,prima
+indicativus,passiva,futurum,iar,singularis,prima
+indicativus,passiva,futurum,iēmur,pluralis,prima
+subiunctivus,activa,praesens,iam,singularis,prima
+subiunctivus,activa,praesens,iāmus,pluralis,prima
+subiunctivus,activa,infectum,īrem,singularis,prima
+subiunctivus,activa,infectum,īrēmus,pluralis,prima
+subiunctivus,activa,perfectum,erim,singularis,prima
+subiunctivus,activa,perfectum,erīmus,pluralis,prima
+subiunctivus,activa,pluperfectum,issem,singularis,prima
+subiunctivus,activa,pluperfectum,issēmus,pluralis,prima
+subiunctivus,passiva,praesens,iar,singularis,prima
+subiunctivus,passiva,praesens,iāmur,pluralis,prima
+subiunctivus,passiva,infectum,īrer,singularis,prima
+subiunctivus,passiva,infectum,īrēmur,pluralis,prima
+indicativus,activa,praesens,īs,singularis,secunda
+indicativus,activa,praesens,ītis,pluralis,secunda
+indicativus,activa,infectum,iēbās,singularis,secunda
+indicativus,activa,infectum,iēbātis,pluralis,secunda
+indicativus,activa,futurum,iēs,singularis,secunda
+indicativus,activa,futurum,iētis,pluralis,secunda
+indicativus,activa,perfectum,istī,singularis,secunda
+indicativus,activa,perfectum,istis,pluralis,secunda
+indicativus,activa,pluperfectum,erās,singularis,secunda
+indicativus,activa,pluperfectum,erāstis,pluralis,secunda
+indicativus,activa,exigendum,eris,singularis,secunda
+indicativus,activa,exigendum,eristis,pluralis,secunda
+indicativus,passiva,praesens,eris,singularis,secunda
+indicativus,passiva,praesens,iminī,pluralis,secunda
+indicativus,passiva,infectum,iēbāris,singularis,secunda
+indicativus,passiva,infectum,iēbāminī,pluralis,secunda
+indicativus,passiva,futurum,iēris,singularis,secunda
+indicativus,passiva,futurum,iēminī,pluralis,secunda
+subiunctivus,activa,praesens,iās,singularis,secunda
+subiunctivus,activa,praesens,iātis,pluralis,secunda
+subiunctivus,activa,infectum,īrēs,singularis,secunda
+subiunctivus,activa,infectum,īrētis,singularis,secunda
+subiunctivus,activa,perfectum,erīs,singularis,secunda
+subiunctivus,activa,perfectum,erītis,singularis,secunda
+subiunctivus,activa,pluperfectum,issēs,singularis,secunda
+subiunctivus,activa,pluperfectum,issētis,pluralis,secunda
+subiunctivus,passiva,praesens,iāris,singularis,secunda
+subiunctivus,passiva,praesens,iāminī,pluralis,secunda
+subiunctivus,passiva,infectum,īrēris,singularis,secunda
+subiunctivus,passiva,infectum,īrēminī,pluralis,secunda
+indicativus,activa,praesens,it,singularis,tertia
+indicativus,activa,praesens,iunt,pluralis,tertia
+indicativus,activa,infectum,iēbat,singularis,tertia
+indicativus,activa,infectum,iēbant,pluralis,tertia
+indicativus,activa,futurum,iet,singularis,tertia
+indicativus,activa,futurum,ient,pluralis,tertia
+indicativus,activa,perfectum,it,singularis,tertia
+indicativus,activa,perfectum,ērunt,pluralis,tertia
+indicativus,activa,pluperfectum,erat,singularis,tertia
+indicativus,activa,pluperfectum,erant,pluralis,tertia
+indicativus,activa,exigendum,erit,singularis,tertia
+indicativus,activa,exigendum,erint,pluralis,tertia
+indicativus,passiva,praesens,ītur,singularis,tertia
+indicativus,passiva,praesens,iuntur,pluralis,tertia
+indicativus,passiva,infectum,iēbātur,singularis,tertia
+indicativus,passiva,infectum,iēbantur,pluralis,tertia
+indicativus,passiva,futurum,iētur,singularis,tertia
+indicativus,passiva,futurum,ientur,pluralis,tertia
+subiunctivus,activa,praesens,iat,singularis,tertia
+subiunctivus,activa,praesens,iant,pluralis,tertia
+subiunctivus,activa,infectum,īret,singularis,tertia
+subiunctivus,activa,infectum,īrent,pluralis,tertia
+subiunctivus,activa,perfectum,erit,singularis,tertia
+subiunctivus,activa,perfectum,erint,pluralis,tertia
+subiunctivus,activa,pluperfectum,isset,singularis,tertia
+subiunctivus,activa,pluperfectum,issent,pluralis,tertia
+subiunctivus,passiva,praesens,iātur,singularis,tertia
+subiunctivus,passiva,praesens,iantur,pluralis,tertia
+subiunctivus,passiva,infectum,īrētur,singularis,tertia
+subiunctivus,passiva,infectum,īrentur,pluralis,tertia

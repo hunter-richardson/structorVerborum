@@ -1,8 +1,8 @@
-modus,vox,tempus,numerus,persona,scriptum
-infinitivus,,,,,īnfierī
-imperativus,,,,,īnfītō
-participalis,,,,,īnfiendum
-indicativus,,praesens,,,īnfit
-indicativus,,infectum,,,īnfīēbat
-subiunctivus,,praesens,,,īnfīat
-subiunctivus,,infectum,,,īnfieret
+modus,scriptum,tempus,vox,numerus,persona
+infinitivus,īnfierī
+imperativus,īnfītō
+participalis,īnfiendum
+indicativus,praesens,īnfit
+indicativus,infectum,īnfīēbat
+subiunctivus,praesens,īnfīat
+subiunctivus,infectum,īnfieret

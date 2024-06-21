@@ -1,8 +1,8 @@
-numerus,gradus,genus,casus,scriptum
-singularis,,neutrum,nominativus,
-singularis,,neutrum,accusativus,
-singularis,,neutrum,vocativus,
-singularis,,masculinum,nominativus,
-singularis,,masculinum,vocativus,
-singularis,,femininum,nominativus,
-singularis,,femininum,vocativus,
+numerus,genus,casus,scriptum,gradus
+singularis,neutrum,nominativus
+singularis,neutrum,accusativus
+singularis,neutrum,vocativus
+singularis,masculinum,nominativus
+singularis,masculinum,vocativus
+singularis,femininum,nominativus
+singularis,femininum,vocativus

@@ -1,5 +1,5 @@
-modus,vox,tempus,numerus,persona,scriptum
-indicativus,,praesens,singularis,secunda,māvīs
-indicativus,,praesens,singularis,tertia,māvult
-indicativus,,praesens,pluralis,prima,mālumus
-indicativus,,praesens,pluralis,secunda,māvultis
+modus,tempus,numerus,persona,scriptum,vox
+indicativus,praesens,singularis,secunda,māvīs
+indicativus,praesens,singularis,tertia,māvult
+indicativus,praesens,pluralis,prima,mālumus
+indicativus,praesens,pluralis,secunda,māvultis

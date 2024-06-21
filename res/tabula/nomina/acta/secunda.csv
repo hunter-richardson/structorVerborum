@@ -1,8 +1,8 @@
-actum,casus,scriptum
-infinitivum,,ēre
-gerundium,genitivus,endī
-gerundium,dativus,endō
-gerundium,ablativus,endō
-gerundium,accusativus,endum
-supinum,accusativus,um
-supinum,ablativus,ū
+actum,scriptum,casus
+infinitivum,ēre
+gerundium,endī,genitivus
+gerundium,endō,dativus
+gerundium,endō,ablativus
+gerundium,endum,accusativus
+supinum,um,accusativus
+supinum,ū,ablativus

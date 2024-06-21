@@ -1,5 +1,5 @@
-modus,vox,tempus,numerus,persona,scriptum
-imperativus,,praesens,singularis,,nōlī
-imperativus,,praesens,pluralis,,nōlīte
-imperativus,,futurum,singularis,,nōlitō
-imperativus,,futurum,pluralis,,nōlitōte
+modus,tempus,numerus,scriptum,vox,persona
+imperativus,praesens,singularis,nōlī
+imperativus,praesens,pluralis,nōlīte
+imperativus,futurum,singularis,nōlitō
+imperativus,futurum,pluralis,nōlitōte

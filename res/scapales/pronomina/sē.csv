@@ -1,5 +1,5 @@
-casus,genus,numerus,scriptum
-genitivus,,,suī
-dativus,,,sibi
-accusativus,,,sē
-ablativus,,,sē
+casus,scriptum,genus,numerus
+genitivus,suī
+dativus,sibi
+accusativus,sē
+ablativus,sē

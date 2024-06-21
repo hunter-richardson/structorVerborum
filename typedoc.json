@@ -1,0 +1,21 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "plugin": [
+    "@mxssfd/typedoc-theme",
+    "typedoc-plugin-markdown",
+    "typedoc-github-wiki-theme",
+    "@8hobbies/typedoc-plugin-404",
+    "@droppedcode/typedoc-plugin-relative-includes",
+    "typedoc-plugin-vue",
+    "typedoc-plugin-mdn-links",
+    "typedoc-plugin-mtos" //?
+  ], "theme": "dark",
+  "includes": "src",
+  "useCodeBlocks": true,
+  "expandObjects": true,
+  "expandParameters": true,
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "newLine": "lf",
+  }
+}

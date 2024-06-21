@@ -1,4 +1,4 @@
-genus,gradus,numerus,casus,scriptum
-positivus,,,,frūgī
-comparativus,,,,frūgālior
-superlativus,,,,frūgālissimus
+gradus,scriptum,genus,numerus,casus
+positivus,frūgī
+comparativus,frūgālior
+superlativus,frūgālissimus

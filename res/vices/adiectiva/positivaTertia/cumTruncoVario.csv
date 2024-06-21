@@ -1,8 +1,8 @@
-gradus,genus,numerus,casus,scriptum
-positivus,,singularis,ablativus,ī
-positivus,,singularis,locativus,ī
-positivus,,pluralis,genitivus,ium
-positivus,neutrum,pluralis,nominativus,ia
-positivus,neutrum,pluralis,accusativus,ia
-positivus,neutrum,pluralis,vocativus,ia
+gradus,numerus,casus,scriptum,genus
+positivus,singularis,ablativus,ī
+positivus,singularis,locativus,ī
+positivus,pluralis,genitivus,ium
+positivus,pluralis,nominativus,ia,neutrum
+positivus,pluralis,accusativus,ia,neutrum
+positivus,pluralis,vocativus,ia,neutrum
 

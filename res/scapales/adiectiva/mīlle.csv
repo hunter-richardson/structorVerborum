@@ -1,8 +1,8 @@
-numerus,genus,gradus,casus,scriptum
-singularis,,,,mīlle
-pluralis,,,nominativus,mīlia
-pluralis,,,genitivus,mīlium
-pluralis,,,dativus,mīlibus
-pluralis,,,accusativus,mīlia
-pluralis,,,ablativus,mīlibus
-pluralis,,,locativus,mīlibus
+numerus,casus,scriptum,casus,genus,gradus
+singularis,,mīlle
+pluralis,nominativus,mīlia,nominativus
+pluralis,genitivus,mīlium,gentivius
+pluralis,dativus,mīlibus,dativus
+pluralis,accusativus,mīlia,accusativus
+pluralis,ablativus,mīlibus,ablativus
+pluralis,locativus,mīlibus,locativus
