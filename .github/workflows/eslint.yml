@@ -47,5 +47,5 @@ jobs:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
       - name: vue-tsc-action
-        uses: keita-hino/vue-tsc-action@v0.1.1
+        uses: keita-hino/vue-tsc-action@main
 
