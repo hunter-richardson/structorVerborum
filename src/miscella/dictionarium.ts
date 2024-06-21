@@ -58,12 +58,14 @@ export default class Dictionarium {
   private readonly _relata: Relatum[] = [];
 
   private get relata(): Promise<Relatum[]> {
-    return new Promise(async () => {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (seratur: (valor: Relatum[]) => void)
+          : Promise<void> => {
       if (!this._relata.length) {
         await this.perscribantur();
       }
 
-      return this._relata;
+      return seratur(this._relata);
     });
   }
 

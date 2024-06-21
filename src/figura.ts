@@ -1,7 +1,7 @@
 import { useFavicon } from '@vueuse/core';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
-import * as Index from './facies/index.vue';
+import Index from './facies/index.vue';
 import { createApp, type App } from 'vue';
 
 useFavicon('/res/picta/favicon.png')

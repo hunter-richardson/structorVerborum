@@ -8,12 +8,15 @@
 
   defineProps<{ id: Hoc; }>();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const verba: ModelRef<Hoc[] | undefined, string> = defineModel<Hoc[]>('verba');
 
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
 
-  let figura: string;
+  let figura: string = '';
   switch (true) {
     case agendum instanceof Agenda.ActusAgendus:
       figura = 'actusAgendus';
@@ -28,6 +31,7 @@
       figura = 'nomenFactum';
       break;
     case agendum instanceof Agenda.NumeramenAgendum:
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       figura = 'numeramenAgendum';
       break;
   }
@@ -36,6 +40,7 @@
 <script lang='ts'>
   import { defineComponent, defineModel } from 'vue';
   import spectere from './specere.vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
