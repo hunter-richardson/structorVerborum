@@ -1,6 +1,9 @@
 name: aedificare
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request:
+      branches: [ "princeps" ]
 jobs:
   build_vue:
     runs-on:  ubuntu-latest
