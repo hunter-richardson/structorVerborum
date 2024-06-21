@@ -5,8 +5,8 @@ import checker from 'vite-plugin-checker';
 import VueDevTools from 'vite-plugin-vue-devtools';
 import { fileURLToPath, URL } from 'node:url'
 
-
 // https://vitejs.dev/config/
+/** @type {import ('vite').UserConfig} */
 export default defineConfig({
   plugins: [
     checker({

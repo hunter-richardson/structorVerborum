@@ -14,7 +14,9 @@ jobs:
     steps:
       - name: inaugurare
           run: npm install @vue/cli
-          continue-on-error: false
+      - name: delere
+          if: failure()
+          run: exit 1
 #      - name: expedire
 #          run: npm run deploy
 #      - name: delere
