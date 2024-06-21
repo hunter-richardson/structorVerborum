@@ -8,7 +8,7 @@
     "@droppedcode/typedoc-plugin-relative-includes",
     "typedoc-plugin-vue",
     "typedoc-plugin-mdn-links",
-    "typedoc-plugin-mtos" //?
+    // "typedoc-plugin-mtos" //?
   ], "theme": "dark",
   "includes": "src",
   "useCodeBlocks": true,
