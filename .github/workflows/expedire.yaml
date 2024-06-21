@@ -3,18 +3,20 @@ name: expedire
 on:
   push:
     branches: [ "princeps" ]
+  workflow_run:
+    workflows: [ "aedificare" ]
+    types: [ requested ]
+    branches: [ "princeps" ]
 
 jobs:
   call-workflow:
-    uses: /.github/workflows/aedificare.yml
+    uses: ./.github/workflows/aedificare.yml
   deploy:
     runs-on:  ubuntu-latest
     name: expedire
     continue-on-error: false
-    stategy:
+    strategy:
       fail-fast: true
-    steps:
-      - name: inaugurare
-        run: npm install @vue/cli
+#    steps:
 #      - name: expedire
 #        run: npm run deploy
