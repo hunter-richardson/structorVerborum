@@ -14,31 +14,21 @@ jobs:
           node-version: latest
       - name: inaugurare
           run: npm clean-install
-      - name: delere
-          if: failure()
-          run: exit 1
+          continue-on-error: false
       - name: fundamen-struere
           run: npm run build
-      - name: delere
-          if: failure()
-          run: exit 1
+          continue-on-error: false
       - name: verificare
           run: tsc --build --clean
-      - name: delere
-          if: failure()
-          run: exit 1
+          continue-on-error: false
       - name: structura-struere
           run: npm run type-check
-      - name: delere
-          if: failure()
-          run: exit 1
+          continue-on-error: false
 #      - name: tentare
 #          run: npm test --passWithNoTests
 #          env:
 #            CI: true
-#      - name: delere
-#         if: failure()
-#         run: exit 1
+#          continue-on-error: false
 #      - name: invenire
 #          run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
 #      - name: emissa
