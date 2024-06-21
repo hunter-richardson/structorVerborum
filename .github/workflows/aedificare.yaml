@@ -6,7 +6,7 @@ jobs:
     runs-on:  ubuntu-latest
     name: aedificare
     continue-on-error: false
-    stategy:
+    strategy:
       fail-fast: true
     steps:
       - uses: actions/checkout@v4
