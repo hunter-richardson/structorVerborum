@@ -2,12 +2,14 @@
   import { defineComponent, defineModel } from 'vue';
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae } from '../miscella/enumerationes';
-  import Inflectere from './inflectere.vue';
-  import * as Specere from './specere.vue';
-  import * as Loqui from './loqui.vue';
+  import inflectere from './inflectere.vue';
+  import specere from './specere.vue';
+  import loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
   import type { ModelRef } from 'vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
 
   const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
@@ -22,8 +24,13 @@
   };
 
   export default defineComponent({
+    components: {
+      gustulare, inflectere, specere, loqui
+    },
+
     data () {
       return {
+        gustulus: new Gustulus({}),
         anglica: lingua === 'anglica',
         lemmae: lemmae,
         onerans: true,
@@ -115,12 +122,13 @@
 </script>
 
 <template lang='vue'>
-  <Loqui />
+	<gustulare v-model='gustulus' />
+  <loqui />
   <template v-if='verbum'>
-    <Specere v-model='verbum' @blur='verbum = undefined;' />
+    <specere v-model='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else-if='eventus'>
-    <Inflectere v-model='eventus' @blur='eventus = undefined;' />
+    <inflectere v-model='eventus' @blur='eventus = undefined;' />
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'

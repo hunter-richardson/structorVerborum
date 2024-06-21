@@ -2,11 +2,13 @@
   import { defineComponent, defineModel } from 'vue';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';
   import Locutor from '../miscella/locutor';
-  import * as Inflectere from './inflectere.vue';
+  import inflectere from './inflectere.vue';
   import Cocutor from '../miscella/cocutor';
   import type { Eventus } from '../miscella/dictionarium';
   import type { NumeramenAgendum } from '../praebeunda/agenda';
   import type { ModelRef } from 'vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
 
   const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
@@ -14,8 +16,13 @@
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
 
   export default defineComponent({
+    components: {
+      gustulare, inflectere
+    },
+
     data () {
       return {
+        gustulus: new Gustulus({}),
         verbum: verbum.value,
         eventus: eventus.value,
         anglica: lingua === 'anglica',
@@ -57,8 +64,9 @@
 </script>
 
 <template lang='vue'>
+	<gustulare v-model='gustulus' />
 	<template v-if='eventus'>
-		<Inflectere v-model='eventus' @blur='eventus = undefined;' />
+		<inflectere v-model='eventus' @blur='eventus = undefined;' />
 	</template>
   <v-dialog v-if'verbum'>
     <v-card :title='verbum?.scriptum'>

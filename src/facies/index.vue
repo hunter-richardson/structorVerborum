@@ -4,9 +4,11 @@
   import { transducatur, transduceretne } from '../scriptura/transducere';
   import { referretne, referatur } from '../scriptura/referre';
   import Cocutor, { type Crustulum } from '../miscella/cocutor';
-  import * as Quaerere from './quaerere.vue';
-  import * as Numerare from './numerare.vue';
-  import * as Calculare from './calculare.vue';
+  import quaerere from './quaerere.vue';
+  import numerare from './numerare.vue';
+  import calculare from './calculare.vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
   import Locutor from '../miscella/locutor';
 
   const locutor: Locutor = Locutor.se.ipse();
@@ -22,9 +24,14 @@
   };
 
   export default defineComponent({
+    components: {
+      gustulare, quaerere, numerare, calculare
+    },
+
     data () {
       return {
         name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
+        gustulus: new Gustulus({}),
         annulus: '',
         locutionis: locutor.locutust(),
         referret: referretne(),
@@ -143,6 +150,7 @@
 </script>
 
 <template lang='vue'>
+	<gustulare v-model='gustulus' />
   <template v-if="crustula.assensus === 'assensit'">
     <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
       <template v-slot:activator='{ props: activator }'>
@@ -210,13 +218,13 @@
     </v-tabs>
     <v-tabs-window v-model='annulus'>
       <v-tabs-window-item value='quaerere'>
-        <Quaerere />
+        <quaerere />
       </v-tabs-window-item>
       <v-tabs-window-item value='numerare'>
-        <Numerare />
+        <numerare />
       </v-tabs-window-item>
       <v-tabs-window-item value='calculare'>
-        <Calculare />
+        <calculare />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

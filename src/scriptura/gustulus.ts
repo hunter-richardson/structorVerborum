@@ -4,7 +4,7 @@ type Optanda = {
   color?: string;
 };
 
-export default class Gustularium {
+export default class Gustulus {
   readonly nuntium: string;
   readonly vita: number;
   readonly color: string;

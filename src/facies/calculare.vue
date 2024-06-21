@@ -2,7 +2,9 @@
   import { defineComponent, defineModel } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
-  import * as Specere from './specere.vue';
+  import specere from './specere.vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
   import type { ModelRef } from 'vue';
 
   type numeri = {
@@ -19,8 +21,14 @@
   };
 
   export default defineComponent({
+    components: {
+      gustulare,
+      specere
+    },
+
     data() {
       return  {
+        gustulus: new Gustulus({}),
         numerus: numerus,
         operator: operator,
         praevii: nihil,
@@ -104,8 +112,9 @@
 </script>
 
 <template lang='vue'>
+	<gustulare v-model='gustulus' />
   <template v-if='this.numerus'>
-    <Specere v-model='this.numerus'
+    <specere v-model='this.numerus'
              @blur='this.numerus = null;' />
   </template>
   <template v-if='this.praevii.anglicus'>

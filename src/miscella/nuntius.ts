@@ -2,7 +2,7 @@ import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes';
 import Numerator from './numerator';
-
+import makeDirectorySync from 'make-dir'
 
 const scribatur = (parametra: {
   nomen?: string,
@@ -189,13 +189,15 @@ export default class Nuntius implements Disposable {
 
       navigium = new DailyRotateFile({
         datePattern: '',
-        dirname: '../nuntia',
+        dirname: '/nuntia',
         filename: `StructorVerborum${Temporis.hodie()}.log)`,
         frequency: '1d',
         maxSize: '20m',
         maxFiles: '30d',
         zippedArchive: true
       });
+
+      makeDirectorySync(navigium.dirname)
 
       // navigium.on('new', (hoc: string) => { });
       // navigium.on('rotate', (illud: string, hoc: string) => { });

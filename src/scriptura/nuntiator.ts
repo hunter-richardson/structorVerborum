@@ -1,13 +1,13 @@
-import Gustularium from './gustularium';
+import Gustulus from './gustulus';
 
 type Optanda<T> = {
   valor?: T,
-  nuntium: Gustularium;
+  nuntium: Gustulus;
 };
 
 export default class Nuntiator<T> {
   readonly valor?: T;
-  readonly nuntium: Gustularium;
+  readonly nuntium: Gustulus;
 
   constructor (optanda: Optanda<T>) {
     this.valor = optanda.valor;

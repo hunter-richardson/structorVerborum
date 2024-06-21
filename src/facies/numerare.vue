@@ -2,17 +2,25 @@
   import { defineComponent, defineModel } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
-  import * as Specere from './specere.vue';
+  import specere from './specere.vue';
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
 
   const cocutor: Cocutor = Cocutor.se.ipse();
 
   const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
 
   export default defineComponent({
+    components: {
+      gustulare,
+      specere
+    },
+
     data () {
       return {
+        gustulus: new Gustulus({}),
         romanus: '',
         anglica: cocutor.edatur('lingua') === 'anglica',
         numerus: numerus,
@@ -51,8 +59,9 @@
 </script>
 
 <template lang='vue'>
+	<gustulare v-model='gustulus' />
 	<template v-if='numerus'>
-		<Specere v-model='numerus' @blur='numerus = undefined' />
+		<specere v-model='numerus' @blur='numerus = undefined' />
 	</template>
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />

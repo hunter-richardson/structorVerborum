@@ -35,10 +35,12 @@
 
 <script lang='ts'>
   import { defineComponent, defineModel } from 'vue';
-  import * as Spectere from './specere.vue';
+  import spectere from './specere.vue';
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
   import type { ModelRef } from 'vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
 
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
   const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
@@ -52,11 +54,15 @@
   const HorizontalScroll = require('vue-horizontal-scroll')
 
   export default defineComponent({
-    components: { HorizontalScroll },
+    components: {
+      HorizontalScroll: horizontal-scroll,
+      gustulare, specere
+    },
 
     data () {
       return {
         anglica: lingua === 'anglica',
+        gustulus: new Gustulus({}),
         categoria: categoria,
         figura: figura,
         seligenda: seligenda,
@@ -199,8 +205,9 @@
 </script>
 
 <template lang='vue'>
+	<gustulare v-model='gustulus' />
   <template v-if='verbum'>
-    <Spectere v-model='verbum' @blur='verbum = undefined;' />
+    <spectere v-model='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else>
     <div id='colamina'>

@@ -1,9 +1,10 @@
 <script lang='ts'>
   import { defineComponent } from 'vue';
   import draggable from 'vuedraggable'
-  import Gustularium from '../scriptura/gustularium';
+  import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
   import Cocutor from '../miscella/cocutor';
+  import gustulare from './gustulare.vue';
 
   const locutor: Locutor = Locutor.se.ipse();
   const cocutor: Cocutor = Cocutor.se.ipse();
@@ -14,7 +15,10 @@
   const ClassifyX = require('classifyx')
 
   export default defineComponent({
-    component: { draggable },
+    component: {
+      draggable,
+      gustulare
+    },
 
     data () {
       return {
@@ -26,7 +30,7 @@
           })
         }),
         lingua: Cocutor.se.ipse().edatur('lingua'),
-        gustularium: new Gustularium({}),
+        gustulus: new Gustulus({}),
         verba: locutor.verba,
       };
     },
@@ -41,15 +45,13 @@
 </script>
 
 <template lang='vue'>
-	<v-snackbar :color='gustularium.color' :timeout='gustularium.vita' v-model='gustularium.visibile'>
-		{ gustularium.nuntium }
-	</v-snackbar>
+	<gustulare v-model='gustulus' />
 	<v-chip-group id='locutio'>
 		<draggable v-model='verba' :ghost-class='pellucidum' @start='trahens = true' @end='trahens = false'>
 			<span :class="'mr-2'.concat(trahens ? 'cursor-grab' : 'cursor-grabbing')">
 				<template v-for='verbum in verba'>
 					<v-chip :v-bind:key='verbum' @click:close='remove(verbum.unicum);' close-icon='remove'
-						      :text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
+						:text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
 				</template>
 </span>
 </draggable>
