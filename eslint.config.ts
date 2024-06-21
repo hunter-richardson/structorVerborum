@@ -1,7 +1,8 @@
 export default [
   {
-    extends: './.eslintrc.cjs',
-    rules: {
+    files: [
+      './.eslintrc.cjs'
+    ], rules: {
       "multi-word-component-names": "ignore"
     }
   }

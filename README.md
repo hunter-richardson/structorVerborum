@@ -26,7 +26,7 @@
   * *Valor inhaerendus: `latina`*
 
 * ***`utendaU`*** ("use the U"):
-  * *Propositum: lemmas locutionesque scribere aut ut tonsas aut cum littera `U` reposita `V` ut Romani veteres corpus Latinum scripserunt quod facilius incidere tabulis lapideis fuerat. Deinde cum cera papyroque scribendis littera `U` litteram `V` mutam reponere incepit.* / To display the lemmas and phrases either as stored, or with *`U`*s replaced with *`V`*s. Ancient Romans wrote Latin literature with *`V`*s instead of *`U`*s, as *`V`*s were easier to carve on stone tablets and buildings. Later, as wax and paper became more popular means of written communication, *`U`*s started to replace *`V`*s used as vowels.
+  * *Propositum: lemmas locutionesque scribere aut ut tonsas aut cum littera `U` reposita `V` ut Romani veteres corpus Latinum scripserunt quod facilius incidere tabulis lapideis fuerat. Deinde cum cera papyroque scribendis littera `U` litteram `V` mutam reponere incepit.* / To display the lemmas and phrases either as stored, or with `U`s replaced with `V`s. Ancient Romans wrote Latin literature with `V`s instead of `U`s, as `V`s were easier to carve on stone tablets and buildings. Later, as wax and paper became more popular means of written communication, `U`s started to replace `V`s used as vowels.
   * *Valora: `ita`* ("yes") *aut `non`* ("no")
   * *Valor inhaerendus: `ita`*
 
