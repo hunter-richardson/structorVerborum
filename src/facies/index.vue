@@ -67,7 +67,7 @@
 
         this.coque({
           nomen: 'facies',
-          valor: 'fuscum'
+          valor: 'fusca'
         });
 
         this.coque({
@@ -103,7 +103,7 @@
         switch (crustulum.nomen) {
           case 'facies':
             this.crustula.facies = crustulum.valor;
-            if (this.crustula.facies === 'illustre') {
+            if (this.crustula.facies === 'illustris') {
               useTheme().global.name.value = 'light';
             } else {
               useTheme().global.name.value = 'dark';
@@ -149,8 +149,8 @@
         <v-fab v-bind='activator' size='medium' icon='cake' />
       </template>
       <v-fab key='facies' id='crustula.facies'
-             :icon="crustula.facies === 'fuscum' ? 'light_mode' : 'dark_mode'"
-             @click="coque({ nomen: 'facies', valor: crustula.facies === 'fuscum' ? 'fuscum' : 'illustre' });" />
+             :icon="crustula.facies === 'fusca' ? 'light_mode' : 'dark_mode'"
+             @click="coque({ nomen: 'facies', valor: crustula.facies === 'fusca' ? 'illustris' : 'fusca' });" />
       <v-fab key='apices' id='crustula.apices'
              :text="crustula.apices === 'ita' ? 'ā' : 'a'"
              @click="coque({ nomen: 'apices', valor: crustula.apices === 'ita' ? 'non' : 'ita' });" />
