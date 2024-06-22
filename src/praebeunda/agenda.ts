@@ -366,24 +366,23 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
     using adiectiva: Adiectiva = Adiectiva.se.ipse();
     const lectorAdiectivum: LectorVerbalis<Incomparabile> = LectorVerbalis.Incomparabilium.ipse();
     switch (referendum) {
-      case 'adverbium':
-        // eslint-disable-next-line no-case-declarations
-        const lectorAdverbiorum: LectorVerbalis<AdverbiumAgendum> = LectorVerbalis.Adverbiorum.ipse();
-        return await lectorAdverbiorum.legatur(this.adverbium);
-      case 'fractionale':
-        // eslint-disable-next-line no-case-declarations
+      case 'adverbium': {
+          const lectorAdverbiorum: LectorVerbalis<AdverbiumAgendum> = LectorVerbalis.Adverbiorum.ipse();
+          return await lectorAdverbiorum.legatur(this.adverbium);
+        }
+      case 'fractionale': {
         using nomina: Nomina = Nomina.se.ipse();
         if ((await nomina.omnia()).includes(this.fractionale)) {
           return await nomina.feratur(this.fractionale) ?? null;
         } else {
-          // eslint-disable-next-line no-case-declarations
           const lectorNominum: LectorVerbalis<NomenAgendum> = LectorVerbalis.Nominum.ipse();
           return await lectorNominum.legatur(this.fractionale);
         }
-      case 'numerus':
-        // eslint-disable-next-line no-case-declarations
+      }
+      case 'numerus': {
         const anglicus: number = Numerator.arabicus(this.numerus);
         return anglicus === null ? null : Verba.Numerus.numerator(anglicus);
+      }
       case 'ordinale':
         if ((await adiectiva.omnia()).includes(this.ordinale)) {
           return await adiectiva.feratur(this.ordinale) ?? null;
