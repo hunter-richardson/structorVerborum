@@ -68,9 +68,8 @@
 	<template v-if='eventus'>
 		<inflectere v-model='eventus' @blur='eventus = undefined;' />
 	</template>
-  <v-dialog v-if'verbum'>
-    <v-card :title='verbum?.scriptum'>
-      <span id='categoria'>{{ verbum?.categoria.capitalize() }}</span>
+  <v-dialog v-if='verbum'>
+    <v-card :title='verbum?.scriptum' :subtitle='verbum?.categoria.capitalize()'>
       <template v-if='multiplex'>
         <v-chip-group>
           <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"

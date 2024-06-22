@@ -1,8 +1,8 @@
-import { useFavicon } from '@vueuse/core';
-import { createVuetify } from 'vuetify';
-import { md3 } from 'vuetify/blueprints';
-import Index from './facies/index.vue';
-import { createApp, type App } from 'vue';
+import { useFavicon } from '@vueuse/core'
+import { createVuetify } from 'vuetify'
+import { md3 } from 'vuetify/blueprints'
+import Index from './facies/index.vue'
+import { createApp, type App } from 'vue'
 
 useFavicon('/res/picta/favicon.png')
 
@@ -15,35 +15,42 @@ export default createVuetify({
       VNumberInput: {
         controlVariant: 'stacked',
         inset: true
-      }, VBtnToggle: {
+      },
+      VBtnToggle: {
         rounded: true,
         tile: true
-      }, VEmptyState: {
+      },
+      VEmptyState: {
         height: '80%',
         width: '80%'
-      }, VDataTableHeader: {
+      },
+      VDataTableHeader: {
         align: 'start',
         sortable: true,
         sticky: true
-      }, VDialog: {
+      },
+      VDialog: {
         height: '80%',
         width: '80%',
         location: 'center',
         scrim: false,
         scrollable: true
-      }, VSnackbar: {
+      },
+      VSnackbar: {
         rounded: 'pill'
-      }, VChip: {
+      },
+      VChip: {
         closeable: true,
         filter: true,
         pill: true,
         rounded: true,
         tile: true
-      }, VTabsWindowItem: {
+      },
+      VTabsWindowItem: {
         transition: 'v-tab-transition'
       }
     }
   }
-});
+})
 
-export const app: App = createApp(Index);
+export const app: App = createApp(Index)

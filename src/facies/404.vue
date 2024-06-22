@@ -1,37 +1,34 @@
-<script lang='ts'>
-  import { defineComponent } from 'vue';
-  import Nuntius from '../miscella/nuntius';
-  import Cocutor from '../miscella/cocutor';
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Nuntius from '../miscella/nuntius'
+import Cocutor from '../miscella/cocutor'
 
-  export default defineComponent({
-    data() {
-      return {
-        lingua: Cocutor.se.ipse().edatur('lingua')
-      };
-    },
-
-    methods: {
-      recipe(): void {
-        history.back();
-      }
-    },
-
-    mounted(): void {
-      if ([
-        location.href,
-        location.href !== '404'
-      ].all()) {
-        Nuntius.timeo({
-          nomen: '404.vue',
-          error: new Error(`CDIV loco ${ location.href } effectu'st`)
-        });
-      }
+export default defineComponent({
+  data() {
+    return {
+      lingua: Cocutor.se.ipse().edatur('lingua')
     }
-  })
+  },
+
+  methods: {
+    recipe(): void {
+      history.back()
+    }
+  },
+
+  mounted(): void {
+    if ([location.href, location.href !== '404'].all()) {
+      Nuntius.timeo({
+        nomen: '404.vue',
+        error: new Error(`CDIV loco ${location.href} effectu'st`)
+      })
+    }
+  }
+})
 </script>
 
-<template lang='vue'>
-	<v-app>
+<template lang="vue">
+<v-app>
 		<v-container>
 			<v-empty-state :text="lingua === 'anglica' ? 'The requested resource is missing' : 'Quaerenda res abest'"
 				:title="lingua === 'anglica' ? 'Absent page' :  'Absens pagina'"

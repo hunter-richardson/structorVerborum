@@ -185,7 +185,7 @@
         <v-btn v-for='separator in separatores' :key='separator'
                @click="coque({ nomen: 'separator', valor: separator.clavis })"
                :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
-               selected-class='text-primary'>
+               selected-class='text-primary' />
       </v-btn-toggle>
     </v-speed-dial>
   </template>

@@ -20,17 +20,57 @@ export enum Mensa {
   December
 }
 
-export const categoriae: string[] = [ 'actus', 'adiectivum', 'adverbium', 'coniunctio', 'nomen', 'numeramen', 'numerus', 'praepositio', 'pronomen' ];
-export const casus: string[] = [ 'derectus', 'nominativus', 'genitivus', 'dativus', 'accusativus', 'ablativus', 'vocativus', 'locativus' ];
-export const acta: string[] = [ 'infintivus', 'gerundium', 'supinum' ];
-export const genera: string[] = [ 'neutrum', 'masculinum', 'femininum' ];
-export const gradi: string[] = [ 'positivus', 'comparativus', 'superlativus' ];
-export const modi: string[] = [ 'indicativus', 'subiunctivus', 'infinitivus', 'imperativus', 'participalis' ];
-export const numeri: string[] = [ 'singularis', 'pluralis' ];
-export const referenda: string[] = [ 'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum', 'distributivum', 'fractionale' ];
-export const personae: string[] = [ 'prima', 'secunda', 'tertia' ];
-export const tempora: string[] = [ 'praesens', 'infectum', 'futurum', 'perfectum', 'plusquamperfectum', 'exigendum' ];
-export const voces: string[] = [ 'activa', 'passiva' ];
+export const categoriae: string[] = [
+  'actus',
+  'adiectivum',
+  'adverbium',
+  'coniunctio',
+  'nomen',
+  'numeramen',
+  'numerus',
+  'praepositio',
+  'pronomen'
+]
+export const casus: string[] = [
+  'derectus',
+  'nominativus',
+  'genitivus',
+  'dativus',
+  'accusativus',
+  'ablativus',
+  'vocativus',
+  'locativus'
+]
+export const acta: string[] = ['infintivus', 'gerundium', 'supinum']
+export const genera: string[] = ['neutrum', 'masculinum', 'femininum']
+export const gradi: string[] = ['positivus', 'comparativus', 'superlativus']
+export const modi: string[] = [
+  'indicativus',
+  'subiunctivus',
+  'infinitivus',
+  'imperativus',
+  'participalis'
+]
+export const numeri: string[] = ['singularis', 'pluralis']
+export const referenda: string[] = [
+  'numerus',
+  'ordinale',
+  'cardinale',
+  'adverbium',
+  'multiplicativum',
+  'distributivum',
+  'fractionale'
+]
+export const personae: string[] = ['prima', 'secunda', 'tertia']
+export const tempora: string[] = [
+  'praesens',
+  'infectum',
+  'futurum',
+  'perfectum',
+  'plusquamperfectum',
+  'exigendum'
+]
+export const voces: string[] = ['activa', 'passiva']
 
 export function anglicum(valor: string) {
   switch (valor) {
@@ -130,7 +170,7 @@ export function anglicum(valor: string) {
     case 'passiva':
       return 'passive'
     case 'modus':
-      return 'mode';
+      return 'mode'
     case 'vox':
       return 'voice'
     case 'tempus':
@@ -147,6 +187,6 @@ export function anglicum(valor: string) {
     case 'referendum':
       return 'reference'
     default:
-      return '';
+      return ''
   }
 }
