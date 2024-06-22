@@ -30,4 +30,9 @@ jobs:
 #      - name: invenire
 #        run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
 #      - name: emissa
-#        run: find ${locus} -type f
+#        run: local emissa=$(find ${locus} -type f | wc -l)
+#      - name: delere
+#        if: ${{ emissa }} = 0
+#        run: |
+#          printf '::error title=aedificare::defectust'
+#          exit 1
