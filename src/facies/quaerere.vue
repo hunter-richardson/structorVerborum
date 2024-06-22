@@ -6,7 +6,7 @@
   import specere from './specere.vue';
   import loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
-  import type { Verbum } from '../praebeunda/verba';
+  import { Actus, Multiplex, type Verbum } from '../praebeunda/verba';
   import type { ModelRef } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';

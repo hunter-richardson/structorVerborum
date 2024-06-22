@@ -6,7 +6,7 @@
   import { Multiplex, Numeramen, Numerus, Verbum } from '../praebeunda/verba';
   import Tabula from '../tabulae/tabula';
 
-  defineProps<{ id: Hoc; }>();
+  defineProps<Hoc>();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const verba: ModelRef<Hoc[] | undefined, string> = defineModel<Hoc[]>('verba');
