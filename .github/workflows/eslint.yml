@@ -10,12 +10,11 @@
 name: ESLint
 
 on:
-  push:
-    branches: [ "princeps" ]
-  pull_request:
-    # The branches below must be a subset of the branches above
-    branches: [ "princeps" ]
-  schedule:
+  - push
+  - pull_request:
+      # The branches below must be a subset of the branches above
+      branches: [ "princeps" ]
+  - schedule:
     - cron: '37 21 * * 3'
 
 jobs:
@@ -46,6 +45,3 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
-#      - name: vue-tsc-action
-#        uses: keita-hino/vue-tsc-action@main
-
