@@ -1,13 +1,9 @@
 <script setup lang='ts' generic='Hoc extends Multiplex'>
   import Tabula from '../tabulae/tabula';
   import type { Faciendum } from '../praebeunda/interfecta';
+  import type { Eventus } from '../miscella/dictionarium';
 
-  defineProps<{
-    eventus: {
-      referendum: Faciendum<Hoc> | null,
-      categoria: string
-    }
-  }>();
+  const eventus: Eventus = defineProps<{ eventus: Eventus }>().eventus;
 
   type Columnae = {
     title: string,
@@ -15,7 +11,7 @@
     filter: (verbum: Hoc, colamen: string) => boolean
   }[];
 
-  const agendum: Faciendum<Hoc> = eventus.referendum;
+  const agendum: Faciendum<Hoc> = eventus.referendum as Faciendum<Hoc>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
 
@@ -133,67 +129,69 @@
           agendum instanceof Agenda.NumeramenAgendum &&
           numeramen instanceof Numeramen) {
           const referendum: Referendum | null = await (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
-          if (referendum instanceof Numerus) {
-            this.verbum = referendum as Numerus;
-          } else if (referendum instanceof Agenda.NomenAgendum) {
-            this.eventus.referendum = referendum as Agenda.NomenAgendum;
-            this.eventus.categoria = 'nomen';
-          } else if (referendum instanceof Agenda.AdiectivumAgendum) {
-            this.eventus.referendum = referendum as Agenda.AdiectivumAgendum;
-            this.eventus.categoria = 'adiectivum';
-          } else if (referendum instanceof Agenda.Incomparabile) {
-            this.eventus.referendum = referendum as Agenda.Incomparabile;
-            this.eventus.categoria = 'adiectivum';
+          if (referendum) {
+            if (referendum instanceof Numerus) {
+              this.verbum = referendum as Numerus;
+            } else {
+              this.eventus.referendum = referendum;
+              if (referendum instanceof Agenda.NomenAgendum) {
+                this.eventus.categoria = 'nomen';
+              } else if (referendum instanceof Agenda.AdiectivumAgendum) {
+                this.eventus.categoria = 'adiectivum';
+              } else if (referendum instanceof Agenda.Incomparabile) {
+                this.eventus.categoria = 'adiectivum';
+              }
+            }
           }
         }
       }, selige (hoc: Hoc): void {
         this.verbum = hoc;
-      }, async refer (eventus: {
+      }, async refer (res: {
         categoria: string,
         referendum?: string,
         gradus?: string,
         genus?: string;
       }): Promise<void> {
+        let referendum: Referendum | null = null;
         switch (this.figura) {
           case 'actusAgendus':
             if (agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
                 case 'frequentativus':
-                  this.eventus.categoria = eventus.categoria;
-                  this.eventus.referendum = (agendum as Agenda.ActusAgendus).frequentativus();
+                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
                   break;
                 case 'nomen':
-                  this.eventus.categoria = eventus.categoria;
-                  this.eventus.referendum = await (agendum as Agenda.ActusAgendus).nomen();
+                  referendum = await (agendum as Agenda.ActusAgendus).nomen();
                   break;
                 case 'actor':
-                  this.eventus.categoria = eventus.categoria;
-                  this.eventus.referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
+                  referendum = (agendum as Agenda.ActusAgendus).actor(res.genus ?? '');
                   break;
               }
             }
             break;
           case 'nomenActum':
             if (agendum instanceof Agenda.NomenActum) {
-              this.eventus.categoria = eventus.categoria;
-              this.eventus.referendum = await (agendum as Agenda.NomenActum).actus();
+              referendum = await (agendum as Agenda.NomenActum).actus();
             }
             break;
           case 'adiectivumAgendum':
             if (agendum instanceof Agenda.AdiectivumAgendum) {
-              this.eventus.categoria = eventus.categoria;
-              this.eventus.referendum = await (agendum as Agenda.AdiectivumAgendum).probetur({
-                gradus: eventus.gradus ?? '',
-                genus: eventus.genus ?? ''
+              referendum = await (agendum as Agenda.AdiectivumAgendum).probetur({
+                gradus: res.gradus ?? '',
+                genus: res.genus ?? ''
               });
             }
             break;
           case 'incomparabile':
             if (agendum instanceof Agenda.Incomparabile) {
-              this.eventus.categoria = eventus.categoria;
-              this.eventus.referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
+              referendum = (agendum as Agenda.Incomparabile).probetur(res.genus ?? '');
             }
             break;
+        }
+
+        if (referendum) {
+          eventus.referendum = referendum;
+          eventus.categoria = res.categoria;
         }
       }
     }, async mounted (): Promise<void> {

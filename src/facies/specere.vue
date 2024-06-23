@@ -14,12 +14,14 @@
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
   const locutor: Locutor = Locutor.se.ipse();
 
+  const verbum: Verbum | undefined = defineProps({ verbum: Verbum }).verbum;
+
   export default defineComponent({
     components: { gustulare, inflectere },
-    props: { verbum: Verbum },
 
     data (): {
       gustulus: Gustulus,
+      verbum: Verbum | undefined,
       eventus: Eventus | undefined,
       anglica: boolean,
       propriabile: boolean,
@@ -30,6 +32,7 @@
     } {
       return {
         gustulus: new Gustulus({}),
+        verbum: verbum,
         eventus: eventus.value,
         anglica: lingua === 'anglica',
         propriabile: false,
@@ -67,16 +70,16 @@
           }
         }
       }, adde (): void {
-        if (this.verbum) {
+        if (verbum) {
           if ([ this.multiplex, this.encliticum ].all()) {
-            (this.verbum as Multiplex).encliticum = this.encliticum;
+            (verbum as Multiplex).encliticum = this.encliticum;
           }
 
-          locutor.addatur(this.verbum);
+          locutor.addatur(verbum);
         }
       }, addeProprium (): void {
-        if (this.verbum && this.propriabile) {
-          this.verbum.scriptum = this.verbum.scriptum.capitalize();
+        if (verbum && this.propriabile) {
+          verbum.scriptum = verbum.scriptum.capitalize();
         }
 
         this.adde();
@@ -84,14 +87,14 @@
     },
 
     mounted(): void {
-      this.multiplex = this.verbum ? this.verbum instanceof Multiplex : false;
-      this.valores = this.multiplex ? (this.verbum as Multiplex)?.valores() : [];
+      this.multiplex = verbum ? verbum instanceof Multiplex : false;
+      this.valores = this.multiplex ? (verbum as Multiplex)?.valores() : [];
 
       this.propriabile = [
         this.multiplex, [
           'nomen', 'adiectivum'
-        ].includes(this.verbum?.categoria ?? ''),
-        !this.verbum?.scriptum.isCapitalized()
+        ].includes(verbum?.categoria ?? ''),
+        !verbum?.scriptum.isCapitalized()
       ].all();
     }
   });
@@ -103,7 +106,7 @@
 		<inflectere :eventus='eventus' @blur='eventus = undefined;' />
 	</template>
   <v-dialog v-if='verbum'>
-    <v-card :title='verbum?.scriptum' :subtitle='verbum?.categoria.capitalize()'>
+    <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>
       <template v-if='multiplex'>
         <v-chip-group>
           <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"
@@ -114,7 +117,7 @@
                   :items='enclitica' chips flat open-on-clear />
       </template>
       <v-btn-toggle>
-        <template v-if='verbum?.paratumne()'>
+        <template v-if='verbum.paratumne()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde();'
                  :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'" />
         </template>
@@ -122,10 +125,10 @@
           <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium();'
                  :text="anglica ? 'Add this to my phrase as a proper name' : 'Adde hoc locutioni ut proprium'" />
         </template>
-        <template v-else-if="verbum?.categoria === 'numerus'">
+        <template v-else-if="verbum.categoria === 'numerus'">
           <v-btn icon='quick_reference' id='aperi' @click='aperi();' :text="anglica ? 'Open' : 'Refer'" />
         </template>
-        <template v-else-if="verbum?.categoria === 'actus' &&
+        <template v-else-if="verbum.categoria === 'actus' &&
           valores.includes('participalis')">
           <v-btn icon='quick_reference' id='aperi' @click='aperi();'
                  :text="anglica ? 'Particple' : 'Participalis'" />
