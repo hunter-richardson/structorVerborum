@@ -23,46 +23,38 @@
     separator: ''
   };
 
-  export default defineComponent({
-    components: {
-      gustulare, quaerere, numerare, calculare
-    },
+  const annuli: {
+    titula: string,
+    valor: string
+  }[] = [];
 
-    data () {
+  const separatores = [
+    {
+      clavis: 'inane',
+      valor: '_'
+    }, {
+      clavis: 'interpunctum',
+      valor: '·'
+    }, {
+      clavis: 'nullum',
+      valor: ' '
+    },
+  ];
+
+  export default defineComponent({
+    components: { gustulare, quaerere, numerare, calculare },
+
+    data() {
       return {
         name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
         gustulus: new Gustulus({}),
-        annulus: '',
         locutionis: locutor.locutust(),
         referret: referretne(),
         transduceret: transduceretne(),
         crustula: crustula,
-
-        annuli: [
-          {
-            titula: crustula.lingua === 'anglica' ? 'Search' : 'Quaerere',
-            valor: 'quaerere'
-          }, {
-            titula: crustula.lingua === 'anglica' ? 'Ennumerate' : 'Numerare',
-            valor: 'numerare'
-          }, {
-            titula: crustula.lingua === 'anglica' ? 'Calculate' : 'Calculare',
-            valor: 'calculare'
-          }
-        ],
-
-        separatores: [
-          {
-            clavis: 'inane',
-            valor: '_'
-          }, {
-            clavis: 'interpunctum',
-            valor: '·'
-          }, {
-            clavis: 'nullum',
-            valor: ' '
-          },
-        ]
+        annuli: annuli,
+        separatores: separatores,
+        annulus: ''
       };
     },
 
@@ -157,13 +149,26 @@
           utendaU: cocutor.edatur('utendaU') ?? 'ita',
           separator: cocutor.edatur('separator') ?? 'inane'
         };
+
+        this.annuli = [
+          {
+            titula: crustula.lingua === 'anglica' ? 'Search' : 'Quaerere',
+            valor: 'quaerere'
+          }, {
+            titula: crustula.lingua === 'anglica' ? 'Ennumerate' : 'Numerare',
+            valor: 'numerare'
+          }, {
+            titula: crustula.lingua === 'anglica' ? 'Calculate' : 'Calculare',
+            valor: 'calculare'
+          }
+        ];
       }
     }
   });
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
   <template v-if="crustula.assensus === 'assensit'">
     <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
       <template v-slot:activator='{ props: activator }'>
@@ -232,7 +237,7 @@
         <quaerere />
       </v-tabs-window-item>
       <v-tabs-window-item value='numerare'>
-        <numerare />
+        <numerare :numerus=0 />
       </v-tabs-window-item>
       <v-tabs-window-item value='calculare'>
         <calculare />

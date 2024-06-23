@@ -1,8 +1,8 @@
-import Ignavum from '../../miscella/ignavum'
-import Nuntius from '../../miscella/nuntius'
-import { Multiplex } from '../../praebeunda/verba'
-import Tabula from '../tabula'
-import { type Colamen } from '../../praebeunda/agenda'
+import Ignavum from '../../miscella/ignavum';
+import Nuntius from '../../miscella/nuntius';
+import { Multiplex } from '../../praebeunda/verba';
+import Tabula from '../tabula';
+import type { Colamen } from '../../praebeunda/agenda'
 
 @Nuntius.factum('TabulaDefecta')
 export default abstract class TabulaDefecta<Hoc extends Multiplex> extends Tabula<Hoc> {

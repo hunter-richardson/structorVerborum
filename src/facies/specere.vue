@@ -16,11 +16,10 @@
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
 
   export default defineComponent({
-    components: {
-      gustulare, inflectere
-    },
+    components: { gustulare, inflectere },
+    props: [ 'verbum' ],
 
-    data () {
+    data() {
       return {
         gustulus: new Gustulus({}),
         verbum: verbum.value,
@@ -64,9 +63,9 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
 	<template v-if='eventus'>
-		<inflectere v-model='eventus' @blur='eventus = undefined;' />
+		<inflectere :eventus='eventus' @blur='eventus = undefined;' />
 	</template>
   <v-dialog v-if='verbum'>
     <v-card :title='verbum?.scriptum' :subtitle='verbum?.categoria.capitalize()'>

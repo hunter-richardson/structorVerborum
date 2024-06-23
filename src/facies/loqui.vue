@@ -14,29 +14,26 @@
   const Please = require('pleasejs');
   const ClassifyX = require('classifyx')
 
-  export default defineComponent({
-    component: {
-      draggable,
-      gustulare
-    },
+  const pellucidum = ClassifyX({
+    opacity: 0.5,
+    background: Please.make_color({
+      value: illustre ? 0.25 : 0.75
+    })
+  });
 
-    data () {
+  export default defineComponent({
+    component: { draggable, gustulare },
+
+    data() {
       return {
         trahens: false,
-        pellucidum: ClassifyX({
-          opacity: 0.5,
-          background: Please.make_color({
-            value: illustre ? 0.25 : 0.75
-          })
-        }),
-        lingua: Cocutor.se.ipse().edatur('lingua'),
         gustulus: new Gustulus({}),
         verba: locutor.verba,
+        pellucidum: pellucidum
       };
     },
 
     methods: {
-
       remove (unicum: symbol): void {
         locutor.removeatur(unicum);
       }
@@ -45,7 +42,7 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
 	<v-chip-group id='locutio'>
 		<draggable v-model='verba' :ghost-class='pellucidum' @start='trahens = true' @end='trahens = false'>
 			<span :class="'mr-2'.concat(trahens ? 'cursor-grab' : 'cursor-grabbing')">
@@ -53,7 +50,7 @@
 					<v-chip :v-bind:key='verbum' @click:close='remove(verbum.unicum);' close-icon='remove'
 						:text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
 				</template>
-</span>
-</draggable>
-</v-chip-group>
+      </span>
+    </draggable>
+  </v-chip-group>
 </template>

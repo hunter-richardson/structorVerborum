@@ -1,8 +1,8 @@
-import file from 'file-fetch'
-import path from 'path'
-import Nuntius from '../miscella/nuntius'
-import * as Verba from '../praebeunda/verba'
-import { type Agendum } from '../praebeunda/agenda'
+import file from 'file-fetch';
+import path from 'path';
+import Nuntius from '../miscella/nuntius';
+import * as Verba from '../praebeunda/verba';
+import type { Agendum } from '../praebeunda/agenda'
 
 export function LectorAgendorum<Illud extends Verba.Multiplex>(
   scapum?: string

@@ -1,8 +1,8 @@
-import TabulaDefecta from './defecta'
-import Ignavum from '../../miscella/ignavum'
-import { Nomen } from '../../praebeunda/verba'
-import Tabula from '../tabula'
-import { type Colamen } from '../../praebeunda/agenda'
+import TabulaDefecta from './defecta';
+import Ignavum from '../../miscella/ignavum';
+import { Nomen } from '../../praebeunda/verba';
+import Tabula from '../tabula';
+import type { Colamen } from '../../praebeunda/agenda'
 
 export default class TabulaProna extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {

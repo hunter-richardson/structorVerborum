@@ -6,15 +6,15 @@
   import specere from './specere.vue';
   import loqui from './loqui.vue';
   import Cocutor from '../miscella/cocutor';
-  import { Actus, Multiplex, type Verbum } from '../praebeunda/verba';
+  import type { Verbum } from '../praebeunda/verba';
   import type { ModelRef } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
 
-  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
 
-  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
 
   const lemmae: Lemma[] = [];
@@ -23,60 +23,68 @@
     pars: ''
   };
 
-  export default defineComponent({
-    components: {
-      gustulare, inflectere, specere, loqui
-    },
+  const Categoriae: {
+    title: string,
+    value: string
+  }[] = categoriae.map(categoria => {
+    return {
+      title: (this.anglica ? anglicum(categoria) : categoria).capitalize(),
+      value: categoria
+    };
+  });
 
-    data () {
+  const columnae: {
+    title: string,
+    key: string,
+    filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, quaerendum: string[]) => boolean)
+  }[] = [
+    {
+      latinum: 'lemma',
+      anglicum: 'term',
+      cultor: (verbum: Verbum, quaerendum: string): boolean => {
+        return verbum.scriptum.includes(quaerendum);
+      }
+    }, {
+      latinum: 'categoriae',
+      anglicum: 'categories',
+      cultor: (verbum: Verbum, selecta: string[]): boolean => {
+        return selecta.includes(verbum.categoria);
+      }
+    }
+  ].map(columna => {
+    return {
+      title: (this.anglica ? columna.anglicum : columna.latinum).capitalize(),
+      filter: columna.cultor,
+      key: columna.latinum
+    };
+  });
+
+  const validator: ((pars: string) => boolean | string)[] = [
+    (pars: string): boolean | string => {
+      const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/;
+      const validum: boolean = licta.test(pars.toLowerCase());
+      const error: string = this.anglica ?
+        'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
+      return validum || error;
+    }
+  ];
+
+  export default defineComponent({
+    components: { gustulare, inflectere, specere, loqui },
+
+    data() {
       return {
         gustulus: new Gustulus({}),
-        anglica: lingua === 'anglica',
+        anglica: anglica,
         lemmae: lemmae,
         onerans: true,
         error: false,
         verbum: verbum.value,
         eventus: eventus.value,
         quaerenda: quaerenda,
-        categoriae: categoriae.map(categoria => {
-          return {
-            title: (this.anglica ? anglicum(categoria) : categoria).capitalize(),
-            value: categoria
-          };
-        }),
-
-        columnae: [
-          {
-            latinum: 'lemma',
-            anglicum: 'term',
-            cultor: (verbum: Verbum, quaerendum: string): boolean => {
-              return verbum.scriptum.includes(quaerendum);
-            }
-          }, {
-            latinum: 'categoriae',
-            anglicum: 'categories',
-            cultor: (verbum: Verbum, selecta: string[]): boolean => {
-              return selecta.includes(verbum.categoria);
-            }
-          }
-        ].map(columna => {
-          return {
-            title: (this.anglica ? columna.anglicum : columna.latinum).capitalize(),
-            filter: columna.cultor,
-            key: columna.latinum
-          };
-        }),
-
-
-        validator: [
-          (pars: string): boolean | string => {
-            const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/;
-            const validum: boolean = licta.test(pars.toLowerCase());
-            const error: string = this.anglica ?
-              'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
-            return validum || error;
-          }
-        ]
+        categoriae: Categoriae,
+        columnae: columnae,
+        validator: validator
       };
     },
 
@@ -122,13 +130,13 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
   <loqui />
   <template v-if='verbum'>
-    <specere v-model='verbum' @blur='verbum = undefined;' />
+    <specere :verbum='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else-if='eventus'>
-    <inflectere v-model='eventus' @blur='eventus = undefined;' />
+    <inflectere :eventus='eventus' @blur='eventus = undefined;' />
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'

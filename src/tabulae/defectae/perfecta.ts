@@ -1,7 +1,7 @@
-import TabulaDefecta from './defecta'
-import { numeri, personae, tempora } from '../../miscella/enumerationes'
-import { Actus } from '../../praebeunda/verba'
-import { type Colamen } from '../../praebeunda/agenda'
+import TabulaDefecta from './defecta';
+import { numeri, personae, tempora } from '../../miscella/enumerationes';
+import { Actus } from '../../praebeunda/verba';
+import type { Colamen } from '../../praebeunda/agenda'
 
 export default class TabulaPerfecta extends TabulaDefecta<Actus> {
   static apponatur(): Colamen<Actus>[] {

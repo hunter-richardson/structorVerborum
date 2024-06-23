@@ -20,28 +20,27 @@
     romanus: 'N'
   };
 
+  const actus: string[][] = [
+    [ ' I ', ' C ', ' · ', ' + ' ],
+    [ ' V ', ' D ', ' : ', ' - ' ],
+    [ ' X ', ' M ', ' ∴ ', ' • ' ],
+    [ ' L ', ' | ', ' × ', ' ÷ ' ],
+    [ ' = ', ' N ', ' S ', ' % ' ]
+  ];
+
   export default defineComponent({
-    components: {
-      gustulare,
-      specere
-    },
+    components: { gustulare, specere },
+    props: [ 'numerus' ],
 
     data() {
-      return  {
+      return {
         gustulus: new Gustulus({}),
-        numerus: numerus,
+        numerus: numerus.value,
         operator: operator,
         praevii: nihil,
         praesentes: nihil,
         nihil: nihil,
-
-        actus: [
-          [ ' I ', ' C ', ' · ', ' + ' ],
-          [ ' V ', ' D ', ' : ', ' - ' ],
-          [ ' X ', ' M ', ' ∴ ', ' • ' ],
-          [ ' L ', ' | ', ' × ', ' ÷ ' ],
-          [ ' = ', ' N ', ' S ', ' % ' ]
-        ]
+        actus: actus
       };
     },
 
@@ -112,9 +111,9 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
   <template v-if='this.numerus'>
-    <specere v-model='this.numerus'
+    <specere :verbum='this.numerus'
              @blur='this.numerus = null;' />
   </template>
   <template v-if='this.praevii.anglicus'>

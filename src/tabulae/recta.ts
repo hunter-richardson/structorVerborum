@@ -1,9 +1,9 @@
-import TabulaScapalis from './scapalis'
-import Tabula from './tabula'
-import Nuntius from '../miscella/nuntius'
-import { Multiplex } from '../praebeunda/verba'
+import TabulaScapalis from './scapalis';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
 import type { Colamen, Positor } from '../praebeunda/agenda'
-import { type Faciendum } from '../praebeunda/interfecta'
+import type { Faciendum } from '../praebeunda/interfecta'
 
 type Radicator<Hoc, Illud> = (hoc: Hoc, colamen: Colamen<Illud>) => string
 

@@ -1,9 +1,9 @@
-import { casus, genera, gradi } from '../../../miscella/enumerationes'
-import Ignavum from '../../../miscella/ignavum'
-import { Adiectivum } from '../../../praebeunda/verba'
-import Tabula from '../../tabula'
-import TabulaDefecta from '../defecta'
-import { type Colamen } from '../../../praebeunda/agenda'
+import { casus, genera, gradi } from '../../../miscella/enumerationes';
+import Ignavum from '../../../miscella/ignavum';
+import { Adiectivum } from '../../../praebeunda/verba';
+import Tabula from '../../tabula';
+import TabulaDefecta from '../defecta';
+import type { Colamen } from '../../../praebeunda/agenda'
 
 type Optanda = {
   relata: Ignavum<Tabula<Adiectivum>>

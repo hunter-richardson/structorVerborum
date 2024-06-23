@@ -1,10 +1,10 @@
-import listFiles from 'list-files-in-dir'
-import path from 'path'
-import Lector from './lector'
-import Ignavum from '../miscella/ignavum'
-import Nuntius from '../miscella/nuntius'
-import * as Agenda from '../praebeunda/agenda'
-import { type Lectum } from '../praebeunda/interfecta'
+import listFiles from 'list-files-in-dir';
+import path from 'path';
+import Lector from './lector';
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import * as Agenda from '../praebeunda/agenda';
+import type { Lectum } from '../praebeunda/interfecta'
 
 @Nuntius.factum('LectorVerbalis')
 export default class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {

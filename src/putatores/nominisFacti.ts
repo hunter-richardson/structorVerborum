@@ -1,11 +1,11 @@
-import Ignavum from '../miscella/ignavum'
-import Nuntius from '../miscella/nuntius'
-import { NomenActum } from '../praebeunda/agenda'
-import { Nomen } from '../praebeunda/verba'
-import TabulaProna from '../tabulae/defectae/prona'
-import TabulaRecta from '../tabulae/recta'
-import Tabula from '../tabulae/tabula'
-import { type Putaturum } from './putaturum'
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import { NomenActum } from '../praebeunda/agenda';
+import { Nomen } from '../praebeunda/verba';
+import TabulaProna from '../tabulae/defectae/prona';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import type { Putaturum } from './putaturum'
 
 type Percolamen = {
   actum: string

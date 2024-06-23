@@ -1,17 +1,19 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Gustulus from '../scriptura/gustulus'
-import type { ModelRef } from 'vue'
+  import { defineComponent } from 'vue'
+  import Gustulus from '../scriptura/gustulus'
+  import type { ModelRef } from 'vue'
 
-const gustulus: ModelRef<Gustulus | undefined, string> = defineModel<Gustulus>()
+  const gustulus: ModelRef<Gustulus | undefined, string> = defineModel<Gustulus>()
 
-export default defineComponent({
-  data() {
-    return {
-      gustulus: gustulus
+  export default defineComponent({
+    props: [ 'gustulus' ],
+
+    data() {
+      return {
+        gustulus: gustulus.value
+      }
     }
-  }
-})
+  })
 </script>
 
 <template>

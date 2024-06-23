@@ -1,20 +1,49 @@
-<script setup lang='ts' generic='Hoc extends Multiplex'>
-  import * as Agenda from '../praebeunda/agenda';
+<script lang='ts'>
+  // eslint-disable @typescript-eslint/no-unused-vars
 
-  import type { Faciendum, Referendum } from '../praebeunda/interfecta';
-  import { type Eventus } from '../miscella/dictionarium';
-  import { Multiplex, Numeramen, Numerus, Verbum } from '../praebeunda/verba';
+  import type { ModelRef } from 'vue';
+  import { defineModel } from 'vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import specere from './specere.vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import gustulare from './gustulare.vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import Gustulus from '../scriptura/gustulus';
+  import type { Eventus } from '../miscella/dictionarium';
+  import { Multiplex, Verbum } from '../praebeunda/verba';
+  import Cocutor from '../miscella/cocutor';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import { genera, gradi, anglicum } from '../miscella/enumerationes';
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const HorizontalScroll = require('vue-horizontal-scroll');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const seligenda: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const selecta: string[] = [];
+</script>
+
+<script setup lang='ts' generic='Hoc extends Multiplex'>
+  import { defineComponent } from 'vue';
   import Tabula from '../tabulae/tabula';
+  import type { Faciendum } from '../praebeunda/interfecta';
 
   defineProps<Hoc>();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const verba: ModelRef<Hoc[] | undefined, string> = defineModel<Hoc[]>('verba');
-
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
+</script>
+
+<script lang='ts'>
+  import * as Agenda from '../praebeunda/agenda';
+  import { Numeramen, Numerus } from '../praebeunda/verba';
 
   let figura: string = '';
   switch (true) {
@@ -28,74 +57,59 @@
       figura = 'incomparabile';
       break;
     case agendum instanceof Agenda.NomenActum:
-      figura = 'nomenFactum';
+      figura = 'nomenActum';
       break;
     case agendum instanceof Agenda.NumeramenAgendum:
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       figura = 'numeramenAgendum';
       break;
   }
-</script>
 
-<script lang='ts'>
-  import { defineComponent, defineModel } from 'vue';
-  import spectere from './specere.vue';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import { genera, gradi, anglicum } from '../miscella/enumerationes';
-  import Cocutor from '../miscella/cocutor';
-  import type { ModelRef } from 'vue';
-  import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
+  const et: {
+    gradus: string, genus: string
+  } = {
+    gradus: '',
+    genus: ''
+  };
 
-  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
-  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+  const columnae: {
+    title: string,
+    key: string,
+    filter (verbum: Multiplex, colamen: string) => boolean
+  }[] = Multiplex.colamina(categoria).map(columna => {
+    return {
+      title: (this.anglica ? anglicum(columna) : columna).toUpperCase(),
+      key: columna,
 
-  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
-  const categoria: string = eventus.value?.categoria ?? '';
-
-  const seligenda: string[] = [];
-  const selecta: string[] = [];
-
-  const HorizontalScroll = require('vue-horizontal-scroll')
+      filter: (verbum: Multiplex, colamen: string): boolean => {
+        return verbum.valores().includes(colamen);
+      }
+    }
+  });
 
   export default defineComponent({
-    components: {
-      HorizontalScroll, gustulare, spectere
-    },
+    components: { HorizontalScroll, gustulare, specere },
+    props: [ 'eventus' ],
 
-    data () {
+    data() {
       return {
         anglica: lingua === 'anglica',
         gustulus: new Gustulus({}),
-        categoria: categoria,
+        categoria: eventus.value?.categoria ?? '',
         figura: figura,
         seligenda: seligenda,
         selecta: selecta,
-        verba: verba,
-        eventus: eventus,
-        verbum: verbum,
+        haec: tabula.tabulentur(),
+        eventus: eventus.value,
+        verbum: verbum.value,
         onerans: true,
-        et: {
-          gradus: '',
-          genus: ''
-        },
-
-        columnae: Multiplex.colamina(categoria).map(columna => {
-          return {
-            title: (this.anglica ? anglicum(columna) : columna).toUpperCase(),
-            key: columna,
-
-            filter: (verbum: Multiplex, colamen: string): boolean => {
-              return verbum.valores().includes(colamen);
-            }
-          };
-        })
+        columnae: columnae,
+        et: et,
       };
     },
 
     methods: {
       async omnes (): Promise<Hoc[]> {
-        return await tabula?.tabulentur() ?? [];
+        return await tabula.tabulentur() ?? [];
       },
 
       async cole (): Promise<void> {
@@ -164,7 +178,7 @@
               }
             }
             break;
-          case 'nomenFactum':
+          case 'nomenActum':
             if (agendum instanceof Agenda.NomenActum) {
               referendum = (agendum as Agenda.NomenActum).actus();
             }
@@ -194,10 +208,10 @@
     },
 
     async mounted (): Promise<void> {
-      this.verba = await this.omnes();
+      this.haec = await this.omnes();
 
       this.seligenda = [
-        ...new Set((this.verba as Hoc[])
+        ...new Set((this.haec as Hoc[])
           .map(verbum => verbum.valores())
           .map(valor => Object.values(valor))
           .flat())
@@ -209,9 +223,9 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
   <template v-if='verbum'>
-    <spectere v-model='verbum' @blur='verbum = undefined;' />
+    <specere :verbum='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else>
     <div id='colamina'>
@@ -236,7 +250,7 @@
                @click="refer({ categoria: 'nomen', referendum: 'actor', genus: 'femininum' });" />
       </v-btn-toggle>
     </template>
-    <template v-else-if="figura === 'nomenFactum'">
+    <template v-else-if="figura === 'nomenActum'">
       <v-btn append-icon='sprint' id='actus' :text="anglica ? 'Verb' : 'Actus'"
              @click="refer({ categoria: 'actus' });" />
     </template>
@@ -270,20 +284,20 @@
         </template>
       </span>
     </template>
-    <v-data-table :items='verba' :loading='onerans' :headers='columnae' density='compact'
+    <v-data-table :items='haec' :loading='onerans' :headers='columnae' density='compact'
                   id='tabula' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
         <v-skeleton-loader :loading-text="anglica ? 'Loading words...' : 'Verba onerantur...'"
                            :loading='onerans' type='table-tbody' />
       </template>
-      <template v-if='!onerans' v-slot:item='item'>
+      <template v-if='!onerans' v-slot:item='hoc'>
         <template v-if="figura === 'numeramenAgendum'">
           <v-btn :text="anglica ? 'Open' : 'Refer'" append-icon='open_in_full' id='numeramen'
-                 @click='numeramen(item.item);' />
+                 @click='numeramen(hoc.item);' />
         </template>
         <template v-else>
           <v-btn :text="anglica ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-                 :id="`selige_${item.item.unicum.toString()}`" @click='selige(item.item)' />
+                 :id="`selige_${hoc.item.unicum.toString()}`" @click='selige(hoc.item)' />
         </template>
       </template>
     </v-data-table>

@@ -1,16 +1,16 @@
-import deepEqual from 'deep-equal'
-import Ignavum from './ignavum'
-import Nuntius from './nuntius'
-import Actus from '../anomala/actus'
-import Adiectiva from '../anomala/adiectiva'
-import Nomina from '../anomala/nomina'
-import Pronomina from '../anomala/pronomina'
-import LectorVerbalis from '../lectores/verbalis'
-import { LectorVerbi } from '../lectores/verbi'
-import * as Agenda from '../praebeunda/agenda'
-import { Verbum, type Pronomen } from '../praebeunda/verba'
-import { type Referendum } from '../praebeunda/interfecta'
-import { type Mantela } from '../anomala/anomala'
+import deepEqual from 'deep-equal';
+import Ignavum from './ignavum';
+import Nuntius from './nuntius';
+import Actus from '../anomala/actus';
+import Adiectiva from '../anomala/adiectiva';
+import { Mantela } from '../anomala/anomala';
+import Nomina from '../anomala/nomina';
+import Pronomina from '../anomala/pronomina';
+import LectorVerbalis from '../lectores/verbalis';
+import { LectorVerbi } from '../lectores/verbi';
+import * as Agenda from '../praebeunda/agenda';
+import type { Verbum, Pronomen } from '../praebeunda/verba'
+import type { Referendum } from '../praebeunda/interfecta'
 
 export type Lemma = {
   categoria: string

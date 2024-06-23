@@ -1,7 +1,7 @@
-import Tabula from './tabula'
-import Nuntius from '../miscella/nuntius'
-import { Multiplex } from '../praebeunda/verba'
-import { type Faciendum } from '../praebeunda/interfecta'
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type { Faciendum } from '../praebeunda/interfecta'
 
 type Factor<Hoc, Illud> = (hoc: Hoc) => Illud
 

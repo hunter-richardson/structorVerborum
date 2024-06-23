@@ -1,10 +1,10 @@
-import TabulaRecta from './recta'
-import Tabula from './tabula'
-import Nuntius from '../miscella/nuntius'
-import { Multiplex } from '../praebeunda/verba'
-import { type Positor } from '../praebeunda/agenda'
-import { type Faciendum } from '../praebeunda/interfecta'
-import { type Radicator } from '../putatores/putaturum'
+import TabulaRecta from './recta';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type { Positor } from '../praebeunda/agenda'
+import type { Faciendum } from '../praebeunda/interfecta'
+import type { Radicator } from '../putatores/putaturum'
 
 type Optanda<Hoc extends Faciendum<Illud>, Illud extends Multiplex> = {
   prima: {

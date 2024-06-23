@@ -11,32 +11,36 @@
   const cocutor: Cocutor = Cocutor.se.ipse();
 
   const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
+  const arabicus: {
+    integer: number,
+    numerator: number,
+    denominator: number
+  } = {
+    integer: 0,
+    numerator: 0,
+    denominator: 12
+  };
+
+  const validator: ((arabicus: number) => boolean | string)[] = [
+    (arabicus: number): boolean | string => {
+      const error: string = this.anglica ?
+        'Only Roman numerals allowed' : 'Romani numeri soli licuntur';
+      return Number.isInteger(arabicus) || error;
+    }
+  ];
 
   export default defineComponent({
-    components: {
-      gustulare,
-      specere
-    },
+    components: { gustulare, specere },
+    props: [ 'numerus' ],
 
-    data () {
+    data() {
       return {
         gustulus: new Gustulus({}),
-        romanus: '',
         anglica: cocutor.edatur('lingua') === 'anglica',
-        numerus: numerus,
-        arabicus: {
-          integer: 0,
-          numerator: 0,
-          denominator: 12
-        },
-
-        validator: [
-          (arabicus: number): boolean | string => {
-            const error: string = this.anglica ?
-              'Only Roman numerals allowed' : 'Romani numeri soli licuntur';
-            return Number.isInteger(arabicus) || error;
-          }
-        ]
+        numerus: numerus.value,
+        validator: validator,
+        arabicus: arabicus,
+        romanus: ''
       };
     },
 
@@ -59,9 +63,9 @@
 </script>
 
 <template lang='vue'>
-	<gustulare v-model='gustulus' />
+	<gustulare :gustulus='gustulus' />
 	<template v-if='numerus'>
-		<specere v-model='numerus' @blur='numerus = undefined' />
+		<specere :verbum='numerus' @blur='numerus = undefined' />
 	</template>
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />

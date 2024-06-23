@@ -1,10 +1,10 @@
-import deepEqual from 'deep-equal'
-import { valedictor } from './collata'
-import Tabula from './tabula'
-import Ignavum from '../miscella/ignavum'
-import Nuntius from '../miscella/nuntius'
-import { Multiplex } from '../praebeunda/verba'
-import { type Positor } from '../praebeunda/agenda'
+import deepEqual from 'deep-equal';
+import { valedictor } from './collata';
+import Tabula from './tabula';
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type { Positor } from '../praebeunda/agenda'
 
 type Optanda<Hoc extends Multiplex> = {
   prima: Ignavum<Tabula<Hoc>>

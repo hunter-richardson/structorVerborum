@@ -1,9 +1,14 @@
-import TabulaDefecta from './defecta'
-import { numeri, personae, tempora, voces } from '../../miscella/enumerationes'
-import Ignavum from '../../miscella/ignavum'
-import { Actus } from '../../praebeunda/verba'
-import Tabula from '../tabula'
-import { type Colamen } from '../../praebeunda/agenda'
+import TabulaDefecta from './defecta';
+import {
+  numeri,
+  personae,
+  tempora,
+  voces
+  } from '../../miscella/enumerationes';
+import Ignavum from '../../miscella/ignavum';
+import { Actus } from '../../praebeunda/verba';
+import Tabula from '../tabula';
+import type { Colamen } from '../../praebeunda/agenda'
 
 type Optanda = {
   relata: Ignavum<Tabula<Actus>>

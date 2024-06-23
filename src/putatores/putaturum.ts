@@ -1,7 +1,7 @@
-import { Multiplex } from '../praebeunda/verba'
-import Tabula from '../tabulae/tabula'
-import { type Colamen } from '../praebeunda/agenda'
-import { type Faciendum } from '../praebeunda/interfecta'
+import { Multiplex } from '../praebeunda/verba';
+import Tabula from '../tabulae/tabula';
+import type { Colamen } from '../praebeunda/agenda'
+import type { Faciendum } from '../praebeunda/interfecta'
 
 export type Radicator<Hoc, Illud> = (hoc: Hoc, percolamen: Colamen<Illud>) => string
 
