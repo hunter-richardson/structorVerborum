@@ -9,10 +9,12 @@ jobs:
     strategy:
       fail-fast: true
     steps:
-      - uses: actions/checkout@v4
+      - name: vellere
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - name: tollere
+        uses: actions/setup-node@v4
         with:
           node-version: 'latest'
       - name: inaugurare
