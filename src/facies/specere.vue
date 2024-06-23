@@ -1,35 +1,42 @@
 <script lang='ts'>
-  import { defineComponent, defineModel } from 'vue';
+  import { defineComponent, defineModel, type ModelRef } from 'vue';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';
   import Locutor from '../miscella/locutor';
   import inflectere from './inflectere.vue';
   import Cocutor from '../miscella/cocutor';
+  import { Encliticum } from '../miscella/enumerationes';
   import type { Eventus } from '../miscella/dictionarium';
   import type { NumeramenAgendum } from '../praebeunda/agenda';
-  import type { ModelRef } from 'vue';
-  import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
 
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
-
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
-  const multiplex: boolean = false;
-  const valores: string[] = []
-
-  defineProps({ verbum: Verbum });
+  const locutor: Locutor = Locutor.se.ipse();
 
   export default defineComponent({
     components: { gustulare, inflectere },
-    props: [ 'verbum' ],
+    props: { verbum: Verbum },
 
-    data() {
+    data (): {
+      gustulus: Gustulus,
+      eventus: Eventus | undefined,
+      anglica: boolean,
+      propriabile: boolean,
+      multiplex: boolean,
+      valores: string[],
+      enclitica: string[],
+      encliticum: string
+    } {
       return {
         gustulus: new Gustulus({}),
         eventus: eventus.value,
         anglica: lingua === 'anglica',
-        multiplex: multiplex,
-        valores: valores,
-        locutor: Locutor.se.ipse()
+        propriabile: false,
+        multiplex: false,
+        valores: [],
+        enclitica: Object.keys(Encliticum),
+        encliticum: ''
       };
     },
 
@@ -37,7 +44,7 @@
       async aperi (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus': {
-            const actus: Actus = verbum as Actus;
+            const actus: Actus = this.verbum as Actus;
             if (actus.modus === 'participium') {
               this.eventus = {
                 referendum: await actus.participialis(),
@@ -48,7 +55,7 @@
             break;
           }
           case 'numerus': {
-            const numerus: Numerus = verbum as Numerus;
+            const numerus: Numerus = this.verbum as Numerus;
             const agendum: NumeramenAgendum | null = await numerus.numeramen();
             if (agendum) {
               this.eventus = {
@@ -59,12 +66,33 @@
             break;
           }
         }
+      }, adde (): void {
+        if (this.verbum) {
+          if ([ this.multiplex, this.encliticum ].all()) {
+            (this.verbum as Multiplex).encliticum = this.encliticum;
+          }
+
+          locutor.addatur(this.verbum);
+        }
+      }, addeProprium (): void {
+        if ([ this.verbum, this.propriabile ].all()) {
+          this.verbum.scriptum = this.verbum.scriptum.capitalize();
+        }
+
+        this.adde();
       }
     },
 
     mounted(): void {
-      this.multiplex = this.verbum.value instanceof Multiplex;
-      this.valores = this.multiplex ? (this.verbum.value as Multiplex)?.valores() : [];
+      this.multiplex = this.verbum ? this.verbum instanceof Multiplex : false;
+      this.valores = this.multiplex ? (this.verbum as Multiplex)?.valores() : [];
+
+      this.propriabile = [
+        this.multiplex, [
+          'nomen', 'adiectivum'
+        ].includes(verbum?.categoria),
+        !verbum?.scriptum.isCapitalized()
+      ].all();
     }
   });
 </script>
@@ -81,13 +109,20 @@
           <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
+        <v-select density='compact' id='enclitica' v-model='encliticum'
+                  :title="anglica ? 'Enclitics' : 'Enclitica'"
+                  :items='enclitica' chips flat open-on-clear />
       </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
-          <v-btn icon='chat_add_on' :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'"
-                 id='adde' @click='locutor.addatur(verbum as Verbum);' />
+          <v-btn icon='chat_add_on' id='adde' @click='adde();'
+                 :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'" />
         </template>
-        <template v-if="verbum?.categoria === 'numerus'">
+        <template v-if='propriabile'>
+          <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium();'
+                 :text="anglica ? 'Add this to my phrase as a proper name' : 'Adde hoc locutioni ut proprium'" />
+        </template>
+        <template v-else-if="verbum?.categoria === 'numerus'">
           <v-btn icon='quick_reference' id='aperi' @click='aperi();' :text="anglica ? 'Open' : 'Refer'" />
         </template>
         <template v-else-if="verbum?.categoria === 'actus' &&

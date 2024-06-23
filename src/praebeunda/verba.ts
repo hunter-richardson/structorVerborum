@@ -1,14 +1,15 @@
-import Structor from './structor';
 import LectorVerbalis from '../lectores/verbalis';
 import * as Enumerationes from '../miscella/enumerationes';
 import Numerator from '../miscella/numerator';
 import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda';
+import Structor from './structor';
 
 export class Verbum {
   static readonly Errator: (exemplar: string, res: string) => Error = (
     exemplar: string,
     res: string
   ) => new Error(["Malu'st", exemplar, res].join(' '));
+
   readonly unicum: symbol = Symbol();
   categoria: string = '';
   protected _scriptum: string = '';
@@ -83,7 +84,7 @@ export abstract class Multiplex extends Verbum {
     }
   }
 
-  private _encliticum: string = Enumerationes.Encliticum.Nolens;
+  private _encliticum: string = '';
 
   abstract valores(): string[];
 
@@ -91,11 +92,20 @@ export abstract class Multiplex extends Verbum {
     return this._encliticum;
   }
 
-  set encliticum(valor: Enumerationes.Encliticum) {
-    this._encliticum = valor;
+  set encliticum (valor: string) {
+    if ([
+      !valor,
+      Object.keys(Enumerationes.Encliticum).includes(valor ?? '')
+    ].any()) {
+      if (this._encliticum) {
+        this.scriptum = this.scriptum.replace(`${this._encliticum}$`, '');
+      }
 
-    if (valor) {
-      this.scriptum = this.scriptum.concat(valor);
+      this._encliticum = valor ?? '';
+
+      if (this._encliticum) {
+        this.scriptum = this.scriptum.concat(this._encliticum);
+      }
     }
   }
 }

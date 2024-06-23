@@ -2,8 +2,7 @@
   import { defineComponent } from 'vue'
   import Gustulus from '../scriptura/gustulus'
 
-  defineProps({ gustulus: Gustulus });
-  export default defineComponent({ props: [ 'gustulus' ] })
+  export default defineComponent({ props: { gustulus: Gustulus } })
 </script>
 
 <template>
@@ -12,7 +11,6 @@
       v-model="gustulus.visibile"
       :color="gustulus.color"
       :timeout="gustulus.vita"
-      :text="gustulus.nuntium"
-    />
+      :text="gustulus.nuntium" />
   </template>
 </template>

@@ -22,11 +22,11 @@
   };
 
   const actus: string[][] = [
-    [ ' I ', ' C ', ' · ', ' + ' ],
-    [ ' V ', ' D ', ' : ', ' - ' ],
-    [ ' X ', ' M ', ' ∴ ', ' • ' ],
-    [ ' L ', ' | ', ' × ', ' ÷ ' ],
-    [ ' = ', ' N ', ' S ', ' % ' ]
+    [ 'I', 'C', '·', '+' ],
+    [ 'V', 'D', ':', '-' ],
+    [ 'X', 'M', '∴', '•' ],
+    [ 'L', '|', '×', '÷' ],
+    [ '=', 'N', 'S', '%' ]
   ];
 
   export default defineComponent({
@@ -130,9 +130,9 @@
   <v-card :text='praesentes.romanus' />
   <div class='text-center' v-for='linea in actus' :key='linea'>
     <span class='text-center' v-for='littera in linea' :key='littera'>
-      <v-card :text='littera' :id='`actus_${littera.trim()}`'
+      <v-card :text=` ${littera} ` :id='`actus_${littera}`'
               :disabled='licta(littera)' density='comfortable'
-              @click='ponatur(littera.trim());'
+              @click='ponatur(littera);'
               position='absolute' border hover />
     </span>
   </div>

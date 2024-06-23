@@ -1,5 +1,4 @@
 export enum Encliticum {
-  Nolens = '',
   Interrogans = 'ne',
   Coniugans = 'que',
   Eligens = 've'

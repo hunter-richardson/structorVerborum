@@ -1,10 +1,13 @@
 <script setup lang='ts' generic='Hoc extends Multiplex'>
-  import { defineComponent } from 'vue';
   import Tabula from '../tabulae/tabula';
   import type { Faciendum } from '../praebeunda/interfecta';
-  import type { Eventus } from '../miscella/dictionarium';
 
-  defineProps<Hoc>({ eventus: Eventus });
+  defineProps<{
+    eventus: {
+      referendum: Faciendum<Hoc>,
+      categoria: string
+    }
+  }>();
 
   type Columnae = {
     title: string,
@@ -12,12 +15,14 @@
     filter: (verbum: Hoc, colamen: string) => boolean
   }[];
 
-  const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
+  const agendum: Faciendum<Hoc> = eventus.value?.referendum;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
 
   const categoria: string = eventus.value?.categoria ?? '';
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const columnae: Columnae = Multiplex.colamina(categoria).map(columna => {
     return {
       title: (anglica ? anglicum(columna) : columna).toUpperCase(),
@@ -44,14 +49,14 @@
       figura = 'nomenActum';
       break;
     case agendum instanceof Agenda.NumeramenAgendum:
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
       figura = 'numeramenAgendum';
       break;
   }
 </script>
 
 <script lang='ts'>
-  import type { ModelRef } from 'vue';
-  import { defineModel } from 'vue';
+  import { defineComponent, defineModel, type ModelRef } from 'vue';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import specere from './specere.vue';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -63,6 +68,7 @@
   import Cocutor from '../miscella/cocutor';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
+  import type { Referendum } from '../praebeunda/interfecta'
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
@@ -200,17 +206,27 @@
             referendum: referendum,
             categoria: eventus.categoria
           };
-        };
+        }
       }
     }, async mounted (): Promise<void> {
-      this.haec = await omnes();
+      this.haec = await this.omnes();
 
-      this.seligenda = [
-        ...new Set((this.haec as Hoc[])
-          .map(verbum => verbum.valores())
-          .map(valor => Object.values(valor))
-          .flat())
-      ];
+      switch (this.haec?.length ?? 0) {
+        case 1:
+          this.verbum = this.haec.first();
+          break;
+        case 0:
+          break;
+        default:
+          this.seligenda = [
+            ...new Set((this.haec as Hoc[])
+              .map(verbum => verbum.valores())
+              .map(valor => Object.values(valor))
+              .flat())
+          ];
+
+          break;
+      }
 
       return new Promise(() => this.onerans = false);
     }
@@ -222,7 +238,7 @@
   <template v-if='verbum'>
     <specere :verbum='verbum' @blur='verbum = undefined;' />
   </template>
-  <template v-else>
+  <template v-else-if='eventus'>
     <div id='colamina'>
       <horizontal-scroll>
         <v-chip-group v-for='seligendum in seligenda' :key='seligendum'

@@ -21,6 +21,7 @@ declare global {
     startsWithVowel(): boolean;
     removeMacra(): string;
     capitalize(): string;
+    isCapitalized(): boolean;
   }
 }
 
@@ -50,3 +51,7 @@ String.prototype.removeMacra = function (): string {
 String.prototype.capitalize = function (): string {
   return (this.at(0) ?? '').toUpperCase().concat(this.slice(1));
 };
+
+String.prototype.isCapitalized = function(): boolean {
+  return /[A-ZĀĒĪŌȲ]/.test(this.at(0) ?? '');
+}
