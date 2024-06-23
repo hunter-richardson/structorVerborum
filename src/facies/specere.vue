@@ -75,7 +75,7 @@
           locutor.addatur(this.verbum);
         }
       }, addeProprium (): void {
-        if ([ this.verbum, this.propriabile ].all()) {
+        if (this.verbum && this.propriabile) {
           this.verbum.scriptum = this.verbum.scriptum.capitalize();
         }
 
@@ -90,8 +90,8 @@
       this.propriabile = [
         this.multiplex, [
           'nomen', 'adiectivum'
-        ].includes(verbum?.categoria),
-        !verbum?.scriptum.isCapitalized()
+        ].includes(this.verbum?.categoria ?? ''),
+        !this.verbum?.scriptum.isCapitalized()
       ].all();
     }
   });

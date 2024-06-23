@@ -15,11 +15,11 @@
     filter: (verbum: Hoc, colamen: string) => boolean
   }[];
 
-  const agendum: Faciendum<Hoc> = eventus.value?.referendum;
+  const agendum: Faciendum<Hoc> = eventus?.referendum;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
 
-  const categoria: string = eventus.value?.categoria ?? '';
+  const categoria: string = eventus?.categoria ?? '';
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -134,9 +134,9 @@
         return await new Promise(() => this.onerans = !!omnia);
       }, async numeramen (numeramen: Hoc): Promise<void> {
         if (this.figura === 'numeramenAgendum' &&
-          this.agendum instanceof Agenda.NumeramenAgendum &&
+          agendum instanceof Agenda.NumeramenAgendum &&
           numeramen instanceof Numeramen) {
-          const referendum: Referendum = (this.agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
+          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
           if (referendum instanceof Numerus) {
             this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
@@ -167,36 +167,36 @@
         let referendum: Referendum | null = null;
         switch (this.figura) {
           case 'actusAgendus':
-            if (this.agendum instanceof Agenda.ActusAgendus) {
+            if (agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
                 case 'frequentativus':
-                  referendum = (this.agendum as Agenda.ActusAgendus).frequentativus();
+                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
                   break;
                 case 'nomen':
-                  referendum = (this.agendum as Agenda.ActusAgendus).nomen();
+                  referendum = (agendum as Agenda.ActusAgendus).nomen();
                   break;
                 case 'actor':
-                  referendum = (this.agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
+                  referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
                   break;
               }
             }
             break;
           case 'nomenActum':
-            if (this.agendum instanceof Agenda.NomenActum) {
-              referendum = (this.agendum as Agenda.NomenActum).actus();
+            if (agendum instanceof Agenda.NomenActum) {
+              referendum = (agendum as Agenda.NomenActum).actus();
             }
             break;
           case 'adiectivumAgendum':
-            if (this.agendum instanceof Agenda.AdiectivumAgendum) {
-              referendum = (this.agendum as Agenda.AdiectivumAgendum).probetur({
+            if (agendum instanceof Agenda.AdiectivumAgendum) {
+              referendum = (agendum as Agenda.AdiectivumAgendum).probetur({
                 gradus: eventus.gradus ?? '',
                 genus: eventus.genus ?? ''
               });
             }
             break;
           case 'incomparabile':
-            if (this.agendum instanceof Agenda.Incomparabile) {
-              referendum = (this.agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
+            if (agendum instanceof Agenda.Incomparabile) {
+              referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
             }
             break;
         }
