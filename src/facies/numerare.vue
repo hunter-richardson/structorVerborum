@@ -8,23 +8,26 @@
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
 
-  const cocutor: Cocutor = Cocutor.se.ipse();
-
-  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
-
-  const arabicus: {
+  type Arabicus = {
     integer: number,
     numerator: number,
     denominator: number
-  } = {
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
+
+  const arabicus: Arabicus = {
     integer: 0,
     numerator: 0,
     denominator: 12
   };
 
+  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string => {
-      const error: string = this.anglica ?
+      const error: string = anglica ?
         'Only Roman numerals allowed' : 'Romani numeri soli licuntur';
       return Number.isInteger(arabicus) || error;
     }
@@ -32,31 +35,32 @@
 
   export default defineComponent({
     components: { gustulare, specere },
-    props: [ 'numerus' ],
 
-    data() {
+    data(): {
+      validator: ((arabicus: number) => boolean | string)[],
+      gustulus: Gustulus,
+      anglica: boolean,
+      numerus: Numerus | undefined,
+      arabicus: Arabicus,
+      romanus: string
+    } {
       return {
         gustulus: new Gustulus({}),
-        anglica: cocutor.edatur('lingua') === 'anglica',
+        anglica: anglica,
         validator: validator,
+        numerus: numerus.value,
         arabicus: arabicus,
         romanus: ''
       };
-    },
-
-    methods: {
+    }, methods: {
       effiat (): void {
         this.romanus = Numerator.romanus(this.arabicus.integer + (this.arabicus.numerator / this.arabicus.denominator));
-      },
-
-      refer (): void {
+      }, refer (): void {
         if (this.arabicus.numerator === 0) {
           this.numerus = Numerus.numerator(this.arabicus.integer);
         }
       }
-    },
-
-    mounted(): void {
+    }, mounted(): void {
       this.effiat();
     }
   });

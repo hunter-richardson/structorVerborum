@@ -44,7 +44,7 @@ export const Nominunm: string[] = [
   'tertiaNeutra/cumAblativoVario/pluralis',
   'tertiaNeutra/cumGenitivoAblativoqueVario/pluralis',
   'tertiaNeutra/cumTruncoVario/pluralis'
-]
+];
 
 export const NominumFactorum: string[] = [
   'prima',
@@ -57,7 +57,7 @@ export const NominumFactorum: string[] = [
   'tertia/prona',
   'tertiaVaria/prona',
   'quarta/prona'
-]
+];
 
 export const Adiectivorum: string[] = [
   'positivaAutPrimaAutSecunda',
@@ -86,7 +86,7 @@ export const Adiectivorum: string[] = [
   'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis',
   'positivaTertia/nominativusUnigenerCumTruncoVario',
   'positivaTertia/nominativusUnigenerCumTruncoVario/pluralis'
-]
+];
 
 export const Incomparabilium: string[] = [
   'autPrimaAutSecunda',
@@ -111,7 +111,7 @@ export const Incomparabilium: string[] = [
   'pronominalis',
   'pronominalis/nominativusDirectus',
   'pronominalis/cumLitteraR'
-]
+];
 
 export const Actuum: string[] = [
   'prima',
@@ -143,4 +143,4 @@ export const Actuum: string[] = [
   'tertia//impersonalis/semideponensActiva',
   'secunda//impersonalis/passivo',
   'tertia//impersonalis/passivo'
-]
+];

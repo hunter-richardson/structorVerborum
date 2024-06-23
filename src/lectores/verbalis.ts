@@ -4,7 +4,7 @@ import Lector from './lector';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import * as Agenda from '../praebeunda/agenda';
-import type { Lectum } from '../praebeunda/interfecta'
+import type { Lectum } from '../praebeunda/interfecta';
 
 @Nuntius.factum('LectorVerbalis')
 export default class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {
@@ -40,6 +40,6 @@ export default class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {
   async omnia(): Promise<string[]> {
     return (await listFiles.listFiles(this._scapum, 'csv'))
       .map((res) => path.parse(res).name)
-      .sort()
+      .sort();
   }
 }

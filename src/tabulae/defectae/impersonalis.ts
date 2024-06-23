@@ -8,12 +8,12 @@ import {
 import Ignavum from '../../miscella/ignavum';
 import { Actus } from '../../praebeunda/verba';
 import Tabula from '../tabula';
-import type { Colamen } from '../../praebeunda/agenda'
+import type { Colamen } from '../../praebeunda/agenda';
 
 type Optanda = {
-  relata: Ignavum<Tabula<Actus>>
+  relata: Ignavum<Tabula<Actus>>,
   et: string
-}
+};
 
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
   static apponatur(et: string): Colamen<Actus>[] {
@@ -21,25 +21,25 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
       return {
         modus: 'infinitivus',
         tempus: tempus
-      } as Colamen<Actus>
-    })
+      } as Colamen<Actus>;
+    });
 
-    ;['praesens', 'futurum', 'perfectum'].forEach((tempus) => {
+    ['praesens', 'futurum', 'perfectum'].forEach((tempus) => {
       colamina.push({
         modus: 'participalis',
         tempus: tempus
-      } as Colamen<Actus>)
+      } as Colamen<Actus>);
 
       if (tempus !== 'perfectum') {
         colamina.push({
           modus: 'imperativus',
           tempus: tempus
-        } as Colamen<Actus>)
+        } as Colamen<Actus>);
       }
-    })
+    });
 
     if (et === 'passivo') {
-      ;['indicativus', 'subiunctivus'].forEach((modus) => {
+      ['indicativus', 'subiunctivus'].forEach((modus) => {
         tempora.forEach((tempus) => {
           if (
             [
@@ -55,20 +55,20 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
                   tempus: tempus,
                   numerus: numerus,
                   persona: persona
-                } as Colamen<Actus>)
-              })
-            })
+                } as Colamen<Actus>);
+              });
+            });
 
             colamina.push({
               modus: modus,
               vox: 'passiva',
               tempus: tempus
-            } as Colamen<Actus>)
+            } as Colamen<Actus>);
           }
-        })
+        });
       })
     } else {
-      ;['indicativus', 'subiunctivus'].forEach((modus) => {
+      ['indicativus', 'subiunctivus'].forEach((modus) => {
         voces.forEach((vox) => {
           tempora.forEach((tempus) => {
             if (
@@ -88,56 +88,54 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
                 modus: modus,
                 vox: vox,
                 tempus: tempus
-              } as Colamen<Actus>)
+              } as Colamen<Actus>);
             }
-          })
-        })
-      })
+          });
+        });
+      });
     }
 
-    return colamina
+    return colamina;
   }
 
-  private readonly _et: string
+  private readonly _et: string;
 
   constructor(optanda: Optanda) {
-    super(optanda.relata)
-    this._et = optanda.et
+    super(optanda.relata);
+    this._et = optanda.et;
   }
 
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
     if (this._et === 'semideponens') {
       if (colamen.modus === 'particpalis') {
-        colamen.vox = ''
+        colamen.vox = '';
       } else if (colamen.vox === 'passiva') {
-        return null
+        return null;
       }
     } else if (this._et === 'semideponensActiva') {
       if (colamen.vox === 'passiva') {
         switch (true) {
           case [colamen.modus === 'participalis', colamen.tempus === 'futurum'].any():
-            colamen.vox = ''
-            break
+            colamen.vox = '';
+            break;
           default:
-            return null
+            return null;
         }
       }
     }
 
     if ([this._et === 'passivo', colamen.vox === 'activa'].all()) {
-      return colamen
+      return colamen;
     } else {
       return [
         colamen.numerus === 'pluralis',
         colamen.persona === 'prima',
         colamen.persona === 'secunda'
-      ].any()
-        ? null
-        : {
+      ].any() ? null : {
             ...colamen,
             numerus: '',
             persona: ''
-          }
+          };
     }
   }
 }

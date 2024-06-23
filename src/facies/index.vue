@@ -11,9 +11,29 @@
   import gustulare from './gustulare.vue';
   import Locutor from '../miscella/locutor';
 
+  type Crustula = {
+    assensus: string,
+    facies: string,
+    lingua: string,
+    apices: string,
+    utendaU: string,
+    magnas: string,
+    separator: string;
+  };
+
+  type Separatores = {
+    clavis: string,
+    valor: string;
+  }[];
+
+  type Annuli = {
+    titula: string,
+    valor: string;
+  }[];
+
   const locutor: Locutor = Locutor.se.ipse();
   const cocutor: Cocutor = Cocutor.se.ipse();
-  const crustula = {
+  const crustula: Crustula = {
     assensus: '',
     facies: '',
     lingua: '',
@@ -25,26 +45,39 @@
 
   const annuli: {
     titula: string,
-    valor: string
+    valor: string;
   }[] = [];
 
-  const separatores = [
-    {
-      clavis: 'inane',
-      valor: '_'
-    }, {
-      clavis: 'interpunctum',
-      valor: '·'
-    }, {
-      clavis: 'nullum',
-      valor: ' '
-    },
-  ];
+  const separatores: {
+    clavis: string,
+    valor: string;
+  }[] = [
+      {
+        clavis: 'inane',
+        valor: '_'
+      }, {
+        clavis: 'interpunctum',
+        valor: '·'
+      }, {
+        clavis: 'nullum',
+        valor: ' '
+      },
+    ];
 
   export default defineComponent({
     components: { gustulare, quaerere, numerare, calculare },
 
-    data() {
+    data (): {
+      name: string,
+      gustulus: Gustulus,
+      locutionis: boolean,
+      referret: boolean,
+      transduceret: boolean,
+      crustula: Crustula,
+      separatores: Separatores,
+      annuli: Annuli,
+      annulus: string;
+    } {
       return {
         name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
         gustulus: new Gustulus({}),
@@ -56,22 +89,40 @@
         separatores: separatores,
         annulus: ''
       };
-    },
-
-    methods: {
+    }, methods: {
       async refer (): Promise<void> {
-        if (referretne()) {
+        if (this.referret) {
           await referatur(locutor.scribantur());
         }
-      },
-
-      transduc (): void {
-        if (transduceretne()) {
+      }, transduc (): void {
+        if (this.transduceret) {
           transducatur(locutor.scribantur());
         }
-      },
-
-      coquantur (): void {
+      }, coque (crustulum: Crustulum): void {
+        cocutor.coquatur(crustulum);
+        switch (crustulum.nomen) {
+          case 'facies':
+            this.crustula.facies = crustulum.valor;
+            if (this.crustula.facies === 'illustris') {
+              useTheme().global.name.value = 'light';
+            } else {
+              useTheme().global.name.value = 'dark';
+            }
+            break;
+          case 'apices':
+            this.crustula.apices = crustulum.valor;
+            break;
+          case 'magnas':
+            this.crustula.magnas = crustulum.valor;
+            break;
+          case 'lingua':
+            this.crustula.lingua = crustulum.valor;
+            break;
+          case 'utendaU':
+            this.crustula.utendaU = crustulum.valor;
+            break;
+        }
+      }, coquantur (): void {
         this.coque({
           nomen: 'assensus',
           valor: 'assensit'
@@ -108,36 +159,8 @@
         });
 
         window.location.reload();
-      },
-
-      coque (crustulum: Crustulum): void {
-        cocutor.coquatur(crustulum);
-        switch (crustulum.nomen) {
-          case 'facies':
-            this.crustula.facies = crustulum.valor;
-            if (this.crustula.facies === 'illustris') {
-              useTheme().global.name.value = 'light';
-            } else {
-              useTheme().global.name.value = 'dark';
-            }
-            break;
-          case 'apices':
-            this.crustula.apices = crustulum.valor;
-            break;
-          case 'magnas':
-            this.crustula.magnas = crustulum.valor;
-            break;
-          case 'lingua':
-            this.crustula.lingua = crustulum.valor;
-            break;
-          case 'utendaU':
-            this.crustula.utendaU = crustulum.valor;
-            break;
-        }
       }
-    },
-
-    async mounted (): Promise<void> {
+    }, async mounted (): Promise<void> {
       document.title = this.name;
       if (cocutor.edatur('assensus') === 'assensit') {
         this.crustula = {
@@ -150,15 +173,16 @@
           separator: cocutor.edatur('separator') ?? 'inane'
         };
 
+        const anglica: boolean = this.crustula.lingua === 'anglica';
         this.annuli = [
           {
-            titula: crustula.lingua === 'anglica' ? 'Search' : 'Quaerere',
+            titula: anglica ? 'Search' : 'Quaerere',
             valor: 'quaerere'
           }, {
-            titula: crustula.lingua === 'anglica' ? 'Ennumerate' : 'Numerare',
+            titula: anglica ? 'Ennumerate' : 'Numerare',
             valor: 'numerare'
           }, {
-            titula: crustula.lingua === 'anglica' ? 'Calculate' : 'Calculare',
+            titula: anglica ? 'Calculate' : 'Calculare',
             valor: 'calculare'
           }
         ];
@@ -237,10 +261,10 @@
         <quaerere />
       </v-tabs-window-item>
       <v-tabs-window-item value='numerare'>
-        <numerare :numerus=0 />
+        <numerare />
       </v-tabs-window-item>
       <v-tabs-window-item value='calculare'>
-        <calculare :numerus=0 />
+        <calculare />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

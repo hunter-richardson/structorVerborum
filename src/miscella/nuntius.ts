@@ -1,8 +1,8 @@
-import mkdir from 'make-dir'
-import winston from 'winston'
-import DailyRotateFile from 'winston-daily-rotate-file'
-import { Mensa } from './enumerationes'
-import Numerator from './numerator'
+import mkdir from 'make-dir';
+import winston from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import { Mensa } from './enumerationes';
+import Numerator from './numerator';
 
 const scribatur = (parametra: {
   nomen?: string
@@ -12,9 +12,9 @@ const scribatur = (parametra: {
   }
 }): string => {
   if (parametra.nomen) {
-    return `${parametra.nomen} @${Temporis.nunc()} <${parametra.res.level}> ${parametra.res.message}`
+    return `${parametra.nomen} @${Temporis.nunc()} <${parametra.res.level}> ${parametra.res.message}`;
   } else {
-    return `@${Temporis.nunc()} <${parametra.res.level}> ${parametra.res.message}`
+    return `@${Temporis.nunc()} <${parametra.res.level}> ${parametra.res.message}`;
   }
 }
 
@@ -22,79 +22,79 @@ type Parametra = {
   nomen?: string
   nuntium?: string
   error?: Error
-}
+};
 
 export default class Nuntius implements Disposable {
   static morior(parametra: Parametra): void {
-    this.timeo(parametra)
-    process.abort()
+    this.timeo(parametra);
+    process.abort();
   }
 
   static timeo(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       error: parametra.error
-    })
+    });
   }
 
   static moneo(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'warn',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static noto(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'info',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static certioro(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'http',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static garrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'verbose',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static plusGarrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'debug',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static plurimumGarrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
+    using nuntius: Nuntius = new Nuntius(parametra.nomen);
     nuntius.nuntio({
       gradus: 'silly',
       nuntium: parametra.nuntium
-    })
+    });
   }
 
   static factum(nomen: string): any {
     return function <Hoc extends { new (...parametra: any[]): object }>(constr: Hoc) {
       return class extends constr {
         constructor(...parametra: any[]) {
-          super(...parametra)
+          super(...parametra);
 
           Nuntius.plusGarrio({
             nomen: nomen,
             nuntium: 'Fit'
-          })
+          });
         }
       }
     }
@@ -106,16 +106,16 @@ export default class Nuntius implements Disposable {
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Initu'st modus ${contextus.name.toString()}`
-        })
+        });
 
-        const illud = modus(parametra)
+        const illud = modus(parametra);
 
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        })
+        });
 
-        return illud
+        return illud;
       }
     }
   }
@@ -126,16 +126,16 @@ export default class Nuntius implements Disposable {
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Initu'st modus ${contextus.name.toString()}`
-        })
+        });
 
-        const illud = await modus(parametra)
+        const illud = await modus(parametra);
 
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        })
+        });
 
-        return illud
+        return illud;
       }
     }
   }
@@ -144,23 +144,23 @@ export default class Nuntius implements Disposable {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     return function (modus: any, contextus: ClassMethodDecoratorContext) {
       return function (...parametra: any[]) {
-        modus(parametra)
+        modus(parametra);
 
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: "Finitu'st"
-        })
+        });
       }
     }
   }
 
-  private readonly _nuntiator: winston.Logger
-  private readonly _mundusEvolendum: boolean = true
-  private readonly _nomen?: string
+  private readonly _nuntiator: winston.Logger;
+  private readonly _mundusEvolendum: boolean = true;
+  private readonly _nomen?: string;
 
   private constructor(nomen?: string) {
-    this._nomen = nomen
-    let navigium, forma: any
+    this._nomen = nomen;
+    let navigium, forma: any;
     if (this._mundusEvolendum) {
       forma = winston.format.combine(
         winston.format.align(),
@@ -173,11 +173,11 @@ export default class Nuntius implements Disposable {
             res: res
           })
         )
-      )
+      );
 
       navigium = new winston.transports.Console({
         format: forma
-      })
+      });
     } else {
       forma = winston.format.combine(
         winston.format.align(),
@@ -189,7 +189,7 @@ export default class Nuntius implements Disposable {
             res: res
           })
         )
-      )
+      );
 
       navigium = new DailyRotateFile({
         datePattern: '',
@@ -199,9 +199,9 @@ export default class Nuntius implements Disposable {
         maxSize: '20m',
         maxFiles: '30d',
         zippedArchive: true
-      })
+      });
 
-      mkdir.makeDirectorySync(navigium.dirname)
+      mkdir.makeDirectorySync(navigium.dirname);
 
       // navigium.on('new', (hoc: string) => { });
       // navigium.on('rotate', (illud: string, hoc: string) => { });
@@ -214,42 +214,41 @@ export default class Nuntius implements Disposable {
       format: forma,
       level: this._mundusEvolendum ? 'debug' : 'error',
       transports: [navigium]
-    })
+    });
   }
 
   nuntio(parametra: { gradus?: string; nuntium?: string; error?: Error }): void {
     if (parametra.error) {
-      this._nuntiator.error(parametra.error)
+      this._nuntiator.error(parametra.error);
     } else if (parametra.gradus) {
-      this._nuntiator.log(parametra.gradus, parametra.nuntium)
+      this._nuntiator.log(parametra.gradus, parametra.nuntium);
     }
   }
 
   [Symbol.dispose](): void {
-    this._nuntiator.close()
-    this._nuntiator.destroy()
+    this._nuntiator.close();
+    this._nuntiator.destroy();
   }
 }
 
 class Temporis {
   static hodie(): string {
-    const hodie: Date = new Date()
+    const hodie: Date = new Date();
     return [
       Numerator.romanus(hodie.getUTCDay()),
       Mensa[hodie.getUTCMonth()],
       Numerator.romanus(hodie.getUTCFullYear())
-    ].join('')
+    ].join('');
   }
 
   static nunc(): string {
-    const nunc: Date = new Date()
+    const nunc: Date = new Date();
     return [
       nunc.getUTCHours(),
       nunc.getUTCMinutes(),
       nunc.getUTCSeconds(),
       nunc.getUTCMilliseconds()
-    ]
-      .map((numerus) => Numerator.romanus(numerus))
-      .join(':')
+    ].map((numerus) => Numerator.romanus(numerus))
+      .join(':');
   }
 }

@@ -1,49 +1,33 @@
-<script lang='ts'>
-  // eslint-disable @typescript-eslint/no-unused-vars
-
-  import type { ModelRef } from 'vue';
-  import { defineModel } from 'vue';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import specere from './specere.vue';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import gustulare from './gustulare.vue';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import Gustulus from '../scriptura/gustulus';
-  import type { Eventus } from '../miscella/dictionarium';
-  import { Multiplex, Verbum } from '../praebeunda/verba';
-  import Cocutor from '../miscella/cocutor';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import { genera, gradi, anglicum } from '../miscella/enumerationes';
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const HorizontalScroll = require('vue-horizontal-scroll');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const seligenda: string[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const selecta: string[] = [];
-</script>
-
 <script setup lang='ts' generic='Hoc extends Multiplex'>
   import { defineComponent } from 'vue';
   import Tabula from '../tabulae/tabula';
   import type { Faciendum } from '../praebeunda/interfecta';
+  import type { Eventus } from '../miscella/dictionarium';
 
-  defineProps<Hoc>();
+  defineProps<Hoc>({ eventus: Eventus });
+
+  type Columnae = {
+    title: string,
+    key: string,
+    filter: (verbum: Hoc, colamen: string) => boolean
+  }[];
 
   const agendum: Faciendum<Hoc> = eventus.value?.referendum as Faciendum<Hoc>;
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
-</script>
 
-<script lang='ts'>
-  import * as Agenda from '../praebeunda/agenda';
-  import { Numeramen, Numerus } from '../praebeunda/verba';
+  const categoria: string = eventus.value?.categoria ?? '';
+  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+
+  const columnae: Columnae = Multiplex.colamina(categoria).map(columna => {
+    return {
+      title: (anglica ? anglicum(columna) : columna).toUpperCase(),
+      key: columna,
+
+      filter: (verbum: Hoc, colamen: string): boolean => {
+        return verbum.valores().includes(colamen);
+      }
+    }
+  });
 
   let figura: string = '';
   switch (true) {
@@ -63,72 +47,90 @@
       figura = 'numeramenAgendum';
       break;
   }
+</script>
 
-  const et: {
-    gradus: string, genus: string
-  } = {
+<script lang='ts'>
+  import type { ModelRef } from 'vue';
+  import { defineModel } from 'vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import specere from './specere.vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import gustulare from './gustulare.vue';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import Gustulus from '../scriptura/gustulus';
+  import * as Agenda from '../praebeunda/agenda';
+  import { Numeramen, Numerus, Multiplex, Verbum } from '../praebeunda/verba';
+  import Cocutor from '../miscella/cocutor';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import { genera, gradi, anglicum } from '../miscella/enumerationes';
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const HorizontalScroll = require('vue-horizontal-scroll');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const seligenda: string[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const selecta: string[] = [];
+
+  type Et = {
+    gradus: string,
+    genus: string
+  };
+
+  const et: Et = {
     gradus: '',
     genus: ''
   };
 
-  const columnae: {
-    title: string,
-    key: string,
-    filter (verbum: Multiplex, colamen: string) => boolean
-  }[] = Multiplex.colamina(categoria).map(columna => {
-    return {
-      title: (this.anglica ? anglicum(columna) : columna).toUpperCase(),
-      key: columna,
-
-      filter: (verbum: Multiplex, colamen: string): boolean => {
-        return verbum.valores().includes(colamen);
-      }
-    }
-  });
-
   export default defineComponent({
     components: { HorizontalScroll, gustulare, specere },
-    props: [ 'eventus' ],
 
-    data() {
+    data(): {
+      anglica: boolean,
+      gustulus: Gustulus,
+      categoria: string,
+      figura: string,
+      seligenda: string[],
+      selecta: string[],
+      haec: Hoc[],
+      verbum: Verbum | undefined,
+      onerans: boolean,
+      columnae: Columnae,
+      et: Et
+    } {
       return {
-        anglica: lingua === 'anglica',
+        anglica: anglica,
         gustulus: new Gustulus({}),
-        categoria: eventus.value?.categoria ?? '',
+        categoria: categoria,
         figura: figura,
         seligenda: seligenda,
         selecta: selecta,
-        haec: tabula.tabulentur(),
+        haec: tabula?.tabulentur() ?? [],
         verbum: verbum.value,
         onerans: true,
         columnae: columnae,
         et: et,
       };
-    },
-
-    methods: {
+    }, methods: {
       async omnes (): Promise<Hoc[]> {
-        return await tabula.tabulentur() ?? [];
-      },
-
-      async cole (): Promise<void> {
+        return (await tabula?.tabulentur()) ?? [];
+      }, async cole (): Promise<void> {
         this.onerans = true;
         const omnia: Hoc[] = await this.omnes();
         if (omnia) {
-          this.verba = omnia.filter(verbum =>
+          this.haec = omnia.filter(verbum =>
             (this.selecta as string[]).every(selectum =>
               verbum.valores().includes(selectum)));
         }
 
         return await new Promise(() => this.onerans = !!omnia);
-
-      },
-
-      async numeramen (numeramen: Hoc): Promise<void> {
+      }, async numeramen (numeramen: Hoc): Promise<void> {
         if (this.figura === 'numeramenAgendum' &&
-          numeramen instanceof Numeramen &&
-          agendum instanceof Agenda.NumeramenAgendum) {
-          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
+          this.agendum instanceof Agenda.NumeramenAgendum &&
+          numeramen instanceof Numeramen) {
+          const referendum: Referendum = (this.agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
           if (referendum instanceof Numerus) {
             this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
@@ -148,51 +150,47 @@
             };
           }
         }
-      },
-
-      selige (verbum: Hoc): void {
-        this.verbum = verbum;
-      },
-
-      refer (eventus: {
+      }, selige (hoc: Hoc): void {
+        this.verbum = hoc;
+      }, refer (eventus: {
         categoria: string,
         referendum?: string,
         gradus?: string,
         genus?: string;
       }): void {
         let referendum: Referendum | null = null;
-        switch (figura) {
+        switch (this.figura) {
           case 'actusAgendus':
-            if (agendum instanceof Agenda.ActusAgendus) {
+            if (this.agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
                 case 'frequentativus':
-                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
+                  referendum = (this.agendum as Agenda.ActusAgendus).frequentativus();
                   break;
                 case 'nomen':
-                  referendum = (agendum as Agenda.ActusAgendus).nomen();
+                  referendum = (this.agendum as Agenda.ActusAgendus).nomen();
                   break;
                 case 'actor':
-                  referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
+                  referendum = (this.agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
                   break;
               }
             }
             break;
           case 'nomenActum':
-            if (agendum instanceof Agenda.NomenActum) {
-              referendum = (agendum as Agenda.NomenActum).actus();
+            if (this.agendum instanceof Agenda.NomenActum) {
+              referendum = (this.agendum as Agenda.NomenActum).actus();
             }
             break;
           case 'adiectivumAgendum':
-            if (agendum instanceof Agenda.AdiectivumAgendum) {
-              referendum = (agendum as Agenda.AdiectivumAgendum).probetur({
+            if (this.agendum instanceof Agenda.AdiectivumAgendum) {
+              referendum = (this.agendum as Agenda.AdiectivumAgendum).probetur({
                 gradus: eventus.gradus ?? '',
                 genus: eventus.genus ?? ''
               });
             }
             break;
           case 'incomparabile':
-            if (agendum instanceof Agenda.Incomparabile) {
-              referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
+            if (this.agendum instanceof Agenda.Incomparabile) {
+              referendum = (this.agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
             }
             break;
         }
@@ -204,10 +202,8 @@
           };
         };
       }
-    },
-
-    async mounted (): Promise<void> {
-      this.haec = await this.omnes();
+    }, async mounted (): Promise<void> {
+      this.haec = await omnes();
 
       this.seligenda = [
         ...new Set((this.haec as Hoc[])

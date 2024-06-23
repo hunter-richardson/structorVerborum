@@ -10,10 +10,13 @@
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
 
-  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
   const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
 
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+  const multiplex: boolean = false;
+  const valores: string[] = []
+
+  defineProps({ verbum: Verbum });
 
   export default defineComponent({
     components: { gustulare, inflectere },
@@ -24,8 +27,8 @@
         gustulus: new Gustulus({}),
         eventus: eventus.value,
         anglica: lingua === 'anglica',
-        multiplex: verbum.value instanceof Multiplex,
-        valores: (verbum.value as Multiplex)?.valores() ?? [],
+        multiplex: multiplex,
+        valores: valores,
         locutor: Locutor.se.ipse()
       };
     },
@@ -33,20 +36,19 @@
     methods: {
       async aperi (): Promise<void> {
         switch (this.verbum?.categoria) {
-          case 'actus':
-            // eslint-disable-next-line no-case-declarations
-            const actus: Actus = this.verbum as Actus;
+          case 'actus': {
+            const actus: Actus = verbum as Actus;
             if (actus.modus === 'participium') {
               this.eventus = {
                 referendum: await actus.participialis(),
                 categoria: 'adiectivum'
               };
             }
+
             break;
-          case 'numerus':
-            // eslint-disable-next-line no-case-declarations
-            const numerus: Numerus = this.verbum as Numerus;
-            // eslint-disable-next-line no-case-declarations
+          }
+          case 'numerus': {
+            const numerus: Numerus = verbum as Numerus;
             const agendum: NumeramenAgendum | null = await numerus.numeramen();
             if (agendum) {
               this.eventus = {
@@ -55,8 +57,14 @@
               };
             }
             break;
+          }
         }
       }
+    },
+
+    mounted(): void {
+      this.multiplex = this.verbum.value instanceof Multiplex;
+      this.valores = this.multiplex ? (this.verbum.value as Multiplex)?.valores() : [];
     }
   });
 </script>

@@ -5,6 +5,7 @@
   import Locutor from '../miscella/locutor';
   import Cocutor from '../miscella/cocutor';
   import gustulare from './gustulare.vue';
+  import { Verbum } from '../praebeunda/verba'
 
   const locutor: Locutor = Locutor.se.ipse();
   const cocutor: Cocutor = Cocutor.se.ipse();
@@ -14,7 +15,7 @@
   const Please = require('pleasejs');
   const ClassifyX = require('classifyx')
 
-  const pellucidum = ClassifyX({
+  const pellucidum: string[] = ClassifyX({
     opacity: 0.5,
     background: Please.make_color({
       value: illustre ? 0.25 : 0.75
@@ -24,16 +25,19 @@
   export default defineComponent({
     component: { draggable, gustulare },
 
-    data() {
+    data(): {
+      trahens: boolean,
+      gustulus: Gustulus,
+      verba: Verbum[],
+      pellucidum: string[]
+    } {
       return {
         trahens: false,
         gustulus: new Gustulus({}),
         verba: locutor.verba,
         pellucidum: pellucidum
       };
-    },
-
-    methods: {
+    }, methods: {
       remove (unicum: symbol): void {
         locutor.removeatur(unicum);
       }

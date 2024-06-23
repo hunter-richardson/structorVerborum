@@ -1,17 +1,18 @@
 <script lang='ts'>
+  import type { ModelRef } from 'vue';
   import { defineComponent, defineModel } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
-  import specere from './specere.vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
-  import type { ModelRef } from 'vue';
+  import specere from './specere.vue';
 
   type numeri = {
     arabicus: number,
-    romanus: string
+    romanus: string;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
   const operator: string = '';
 
@@ -30,30 +31,32 @@
 
   export default defineComponent({
     components: { gustulare, specere },
-    props: [ 'numerus' ],
 
-    data() {
+    data (): {
+      numerus: ModelRef<Numerus | undefined, string>,
+      gustulus: Gustulus,
+      operator: string,
+      actus: string[][],
+      praevii: numeri,
+      praesentes: numeri,
+      nihil: numeri;
+    } {
       return {
         gustulus: new Gustulus({}),
         operator: operator,
+        numerus: numerus,
         praevii: nihil,
         praesentes: nihil,
         nihil: nihil,
         actus: actus
       };
-    },
-
-    methods: {
+    }, methods: {
       operat (actus: string): boolean {
         return /^\+-•÷%=$/.test(actus);
-      },
-
-      licta(actus: string): boolean {
+      }, licta (actus: string): boolean {
         return this.operat(actus) ||
           !!this.praesentes.arabicus;
-      },
-
-      ponatur(actus: string): void {
+      }, ponatur (actus: string): void {
         if (actus === 'N') {
           this.praevii = nihil;
           this.praesentes = nihil;
@@ -100,9 +103,7 @@
           this.operator = actus === '=' ? '' : ` ${actus} `;
           this.praesentes = nihil;
         }
-      },
-
-      aequa(): void {
+      }, aequa (): void {
         this.numerus = Numerus.numerator(this.praevii.arabicus);
       }
     }
@@ -111,11 +112,11 @@
 
 <template lang='vue'>
 	<gustulare :gustulus='gustulus' />
-  <template v-if='this.numerus'>
-    <specere :verbum='this.numerus'
-             @blur='this.numerus = null;' />
+  <template v-if='numerus'>
+    <specere :verbum='numerus'
+             @blur='numerus = null;' />
   </template>
-  <template v-if='this.praevii.anglicus'>
+  <template v-if='praevii.anglicus'>
     <div class='text-center'>
       <template v-if='Number.isInteger(praevii.arabicus)'>
         <v-btn id='refer' icon='aequa' @click='aequa();' />
@@ -126,11 +127,11 @@
       </template>
     </div>
   </template>
-  <v-card :text='this.praesentes.romanus' />
-  <div class='text-center' v-for='linea in this.actus' :key='linea'>
-    <span class='text-center' v-for='littera in this.linea' :key='littera'>
+  <v-card :text='praesentes.romanus' />
+  <div class='text-center' v-for='linea in actus' :key='linea'>
+    <span class='text-center' v-for='littera in linea' :key='littera'>
       <v-card :text='littera' :id='`actus_${littera.trim()}`'
-              :disabled='this.licta(littera)' density='comfortable'
+              :disabled='licta(littera)' density='comfortable'
               @click='ponatur(littera.trim());'
               position='absolute' border hover />
     </span>

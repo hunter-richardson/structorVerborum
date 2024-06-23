@@ -28,7 +28,7 @@
     value: string
   }[] = categoriae.map(categoria => {
     return {
-      title: (this.anglica ? anglicum(categoria) : categoria).capitalize(),
+      title: (anglica ? anglicum(categoria) : categoria).capitalize(),
       value: categoria
     };
   });
@@ -53,7 +53,7 @@
     }
   ].map(columna => {
     return {
-      title: (this.anglica ? columna.anglicum : columna.latinum).capitalize(),
+      title: (anglica ? columna.anglicum : columna.latinum).capitalize(),
       filter: columna.cultor,
       key: columna.latinum
     };
@@ -63,7 +63,7 @@
     (pars: string): boolean | string => {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/;
       const validum: boolean = licta.test(pars.toLowerCase());
-      const error: string = this.anglica ?
+      const error: string = anglica ?
         'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
       return validum || error;
     }

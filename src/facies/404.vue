@@ -1,21 +1,19 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Nuntius from '../miscella/nuntius'
-import Cocutor from '../miscella/cocutor'
+  import { defineComponent } from 'vue';
+  import Cocutor from '../miscella/cocutor';
+  import Nuntius from '../miscella/nuntius';
 
-export default defineComponent({
-  data() {
-    return {
-      anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
-    }
-  },
-
-  mounted(): void {
+  export default defineComponent({
+    data (): { anglica: boolean; } {
+      return {
+        anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
+      };
+    }, mounted (): void {
     if ([location.href, location.href !== '404'].all()) {
       Nuntius.timeo({
         nomen: '404.vue',
         error: new Error(`CDIV loco ${location.href} effectu'st`)
-      })
+      });
     }
   }
 })

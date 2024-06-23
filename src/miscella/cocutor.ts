@@ -1,7 +1,7 @@
-import { getCookie, removeCookie, setCookie } from 'typescript-cookie'
-import Ignavum from './ignavum'
-import Nuntius from './nuntius'
-import type { CookieAttributes } from 'node_modules/typescript-cookie/dist/types'
+import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
+import Ignavum from './ignavum';
+import Nuntius from './nuntius';
+import type { CookieAttributes } from 'node_modules/typescript-cookie/dist/types';
 
 export type Crustulum = {
   nomen: string
@@ -21,39 +21,39 @@ export default class Cocutor {
 
   @Nuntius.modus('Cocutor')
   coquatur(crustulum: Crustulum): void {
-    setCookie(crustulum.nomen, crustulum.valor, this._optiones)
+    setCookie(crustulum.nomen, crustulum.valor, this._optiones);
   }
 
   @Nuntius.modus('Cocutor')
   edatur(nomen: string): string | undefined {
-    return getCookie(nomen)
+    return getCookie(nomen);
   }
 
   @Nuntius.modus('Cocutor')
   voreatur(nomen: string): string | undefined {
-    const esum: string | undefined = this.edatur(nomen)
+    const esum: string | undefined = this.edatur(nomen);
     removeCookie(nomen, {
       domain: this._optiones.domain
-    })
+    });
 
-    return esum
+    return esum;
   }
 
   @Nuntius.modus('Cocutor')
   coctust(nomen: string): boolean {
-    return !!this.edatur(nomen)
+    return !!this.edatur(nomen);
   }
 
   @Nuntius.modus('Cocutor')
   est(nomen: string): boolean | undefined {
-    const valor: string | undefined = this.edatur(nomen)
+    const valor: string | undefined = this.edatur(nomen);
     switch (valor) {
       case 'ita':
-        return true
+        return true;
       case 'non':
-        return false
+        return false;
       default:
-        return undefined
+        return undefined;
     }
   }
 }

@@ -2,7 +2,7 @@ import file from 'file-fetch';
 import path from 'path';
 import Nuntius from '../miscella/nuntius';
 import * as Verba from '../praebeunda/verba';
-import type { Agendum } from '../praebeunda/agenda'
+import type { Agendum } from '../praebeunda/agenda';
 
 export function LectorAgendorum<Illud extends Verba.Multiplex>(
   scapum?: string
@@ -37,28 +37,28 @@ export default class Lector<Hoc> {
     if (data) {
       const { parse } = require('comma-separated-values')
       try {
-        const hoc: Hoc = parse(data, { header: true }) as Hoc
+        const hoc: Hoc = parse(data, { header: true }) as Hoc;
         if (hoc) {
           Nuntius.plusGarrio({
             nomen: 'Lector',
             nuntium: `Lemma invenita'st ${lemma} `
-          })
+          });
 
-          return hoc
+          return hoc;
         }
       } catch (error) {
         Nuntius.timeo({
           nomen: 'Lector',
           error: error as Error
-        })
+        });
       }
     }
 
     Nuntius.plusGarrio({
       nomen: 'Lector',
       nuntium: `Lemma nulla'st  ${lemma}`
-    })
+    });
 
-    return null
+    return null;
   }
 }

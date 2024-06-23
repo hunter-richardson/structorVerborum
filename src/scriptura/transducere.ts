@@ -1,10 +1,10 @@
-import { NewTabOpener } from 'new-tab-opener'
+import { NewTabOpener } from 'new-tab-opener';
 
 export function transduceretne(): boolean {
   try {
-    return !!new Blob()
+    return !!new Blob();
   } catch {
-    return false
+    return false;
   }
 }
 
@@ -16,6 +16,6 @@ export function transducatur(locutio: string): void {
           type: 'text/plain;charset=utf-8'
         })
       )
-    )
+    );
   }
 }

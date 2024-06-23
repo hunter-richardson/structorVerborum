@@ -20,6 +20,13 @@ export enum Mensa {
   December
 }
 
+export const acta: string[] = ['infintivus', 'gerundium', 'supinum'];
+export const genera: string[] = ['neutrum', 'masculinum', 'femininum'];
+export const gradi: string[] = ['positivus', 'comparativus', 'superlativus'];
+export const personae: string[] = ['prima', 'secunda', 'tertia'];
+export const numeri: string[] = ['singularis', 'pluralis'];
+export const voces: string[] = ['activa', 'passiva'];
+
 export const categoriae: string[] = [
   'actus',
   'adiectivum',
@@ -30,7 +37,8 @@ export const categoriae: string[] = [
   'numerus',
   'praepositio',
   'pronomen'
-]
+];
+
 export const casus: string[] = [
   'derectus',
   'nominativus',
@@ -40,18 +48,16 @@ export const casus: string[] = [
   'ablativus',
   'vocativus',
   'locativus'
-]
-export const acta: string[] = ['infintivus', 'gerundium', 'supinum']
-export const genera: string[] = ['neutrum', 'masculinum', 'femininum']
-export const gradi: string[] = ['positivus', 'comparativus', 'superlativus']
+];
+
 export const modi: string[] = [
   'indicativus',
   'subiunctivus',
   'infinitivus',
   'imperativus',
   'participalis'
-]
-export const numeri: string[] = ['singularis', 'pluralis']
+];
+
 export const referenda: string[] = [
   'numerus',
   'ordinale',
@@ -60,8 +66,8 @@ export const referenda: string[] = [
   'multiplicativum',
   'distributivum',
   'fractionale'
-]
-export const personae: string[] = ['prima', 'secunda', 'tertia']
+];
+
 export const tempora: string[] = [
   'praesens',
   'infectum',
@@ -69,124 +75,123 @@ export const tempora: string[] = [
   'perfectum',
   'plusquamperfectum',
   'exigendum'
-]
-export const voces: string[] = ['activa', 'passiva']
+];
 
 export function anglicum(valor: string) {
   switch (valor) {
     case 'actus':
-      return 'verb'
+      return 'verb';
     case 'adiectivum':
-      return 'adjective'
+      return 'adjective';
     case 'adverbium':
-      return 'adverb'
+      return 'adverb';
     case 'coniunctio':
-      return 'conjunction'
+      return 'conjunction';
     case 'nomen':
-      return 'noun'
+      return 'noun';
     case 'numeramen':
     case 'numerus':
-      return 'numeral'
+      return 'numeral';
     case 'praepositio':
-      return 'preposition'
+      return 'preposition';
     case 'pronomen':
-      return 'pronoun'
+      return 'pronoun';
     case 'derectus':
-      return 'direct'
+      return 'direct';
     case 'nominativus':
-      return 'nominative'
+      return 'nominative';
     case 'genitivus':
-      return 'genitive'
+      return 'genitive';
     case 'dativus':
-      return 'dative'
+      return 'dative';
     case 'accusativus':
-      return 'accusative'
+      return 'accusative';
     case 'ablativus':
-      return 'ablative'
+      return 'ablative';
     case 'locativus':
-      return 'locative'
+      return 'locative';
     case 'vocativus':
-      return 'vocative'
+      return 'vocative';
     case 'infinitivus':
-      return 'infinitive'
+      return 'infinitive';
     case 'gerundium':
-      return 'gerund'
+      return 'gerund';
     case 'supinum':
-      return 'supine'
+      return 'supine';
     case 'neutrum':
-      return 'neuter'
+      return 'neuter';
     case 'masculinum':
-      return 'masculine'
+      return 'masculine';
     case 'femininum':
-      return 'feminine'
+      return 'feminine';
     case 'positivus':
-      return 'positive'
+      return 'positive';
     case 'comparativus':
-      return 'comparative'
+      return 'comparative';
     case 'superlativus':
-      return 'superlative'
+      return 'superlative';
     case 'indicativus':
-      return 'indicative'
+      return 'indicative';
     case 'subiunctivus':
-      return 'subjunctive'
+      return 'subjunctive';
     case 'imperativus':
-      return 'imperative'
+      return 'imperative';
     case 'participalis':
-      return 'participle'
+      return 'participle';
     case 'singularis':
-      return 'singular'
+      return 'singular';
     case 'pluralis':
-      return 'plural'
+      return 'plural';
     case 'ordinale':
-      return 'ordinal'
+      return 'ordinal';
     case 'cardinale':
-      return 'cardinal'
+      return 'cardinal';
     case 'distributivum':
-      return 'distributive'
+      return 'distributive';
     case 'multiplicativum':
-      return 'multiplicative'
+      return 'multiplicative';
     case 'fractionale':
-      return 'fractional'
+      return 'fractional';
     case 'prima':
-      return 'first'
+      return 'first';
     case 'secunda':
-      return 'second'
+      return 'second';
     case 'tertia':
-      return 'third'
+      return 'third';
     case 'praesens':
-      return 'present'
+      return 'present';
     case 'infectum':
-      return 'imperfect'
+      return 'imperfect';
     case 'futurum':
-      return 'future'
+      return 'future';
     case 'perfectum':
-      return 'perfect'
+      return 'perfect';
     case 'plusquamperfectum':
-      return 'plu-perfect'
+      return 'plu-perfect';
     case 'exigendum':
-      return 'future-perfect'
+      return 'future-perfect';
     case 'activa':
-      return 'active'
+      return 'active';
     case 'passiva':
-      return 'passive'
+      return 'passive';
     case 'modus':
-      return 'mode'
+      return 'mode';
     case 'vox':
-      return 'voice'
+      return 'voice';
     case 'tempus':
-      return 'tense'
+      return 'tense';
     case 'persona':
-      return 'person'
+      return 'person';
     case 'genus':
-      return 'gender'
+      return 'gender';
     case 'gradus':
-      return 'grade'
+      return 'grade';
     case 'casus':
-      return 'case'
+      return 'case';
     case 'actum':
     case 'referendum':
-      return 'reference'
+      return 'reference';
     default:
-      return ''
+      return '';
   }
 }
