@@ -1,8 +1,11 @@
 name: aedificare
 
-on: [ push, pull_request ]
+on:
+  workflow_run:
+    workflows: [ ESLint ]
+    types: [ completed ]
 jobs:
-  build_vue:
+  on-success:
     runs-on:  ubuntu-latest
     name: aedificare
     continue-on-error: false
