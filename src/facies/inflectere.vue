@@ -4,7 +4,7 @@
 
   defineProps<{
     eventus: {
-      referendum: Faciendum<Hoc>,
+      referendum: Faciendum<Hoc> | null,
       categoria: string
     }
   }>();
@@ -15,11 +15,11 @@
     filter: (verbum: Hoc, colamen: string) => boolean
   }[];
 
-  const agendum: Faciendum<Hoc> = eventus?.referendum;
+  const agendum: Faciendum<Hoc> = eventus.referendum;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const tabula: Tabula<Hoc> | null = agendum?.putetur() ?? null;
 
-  const categoria: string = eventus?.categoria ?? '';
+  const categoria: string = eventus.categoria ?? '';
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -70,14 +70,10 @@
   import { genera, gradi, anglicum } from '../miscella/enumerationes';
   import type { Referendum } from '../praebeunda/interfecta'
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const HorizontalScroll = require('vue-horizontal-scroll');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const seligenda: string[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const selecta: string[] = [];
 
   type Et = {
@@ -113,7 +109,7 @@
         figura: figura,
         seligenda: seligenda,
         selecta: selecta,
-        haec: tabula?.tabulentur() ?? [],
+        haec: (tabula?.tabulentur() ?? []) as Hoc[],
         verbum: verbum.value,
         onerans: true,
         columnae: columnae,
@@ -136,59 +132,57 @@
         if (this.figura === 'numeramenAgendum' &&
           agendum instanceof Agenda.NumeramenAgendum &&
           numeramen instanceof Numeramen) {
-          const referendum: Referendum = (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
+          const referendum: Referendum | null = await (agendum as Agenda.NumeramenAgendum).referatur(numeramen.referendum);
           if (referendum instanceof Numerus) {
             this.verbum = referendum as Numerus;
           } else if (referendum instanceof Agenda.NomenAgendum) {
-            this.eventus = {
-              referendum: referendum as Agenda.NomenAgendum,
-              categoria: 'nomen'
-            };
+            this.eventus.referendum = referendum as Agenda.NomenAgendum;
+            this.eventus.categoria = 'nomen';
           } else if (referendum instanceof Agenda.AdiectivumAgendum) {
-            this.eventus = {
-              referendum: referendum as Agenda.AdiectivumAgendum,
-              categoria: 'adiectivum'
-            };
+            this.eventus.referendum = referendum as Agenda.AdiectivumAgendum;
+            this.eventus.categoria = 'adiectivum';
           } else if (referendum instanceof Agenda.Incomparabile) {
-            this.eventus = {
-              referendum: referendum as Agenda.Incomparabile,
-              categoria: 'adiectivum'
-            };
+            this.eventus.referendum = referendum as Agenda.Incomparabile;
+            this.eventus.categoria = 'adiectivum';
           }
         }
       }, selige (hoc: Hoc): void {
         this.verbum = hoc;
-      }, refer (eventus: {
+      }, async refer (eventus: {
         categoria: string,
         referendum?: string,
         gradus?: string,
         genus?: string;
-      }): void {
-        let referendum: Referendum | null = null;
+      }): Promise<void> {
         switch (this.figura) {
           case 'actusAgendus':
             if (agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
                 case 'frequentativus':
-                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
+                  this.eventus.categoria = eventus.categoria;
+                  this.eventus.referendum = (agendum as Agenda.ActusAgendus).frequentativus();
                   break;
                 case 'nomen':
-                  referendum = (agendum as Agenda.ActusAgendus).nomen();
+                  this.eventus.categoria = eventus.categoria;
+                  this.eventus.referendum = await (agendum as Agenda.ActusAgendus).nomen();
                   break;
                 case 'actor':
-                  referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
+                  this.eventus.categoria = eventus.categoria;
+                  this.eventus.referendum = (agendum as Agenda.ActusAgendus).actor(eventus.genus ?? '');
                   break;
               }
             }
             break;
           case 'nomenActum':
             if (agendum instanceof Agenda.NomenActum) {
-              referendum = (agendum as Agenda.NomenActum).actus();
+              this.eventus.categoria = eventus.categoria;
+              this.eventus.referendum = await (agendum as Agenda.NomenActum).actus();
             }
             break;
           case 'adiectivumAgendum':
             if (agendum instanceof Agenda.AdiectivumAgendum) {
-              referendum = (agendum as Agenda.AdiectivumAgendum).probetur({
+              this.eventus.categoria = eventus.categoria;
+              this.eventus.referendum = await (agendum as Agenda.AdiectivumAgendum).probetur({
                 gradus: eventus.gradus ?? '',
                 genus: eventus.genus ?? ''
               });
@@ -196,16 +190,10 @@
             break;
           case 'incomparabile':
             if (agendum instanceof Agenda.Incomparabile) {
-              referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
+              this.eventus.categoria = eventus.categoria;
+              this.eventus.referendum = (agendum as Agenda.Incomparabile).probetur(eventus.genus ?? '');
             }
             break;
-        }
-
-        if (referendum) {
-          this.eventus = {
-            referendum: referendum,
-            categoria: eventus.categoria
-          };
         }
       }
     }, async mounted (): Promise<void> {
@@ -238,7 +226,7 @@
   <template v-if='verbum'>
     <specere :verbum='verbum' @blur='verbum = undefined;' />
   </template>
-  <template v-else-if='eventus'>
+  <template v-else-if='eventus && eventus.referendum'>
     <div id='colamina'>
       <horizontal-scroll>
         <v-chip-group v-for='seligendum in seligenda' :key='seligendum'
@@ -252,7 +240,7 @@
       <v-btn-toggle>
         <v-btn append-icon='sprint' id='frequentativus'
                :text="anglica ? 'Frequentative' : 'Frequentativus'"
-               @click="refer({ categoria: 'nomen', referendum: 'frequentativus' });" />
+               @click="refer({ categoria: 'actus', referendum: 'frequentativus' });" />
         <v-btn append-icon='subject' id='nomen' :text="anglica ? 'Noun' : 'Nomen'"
                @click="refer({ categoria: 'nomen', referendum: 'nomen' });" />
         <v-btn append-icon='person' id='actor' :text="anglica ? 'Agent (masculine)' : 'Actor'"
