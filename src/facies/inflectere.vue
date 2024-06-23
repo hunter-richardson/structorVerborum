@@ -158,33 +158,33 @@
             if (agendum instanceof Agenda.ActusAgendus) {
               switch (eventus.referendum) {
                 case 'frequentativus':
-                  referendum = (agendum as Agenda.ActusAgendus).frequentativus();
+                  referendum = (agendum as Agenda.ActusAgendus).frequentativus() ?? null;
                   break;
                 case 'nomen':
-                  referendum = await (agendum as Agenda.ActusAgendus).nomen();
+                  referendum = (await (agendum as Agenda.ActusAgendus).nomen()) ?? null;
                   break;
                 case 'actor':
-                  referendum = (agendum as Agenda.ActusAgendus).actor(res.genus ?? '');
+                  referendum = (agendum as Agenda.ActusAgendus).actor(res.genus ?? '') ?? null;
                   break;
               }
             }
             break;
           case 'nomenActum':
             if (agendum instanceof Agenda.NomenActum) {
-              referendum = await (agendum as Agenda.NomenActum).actus();
+              referendum = (await (agendum as Agenda.NomenActum).actus()) ?? null;
             }
             break;
           case 'adiectivumAgendum':
             if (agendum instanceof Agenda.AdiectivumAgendum) {
-              referendum = await (agendum as Agenda.AdiectivumAgendum).probetur({
+              referendum = (await (agendum as Agenda.AdiectivumAgendum).probetur({
                 gradus: res.gradus ?? '',
                 genus: res.genus ?? ''
-              });
+              })) ?? null;
             }
             break;
           case 'incomparabile':
             if (agendum instanceof Agenda.Incomparabile) {
-              referendum = (agendum as Agenda.Incomparabile).probetur(res.genus ?? '');
+              referendum = (agendum as Agenda.Incomparabile).probetur(res.genus ?? '') ?? null;
             }
             break;
         }
