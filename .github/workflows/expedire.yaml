@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - name: aedificare
+        uses: ./.github/workflows/aedificare.yaml
       - name: inaugurare
         run: npm install @vue/cli
 #      - name: expedire
