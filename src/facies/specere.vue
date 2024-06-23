@@ -22,7 +22,6 @@
     data() {
       return {
         gustulus: new Gustulus({}),
-        verbum: verbum.value,
         eventus: eventus.value,
         anglica: lingua === 'anglica',
         multiplex: verbum.value instanceof Multiplex,

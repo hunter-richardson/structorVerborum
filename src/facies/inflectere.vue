@@ -99,7 +99,6 @@
         seligenda: seligenda,
         selecta: selecta,
         haec: tabula.tabulentur(),
-        eventus: eventus.value,
         verbum: verbum.value,
         onerans: true,
         columnae: columnae,

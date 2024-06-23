@@ -240,7 +240,7 @@
         <numerare :numerus=0 />
       </v-tabs-window-item>
       <v-tabs-window-item value='calculare'>
-        <calculare />
+        <calculare :numerus=0 />
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

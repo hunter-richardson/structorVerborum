@@ -11,6 +11,7 @@
   const cocutor: Cocutor = Cocutor.se.ipse();
 
   const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
+
   const arabicus: {
     integer: number,
     numerator: number,
@@ -37,7 +38,6 @@
       return {
         gustulus: new Gustulus({}),
         anglica: cocutor.edatur('lingua') === 'anglica',
-        numerus: numerus.value,
         validator: validator,
         arabicus: arabicus,
         romanus: ''

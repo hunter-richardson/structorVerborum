@@ -35,7 +35,6 @@
     data() {
       return {
         gustulus: new Gustulus({}),
-        numerus: numerus.value,
         operator: operator,
         praevii: nihil,
         praesentes: nihil,

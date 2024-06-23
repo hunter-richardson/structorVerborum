@@ -5,15 +5,7 @@
 
   const gustulus: ModelRef<Gustulus | undefined, string> = defineModel<Gustulus>()
 
-  export default defineComponent({
-    props: [ 'gustulus' ],
-
-    data() {
-      return {
-        gustulus: gustulus.value
-      }
-    }
-  })
+  export default defineComponent({ props: [ 'gustulus' ] })
 </script>
 
 <template>
