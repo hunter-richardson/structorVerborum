@@ -71,7 +71,7 @@
     "vite-plugin-vue-devtools": "^7.0.25",
     "vitest": "^1.4.0",
     "vue-horizontal-scroll": "^0.2.4",
-    "vue-tsc": "^2.0.21",
+    "vue-tsc": "^2.0.22",
     "vuedraggable": "^4.1.0",
     "vuetify": "^3.6.10",
     "winston": "^3.13.0",
