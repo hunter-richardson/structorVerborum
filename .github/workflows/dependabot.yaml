@@ -1,11 +1,11 @@
-name: confundere
+name: dependabot
 
 on:
   pull_request:
     types: [opened]
 
 jobs:
-  confundere:
+  dependabot:
     runs-on: ubuntu-latest
     steps:
       - uses: mitto98/dependabot-automerge-action@master
