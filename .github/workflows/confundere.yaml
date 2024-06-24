@@ -1,0 +1,18 @@
+name: confundere
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  confundere:
+    if: ${{ github.event.review.state == 'APPROVED' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: nikhilaii93/pr-autobuild@master
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_NAME: hunter-richardson/structorVerborum
+          DEFAULT_APPROVAL_COUNT_ENV: 1
+          PR_LABEL_ENV: RELEASE
+          DELETE_BRANCH_ENV: true
