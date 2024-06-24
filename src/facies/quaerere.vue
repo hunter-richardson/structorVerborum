@@ -136,14 +136,14 @@
     <specere :verbum='verbum' @blur='verbum = undefined;' />
   </template>
   <template v-else-if='eventus'>
-    <inflectere :eventus='eventus' @blur='eventus = undefined;' />
+    <inflectere :eventus='eventus as Eventus' @blur='eventus = undefined;' />
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
            id='sarci' :text="anglica ? 'Search' : 'Sarci'" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' density='compact' id='tabula' :headers='columnae'>
-    <template v-slot:headers='{ headers, isSorted, getSortIcon, toggleSort }'>
+    <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <template v-for='columna in headers.flat()' :key='columna.key'>
           <td>

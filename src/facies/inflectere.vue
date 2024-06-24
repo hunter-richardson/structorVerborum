@@ -3,6 +3,7 @@
   import type { Faciendum } from '../praebeunda/interfecta';
   import type { Eventus } from '../miscella/dictionarium';
 
+
   const eventus: Eventus = defineProps<{ eventus: Eventus }>().eventus;
 
   type Columnae = {
@@ -19,7 +20,10 @@
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const columnae: Columnae = Multiplex.colamina(categoria).map(columna => {
+  const columnae: Columnae = [
+    ...Multiplex.colamina(categoria),
+    'scriptum'
+  ].map(columna => {
     return {
       title: (anglica ? anglicum(columna) : columna).toUpperCase(),
       key: columna,
@@ -52,7 +56,7 @@
 </script>
 
 <script lang='ts'>
-  import { defineComponent, defineModel, type ModelRef } from 'vue';
+  import { defineComponent, defineModel, type ModelRef, ref } from 'vue';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import specere from './specere.vue';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -118,9 +122,12 @@
         this.onerans = true;
         const omnia: Hoc[] = await this.omnes();
         if (omnia) {
-          this.haec = omnia.filter(verbum =>
+          this.haec = ref<Hoc[]>(omnia.filter(verbum =>
             (this.selecta as string[]).every(selectum =>
-              verbum.valores().includes(selectum)));
+              verbum.valores().includes(selectum)))).value;
+          // this.haec = omnia.filter(verbum =>
+          //   (this.selecta as string[]).every(selectum =>
+          //     verbum.valores().includes(selectum)));
         }
 
         return await new Promise(() => this.onerans = !!omnia);
@@ -195,7 +202,8 @@
         }
       }
     }, async mounted (): Promise<void> {
-      this.haec = await this.omnes();
+      this.haec = ref<Hoc[]>(await this.omnes()).value;
+      // this.haec = await this.omnes());
 
       switch (this.haec?.length ?? 0) {
         case 1:
@@ -287,7 +295,7 @@
         <v-skeleton-loader :loading-text="anglica ? 'Loading words...' : 'Verba onerantur...'"
                            :loading='onerans' type='table-tbody' />
       </template>
-      <template v-if='!onerans' v-slot:item='hoc'>
+      <template v-if='!onerans' #item='hoc'>
         <template v-if="figura === 'numeramenAgendum'">
           <v-btn :text="anglica ? 'Open' : 'Refer'" append-icon='open_in_full' id='numeramen'
                  @click='numeramen(hoc.item);' />

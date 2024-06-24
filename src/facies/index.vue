@@ -195,7 +195,7 @@
 	<gustulare :gustulus='gustulus' />
   <template v-if="crustula.assensus === 'assensit'">
     <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
-      <template v-slot:activator='{ props: activator }'>
+      <template #activator='{ props: activator }'>
         <v-fab v-bind='activator' size='medium' icon='cake' />
       </template>
       <v-fab key='facies' id='crustula.facies'
@@ -239,7 +239,7 @@
         </template>
         <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
           <v-hover>
-            <template v-slot:default='{ isHovering, props }'>
+            <template #default='{ isHovering, props }'>
               <a v-if='isHovering' target='_blank'
                  href='https://github.com/hunter-richardson/structorverborum/issues'>
                 <v-card v-bind='props'

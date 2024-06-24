@@ -15,6 +15,8 @@
   const locutor: Locutor = Locutor.se.ipse();
 
   const verbum: Verbum | undefined = defineProps({ verbum: Verbum }).verbum;
+  const enclitica: string[] = Object.keys(Encliticum)
+    .filter(encliticum => !verbum?.scriptum.endsWith(encliticum));
 
   export default defineComponent({
     components: { gustulare, inflectere },
@@ -38,7 +40,7 @@
         propriabile: false,
         multiplex: false,
         valores: [],
-        enclitica: Object.keys(Encliticum),
+        enclitica: enclitica,
         encliticum: ''
       };
     },

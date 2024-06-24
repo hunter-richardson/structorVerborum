@@ -190,6 +190,8 @@ export function anglicum(valor: string) {
     case 'actum':
     case 'referendum':
       return 'reference';
+    case 'scriptum':
+      return 'form'
     default:
       return '';
   }
