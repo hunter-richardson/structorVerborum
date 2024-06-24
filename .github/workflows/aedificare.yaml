@@ -32,12 +32,12 @@ jobs:
 #        run: npm test --passWithNoTests
 #        env:
 #          CI: true
-#      - name: invenire
-#        run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
-#      - name: emissa
-#        run: local emissa=$(find ${locus} -type f | wc -l)
-#      - name: delere
-#        if: ${{ emissa }} = 0
-#        run: |
-#          printf '::error title=aedificare::defectust'
-#          exit 1
+      - name: invenire
+        run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
+      - name: emissa
+        run: local emissa=$(find ${locus} -type f | wc -l)
+      - name: delere
+        if: ${{ emissa }} = 0
+        run: |
+          printf '::error title=aedificare::defectust'
+          exit 1
