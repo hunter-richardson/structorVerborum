@@ -1,12 +1,11 @@
 name: confundere
 
 on:
-  pull_request_review:
-    types: [submitted]
+  pull_request:
+    types: [opened]
 
 jobs:
   confundere:
-    if: github.event.review.state == 'APPROVED'
     runs-on: ubuntu-latest
     steps:
       - uses: mitto98/dependabot-automerge-action@master
