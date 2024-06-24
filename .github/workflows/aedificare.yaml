@@ -37,7 +37,7 @@ jobs:
       - name: emissa
         run: local emissa=$(find ${locus} -type f | wc -l)
       - name: delere
-        if: ${{ emissa }} = 0
+        if: ${{ env.emissa }} = 0
         run: |
           printf '::error title=aedificare::defectust'
           exit 1
