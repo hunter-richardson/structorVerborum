@@ -5,6 +5,7 @@
   import inflectere from './inflectere.vue';
   import specere from './specere.vue';
   import loqui from './loqui.vue';
+  import onerare from './onerare.vue'
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
   import type { ModelRef } from 'vue';
@@ -70,7 +71,7 @@
   ];
 
   export default defineComponent({
-    components: { gustulare, inflectere, specere, loqui },
+    components: { gustulare, inflectere, specere, loqui, onerare },
 
     data() {
       return {
@@ -166,11 +167,8 @@
         </template>
       </tr>
     </template>
-    <template v-if='onerans'>
-      <v-skeleton-loader :loadingText="anglica ? 'Loading words...' : 'Lemmae onerantur...'"
-                         :loading='onerans' type='table-tbody' />
-    </template>
-    <template v-else v-for='lemma in lemmae' :key='lemma'>
+    <onerare :onerans='onerare' pittacium='lemmae' />
+    <template v-if='~!onerare' v-for='lemma in lemmae' :key='lemma'>
       <tr>
         <td>{{ lemma.categoria }}</td>
       </tr>
