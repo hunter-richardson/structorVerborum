@@ -12,9 +12,9 @@ name: ESLint
 on: 
   pull_request:
     types: [opened, reopened, edited, synchronized, ready_for_review, review_requested, auto_merge_enabled]
-    paths: [ src/*, res/*, tsconfig*.json ]
+    paths-ignore: [ .github ]
   push:
-    paths: [ src/*, res/*, tsconfig*.json ]
+    paths-ignore: [ .github ]
 
 jobs:
   eslint:
