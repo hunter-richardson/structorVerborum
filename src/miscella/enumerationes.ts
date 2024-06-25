@@ -95,6 +95,25 @@ export function anglicum(valor: string) {
       return 'preposition';
     case 'pronomen':
       return 'pronoun';
+    case 'actua':
+      return 'verbs';
+    case 'adiectiva':
+      return 'adjectives';
+    case 'coniunctiones':
+      return 'conjunctions';
+    case 'nomina':
+      return 'nouns';
+    case 'numeramina':
+    case 'numeri':
+      return 'numerals';
+    case 'praepositiones':
+      return 'prepositions';
+    case 'pronomina':
+      return 'pronouns';
+    case 'verbum':
+      return 'word';
+    case 'verba':
+      return 'words';
     case 'derectus':
       return 'direct';
     case 'nominativus':
