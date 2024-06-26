@@ -43,11 +43,6 @@
     separator: ''
   };
 
-  const annuli: {
-    titula: string,
-    valor: string;
-  }[] = [];
-
   const separatores: {
     clavis: string,
     valor: string;
@@ -83,9 +78,9 @@
         locutionis: locutor.locutust(),
         referret: referretne(),
         transduceret: transduceretne(),
-        crustula: crustula,
-        annuli: annuli,
         separatores: separatores,
+        crustula: crustula,
+        annuli: [],
         annulus: ''
       };
     }, methods: {
