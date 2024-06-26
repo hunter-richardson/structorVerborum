@@ -35,7 +35,6 @@
 
   export default defineComponent({
     components: { gustulare, specere },
-
     data(): {
       validator: ((arabicus: number) => boolean | string)[],
       gustulus: Gustulus,

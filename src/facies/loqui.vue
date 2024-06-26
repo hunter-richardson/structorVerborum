@@ -24,7 +24,6 @@
 
   export default defineComponent({
     component: { draggable, gustulare },
-
     data(): {
       trahens: boolean,
       gustulus: Gustulus,

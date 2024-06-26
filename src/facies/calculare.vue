@@ -31,7 +31,6 @@
 
   export default defineComponent({
     components: { gustulare, specere },
-
     data (): {
       numerus: ModelRef<Numerus | undefined, string>,
       gustulus: Gustulus,

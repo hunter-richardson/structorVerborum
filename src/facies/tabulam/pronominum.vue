@@ -5,22 +5,21 @@
   import onerare from '../onerare.vue'
   import gustulare from '../gustulare.vue'
   import Gustulus from '../../scriptura/gustulus'
-  import { type Columnae, erigantur } from '../../scriptura/columnae'
+  import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { Pronomen } from '../../praebeunda/verba'
   import { Mantela } from '../../anomala/anomala'
   import Cocutor from '../../miscella/cocutor'
   import Tabula from '../../tabulae/tabula'
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  import { anglicum } from '../../miscella/enumerationes'
-
-  const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen> }>().agendum;
-
-  const columnae: Columnae<Pronomen> = erigantur<Pronomen>([ 'genus', 'numerus', 'casus', 'scriptum' ]);
+  const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen>; }>().agendum;
   const pronomen: Pronomen | undefined = defineModel<Pronomen>().value;
   const tabula: Tabula<Pronomen> | null = agendum.putetur();
   const pronomina: Pronomen[] = await tabula?.tabulentur() ?? [];
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const columnae: Columnae<Pronomen> = categoricum<Pronomen>({
+    categoria: 'pronomen',
+    haec: pronomina
+  });
 
   export default defineComponent({
     components: { gustulare, specere, onerare, seligere },
@@ -63,15 +62,15 @@
   </template>
   <template v-else>
     <seligere :multiplicia='pronomina' :selectum='cole' />
-    <v-data-table :items='pronomina' :headers='columnae' density='compact'
-                  :loading='onerans' :disabled='onerans' id='tabula'
-                  items-per-page='10' item-selectable=false>
+    <v-data-table :items='pronomina' :headers='columnae' density='compact' :loading='onerans'
+                  :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='pronomina' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in pronomina' :key='hoc'
-               :text="anglica ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-               :id='`selige_${hoc.unicum.toString()}`' @click='pronomen = hoc' />
+        <v-btn v-for='hoc in pronomina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+               append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
+               @click='pronomen = hoc' />
       </template>
-  </v-data-table>
+    </v-data-table>
   </template>
 </template>
+

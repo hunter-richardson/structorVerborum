@@ -66,7 +66,6 @@
 
   export default defineComponent({
     components: { gustulare, quaerere, numerare, calculare },
-
     data (): {
       name: string,
       gustulus: Gustulus,

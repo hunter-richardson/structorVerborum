@@ -20,7 +20,6 @@
 
   export default defineComponent({
     components: { gustulare, inflectere },
-
     data (): {
       gustulus: Gustulus,
       verbum: Verbum | undefined,
@@ -43,9 +42,7 @@
         enclitica: enclitica,
         encliticum: ''
       };
-    },
-
-    methods: {
+    }, methods: {
       async aperi (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus': {
@@ -86,9 +83,7 @@
 
         this.adde();
       }
-    },
-
-    mounted(): void {
+    }, mounted (): void {
       this.multiplex = verbum ? verbum instanceof Multiplex : false;
       this.valores = this.multiplex ? (verbum as Multiplex)?.valores() : [];
 

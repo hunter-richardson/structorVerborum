@@ -72,7 +72,6 @@
 
   export default defineComponent({
     components: { gustulare, inflectere, specere, loqui, onerare },
-
     data() {
       return {
         gustulus: new Gustulus({}),
@@ -87,33 +86,25 @@
         columnae: columnae,
         validator: validator
       };
-    },
-
-    methods: {
+    }, methods: {
       async sarci (): Promise<void> {
         this.onerans = true;
         this.lemmae = await dictionarium.quaeratur(this.quaerenda);
         return new Promise(() => this.onerans = false);
-      },
-
-      async omnes (): Promise<void> {
+      }, async omnes (): Promise<void> {
         this.onerans = true;
         this.quaerenda.categoriae = [];
         this.quaerenda.pars = '';
 
         this.sarci();
-      },
-
-      removeApices (): void {
+      }, removeApices (): void {
         if (this.validator[ 0 ](this.quaerenda.pars) === true) {
           this.quaerenda.pars = this.quaerenda.pars.toLowerCase().removeMacra();
           this.error = false;
         } else {
           this.error = true;
         }
-      },
-
-      async aperi (lemma: Lemma): Promise<void> {
+      }, async aperi (lemma: Lemma): Promise<void> {
         const eventus: Eventus | null = await dictionarium.referatur(lemma);
         if (eventus) {
           if ([
