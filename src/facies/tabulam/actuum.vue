@@ -13,30 +13,25 @@
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const tabula: Tabula<Actus> | null = agendum.putetur();
-  const actua: Actus[] = await tabula?.tabulentur() ?? [];
   const actus: Actus | undefined = defineModel<Actus>().value;
-  const columnae: Columnae<Actus> = categoricum<Actus>({
-    categoria: 'actus',
-    haec: actua
-  });
 
-  export default defineComponent({
+  const tabulaActuum: any = defineComponent({
     components: { gustulare, specere, seligere },
     data (): {
+      columnae: Columnae<Actus>,
+      actus: Actus | undefined,
       gustulus: Gustulus,
       actua: Actus[],
-      actus: Actus | undefined,
-      columnae: Columnae<Actus>,
       onerans: boolean,
       anglica: boolean;
     } {
       return {
         gustulus: new Gustulus({}),
-        actua: actua,
         actus: actus,
-        columnae: columnae,
         anglica: anglica,
-        onerans: true
+        onerans: true,
+        columnae: [],
+        actua: []
       };
     }, methods: {
       async omnia (): Promise<Actus[]> {
@@ -51,8 +46,18 @@
 
         return new Promise(() => this.onerans = false);
       }
+    }, async mounted (): Promise<void> {
+      this.actua = await this.omnia();
+      this.columnae = categoricum<Actus>({
+        categoria: 'actus',
+        haec: this.actua as Actus[]
+      });
+
+      return new Promise(() => this.onerans = false);
     }
   });
+
+  export default tabulaActuum;
 </script>
 
 <template lang='vue'>

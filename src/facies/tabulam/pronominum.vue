@@ -14,30 +14,25 @@
   const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen>; }>().agendum;
   const pronomen: Pronomen | undefined = defineModel<Pronomen>().value;
   const tabula: Tabula<Pronomen> | null = agendum.putetur();
-  const pronomina: Pronomen[] = await tabula?.tabulentur() ?? [];
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
-  const columnae: Columnae<Pronomen> = categoricum<Pronomen>({
-    categoria: 'pronomen',
-    haec: pronomina
-  });
 
   export default defineComponent({
     components: { gustulare, specere, onerare, seligere },
-    data(): {
-      gustulus: Gustulus,
-      pronomina: Pronomen[],
+    data (): {
       pronomen: Pronomen | undefined,
       columnae: Columnae<Pronomen>,
+      pronomina: Pronomen[],
+      gustulus: Gustulus,
       onerans: boolean,
       anglica: boolean
     } {
       return {
         gustulus: new Gustulus({}),
-        pronomina: pronomina,
         pronomen: pronomen,
-        columnae: columnae,
         anglica: anglica,
-        onerans: true
+        onerans: true,
+        pronomina: [],
+        columnae: []
       };
     }, methods: {
       async omnia(): Promise<Pronomen[]> {
@@ -51,6 +46,14 @@
         }
         return new Promise(() => this.onerans = false);
       }
+    }, async mounted (): Promise<void> {
+      this.pronomina = await this.omnia();
+      this.columnae = categoricum<Pronomen>({
+        categoria: 'pronomen',
+        haec: this.pronomina as Pronomen[]
+      });
+
+      return new Promise(() => this.onerans = false);
     }
   });
 </script>

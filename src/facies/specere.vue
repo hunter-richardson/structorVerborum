@@ -18,7 +18,7 @@
   const enclitica: string[] = Object.keys(Encliticum)
     .filter(encliticum => !verbum?.scriptum.endsWith(encliticum));
 
-  export default defineComponent({
+  const specere: any = defineComponent({
     components: { gustulare, inflectere },
     data (): {
       gustulus: Gustulus,
@@ -95,6 +95,8 @@
       ].all();
     }
   });
+
+  export default specere;
 </script>
 
 <template lang='vue'>
@@ -102,7 +104,7 @@
 	<template v-if='eventus'>
 		<inflectere :eventus='eventus' @blur='eventus = undefined;' />
 	</template>
-  <v-dialog v-if='verbum'>
+  <v-dialog v-else-if='verbum'>
     <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>
       <template v-if='multiplex'>
         <v-chip-group>

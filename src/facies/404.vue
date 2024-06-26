@@ -3,20 +3,22 @@
   import Cocutor from '../miscella/cocutor';
   import Nuntius from '../miscella/nuntius';
 
-  export default defineComponent({
+  const _404: any = defineComponent({
     data (): { anglica: boolean; } {
       return {
         anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
       };
     }, mounted (): void {
-    if ([location.href, location.href !== '404'].all()) {
-      Nuntius.timeo({
-        nomen: '404.vue',
-        error: new Error(`CDIV loco ${location.href} effectu'st`)
-      });
+      if ([ location.href, location.href !== '404' ].all()) {
+        Nuntius.timeo({
+          nomen: '404.vue',
+          error: new Error(`CDIV loco ${location.href} effectu'st`)
+        });
+      }
     }
-  }
-})
+  });
+
+  export default _404;
 </script>
 
 <template lang="vue">

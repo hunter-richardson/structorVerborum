@@ -33,7 +33,7 @@
     }
   ];
 
-  export default defineComponent({
+  const numerare: any = defineComponent({
     components: { gustulare, specere },
     data(): {
       validator: ((arabicus: number) => boolean | string)[],
@@ -63,6 +63,8 @@
       this.effiat();
     }
   });
+
+  export default numerare;
 </script>
 
 <template lang='vue'>

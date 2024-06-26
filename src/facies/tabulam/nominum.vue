@@ -15,31 +15,25 @@
 
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const tabula: Tabula<Nomen> | null = agendum.putetur();
-  const nomina: Nomen[] = await tabula?.tabulentur() ?? [];
   const nomen: Nomen | undefined = defineModel<Nomen>().value;
 
-  const columnae: Columnae<Nomen> = categoricum<Nomen>({
-    categoria: 'nomen',
-    haec: nomina
-  });
-
-  export default defineComponent({
+  const tabulaNominum: any = defineComponent({
     components: { gustulare, specere, seligere, onerare },
     data (): {
+      columnae: Columnae<Nomen>,
+      nomen: Nomen | undefined,
       gustulus: Gustulus,
       nomina: Nomen[],
-      nomen: Nomen | undefined,
-      columnae: Columnae<Nomen>,
       onerans: boolean,
       anglica: boolean;
     } {
       return {
         gustulus: new Gustulus({}),
-        nomina: nomina,
         nomen: nomen,
-        columnae: columnae,
         anglica: anglica,
-        onerans: true
+        onerans: true,
+        columnae: [],
+        nomina: []
       };
     }, methods: {
       async omnia (): Promise<Nomen[]> {
@@ -54,8 +48,18 @@
 
         return new Promise(() => this.onerans = false);
       }
+    }, async mounted (): Promise<void> {
+      this.nomina = await this.omnia();
+      this.columnae = categoricum<Nomen>({
+        categoria: 'nomen',
+        haec: this.nomina as Nomen[]
+      });
+
+      return new Promise(() => this.onerans = false);
     }
   });
+
+  export default tabulaNominum;
 </script>
 
 <template lang='vue'>

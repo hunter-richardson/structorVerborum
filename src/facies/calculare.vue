@@ -29,7 +29,7 @@
     [ '=', 'N', 'S', '%' ]
   ];
 
-  export default defineComponent({
+  const calculare: any = defineComponent({
     components: { gustulare, specere },
     data (): {
       numerus: ModelRef<Numerus | undefined, string>,
@@ -107,6 +107,8 @@
       }
     }
   });
+
+  export default calculare;
 </script>
 
 <template lang='vue'>

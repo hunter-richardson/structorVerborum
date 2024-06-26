@@ -11,7 +11,7 @@
 
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
-  export default defineComponent({
+  const inflectere: any = defineComponent({
     components: {
       tabulaActuum,
       tabulaAdiectivorum,
@@ -29,6 +29,8 @@
       };
     }
   });
+
+  export default inflectere;
 </script>
 
 <template lang='vue'>

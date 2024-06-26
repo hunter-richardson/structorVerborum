@@ -15,31 +15,25 @@
 
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const tabula: Tabula<Adiectivum> | null = agendum.putetur();
-  const adiectiva: Adiectivum[] = await tabula?.tabulentur() ?? [];
   const adiectivum: Adiectivum | undefined = defineModel<Adiectivum>().value;
 
-  const columnae: Columnae<Adiectivum> = categoricum<Adiectivum>({
-    categoria: 'adiectivum',
-    haec: adiectiva
-  });
-
-  export default defineComponent({
+  const tabulaAdiectivorum: any = defineComponent({
     components: { gustulare, specere, seligere, onerare },
     data (): {
-      gustulus: Gustulus,
-      adiectiva: Adiectivum[],
       adiectivum: Adiectivum | undefined,
       columnae: Columnae<Adiectivum>,
+      adiectiva: Adiectivum[],
+      gustulus: Gustulus,
       anglica: boolean,
       onerans: boolean;
     } {
       return {
         gustulus: new Gustulus({}),
-        adiectiva: adiectiva,
         adiectivum: adiectivum,
-        columnae: columnae,
         anglica: anglica,
-        onerans: true
+        onerans: true,
+        adiectiva: [],
+        columnae: []
       };
     }, methods: {
       async omnia (): Promise<Adiectivum[]> {
@@ -54,8 +48,18 @@
 
         return new Promise(() => this.onerans = false);
       }
+    }, async mounted (): Promise<void> {
+      this.adiectiva = await this.omnia();
+      this.columnae = categoricum<Adiectivum>({
+        categoria: 'adiectivum',
+        haec: this.adiectiva as Adiectivum[]
+      });
+
+      return new Promise(() => this.onerans = false);
     }
   });
+
+  export default tabulaAdiectivorum;
 </script>
 
 <template lang='vue'>

@@ -10,7 +10,7 @@
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const scriptum: string = anglica ? `Loading ${anglicum(pittacium).toUpperCase()}...` : `${pittacium.toUpperCase()} onerantur...`;
 
-  export default defineComponent({
+  const onerare: any = defineComponent({
     data (): {
       onerans: boolean,
       scriptum: string;
@@ -21,6 +21,8 @@
       };
     }
   });
+
+  export default onerare;
 </script>
 
 <template lang='vue'>

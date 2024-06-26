@@ -64,7 +64,7 @@
       },
     ];
 
-  export default defineComponent({
+  const index: any = defineComponent({
     components: { gustulare, quaerere, numerare, calculare },
     data (): {
       name: string,
@@ -188,6 +188,8 @@
       }
     }
   });
+
+  export default index;
 </script>
 
 <template lang='vue'>

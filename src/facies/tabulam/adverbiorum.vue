@@ -14,30 +14,25 @@
   const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum; }>().agendum;
   const adverbium: Adverbium | undefined = defineModel<Adverbium>().value;
   const tabula: Tabula<Adverbium> | null = agendum.putetur();
-  const adverbia: Adverbium[] = await tabula?.tabulentur() ?? [];
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
-  const columnae: Columnae<Adverbium> = categoricum<Adverbium>({
-    categoria: 'adverbium',
-    haec: adverbia
-  });
 
   export default defineComponent({
     components: { gustulare, specere, seligere, onerare },
     data (): {
-      gustulus: Gustulus,
-      adverbia: Adverbium[],
       adverbium: Adverbium | undefined,
       columnae: Columnae<Adverbium>,
+      adverbia: Adverbium[],
+      gustulus: Gustulus,
       anglica: boolean,
       onerans: boolean;
     } {
       return {
         gustulus: new Gustulus({}),
-        adverbia: adverbia,
         adverbium: adverbium,
-        columnae: columnae,
         anglica: anglica,
-        onerans: true
+        onerans: true,
+        adverbia: [],
+        columnae: []
       };
     }, methods: {
       async omnia (): Promise<Adverbium[]> {
@@ -52,6 +47,14 @@
 
         return new Promise(() => this.onerans = false);
       }
+    }, async mounted (): Promise<void> {
+      this.adverbia = await this.omnia();
+      this.columnae = categoricum<Adverbium>({
+        categoria: 'adverbium',
+        haec: this.adverbia as Adverbium[]
+      });
+
+      return new Promise(() => this.onerans = false);
     }
   });
 </script>
