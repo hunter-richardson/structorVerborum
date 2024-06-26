@@ -7,10 +7,7 @@
   import tabulaPronominum from './tabulam/pronominum.vue';
   // import tabulaNumeraminum from './tabulam/numeraminum.vue'
   import type { Eventus } from '../miscella/dictionarium';
-  // eslint-disable-next-line @typescript/no-unused-vars
-  import * as Verba from '../praebeunda/verba';
-  // eslint-disable-next-line @typescript/no-unused-vars
-  import type { Faciendum, Referendum } from '../praebeunda/interfecta';
+  import type { Referendum } from '../praebeunda/interfecta';
 
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
