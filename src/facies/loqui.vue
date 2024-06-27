@@ -22,7 +22,7 @@
     })
   });
 
-  const loqui: any = defineComponent({
+  export default defineComponent({
     component: { draggable, gustulare },
     data(): {
       trahens: boolean,
@@ -42,8 +42,6 @@
       }
     }
   });
-
-  export default loqui;
 </script>
 
 <template lang='vue'>

@@ -70,7 +70,7 @@
     }
   ];
 
-  const quaerere: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, inflectere, specere, loqui, onerare },
     data() {
       return {
@@ -119,8 +119,6 @@
       }
     }
   });
-
-  export default quaerere;
 </script>
 
 <template lang='vue'>

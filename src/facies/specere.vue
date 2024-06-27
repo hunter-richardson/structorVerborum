@@ -18,7 +18,7 @@
   const enclitica: string[] = Object.keys(Encliticum)
     .filter(encliticum => !verbum?.scriptum.endsWith(encliticum));
 
-  const specere: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, inflectere },
     data (): {
       gustulus: Gustulus,
@@ -95,8 +95,6 @@
       ].all();
     }
   });
-
-  export default specere;
 </script>
 
 <template lang='vue'>

@@ -17,7 +17,7 @@
   const tabula: Tabula<Adiectivum> | null = agendum.putetur();
   const adiectivum: Adiectivum | undefined = defineModel<Adiectivum>().value;
 
-  const tabulaAdiectivorum: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, specere, seligere, onerare },
     data (): {
       adiectivum: Adiectivum | undefined,
@@ -58,8 +58,6 @@
       return new Promise(() => this.onerans = false);
     }
   });
-
-  export default tabulaAdiectivorum;
 </script>
 
 <template lang='vue'>

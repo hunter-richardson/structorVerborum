@@ -15,7 +15,7 @@
   const tabula: Tabula<Actus> | null = agendum.putetur();
   const actus: Actus | undefined = defineModel<Actus>().value;
 
-  const tabulaActuum: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, specere, seligere },
     data (): {
       columnae: Columnae<Actus>,
@@ -56,8 +56,6 @@
       return new Promise(() => this.onerans = false);
     }
   });
-
-  export default tabulaActuum;
 </script>
 
 <template lang='vue'>

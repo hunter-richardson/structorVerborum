@@ -13,7 +13,7 @@
   const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value;
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
-  const seligere: any = defineComponent({
+  export default defineComponent({
     components: { HorizontalScroll },
     data (): {
       seligenda: string[],
@@ -33,8 +33,6 @@
       }
     }
   });
-
-  export default seligere;
 </script>
 
 <template lang='vue'>

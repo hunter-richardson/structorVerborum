@@ -17,7 +17,7 @@
   const tabula: Tabula<Nomen> | null = agendum.putetur();
   const nomen: Nomen | undefined = defineModel<Nomen>().value;
 
-  const tabulaNominum: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, specere, seligere, onerare },
     data (): {
       columnae: Columnae<Nomen>,
@@ -58,8 +58,6 @@
       return new Promise(() => this.onerans = false);
     }
   });
-
-  export default tabulaNominum;
 </script>
 
 <template lang='vue'>

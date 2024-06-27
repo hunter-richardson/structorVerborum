@@ -11,17 +11,16 @@
 
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
-  const inflectere: any = defineComponent({
+  export default defineComponent({
     components: {
       tabulaActuum,
       tabulaAdiectivorum,
       tabulaAdverbiorum,
       tabulaNominum,
       tabulaPronominum
-      // tabulaNumeraminum
     }, data (): {
       referendum: Referendum | undefined,
-      categoria: string;
+      categoria: string
     } {
       return {
         referendum: eventus.referendum,
@@ -29,8 +28,6 @@
       };
     }
   });
-
-  export default inflectere;
 </script>
 
 <template lang='vue'>

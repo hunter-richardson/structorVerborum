@@ -7,8 +7,8 @@
   import quaerere from './quaerere.vue';
   import numerare from './numerare.vue';
   import calculare from './calculare.vue';
-  import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
+  import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
 
   type Crustula = {
@@ -59,7 +59,7 @@
       },
     ];
 
-  const index: any = defineComponent({
+  export default defineComponent({
     components: { gustulare, quaerere, numerare, calculare },
     data (): {
       name: string,
@@ -183,8 +183,6 @@
       }
     }
   });
-
-  export default index;
 </script>
 
 <template lang='vue'>

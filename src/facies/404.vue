@@ -3,7 +3,7 @@
   import Cocutor from '../miscella/cocutor';
   import Nuntius from '../miscella/nuntius';
 
-  const _404: any = defineComponent({
+  export default defineComponent({
     data (): { anglica: boolean; } {
       return {
         anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
@@ -17,8 +17,6 @@
       }
     }
   });
-
-  export default _404;
 </script>
 
 <template lang="vue">
