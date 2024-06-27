@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ModelRef, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';

@@ -10,7 +10,6 @@
   import gustulare from './gustulare.vue';
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
-  import { Component } from 'node_modules/typedoc/dist/lib/utils';
 
   type Crustula = {
     assensus: string,
@@ -60,7 +59,7 @@
       },
     ];
 
-  const componenta = {
+  const componenta: ComponentOptionsWithoutProps = {
     'gustulare': gustulare,
     'calculare': calculare,
     'quaerere': quaerere,
