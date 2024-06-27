@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae } from '../miscella/enumerationes';
   import inflectere from './inflectere.vue';
@@ -8,12 +8,11 @@
   import onerare from './onerare.vue'
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
-  import type { ModelRef } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
 
-  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
-  const verbum: ModelRef<Verbum | undefined, string> = defineModel<Verbum>('verbum');
+  const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
+  const verbum: Verbum | undefined = defineModel<Verbum>('verbum').value;
 
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
@@ -37,7 +36,7 @@
   const columnae: {
     title: string,
     key: string,
-    filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, quaerendum: string[]) => boolean)
+    filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, selecta: string[]) => boolean)
   }[] = [
     {
       latinum: 'lemma',
@@ -70,23 +69,52 @@
     }
   ];
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'inflectere': inflectere,
+    'gustulare': gustulare,
+    'onerare': onerare,
+    'specere': specere,
+    'loqui': loqui
+  };
+
+  const data = (): {
+    validator: ((pars: string) => boolean | string)[],
+    eventus: Eventus | undefined,
+    verbum: Verbum | undefined,
+    quaerenda: Quaerenda,
+    gustulus: Gustulus,
+    onerans: boolean,
+    anglica: boolean,
+    lemmae: Lemma[],
+    error: boolean,
+    columnae: {
+      title: string,
+      key: string,
+      filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, selecta: string[]) => boolean);
+    }[],
+    categoriae: {
+      title: string,
+      value: string;
+    }[];
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      anglica: anglica,
+      lemmae: lemmae,
+      onerans: true,
+      error: false,
+      verbum: verbum,
+      eventus: eventus,
+      quaerenda: quaerenda,
+      categoriae: Categoriae,
+      columnae: columnae,
+      validator: validator
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, inflectere, specere, loqui, onerare },
-    data() {
-      return {
-        gustulus: new Gustulus({}),
-        anglica: anglica,
-        lemmae: lemmae,
-        onerans: true,
-        error: false,
-        verbum: verbum.value,
-        eventus: eventus.value,
-        quaerenda: quaerenda,
-        categoriae: Categoriae,
-        columnae: columnae,
-        validator: validator
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async sarci (): Promise<void> {
         this.onerans = true;
         this.lemmae = await dictionarium.quaeratur(this.quaerenda);

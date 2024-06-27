@@ -1,6 +1,5 @@
 <script lang='ts'>
-  import type { ModelRef } from 'vue';
-  import { defineComponent, defineModel } from 'vue';
+  import { defineComponent, defineModel, type ModelRef, type ComponentOptionsWithoutProps } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
@@ -13,7 +12,7 @@
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
+  const numerus: Numerus | undefined = defineModel<Numerus>().value;
   const operator: string = '';
 
   const nihil: numeri = {
@@ -29,27 +28,34 @@
     [ '=', 'N', 'S', '%' ]
   ];
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'gustulare': gustulare,
+    'specere': specere
+  };
+
+  const data = (): {
+    numerus: Numerus | undefined,
+    gustulus: Gustulus,
+    operator: string,
+    actus: string[][],
+    praevii: numeri,
+    praesentes: numeri,
+    nihil: numeri;
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      operator: operator,
+      numerus: numerus,
+      praevii: nihil,
+      praesentes: nihil,
+      nihil: nihil,
+      actus: actus
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, specere },
-    data (): {
-      numerus: ModelRef<Numerus | undefined, string>,
-      gustulus: Gustulus,
-      operator: string,
-      actus: string[][],
-      praevii: numeri,
-      praesentes: numeri,
-      nihil: numeri;
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        operator: operator,
-        numerus: numerus,
-        praevii: nihil,
-        praesentes: nihil,
-        nihil: nihil,
-        actus: actus
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       operat (actus: string): boolean {
         return /^\+-•÷%=$/.test(actus);
       }, licta (actus: string): boolean {

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineProps, defineComponent } from 'vue';
+  import { defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import tabulaActuum from './tabulam/actuum.vue';
   import tabulaAdiectivorum from './tabulam/adiectivorum.vue';
   import tabulaAdverbiorum from './tabulam/adverbiorum.vue';
@@ -11,22 +11,28 @@
 
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'tabulaAdiectivorum': tabulaAdiectivorum,
+    'tabulaAdverbiorum': tabulaAdverbiorum,
+    // 'tabulaNumeraminum': tabulaNumeraminum
+    'tabulaNominum': tabulaNominum,
+    'tabulaPronominum': tabulaPronominum,
+    'tabulaActuum': tabulaActuum,
+  };
+
+  const data = (): {
+    referendum: Referendum | undefined,
+    categoria: string
+  } => {
+    return {
+      referendum: eventus.referendum,
+      categoria: eventus.categoria
+    };
+  };
+
   export default defineComponent({
-    components: {
-      tabulaActuum,
-      tabulaAdiectivorum,
-      tabulaAdverbiorum,
-      tabulaNominum,
-      tabulaPronominum
-    }, data (): {
-      referendum: Referendum | undefined,
-      categoria: string
-    } {
-      return {
-        referendum: eventus.referendum,
-        categoria: eventus.categoria
-      };
-    }
+    components: componenta,
+    data: data
   });
 </script>
 
@@ -36,18 +42,18 @@
         <template v-if="categoria === 'actus'">
           <tabulaActuum :agendum='referendum' />
         </template>
-  <template v-else-if="categoria === 'adiectivum'">
+        <template v-else-if="categoria === 'adiectivum'">
           <tabulaAdiectivorum :agendum='referendum' />
         </template>
-  <template v-else-if="categoria === 'adverbium'">
+        <template v-else-if="categoria === 'adverbium'">
           <tabulaAdverbiorum :agendum='referendum' />
         </template>
-  <template v-else-if="categoria === 'nomen'">
+        <template v-else-if="categoria === 'nomen'">
               <tabulaNominum :agendum='referendum' />
         </template>
-      <template v-else-if="categoria === 'pronomen'">
-        <tabulaPronominum :agendum='referendum' />
-      </template>
+        <template v-else-if="categoria === 'pronomen'">
+          <tabulaPronominum :agendum='referendum' />
+        </template>
     </v-dialog>
   </template>
 </template>

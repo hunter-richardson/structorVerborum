@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ModelRef } from 'vue';
+  import { defineComponent, defineModel, type ModelRef, type ComponentOptionsWithoutProps } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';
@@ -10,7 +10,7 @@
   import type { Eventus } from '../miscella/dictionarium';
   import type { NumeramenAgendum } from '../praebeunda/agenda';
 
-  const eventus: ModelRef<Eventus | undefined, string> = defineModel<Eventus>('eventus');
+  const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
   const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
   const locutor: Locutor = Locutor.se.ipse();
 
@@ -18,31 +18,38 @@
   const enclitica: string[] = Object.keys(Encliticum)
     .filter(encliticum => !verbum?.scriptum.endsWith(encliticum));
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'inflectere': inflectere,
+    'gustulare': gustulare
+  };
+
+  const data = (): {
+    eventus: Eventus | undefined,
+    verbum: Verbum | undefined,
+    propriabile: boolean,
+    multiplex: boolean,
+    valores: string[],
+    enclitica: string[],
+    encliticum: string,
+    gustulus: Gustulus,
+    anglica: boolean;
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      anglica: lingua === 'anglica',
+      enclitica: enclitica,
+      eventus: eventus,
+      verbum: verbum,
+      encliticum: '',
+      propriabile: false,
+      multiplex: false,
+      valores: [],
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, inflectere },
-    data (): {
-      gustulus: Gustulus,
-      verbum: Verbum | undefined,
-      eventus: Eventus | undefined,
-      anglica: boolean,
-      propriabile: boolean,
-      multiplex: boolean,
-      valores: string[],
-      enclitica: string[],
-      encliticum: string
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        verbum: verbum,
-        eventus: eventus.value,
-        anglica: lingua === 'anglica',
-        propriabile: false,
-        multiplex: false,
-        valores: [],
-        enclitica: enclitica,
-        encliticum: ''
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async aperi (): Promise<void> {
         switch (this.verbum?.categoria) {
           case 'actus': {

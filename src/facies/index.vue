@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { useTheme } from 'vuetify';
-  import { defineComponent } from 'vue';
+  import { defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import { transducatur, transduceretne } from '../scriptura/transducere';
   import { referretne, referatur } from '../scriptura/referre';
   import Cocutor, { type Crustulum } from '../miscella/cocutor';
@@ -10,6 +10,7 @@
   import gustulare from './gustulare.vue';
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
+  import { Component } from 'node_modules/typedoc/dist/lib/utils';
 
   type Crustula = {
     assensus: string,
@@ -59,31 +60,40 @@
       },
     ];
 
+  const componenta = {
+    'gustulare': gustulare,
+    'calculare': calculare,
+    'quaerere': quaerere,
+    'numerare': numerare
+  };
+
+  const data = (): {
+    name: string,
+    gustulus: Gustulus,
+    locutionis: boolean,
+    referret: boolean,
+    transduceret: boolean,
+    crustula: Crustula,
+    separatores: Separatores,
+    annuli: Annuli,
+    annulus: string;
+  } => {
+    return {
+      name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
+      gustulus: new Gustulus({}),
+      locutionis: locutor.locutust(),
+      referret: referretne(),
+      transduceret: transduceretne(),
+      separatores: separatores,
+      crustula: crustula,
+      annuli: [],
+      annulus: ''
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, quaerere, numerare, calculare },
-    data (): {
-      name: string,
-      gustulus: Gustulus,
-      locutionis: boolean,
-      referret: boolean,
-      transduceret: boolean,
-      crustula: Crustula,
-      separatores: Separatores,
-      annuli: Annuli,
-      annulus: string;
-    } {
-      return {
-        name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
-        gustulus: new Gustulus({}),
-        locutionis: locutor.locutust(),
-        referret: referretne(),
-        transduceret: transduceretne(),
-        separatores: separatores,
-        crustula: crustula,
-        annuli: [],
-        annulus: ''
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async refer (): Promise<void> {
         if (this.referret) {
           await referatur(locutor.scribantur());

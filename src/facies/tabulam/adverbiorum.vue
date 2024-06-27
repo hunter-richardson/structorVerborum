@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent } from 'vue'
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue'
   import specere from '../specere.vue'
   import seligere from '../seligere.vue'
   import onerare from '../onerare.vue'
@@ -16,25 +16,34 @@
   const tabula: Tabula<Adverbium> | null = agendum.putetur();
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'gustulare': gustulare,
+    'seligere': seligere,
+    'specere': specere,
+    'onerare': onerare
+  };
+
+  const data: () => {
+    adverbium: Adverbium | undefined,
+    columnae: Columnae<Adverbium>,
+    adverbia: Adverbium[],
+    gustulus: Gustulus,
+    anglica: boolean,
+    onerans: boolean;
+  } = () => {
+    return {
+      gustulus: new Gustulus({}),
+      adverbium: adverbium,
+      anglica: anglica,
+      onerans: true,
+      adverbia: [],
+      columnae: []
+    };
+    };
+
   export default defineComponent({
-    components: { gustulare, specere, seligere, onerare },
-    data (): {
-      adverbium: Adverbium | undefined,
-      columnae: Columnae<Adverbium>,
-      adverbia: Adverbium[],
-      gustulus: Gustulus,
-      anglica: boolean,
-      onerans: boolean;
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        adverbium: adverbium,
-        anglica: anglica,
-        onerans: true,
-        adverbia: [],
-        columnae: []
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async omnia (): Promise<Adverbium[]> {
         return await tabula?.tabulentur() ?? [];
       }, async cole (selecta: string[]): Promise<void> {

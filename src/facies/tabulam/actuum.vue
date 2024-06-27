@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent } from 'vue';
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import specere from '../specere.vue';
   import seligere from '../seligere.vue';
   import gustulare from '../gustulare.vue';
@@ -15,25 +15,33 @@
   const tabula: Tabula<Actus> | null = agendum.putetur();
   const actus: Actus | undefined = defineModel<Actus>().value;
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'gustulare': gustulare,
+    'specere': specere,
+    'seligere': seligere
+  };
+
+  const data = (): {
+    columnae: Columnae<Actus>,
+    actus: Actus | undefined,
+    gustulus: Gustulus,
+    actua: Actus[],
+    onerans: boolean,
+    anglica: boolean;
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      actus: actus,
+      anglica: anglica,
+      onerans: true,
+      columnae: [],
+      actua: []
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, specere, seligere },
-    data (): {
-      columnae: Columnae<Actus>,
-      actus: Actus | undefined,
-      gustulus: Gustulus,
-      actua: Actus[],
-      onerans: boolean,
-      anglica: boolean;
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        actus: actus,
-        anglica: anglica,
-        onerans: true,
-        columnae: [],
-        actua: []
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async omnia (): Promise<Actus[]> {
         return await tabula?.tabulentur() ?? [];
       }, async cole (selecta: string[]): Promise<void> {

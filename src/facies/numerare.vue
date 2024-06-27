@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import specere from './specere.vue';
@@ -33,25 +33,32 @@
     }
   ];
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'gustulare': gustulare,
+    'specere': specere
+  };
+
+  const data = (): {
+    validator: ((arabicus: number) => boolean | string)[],
+    gustulus: Gustulus,
+    anglica: boolean,
+    numerus: Numerus | undefined,
+    arabicus: Arabicus,
+    romanus: string
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      anglica: anglica,
+      validator: validator,
+      numerus: numerus.value,
+      arabicus: arabicus,
+      romanus: ''
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, specere },
-    data(): {
-      validator: ((arabicus: number) => boolean | string)[],
-      gustulus: Gustulus,
-      anglica: boolean,
-      numerus: Numerus | undefined,
-      arabicus: Arabicus,
-      romanus: string
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        anglica: anglica,
-        validator: validator,
-        numerus: numerus.value,
-        arabicus: arabicus,
-        romanus: ''
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       effiat (): void {
         this.romanus = Numerator.romanus(this.arabicus.integer + (this.arabicus.numerator / this.arabicus.denominator));
       }, refer (): void {

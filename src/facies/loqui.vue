@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent } from 'vue';
+  import { defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import draggable from 'vuedraggable'
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
@@ -22,21 +22,28 @@
     })
   });
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'draggable': draggable,
+    'gustulare': gustulare
+  };
+
+  const data = (): {
+    trahens: boolean,
+    gustulus: Gustulus,
+    verba: Verbum[],
+    pellucidum: string[]
+  } => {
+    return {
+      trahens: false,
+      gustulus: new Gustulus({}),
+      verba: locutor.verba,
+      pellucidum: pellucidum
+    };
+  };
+
   export default defineComponent({
-    component: { draggable, gustulare },
-    data(): {
-      trahens: boolean,
-      gustulus: Gustulus,
-      verba: Verbum[],
-      pellucidum: string[]
-    } {
-      return {
-        trahens: false,
-        gustulus: new Gustulus({}),
-        verba: locutor.verba,
-        pellucidum: pellucidum
-      };
-    }, methods: {
+    component: componenta, data: data,
+    methods: {
       remove (unicum: symbol): void {
         locutor.removeatur(unicum);
       }

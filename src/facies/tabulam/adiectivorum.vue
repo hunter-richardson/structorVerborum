@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent } from 'vue';
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import specere from '../specere.vue';
   import seligere from '../seligere.vue';
   import onerare from '../onerare.vue';
@@ -17,25 +17,34 @@
   const tabula: Tabula<Adiectivum> | null = agendum.putetur();
   const adiectivum: Adiectivum | undefined = defineModel<Adiectivum>().value;
 
+  const componenta: ComponentOptionsWithoutProps = {
+    'gustulare': gustulare,
+    'seligere': seligere,
+    'specere': specere,
+    'onerare': onerare
+  };
+
+  const data = (): {
+    adiectivum: Adiectivum | undefined,
+    columnae: Columnae<Adiectivum>,
+    adiectiva: Adiectivum[],
+    gustulus: Gustulus,
+    anglica: boolean,
+    onerans: boolean;
+  } => {
+    return {
+      gustulus: new Gustulus({}),
+      adiectivum: adiectivum,
+      anglica: anglica,
+      onerans: true,
+      adiectiva: [],
+      columnae: []
+    };
+  };
+
   export default defineComponent({
-    components: { gustulare, specere, seligere, onerare },
-    data (): {
-      adiectivum: Adiectivum | undefined,
-      columnae: Columnae<Adiectivum>,
-      adiectiva: Adiectivum[],
-      gustulus: Gustulus,
-      anglica: boolean,
-      onerans: boolean;
-    } {
-      return {
-        gustulus: new Gustulus({}),
-        adiectivum: adiectivum,
-        anglica: anglica,
-        onerans: true,
-        adiectiva: [],
-        columnae: []
-      };
-    }, methods: {
+    components: componenta, data: data,
+    methods: {
       async omnia (): Promise<Adiectivum[]> {
         return await tabula?.tabulentur() ?? [];
       }, async cole (selecta: string[]): Promise<void> {

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineComponent, defineProps } from 'vue';
+  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps } from 'vue';
   import { Multiplex } from '../praebeunda/verba';
   import Cocutor from '../miscella/cocutor';
 
@@ -13,19 +13,25 @@
   const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value;
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
+  const compnenta: ComponentOptionsWithoutProps = {
+    'horizontal-scroll': HorizontalScroll
+  };
+
+  const data = (): {
+    seligenda: string[],
+    selecta: string[],
+    anglica: boolean;
+  } => {
+    return {
+      seligenda: seligenda,
+      selecta: [],
+      anglica: anglica
+    };
+  };
+
   export default defineComponent({
-    components: { HorizontalScroll },
-    data (): {
-      seligenda: string[],
-      selecta: string[],
-      anglica: boolean;
-    } {
-      return {
-        seligenda: seligenda,
-        selecta: [],
-        anglica: anglica
-      };
-    }, methods: {
+    components: compnenta, data: data,
+    methods: {
       async selige (): Promise<void> {
         if (selectum) {
           await selectum(this.selecta);

@@ -3,12 +3,17 @@
   import Cocutor from '../miscella/cocutor';
   import Nuntius from '../miscella/nuntius';
 
+  const data = (): {
+    anglica: boolean;
+  } => {
+    return {
+      anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
+    }
+  };
+
   export default defineComponent({
-    data (): { anglica: boolean; } {
-      return {
-        anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
-      };
-    }, mounted (): void {
+    data: data,
+    mounted (): void {
       if ([ location.href, location.href !== '404' ].all()) {
         Nuntius.timeo({
           nomen: '404.vue',
