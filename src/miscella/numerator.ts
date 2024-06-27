@@ -1,10 +1,12 @@
 import RomanNumeral from 'js-roman-numerals';
+import Nuntius from './nuntius';
 
 type Par = {
   arabicus: number
   latinum: string
 };
 
+@Nuntius.factum('Numerator')
 export default class Numerator {
   static minimus: Par = {
     arabicus: 0.0,
@@ -16,7 +18,7 @@ export default class Numerator {
     latinum: '|MMMCMXCIX|MMMCMXCIXS×'
   };
 
-  static fracti(): Map<number, string> {
+  private static fracti (): Map<number, string> {
     const numeri: Map<number, string> = new Map();
     numeri.set(1, '·');
     numeri.set(2, ':');
@@ -36,6 +38,7 @@ export default class Numerator {
     return [arabicus >= Numerator.minimus.arabicus, arabicus <= Numerator.maximus.arabicus].all();
   }
 
+  @Nuntius.modus('Numerator')
   static romanus(arabicus: number): string {
     if (this.convertibilis(arabicus)) {
       if (arabicus === Numerator.minimus.arabicus) {
@@ -59,6 +62,7 @@ export default class Numerator {
     }
   }
 
+  @Nuntius.modus('Numerator')
   static arabicus(romanus: string): number {
     const fractus: string = [
       ...this.fracti().values()

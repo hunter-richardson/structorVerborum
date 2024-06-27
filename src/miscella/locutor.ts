@@ -46,6 +46,7 @@ export default class Locutor {
     return this._verba;
   }
 
+  @Nuntius.modus('Locutor')
   addatur(verbum: Verbum): void {
     const praevium: Verbum = this._verba.last();
     if (praevium.categoria === 'praepositio') {
