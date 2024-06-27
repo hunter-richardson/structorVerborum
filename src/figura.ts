@@ -6,7 +6,7 @@ import index from './facies/index.vue';
 
 useFavicon('/res/picta/favicon.png')
 
-export default createVuetify({
+const figura: any = createVuetify({
   blueprint: md3,
   defaults: {
     global: {
@@ -46,4 +46,5 @@ export default createVuetify({
   }
 });
 
-export const app: App = createApp(index);
+export const app: App<Element> = createApp(index as any);
+export default figura;
