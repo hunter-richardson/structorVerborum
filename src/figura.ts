@@ -1,8 +1,8 @@
 import { useFavicon } from '@vueuse/core';
+import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
-import Index from './facies/index.vue';
-import { createApp, type App } from 'vue';
+import index from './facies/index.vue';
 
 useFavicon('/res/picta/favicon.png')
 
@@ -46,4 +46,4 @@ export default createVuetify({
   }
 });
 
-export const app: App = createApp(Index);
+export const app: App = createApp(index);
