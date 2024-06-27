@@ -68,17 +68,17 @@ export abstract class Multiplex extends Verbum {
   static colamina(categoria: string): string[] {
     switch (categoria) {
       case 'actus':
-        return [ 'modus', 'vox', 'tempus', 'numerus', 'persona' ];
+        return [ 'modus', 'vox', 'tempus', 'numerus', 'persona', 'scriptum' ];
       case 'adiectivum':
-        return [ 'gradus', 'genus', 'numerus', 'casus' ];
+        return [ 'gradus', 'genus', 'numerus', 'casus', 'scriptum' ];
       case 'adverbium':
-        return [ 'gradus' ];
+        return [ 'gradus', 'scriptum' ];
       case 'nomen':
-        return [ 'actum', 'numerus', 'casus' ];
+        return [ 'actum', 'numerus', 'casus', 'scriptum' ];
       case 'numeramen':
-        return [ 'referendum' ];
+        return [ 'referendum', 'scriptum' ];
       case 'pronomen':
-        return [ 'genus', 'numerus', 'casus' ];
+        return [ 'genus', 'numerus', 'casus', 'scriptum' ];
       default:
         return [  ];
     }
