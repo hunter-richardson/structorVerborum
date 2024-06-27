@@ -36,7 +36,12 @@
       "scriptura": [ "./src/scriptura/*.ts" ]
     },
     "sourceMap": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "types": [
+      "@nuxt/types",
+      "@nuxt/typescript-build",
+      "@types/node"
+    ]
   },
   "files": [],
   "references": [
