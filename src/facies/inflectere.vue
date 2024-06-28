@@ -5,7 +5,7 @@
   import tabulaAdverbiorum from './tabulam/adverbiorum.vue';
   import tabulaNominum from './tabulam/nominum.vue';
   import tabulaPronominum from './tabulam/pronominum.vue';
-  // import tabulaNumeraminum from './tabulam/numeraminum.vue'
+  import tabulaNumeraminum from './tabulam/numeraminum.vue'
   import type { Eventus } from '../miscella/dictionarium';
   import type { Referendum } from '../praebeunda/interfecta';
 
@@ -14,7 +14,7 @@
   const componenta: ComponentOptionsWithoutProps = {
     'tabulaAdiectivorum': tabulaAdiectivorum,
     'tabulaAdverbiorum': tabulaAdverbiorum,
-    // 'tabulaNumeraminum': tabulaNumeraminum
+    'tabulaNumeraminum': tabulaNumeraminum,
     'tabulaNominum': tabulaNominum,
     'tabulaPronominum': tabulaPronominum,
     'tabulaActuum': tabulaActuum,
@@ -49,8 +49,11 @@
           <tabulaAdverbiorum :agendum='referendum' />
         </template>
         <template v-else-if="categoria === 'nomen'">
-              <tabulaNominum :agendum='referendum' />
+          <tabulaNominum :agendum='referendum' />
         </template>
+        <template v-else-if="categoria === 'numeramen'">
+                  <tabulaNumeraminum :agendum='referendum' />
+                </template>
         <template v-else-if="categoria === 'pronomen'">
           <tabulaPronominum :agendum='referendum' />
         </template>

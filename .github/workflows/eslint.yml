@@ -9,12 +9,12 @@
 
 name: ESLint
 
-on: 
+on:
   pull_request:
-    types: [opened, reopened, edited, synchronized, ready_for_review, review_requested, auto_merge_enabled]
-    paths-ignore: [ .github ]
+    types: [opened, reopened, edited, ready_for_review, review_requested, auto_merge_enabled]
+    paths-ignore: [ .github, README.md ]
   push:
-    paths-ignore: [ .github ]
+    paths-ignore: [ .github, README.md ]
 
 jobs:
   eslint:
