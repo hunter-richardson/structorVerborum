@@ -21,7 +21,7 @@ export enum Mensa {
 
 export const acta: string[] = ['infintivus', 'gerundium', 'supinum'];
 export const genera: string[] = ['neutrum', 'masculinum', 'femininum'];
-export const gradi: string[] = ['positivus', 'comparativus', 'superlativus'];
+export const gradua: string[] = [ 'positivus', 'comparativus', 'superlativus' ];
 export const personae: string[] = ['prima', 'secunda', 'tertia'];
 export const numeri: string[] = ['singularis', 'pluralis'];
 export const voces: string[] = ['activa', 'passiva'];

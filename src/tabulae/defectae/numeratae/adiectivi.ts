@@ -1,9 +1,9 @@
-import { casus, genera, gradi } from '../../../miscella/enumerationes';
+import { casus, genera, gradua } from '../../../miscella/enumerationes';
 import Ignavum from '../../../miscella/ignavum';
+import type { Colamen } from '../../../praebeunda/agenda';
 import { Adiectivum } from '../../../praebeunda/verba';
 import Tabula from '../../tabula';
 import TabulaDefecta from '../defecta';
-import type { Colamen } from '../../../praebeunda/agenda';
 
 type Optanda = {
   relata: Ignavum<Tabula<Adiectivum>>,
@@ -12,7 +12,7 @@ type Optanda = {
 
 export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
   static apponatur(): Colamen<Adiectivum>[] {
-    return gradi.map((gradus) => {
+    return gradua.map((gradus) => {
         return genera.map((genus) => {
             return casus.map((casus) => {
               return {

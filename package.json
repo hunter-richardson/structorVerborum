@@ -57,7 +57,6 @@
     "list-files-in-dir": "^0.1.5",
     "make-dir": "^5.0.0",
     "marked": "^13.0.1",
-    "marked-base-url": "^1.1.4",
     "new-tab-opener": "^1.0.2",
     "npm-run-all2": "^6.1.2",
     "start-server-and-test": "^2.0.3",

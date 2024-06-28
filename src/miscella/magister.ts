@@ -4,7 +4,6 @@ import path from 'path';
 import Cocutor from './cocutor';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-//import { baseUrl } from 'marked-base-url';
 
 @Nuntius.factum('Magister')
 export default class Magister {
@@ -30,7 +29,6 @@ export default class Magister {
         .replace('>', "target='_blank' >");
     };
 
-    // marked.use(baseUrl(''))
     const data: string = await marked.use({
       async: true,
       pedantic: true,
@@ -38,7 +36,7 @@ export default class Magister {
     }).parse(await this.aperiatur(docendum));
 
     const nuntiator: (parametra: object) => void = data ? Nuntius.plusGarrio : Nuntius.timeo;
-    const nuntium: string = data ? 'Docendum relatust ' : 'Nihil docendust valore';
+    const nuntium: string = data ? 'Docendum relatust ' : 'Nihil docendust valore ';
 
     nuntiator({
       nomen: 'Magister',

@@ -249,7 +249,7 @@ export class Adverbium extends Multiplex {
   set gradus(valor: string) {
     valor = valor.toLowerCase();
 
-    if (Enumerationes.gradi.includes(valor)) {
+    if (Enumerationes.gradua.includes(valor)) {
       this._gradus = valor;
     } else {
       throw Adverbium.Errator('gradus', valor);
@@ -419,7 +419,7 @@ export class Adiectivum extends Multiplex {
   set gradus(valor: string) {
     valor = valor.toLowerCase();
 
-    if (Enumerationes.gradi.includes(valor)) {
+    if (Enumerationes.gradua.includes(valor)) {
       this._gradus = valor;
     } else {
       throw Adiectivum.Errator('gradus', valor);

@@ -1,8 +1,8 @@
-import Tabula from './tabula';
-import { gradi } from '../miscella/enumerationes';
+import { gradua } from '../miscella/enumerationes';
 import Nuntius from '../miscella/nuntius';
 import { AdverbiumAgendum } from '../praebeunda/agenda';
 import { Adverbium } from '../praebeunda/verba';
+import Tabula from './tabula';
 
 @Nuntius.factum('TabulaAdverbii')
 export default class TabulaAdverbii extends Tabula<Adverbium> {
@@ -15,7 +15,7 @@ export default class TabulaAdverbii extends Tabula<Adverbium> {
 
   @Nuntius.futurus('TabulaAdverbii')
   async plenetur(): Promise<void> {
-    gradi.forEach((gradus) => {
+    gradua.forEach((gradus) => {
       let scriptum: string = '';
       switch (gradus) {
         case 'positivus':
