@@ -1,7 +1,7 @@
+import type { VDataTable } from 'vuetify/components';
 import Cocutor from '../miscella/cocutor';
 import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
-import type { VDataTable } from 'vuetify/components';
 
 const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 

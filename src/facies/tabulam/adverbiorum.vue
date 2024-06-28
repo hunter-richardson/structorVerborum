@@ -46,6 +46,8 @@
     methods: {
       async omnia (): Promise<Adverbium[]> {
         return await tabula?.tabulentur() ?? [];
+      }, async oneratust (): Promise<void> {
+        return new Promise(() => this.onerans = false);
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Adverbium[] = await this.omnia();
@@ -54,7 +56,7 @@
             adverbium.valores().includes(selectum)));
         }
 
-        return new Promise(() => this.onerans = false);
+        return this.oneratust();
       }
     }, async mounted (): Promise<void> {
       this.adverbia = await this.omnia();
@@ -63,7 +65,7 @@
         haec: this.adverbia as Adverbium[]
       });
 
-      return new Promise(() => this.onerans = false);
+      return this.oneratust();
     }
   });
 </script>

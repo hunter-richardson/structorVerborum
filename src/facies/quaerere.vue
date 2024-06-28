@@ -36,7 +36,7 @@
   const columnae: {
     title: string,
     key: string,
-    filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, selecta: string[]) => boolean)
+    filter: ((verbum: Verbum, quaerendum: any) => boolean)
   }[] = [
     {
       latinum: 'lemma',

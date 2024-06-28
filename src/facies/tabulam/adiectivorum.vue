@@ -47,6 +47,8 @@
     methods: {
       async omnia (): Promise<Adiectivum[]> {
         return await tabula?.tabulentur() ?? [];
+      }, async oneratust (): Promise<void> {
+        return new Promise(() => this.onerans = false);
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Adiectivum[] = await this.omnia();
@@ -55,7 +57,7 @@
             adiectivum.valores().includes(selectum)));
         }
 
-        return new Promise(() => this.onerans = false);
+        return this.oneratust();
       }
     }, async mounted (): Promise<void> {
       this.adiectiva = await this.omnia();
@@ -64,7 +66,7 @@
         haec: this.adiectiva as Adiectivum[]
       });
 
-      return new Promise(() => this.onerans = false);
+      return this.oneratust();
     }
   });
 </script>

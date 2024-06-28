@@ -47,6 +47,8 @@
     methods: {
       async omnia (): Promise<Nomen[]> {
         return await tabula?.tabulentur() ?? [];
+      }, async oneratust (): Promise<void> {
+        return new Promise(() => this.onerans = false);
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Nomen[] = await this.omnia();
@@ -55,7 +57,7 @@
             nomen.valores().includes(selectum)));
         }
 
-        return new Promise(() => this.onerans = false);
+        return this.oneratust();
       }
     }, async mounted (): Promise<void> {
       this.nomina = await this.omnia();
@@ -64,7 +66,7 @@
         haec: this.nomina as Nomen[]
       });
 
-      return new Promise(() => this.onerans = false);
+      return this.oneratust();
     }
   });
 </script>
