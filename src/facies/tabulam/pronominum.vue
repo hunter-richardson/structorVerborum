@@ -25,8 +25,8 @@
 
   const data = (): {
     pronomen: Pronomen | undefined,
-    columnae: Columnae<Pronomen>,
     pronomina: Pronomen[],
+    columnae: Columnae,
     gustulus: Gustulus,
     onerans: boolean,
     anglica: boolean

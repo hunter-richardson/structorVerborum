@@ -26,11 +26,11 @@
 
   const data = (): {
     adiectivum: Adiectivum | undefined,
-    columnae: Columnae<Adiectivum>,
     adiectiva: Adiectivum[],
+    columnae: Columnae,
     gustulus: Gustulus,
     anglica: boolean,
-    onerans: boolean;
+    onerans: boolean
   } => {
     return {
       gustulus: new Gustulus({}),

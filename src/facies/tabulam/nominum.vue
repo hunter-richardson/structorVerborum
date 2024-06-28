@@ -25,12 +25,12 @@
   };
 
   const data = (): {
-    columnae: Columnae<Nomen>,
     nomen: Nomen | undefined,
+    columnae: Columnae,
     gustulus: Gustulus,
-    nomina: Nomen[],
     onerans: boolean,
-    anglica: boolean;
+    anglica: boolean,
+    nomina: Nomen[]
   } => {
     return {
       gustulus: new Gustulus({}),

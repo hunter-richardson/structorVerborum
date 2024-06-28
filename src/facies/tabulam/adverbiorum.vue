@@ -25,11 +25,11 @@
 
   const data: () => {
     adverbium: Adverbium | undefined,
-    columnae: Columnae<Adverbium>,
     adverbia: Adverbium[],
+    columnae: Columnae,
     gustulus: Gustulus,
     anglica: boolean,
-    onerans: boolean;
+    onerans: boolean
   } = () => {
     return {
       gustulus: new Gustulus({}),

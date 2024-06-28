@@ -1,7 +1,5 @@
-import * as Interfecta from './interfecta';
-import Structor from './structor';
-import * as Verba from './verba';
 import Nomina from '../anomala/nomina';
+import Dictionarium, { type Lemma } from '../miscella/dictionarium';
 import Numerator from '../miscella/numerator';
 import PutatorActus from '../putatores/actus';
 import PutatorAdiectivi from '../putatores/adiectivi';
@@ -11,7 +9,9 @@ import PutatorNominisFacti from '../putatores/nominisFacti';
 import TabulaAdverbii from '../tabulae/adverbii';
 import TabulaNumeraminis from '../tabulae/numeraminis';
 import Tabula from '../tabulae/tabula';
-import Dictionarium, { type Lemma } from '../miscella/dictionarium';
+import * as Interfecta from './interfecta';
+import Structor from './structor';
+import * as Verba from './verba';
 
 export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, 'categoria' | 'enclicitum' | 'unicum'>;
 export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>;
@@ -25,17 +25,6 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
 
   putetur(): Tabula<Verba.Actus> {
     return PutatorActus.se.ipse().putetur(this);
-  }
-
-  frequentativus(): ActusAgendus | null {
-    return this.supinum
-      ? new Structor(() => new ActusAgendus())
-          .ponatur((actus) => (actus.infinitivum = this.supinum.replace('um$', 'āre')))
-          .ponatur((actus) => (actus.perfectum = this.supinum.replace('um$', 'āvisse')))
-          .ponatur((actus) => (actus.supinum = this.supinum.replace('um$', 'ātum')))
-          .ponatur((actus) => (actus.versio = 'prima'))
-          .struatur()
-      : null;
   }
 
   async nomen(): Promise<Interfecta.Faciendum<Verba.Nomen> | null> {

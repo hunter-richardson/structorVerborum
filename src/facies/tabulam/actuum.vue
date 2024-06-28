@@ -22,12 +22,12 @@
   };
 
   const data = (): {
-    columnae: Columnae<Actus>,
     actus: Actus | undefined,
+    columnae: Columnae,
     gustulus: Gustulus,
-    actua: Actus[],
     onerans: boolean,
-    anglica: boolean;
+    anglica: boolean,
+    actua: Actus[]
   } => {
     return {
       gustulus: new Gustulus({}),
@@ -78,10 +78,11 @@
         <v-skeleton-loader :loading-text="anglica ? 'Loading verbs...' : 'Actus onerantur...'"
                            :loading='onerans' type='table-tbody' />
       </template>
-<template v-else>
-  <v-btn v-for='hoc in actua' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
-         append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`' @click='actus = hoc;' />
-</template>
-</v-data-table>
-</template>
+      <template v-else>
+        <v-btn v-for='hoc in actua' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+               append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
+               @click='actus = hoc;' />
+      </template>
+      </v-data-table>
+      </template>
 </template>
