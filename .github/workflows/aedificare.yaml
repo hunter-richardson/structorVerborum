@@ -24,10 +24,10 @@ jobs:
         run: npm clean-install
       - name: fundere
         run: npm run type-check
-      - name: struere
-        run: npm run build-only
       - name: verificare
         run: tsc --build --clean
+      - name: struere
+        run: npm run build-only
 #      - name: tentare
 #        run: npm test --passWithNoTests
 #        env:
