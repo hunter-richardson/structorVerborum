@@ -17,7 +17,6 @@
     "deploy": "node src/scriptura/expedire.ts"
   },
   "dependencies": {
-    "pinia": "^2.1.7",
     "pleasejs": "^0.4.2",
     "vue": "^3.4.21"
   },

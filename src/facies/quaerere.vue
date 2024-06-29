@@ -1,15 +1,21 @@
 <script lang='ts'>
   import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
-  import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
-  import { anglicum, categoriae } from '../miscella/enumerationes';
   import inflectere from './inflectere.vue';
   import specere from './specere.vue';
   import loqui from './loqui.vue';
   import onerare from './onerare.vue'
+  import gustulare from './gustulare.vue';
+  import Gustulus from '../scriptura/gustulus';
+  import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
+  import { anglicum, categoriae } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
+
+  type Columnae = {
+    title: string,
+    key: string,
+    filter: ((verbum: Verbum, quaerendum: any) => boolean);
+  }[];
 
   const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
   const verbum: Verbum | undefined = defineModel<Verbum>('verbum').value;
@@ -33,11 +39,7 @@
     };
   });
 
-  const columnae: {
-    title: string,
-    key: string,
-    filter: ((verbum: Verbum, quaerendum: any) => boolean)
-  }[] = [
+  const columnae: Columnae = [
     {
       latinum: 'lemma',
       anglicum: 'term',
@@ -83,15 +85,11 @@
     verbum: Verbum | undefined,
     quaerenda: Quaerenda,
     gustulus: Gustulus,
+    columnae: Columnae,
     onerans: boolean,
     anglica: boolean,
     lemmae: Lemma[],
     error: boolean,
-    columnae: {
-      title: string,
-      key: string,
-      filter: ((verbum: Verbum, quaerendum: string) => boolean) | ((verbum: Verbum, selecta: string[]) => boolean);
-    }[],
     categoriae: {
       title: string,
       value: string;

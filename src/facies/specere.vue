@@ -38,11 +38,11 @@
       gustulus: new Gustulus({}),
       anglica: lingua === 'anglica',
       enclitica: enclitica,
+      propriabile: false,
+      multiplex: false,
       eventus: eventus,
       verbum: verbum,
       encliticum: '',
-      propriabile: false,
-      multiplex: false,
       valores: [],
     };
   };

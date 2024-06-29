@@ -2,11 +2,13 @@ import { useFavicon } from '@vueuse/core';
 import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
-import index from './facies/index.vue';
+import appositus from './facies/appositus.vue';
 
 useFavicon('/res/picta/favicon.png')
 
-const figura: any = createVuetify({
+export const app: App<Element> = createApp(appositus as any);
+
+export default createVuetify({
   blueprint: md3,
   defaults: {
     global: {
@@ -45,6 +47,3 @@ const figura: any = createVuetify({
     }
   }
 });
-
-export const app: App<Element> = createApp(index as any);
-export default figura;
