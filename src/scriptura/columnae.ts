@@ -1,4 +1,3 @@
-import type { VDataTable } from 'vuetify/components';
 import Cocutor from '../miscella/cocutor';
 import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
@@ -10,7 +9,10 @@ type Generanda<Hoc extends Multiplex> = {
   haec: Hoc[];
 };
 
-export type Columnae = VDataTable[ '$props' ][ 'headers' ];
+export type Columnae = {
+  title: string,
+  key: string;
+}[];
 
 export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): Columnae {
   return Multiplex.colamina(generanda.categoria)
