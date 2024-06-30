@@ -5,10 +5,10 @@
   import seligere from '../seligere.vue';
   import gustulare from '../gustulare.vue';
   import Gustulus from '../../scriptura/gustulus';
-  import { NomenActum, NomenAgendum, ActusAgendus } from '../../praebeunda/agenda';
+  import { ActusAgendus } from '../../praebeunda/agenda';
   import { type Columnae, categoricum } from '../../scriptura/columnae';
   import type { Faciendum } from '../../praebeunda/interfecta';
-  import { Actus } from '../../praebeunda/verba';
+  import { Actus, Nomen } from '../../praebeunda/verba';
   import Cocutor from '../../miscella/cocutor';
   import Tabula from '../../tabulae/tabula';
 
@@ -18,8 +18,7 @@
 
   const lectum: boolean = agendum instanceof ActusAgendus;
   const actus: Actus | undefined = defineModel<Actus>().value;
-  const nomen: NomenActum | undefined = defineModel<NomenActum>().value;
-  const actor: NomenAgendum | undefined = defineModel<NomenAgendum>().value;
+  const referendum: Faciendum<Nomen> | undefined = defineModel<Faciendum<Nomen>>().value;
 
   const componenta: ComponentOptionsWithoutProps = {
     'inflectere': inflectere,
@@ -29,24 +28,24 @@
   };
 
   const data = (): {
-    nomen: NomenActum | undefined,
-    actor: NomenAgendum | undefined,
+    referendum: Faciendum<Nomen> | undefined,
+    agendum: Faciendum<Actus>,
     actus: Actus | undefined,
     columnae: Columnae,
     gustulus: Gustulus,
     onerans: boolean,
     anglica: boolean,
-    lectum: bolean,
+    lectum: boolean,
     actua: Actus[]
   } => {
     return {
       gustulus: new Gustulus({}),
+      referendum: referendum,
       anglica: anglica,
+      agendum: agendum,
       lectum: lectum,
       onerans: true,
       columnae: [],
-      nomen: nomen,
-      actor: actor,
       actus: actus,
       actua: []
     };
@@ -68,6 +67,8 @@
         }
 
         return this.oneratust();
+      }, async refer(referendum: Promise<Faciendum<Nomen> | null>): Promise<void> {
+        this.referendum = await referendum ?? undefined;
       }
     }, async mounted (): Promise<void> {
       this.actua = await this.omnia();
@@ -84,8 +85,7 @@
 <template lang='vue'>
   <gustulare :gustulus='gustulus' />
   <specere v-if='actus' :verbum='actus' @blur='actus = undefined;' />
-  <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined' />
-  <inflectere v-else-if='actor' :agendum='actor' @blur='actor = undefined' />
+  <inflectere v-else-if='referendum' :agendum='referendum' @blur='referendum = undefined;' />
   <template v-else>
     <seligere :multiplicia='actua' :selectum='cole' />
     <v-data-table :items='actua' :headers='columnae' density='compact'
@@ -103,11 +103,11 @@
     </v-data-table>
     <v-btn-toggle v-if='lectum'>
       <v-btn :text="anglica ? 'Gerund' : 'Nomen'" append-icon='subject' id='nomen'
-             @click='nomen = (agendum as ActusAgendus).nomen() ?? undefined' />
+             @click='refer((agendum as ActusAgendus).nomen())' />
       <v-btn :text="anglica ? 'Agent (masculine)' : 'Actor'" append-icon='man' id='actor'
-             @click="actor = (agendum as ActusAgendus).actor('masculinum') ?? undefined" />
+             @click="refer((agendum as ActusAgendus).actor('masculinum'))" />
       <v-btn :text="anglica ? 'Agent (feminine)' : 'Actrix'" append-icon='woman' id='actrix'
-             @click="actor = (agendum as ActusAgendus).actor('feminine') ?? undefined" />
+             @click="refer((agendum as ActusAgendus).actor('feminine'))" />
     </v-btn-toggle>
   </template>
 </template>

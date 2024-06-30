@@ -7,9 +7,9 @@
   import gustulare from '../gustulare.vue';
   import Gustulus from '../../scriptura/gustulus';
   import { type Columnae, categoricum } from '../../scriptura/columnae';
-  import { NomenActum, ActusAgendus } from '../../praebeunda/agenda';
+  import { NomenActum } from '../../praebeunda/agenda';
   import type { Faciendum } from '../../praebeunda/interfecta';
-  import { Nomen } from '../../praebeunda/verba';
+  import { Nomen, Actus } from '../../praebeunda/verba';
   import Cocutor from '../../miscella/cocutor';
   import Tabula from '../../tabulae/tabula';
 
@@ -19,7 +19,7 @@
   const tabula: Tabula<Nomen> | null = agendum.putetur();
 
   const nomen: Nomen | undefined = defineModel<Nomen>().value;
-  const actus: ActusAgendus | undefined = defineModel<ActusAgendus>();
+  const actus: Faciendum<Actus> | undefined = defineModel<Faciendum<Actus>>().value;
   const actum: boolean = agendum instanceof NomenActum;
 
   const componenta: ComponentOptionsWithoutProps = {
@@ -31,7 +31,8 @@
   };
 
   const data = (): {
-    actus: ActusAgendus | undefined,
+    actus: Faciendum<Actus> | undefined,
+    agendum: Faciendum<Nomen>,
     nomen: Nomen | undefined,
     columnae: Columnae,
     gustulus: Gustulus,
@@ -42,6 +43,7 @@
   } => {
     return {
       gustulus: new Gustulus({}),
+      agendum: agendum,
       anglica: anglica,
       onerans: true,
       nomen: nomen,
@@ -68,6 +70,8 @@
         }
 
         return this.oneratust();
+      }, async refer(): Promise<void> {
+        this.actus = await (agendum as NomenActum).actus() ?? undefined;
       }
     }, async mounted (): Promise<void> {
       this.nomina = await this.omnia();
@@ -84,7 +88,7 @@
 <template lang='vue'>
 	<gustulare :gustulus='gustulus' />
 	<specere v-if='nomen' :verbum='nomen' @blur='nomen = undefined;' />
-  <inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined' />
+  <inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined;' />
 	<template v-else>
 		<seligere :multiplicia='nomina' :selectum='cole' />
 		<v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans' :disabled='onerans'
@@ -96,6 +100,6 @@
 			</template>
     </v-data-table>
     <v-btn v-if='actum' :text="anglica ? 'Verb' : 'Actus'" append-icon='sprint'
-           id='actus' @click='actus = (agendum as NomenActum).actus() ?? undefined' />
+           id='actus' @click='refer()' />
   </template>
 </template>

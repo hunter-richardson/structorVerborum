@@ -8,7 +8,7 @@
   import Gustulus from '../../scriptura/gustulus';
   import { NomenAgendum, AdiectivumAgendum, Incomparabile } from '../../praebeunda/agenda'
   import { type Columnae, categoricum } from '../../scriptura/columnae';
-  import { genera, gradua } from '../../miscella/enumerationes';
+  import { genera, gradua, anglicum } from '../../miscella/enumerationes';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Adiectivum } from '../../praebeunda/verba';
   import Cocutor from '../../miscella/cocutor';
@@ -54,6 +54,7 @@
   const data = (): {
     adiectivum: Adiectivum | undefined,
     nomen: NomenAgendum | undefined,
+    agendum: Faciendum<Adiectivum>,
     incomparabilium: boolean,
     adiectiva: Adiectivum[],
     columnae: Columnae,
@@ -71,6 +72,7 @@
       adiectivum: adiectivum,
       gradua: paria(gradua),
       genera: paria(genera),
+      agendum: agendum,
       anglica: anglica,
       lectum: lectum,
       onerans: true,
@@ -100,6 +102,13 @@
         }
 
         return this.oneratust();
+      }, referIncomparabile(): void {
+        this.nomen = (this.agendum as Incomparabile).probetur(this.et.genus) ?? undefined;
+      }, async referComparabile(): Promise<void> {
+        this.nomen = await (agendum as AdiectivumAgendum).probetur({
+          gradus: this.et.gradus,
+          genus: this.et.genus
+        }) ?? undefined;
       }
     }, async mounted (): Promise<void> {
       this.adiectiva = await this.omnia();
@@ -116,6 +125,7 @@
 <template lang='vue'>
 	<gustulare :gustulus='gustulus' />
 	<specere v-if='adiectivum' :verbum='adiectivum' @blur='adiectivum = undefined;' />
+  <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined;' />
 	<template v-else>
 		<seligere :multiplicia='adiectiva' :selectum='cole' />
 		<v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans' :disabled='onerans'
@@ -133,17 +143,14 @@
       <template v-if='incomparabilium'>
         <v-btn :text="anglica ? 'Substantiate' : 'Probetur'"
                id='probetur' append-icon='open_in_full'
-               @click='nomen = (agendum as Incomparabile).probetur(et.genus) ?? undefined' />
+               @click='referIncomparabile()' />
       </template>
       <template v-else-if='lectum'>
         <v-select density='compact' id='gradus' :label="anglica ? 'Grade' : 'Gradus'"
                   v-model='et.gradus' :items='gradua' chips flat open-on-clear />
         <v-btn :text="anglica ? 'Substantiate' : 'Probetur'"
                id='probetur' append-icon='open_in_full'
-               @click='nomen = (agendum as AdiectivumAgendum).probetur({
-                 gradus: et.gradus,
-                 genus: et.genus
-               }) ?? undefined' />
+               @click='referComparabile()' />
       </template>
     </template>
   </template>
