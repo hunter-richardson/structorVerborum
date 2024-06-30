@@ -1,7 +1,7 @@
+import type { CookieAttributes } from 'node_modules/typescript-cookie/dist/types';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-import type { CookieAttributes } from 'node_modules/typescript-cookie/dist/types';
 
 export type Crustulum = {
   nomen: string

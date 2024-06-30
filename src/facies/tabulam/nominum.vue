@@ -1,11 +1,13 @@
 <script lang='ts'>
   import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import specere from '../specere.vue';
-  import seligere from '../seligere.vue';
   import onerare from '../onerare.vue';
+  import seligere from '../seligere.vue';
+  import inflectere from '../inflectere.vue';
   import gustulare from '../gustulare.vue';
   import Gustulus from '../../scriptura/gustulus';
   import { type Columnae, categoricum } from '../../scriptura/columnae';
+  import { NomenActum, ActusAgendus } from '../../praebeunda/agenda';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Nomen } from '../../praebeunda/verba';
   import Cocutor from '../../miscella/cocutor';
@@ -15,7 +17,10 @@
 
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const tabula: Tabula<Nomen> | null = agendum.putetur();
+
   const nomen: Nomen | undefined = defineModel<Nomen>().value;
+  const actus: ActusAgendus | undefined = defineModel<ActusAgendus>();
+  const actum: boolean = agendum instanceof NomenActum;
 
   const componenta: ComponentOptionsWithoutProps = {
     'gustulare': gustulare,
@@ -74,6 +79,7 @@
 <template lang='vue'>
 	<gustulare :gustulus='gustulus' />
 	<specere v-if='nomen' :verbum='nomen' @blur='nomen = undefined;' />
+  <inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined' />
 	<template v-else>
 		<seligere :multiplicia='nomina' :selectum='cole' />
 		<v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans' :disabled='onerans'
@@ -83,6 +89,8 @@
 				<v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
 					append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`' @click='nomen = hoc;' />
 			</template>
-</v-data-table>
-</template>
+    </v-data-table>
+    <v-btn v-if='actum' :text="anglica ? 'Verb' : 'Actus'" append-icon='sprint'
+           id='actus' @click='actus = (agendum as NomenActum).actus() ?? undefined' />
+  </template>
 </template>

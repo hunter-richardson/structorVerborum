@@ -1,9 +1,11 @@
 <script lang='ts'>
   import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import specere from '../specere.vue';
+  import inflectere from '../inflectere.vue';
   import seligere from '../seligere.vue';
   import gustulare from '../gustulare.vue';
   import Gustulus from '../../scriptura/gustulus';
+  import { NomenActum, NomenAgendum, ActusAgendus } from '../../praebeunda/agenda';
   import { type Columnae, categoricum } from '../../scriptura/columnae';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Actus } from '../../praebeunda/verba';
@@ -13,7 +15,11 @@
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
   const tabula: Tabula<Actus> | null = agendum.putetur();
+
+  const lectum: boolean = agendum instanceof ActusAgendus;
   const actus: Actus | undefined = defineModel<Actus>().value;
+  const nomen: NomenActum | undefined = defineModel<NomenActum>().value;
+  const actor: NomenAgendum | undefined = defineModel<NomenAgendum>().value;
 
   const componenta: ComponentOptionsWithoutProps = {
     'gustulare': gustulare,
@@ -22,6 +28,8 @@
   };
 
   const data = (): {
+    nomen: NomenActum | undefined,
+    actor: NomenAgendum | undefined,
     actus: Actus | undefined,
     columnae: Columnae,
     gustulus: Gustulus,
@@ -31,10 +39,11 @@
   } => {
     return {
       gustulus: new Gustulus({}),
-      actus: actus,
       anglica: anglica,
       onerans: true,
       columnae: [],
+      nomen: nomen,
+      actus: actus,
       actua: []
     };
   };
@@ -71,6 +80,8 @@
 <template lang='vue'>
   <gustulare :gustulus='gustulus' />
   <specere v-if='actus' :verbum='actus' @blur='actus = undefined;' />
+  <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined' />
+  <inflectere v-else-if='actor' :agendum='actor' @blur='actor = undefined' />
   <template v-else>
     <seligere :multiplicia='actua' :selectum='cole' />
     <v-data-table :items='actua' :headers='columnae' density='compact'
@@ -85,6 +96,14 @@
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='actus = hoc;' />
       </template>
-      </v-data-table>
-      </template>
+    </v-data-table>
+    <v-btn-toggle v-if='lectum'>
+      <v-btn :text="anglica ? 'Gerund' : 'Nomen'" append-icon='subject' id='nomen'
+             @click='nomen = (agendum as ActusAgendus).nomen() ?? undefined' />
+      <v-btn :text="anglica ? 'Agent (masculine)' : 'Actor'" append-icon='man' id='actor'
+             @click="actor = (agendum as ActusAgendus).actor('masculinum') ?? undefined" />
+      <v-btn :text="anglica ? 'Agent (feminine)' : 'Actrix'" append-icon='woman' id='actrix'
+             @click="actor = (agendum as ActusAgendus).actor('feminine') ?? undefined" />
+    </v-btn-toggle>
+  </template>
 </template>
