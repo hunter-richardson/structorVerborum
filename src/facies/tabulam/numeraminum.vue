@@ -18,8 +18,8 @@
   const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
 
   const componenta: ComponentOptionsWithoutProps = {
-    'gustulare': gustulare,
     'inflectere': inflectere,
+    'gustulare': gustulare,
     'onerare': onerare,
     'specere': specere
   };

@@ -34,7 +34,17 @@
   const lectum: boolean = agendum instanceof AdiectivumAgendum;
   const incomparabilium: boolean = agendum instanceof Incomparabile;
 
+  function paria(valores: string[]): Par[] {
+    return valores.map(valor => {
+      return {
+        title: (anglica ? anglicum(valor) : valor).toUpperCase(),
+        value: valor
+      };
+    });
+  }
+
   const componenta: ComponentOptionsWithoutProps = {
+    'inflectere': inflectere,
     'gustulare': gustulare,
     'seligere': seligere,
     'specere': specere,
@@ -59,23 +69,15 @@
       incomparabilium: incomparabilium,
       gustulus: new Gustulus({}),
       adiectivum: adiectivum,
+      gradua: paria(gradua),
+      genera: paria(genera),
       anglica: anglica,
       lectum: lectum,
       onerans: true,
       adiectiva: [],
       columnae: [],
       nomen: nomen,
-      gradua: gradua.map(gradus => {
-        return {
-          title: (anglica ? anglicum(gradus) : gradus).toUpperCase(),
-          value: gradus
-        };
-      }), genera: genera.map(genus => {
-        return: {
-          title: (anglica ? anglicum(genus) : genus).toUpperCase(),
-          value: genus
-        };
-      }), et: {
+      et: {
         gradus: '',
         genus: ''
       }

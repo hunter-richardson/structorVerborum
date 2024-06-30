@@ -22,9 +22,10 @@
   const actor: NomenAgendum | undefined = defineModel<NomenAgendum>().value;
 
   const componenta: ComponentOptionsWithoutProps = {
+    'inflectere': inflectere,
     'gustulare': gustulare,
-    'specere': specere,
-    'seligere': seligere
+    'seligere': seligere,
+    'specere': specere
   };
 
   const data = (): {
@@ -35,14 +36,17 @@
     gustulus: Gustulus,
     onerans: boolean,
     anglica: boolean,
+    lectum: bolean,
     actua: Actus[]
   } => {
     return {
       gustulus: new Gustulus({}),
       anglica: anglica,
+      lectum: lectum,
       onerans: true,
       columnae: [],
       nomen: nomen,
+      actor: actor,
       actus: actus,
       actua: []
     };

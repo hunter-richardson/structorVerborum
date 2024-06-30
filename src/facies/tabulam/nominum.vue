@@ -23,6 +23,7 @@
   const actum: boolean = agendum instanceof NomenActum;
 
   const componenta: ComponentOptionsWithoutProps = {
+    'inflectere': inflectere,
     'gustulare': gustulare,
     'seligere': seligere,
     'specere': specere,
@@ -30,20 +31,24 @@
   };
 
   const data = (): {
+    actus: ActusAgendus | undefined,
     nomen: Nomen | undefined,
     columnae: Columnae,
     gustulus: Gustulus,
     onerans: boolean,
     anglica: boolean,
-    nomina: Nomen[]
+    nomina: Nomen[],
+    actum: boolean
   } => {
     return {
       gustulus: new Gustulus({}),
-      nomen: nomen,
       anglica: anglica,
       onerans: true,
+      nomen: nomen,
+      actus: actus,
+      actum: actum,
       columnae: [],
-      nomina: []
+      nomina: [],
     };
   };
 
