@@ -130,40 +130,16 @@
             break;
         }
       }, coquantur (): void {
-        this.coque({
-          nomen: 'assensus',
-          valor: 'assensit'
-        });
+        this.coque({ nomen: 'assensus', valor: 'assensit' });
+        this.coque({ nomen: 'facies', valor: 'fusca' });
+        this.coque({ nomen: 'apices', valor: 'ita' });
+        this.coque({ nomen: 'utendaU', valor: 'ita' });
+        this.coque({ nomen: 'magnas', valor: 'non' });
+        this.coque({ nomen: 'separator', valor: 'inane' });
 
-        this.coque({
-          nomen: 'facies',
-          valor: 'fusca'
-        });
-
-        this.coque({
-          nomen: 'lingua',
-          valor: 'latina'
-        });
-
-        this.coque({
-          nomen: 'apices',
-          valor: 'ita'
-        });
-
-        this.coque({
-          nomen: 'utendaU',
-          valor: 'ita'
-        });
-
-        this.coque({
-          nomen: 'magnas',
-          valor: 'non'
-        });
-
-        this.coque({
-          nomen: 'separator',
-          valor: 'inane'
-        });
+        if (cocutor.coctust('lingua')) {
+          this.coque({ nomen: 'lingua', valor: 'latina' });
+        }
 
         window.location.reload();
       }
@@ -206,28 +182,29 @@
         <template #activator='{ props: activator }'>
           <v-fab v-bind='activator' size='medium' icon='cake' />
         </template>
-<v-fab key='facies' id='crustula.facies'
-       :icon="crustula.facies === 'fusca' ? 'light_mode' : 'dark_mode'"
-       @click="coque({ nomen: 'facies', valor: crustula.facies === 'fusca' ? 'illustris' : 'fusca' });" />
-<v-fab key='apices' id='crustula.apices'
-       :text="crustula.apices === 'ita' ? 'ā' : 'a'"
-       @click="coque({ nomen: 'apices', valor: crustula.apices === 'ita' ? 'non' : 'ita' });" />
-<v-fab key='magnas' id='crustula.magnas'
-       :text="crustula.magnas === 'ita' ? 'A' : 'a'"
-       @click="coque({ nomen: 'magnas', valor: crustula.magnas === 'ita' ? 'non' : 'ita' });" />
-<v-fab key='utendaU' id='crustula.utendaU'
-       :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
-       @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
-<v-btn-toggle key='separator'>
-          <v-btn v-for='separator in separatores' :key='separator'
-                  @click="coque({ nomen: 'separator', valor: separator.clavis })"
-                  :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
-                  selected-class='text-primary' />
-        </v-btn-toggle>
-</v-speed-dial>
-</draggable>
-</template>
-<v-card>
+        <v-btn key='facies' id='crustula.facies'
+               :icon="crustula.facies === 'fusca' ? 'light_mode' : 'dark_mode'"
+               @click="coque({ nomen: 'facies', valor: crustula.facies === 'fusca' ? 'illustris' : 'fusca' });" />
+        <v-btn key='lingua' id='crustula.lingua'
+               :image="`/res/picta/${crustula.lingua === 'anglica' ? 'spqr' : 'uk'}.png`"
+               @click="coque({ nomen: 'lingua', valor: crustula.lingua === 'anglica' ? 'latina' : 'anglica' });" />
+        <v-btn key='apices' id='crustula.apices'
+              :text="crustula.apices === 'ita' ? 'ā' : 'a'"
+              @click="coque({ nomen: 'apices', valor: crustula.apices === 'ita' ? 'non' : 'ita' });" />
+        <v-btn key='magnas' id='crustula.magnas'
+               :text="crustula.magnas === 'ita' ? 'A' : 'a'"
+               @click="coque({ nomen: 'magnas', valor: crustula.magnas === 'ita' ? 'non' : 'ita' });" />
+        <v-btn key='utendaU' id='crustula.utendaU'
+               :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
+               @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
+        <v-btn v-for='separator in separatores' :key='separator'
+                @click="coque({ nomen: 'separator', valor: separator.clavis })"
+                :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
+                selected-class='text-primary' />
+      </v-speed-dial>
+    </draggable>
+  </template>
+  <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title text='StructorVerborum' />
       <template v-if='!locutionis'>
@@ -258,14 +235,14 @@
           </v-hover>
         </v-avatar>
       </v-card>
-</v-app-bar>
-<v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
+    </v-app-bar>
+    <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
         <v-tab :v-bind:key='annulus' :value='annulus' selected-class='text-primary'
                :id="`annulus_${annulus}`" density='compact' :text='annulus.titula' tile />
       </template>
     </v-tabs>
-<v-tabs-window v-model='annulus'>
+    <v-tabs-window v-model='annulus'>
       <v-tabs-window-item value='quaerere'>
         <quaerere />
       </v-tabs-window-item>
@@ -276,42 +253,40 @@
         <calculare />
       </v-tabs-window-item>
     </v-tabs-window>
-</v-card>
-<template v-if='!crustula.assensus'>
-  <v-footer absolute>
-    <div class='text-center'>
-      <span class='text-left'>
-        <div id='titulus.latinus'>
-          Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare
-          optares et situm immutatum utereris, atque solum crustulum conditum erit renutus
-          eorum.<br><br>Noteris quod crustula plura mutabunt modum pariendo locutionum ergo
-          infidum esset vertere huc illucque.
-        </div>
-        <v-btn-toggle>
-          <v-btn text='Assentio' id='assentio' append-icon='handshake'
-                 @click="coque({ nomen: 'assensus', valor: 'assensit' });" />
-          <v-btn text='Nego' id='nego' append-icon='block'
-                 @click="coque({ nomen: 'assessus', valor: 'negavit' });" />
-        </v-btn-toggle>
-      </span>
-      <span class='text-left'>
-        <div id='titulus.anglicus'>
-          Here cookies are used so that you may choose details for your own experience. Or you can
-          choose not to store cookies and use the site unchanged; in this case, the only cookie
-          stored would be your refusal of them.<br><br>Note that most of these cookies will modify
-          the method of generating phrases, so switching them back-and-forth between modes will be
-          unreliable.
-        </div>
-        <v-btn-toggle>
-          <v-btn text='Agree' append-icon='handshake' @click="coque({ nomen: 'assensus', valor: 'assensit' });
-          coque({ nomen: 'lingua', valor: 'anglica' });" />
-          <v-btn text='Refuse' append-icon='block'
-                 @click="coque({ nomen: 'assessus', valor: 'negavit' });" />
-        </v-btn-toggle>
-      </span>
-    </div>
-  </v-footer>
-</template>
+  </v-card>
+  <template v-if='!crustula.assensus'>
+    <v-footer absolute>
+      <div class='text-center'>
+        <span class='text-left'>
+          <div id='titulus.latinus'>
+            Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.<br><br>Noteris quod crustula plura mutabunt modum pariendo locutionum ergo infidum esset vertere huc illucque.
+          </div>
+          <v-btn-toggle>
+            <v-btn text='Assentio' id='assentio' append-icon='handshake'
+                   @click="coque({ nomen: 'assensus', valor: 'assensit' });
+                           coquantur();" />
+            <v-btn text='Nego' id='nego' append-icon='block'
+                   @click="coque({ nomen: 'assessus', valor: 'negavit' });
+                           coquantur();" />
+          </v-btn-toggle>
+        </span>
+        <span class='text-left'>
+          <div id='titulus.anglicus'>
+            Here cookies are used so that you may choose details for your own experience. Or you can choose not to store cookies and use the site unchanged; in this case, the only cookie stored would be your refusal of them.<br><br>Note that most of these cookies will modify the method of generating phrases, so switching them back-and-forth between modes will be unreliable.
+          </div>
+          <v-btn-toggle>
+            <v-btn text='Agree' append-icon='handshake'
+                   @click="coque({ nomen: 'assensus', valor: 'assensit' });
+                           coque({ nomen: 'lingua', valor: 'anglica' });
+                           coquantur();" />
+            <v-btn text='Refuse' append-icon='block'
+                   @click="coque({ nomen: 'assessus', valor: 'negavit' });
+                           coquantur();" />
+          </v-btn-toggle>
+        </span>
+      </div>
+    </v-footer>
+  </template>
 </template>
 
 <style>
