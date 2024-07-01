@@ -199,34 +199,36 @@
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title text='StructorVerborum' />
-      <template v-if='!locutionis'>
+      <template v-if='locutionis'>
+        <v-card location='right'>
+          <template v-if='locutionis'>
+            <v-btn-toggle density='compact'>
+              <template v-if='referret'>
+                <v-btn icon='content_copy' id='refer' @click='refer()' />
+              </template>
+              <template v-if='transduceret'>
+                <v-btn icon='file_open' id='transduc' @click='transduc()' />
+              </template>
+              </v-btn-toggle>
+          </template>
+          <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
+            <v-hover>
+              <template #default='{ isHovering, props }'>
+                <a v-if='isHovering' target='_blank'
+                   href='https://github.com/hunter-richardson/structorverborum/issues'>
+                  <v-card v-bind='props'
+                          :text="crustula.lingua === 'anglica' ? 'Let\'s talk!' : 'Colloquamur'" />
+                </a>
+              </template>
+            </v-hover>
+          </v-avatar>
+        </v-card>
+      </template>
+      <template v-else>
         <div id='subiciendum' class='text-center'>
           <v-card :text="lingua === 'anglica' ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
         </div>
       </template>
-      <v-card location='right'>
-        <template v-if='locutionis'>
-          <v-btn-toggle density='compact'>
-            <template v-if='referret'>
-              <v-btn icon='content_copy' id='refer' @click='refer()' />
-            </template>
-            <template v-if='transduceret'>
-              <v-btn icon='file_open' id='transduc' @click='transduc()' />
-            </template>
-          </v-btn-toggle>
-        </template>
-        <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
-          <v-hover>
-            <template #default='{ isHovering, props }'>
-              <a v-if='isHovering' target='_blank'
-                 href='https://github.com/hunter-richardson/structorverborum/issues'>
-                <v-card v-bind='props'
-                        :text="crustula.lingua === 'anglica' ? 'Let\'s talk!' : 'Colloquamur'" />
-              </a>
-            </template>
-          </v-hover>
-        </v-avatar>
-      </v-card>
     </v-app-bar>
     <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
