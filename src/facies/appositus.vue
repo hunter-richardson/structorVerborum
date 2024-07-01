@@ -91,7 +91,9 @@
             break;
           case 'separator':
             this.crustula.separator = crustulum.valor;
+            // eslint-disable-next-line no-case-declarations
             const elementaSeparatorum: HTMLCollection | null = document.getElementsByClassName('text-primary');
+            // eslint-disable-next-line no-case-declarations
             const selectum: Element | null = document.getElementById(`#crustula.separator.${crustulum.valor}`);
             if (elementaSeparatorum) {
               for (let elementum of elementaSeparatorum) {
@@ -166,8 +168,10 @@
         <template #activator='{ props: activator }'>
           <v-fab v-bind='activator' size='medium' icon='cake' />
         </template>
-        <v-img key='lingua' id='crustula.lingua' height='36px' width='36px' :src="`/res/picta/${crustula.lingua}.png`"
-               @click="coque({ nomen: 'lingua', valor: crustula.lingua === 'anglica' ? 'latina' : 'anglica' });" />
+        <v-btn key='lingua' id='crustula.lingua' icon
+               @click="coque({ nomen: 'lingua', valor: crustula.lingua === 'anglica' ? 'latina' : 'anglica' });" >
+          <v-img height='36px' width='36px' :src="`/res/picta/${crustula.lingua}.png`" />
+        </v-btn>
         <v-btn key='facies' id='crustula.facies'
                :icon="crustula.facies === 'fusca' ? 'light_mode' : 'dark_mode'"
                @click="coque({ nomen: 'facies', valor: crustula.facies === 'fusca' ? 'illustris' : 'fusca' });" />
