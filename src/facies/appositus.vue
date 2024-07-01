@@ -89,6 +89,18 @@
             this.crustula.facies = crustulum.valor;
             useTheme().global.name.value = this.crustula.facies === 'illustris' ? 'light' : 'dark';
             break;
+          case 'separator':
+            this.crustula.separator = crustulum.valor;
+            const elementaSeparatorum: HTMLCollection | null = document.getElementsByClassName('text-primary');
+            const selectum: Element | null = document.getElementById(`#crustula.separator.${crustulum.valor}`);
+            if (elementaSeparatorum) {
+              for (let elementum of elementaSeparatorum) {
+                elementum.classList.remove('text-primary');
+              }
+            } if (selectum) {
+              selectum.classList.add('text-primary');
+            }
+            break;
           case 'apices':
             this.crustula.apices = crustulum.valor;
             break;
@@ -100,9 +112,6 @@
             break;
           case 'utendaU':
             this.crustula.utendaU = crustulum.valor;
-            break;
-          case 'separator':
-            this.crustula.separator = crustulum.valor;
             break;
         }
       }, coquantur (): void {
@@ -173,16 +182,13 @@
                @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
         <v-btn key='crustula.separator.inane'
                @click="coque({ nomen: 'separator', valor: 'inane' });"
-               text='   ' id='crustula.separator.inane'
-               selected-class='text-primary' />
+               text='   ' id='crustula.separator.inane' />
         <v-btn key='crustula.separator.interpunctum'
                @click="coque({ nomen: 'separator', valor: 'interpunctum' });"
-               text=' · ' id='crustula.separator.interpunctum'
-               selected-class='text-primary' />
+               text=' · ' id='crustula.separator.interpunctum' />
         <v-btn key='crustula.separator.nullum'
                @click="coque({ nomen: 'separator', valor: 'nullum' });"
-               text=' _ ' id='crustula.separator.nullum'
-               selected-class='text-primary' />
+               text=' _ ' id='crustula.separator.nullum' />
       </v-speed-dial>
     </draggable>
   </template>
