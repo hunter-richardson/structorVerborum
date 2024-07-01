@@ -197,7 +197,7 @@
         <v-btn key='utendaU' id='crustula.utendaU'
                :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
                @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
-        <v-btn v-for='separator in separatores' :key='separator'
+        <v-btn v-for='separator in separatores' :key='separator.clavis'
                 @click="coque({ nomen: 'separator', valor: separator.clavis })"
                 :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
                 selected-class='text-primary' />
