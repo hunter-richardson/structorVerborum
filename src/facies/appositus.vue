@@ -22,11 +22,6 @@
     separator: string;
   };
 
-  type Separatores = {
-    clavis: string,
-    valor: string;
-  }[];
-
   type Annuli = {
     titula: string,
     valor: string;
@@ -44,22 +39,6 @@
     separator: ''
   };
 
-  const separatores: {
-    clavis: string,
-    valor: string;
-  }[] = [
-      {
-        clavis: 'inane',
-        valor: '_'
-      }, {
-        clavis: 'interpunctum',
-        valor: '·'
-      }, {
-        clavis: 'nullum',
-        valor: ' '
-      },
-    ];
-
   const componenta: ComponentOptionsWithoutProps = {
     'draggable': draggable,
     'gustulare': gustulare,
@@ -69,24 +48,22 @@
   };
 
   const data = (): {
-    separatores: Separatores,
     transduceret: boolean,
-    referret: boolean,
     locutionis: boolean,
+    referret: boolean,
     gustulus: Gustulus,
     crustula: Crustula,
     trahens: boolean,
     annulus: string,
     annuli: Annuli,
-    name: string;
+    nomen: string;
   } => {
     return {
-      name: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
-      gustulus: new Gustulus({}),
-      locutionis: locutor.locutust(),
-      referret: referretne(),
+      nomen: crustula.lingua === 'anglica' ? 'Phrase Factory' : 'Structor Verborum',
       transduceret: transduceretne(),
-      separatores: separatores,
+      locutionis: locutor.locutust(),
+      gustulus: new Gustulus({}),
+      referret: referretne(),
       crustula: crustula,
       trahens: false,
       annuli: [],
@@ -110,11 +87,7 @@
         switch (crustulum.nomen) {
           case 'facies':
             this.crustula.facies = crustulum.valor;
-            if (this.crustula.facies === 'illustris') {
-              useTheme().global.name.value = 'light';
-            } else {
-              useTheme().global.name.value = 'dark';
-            }
+            useTheme().global.name.value = this.crustula.facies === 'illustris' ? 'light' : 'dark';
             break;
           case 'apices':
             this.crustula.apices = crustulum.valor;
@@ -128,23 +101,25 @@
           case 'utendaU':
             this.crustula.utendaU = crustulum.valor;
             break;
+          case 'separator':
+            this.crustula.separator = crustulum.valor;
+            break;
         }
       }, coquantur (): void {
+        if (!cocutor.coctust('lingua')) {
+          this.coque({ nomen: 'lingua', valor: 'latina' });
+        }
+
         this.coque({ nomen: 'assensus', valor: 'assensit' });
         this.coque({ nomen: 'facies', valor: 'fusca' });
         this.coque({ nomen: 'apices', valor: 'ita' });
         this.coque({ nomen: 'utendaU', valor: 'ita' });
         this.coque({ nomen: 'magnas', valor: 'non' });
         this.coque({ nomen: 'separator', valor: 'inane' });
-
-        if (cocutor.coctust('lingua')) {
-          this.coque({ nomen: 'lingua', valor: 'latina' });
-        }
-
         window.location.reload();
       }
     }, async mounted (): Promise<void> {
-      document.title = this.name;
+      document.title = this.nomen;
       if (cocutor.edatur('assensus') === 'assensit') {
         this.crustula = {
           assensus: cocutor.edatur('assensus') ?? 'assensit',
@@ -182,12 +157,11 @@
         <template #activator='{ props: activator }'>
           <v-fab v-bind='activator' size='medium' icon='cake' />
         </template>
+        <v-img key='lingua' id='crustula.lingua' height='36px' width='36px' :src="`/res/picta/${crustula.lingua}.png`"
+               @click="coque({ nomen: 'lingua', valor: crustula.lingua === 'anglica' ? 'latina' : 'anglica' });" />
         <v-btn key='facies' id='crustula.facies'
                :icon="crustula.facies === 'fusca' ? 'light_mode' : 'dark_mode'"
                @click="coque({ nomen: 'facies', valor: crustula.facies === 'fusca' ? 'illustris' : 'fusca' });" />
-        <v-btn key='lingua' id='crustula.lingua'
-               :image="`/res/picta/${crustula.lingua === 'anglica' ? 'spqr' : 'uk'}.png`"
-               @click="coque({ nomen: 'lingua', valor: crustula.lingua === 'anglica' ? 'latina' : 'anglica' });" />
         <v-btn key='apices' id='crustula.apices'
               :text="crustula.apices === 'ita' ? 'ā' : 'a'"
               @click="coque({ nomen: 'apices', valor: crustula.apices === 'ita' ? 'non' : 'ita' });" />
@@ -197,10 +171,18 @@
         <v-btn key='utendaU' id='crustula.utendaU'
                :text="crustula.utendaU === 'ita' ? 'v' : 'u'"
                @click="coque({ nomen: 'utendaU', valor: crustula.utendaU === 'ita' ? 'non' : 'ita' });" />
-        <v-btn v-for='separator in separatores' :key='separator.clavis'
-                @click="coque({ nomen: 'separator', valor: separator.clavis })"
-                :text="` ${separator.valor} `" :id="`crustula.separator.${separator.clavis}`"
-                selected-class='text-primary' />
+        <v-btn key='crustula.separator.inane'
+               @click="coque({ nomen: 'separator', valor: 'inane' });"
+               text='   ' id='crustula.separator.inane'
+               selected-class='text-primary' />
+        <v-btn key='crustula.separator.interpunctum'
+               @click="coque({ nomen: 'separator', valor: 'interpunctum' });"
+               text=' · ' id='crustula.separator.interpunctum'
+               selected-class='text-primary' />
+        <v-btn key='crustula.separator.nullum'
+               @click="coque({ nomen: 'separator', valor: 'nullum' });"
+               text=' _ ' id='crustula.separator.nullum'
+               selected-class='text-primary' />
       </v-speed-dial>
     </draggable>
   </template>
