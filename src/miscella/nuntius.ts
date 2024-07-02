@@ -233,7 +233,7 @@ export default class Nuntius implements Disposable {
 
 class Temporis {
   static hodie(): string {
-    const hodie: Date = new Date();
+    const hodie: Date = new Date;
     return [
       Numerator.romanus(hodie.getUTCDay()),
       Mensa[hodie.getUTCMonth()],
@@ -242,7 +242,7 @@ class Temporis {
   }
 
   static nunc(): string {
-    const nunc: Date = new Date();
+    const nunc: Date = new Date;
     return [
       nunc.getUTCHours(),
       nunc.getUTCMinutes(),

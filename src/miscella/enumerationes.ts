@@ -54,7 +54,7 @@ export const modi: string[] = [
   'subiunctivus',
   'infinitivus',
   'imperativus',
-  'participalis'
+  'participium'
 ];
 
 export const referenda: string[] = [
@@ -154,7 +154,7 @@ export function anglicum(valor: string) {
       return 'subjunctive';
     case 'imperativus':
       return 'imperative';
-    case 'participalis':
+    case 'participium':
       return 'participle';
     case 'singularis':
       return 'singular';

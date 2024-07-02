@@ -1,16 +1,16 @@
-import Anomala, { Mantela } from './anomala'
-import Ignavum from '../miscella/ignavum'
-import { NomenActum, NomenAgendum } from '../praebeunda/agenda'
-import Structor from '../praebeunda/structor'
-import { Nomen } from '../praebeunda/verba'
-import TabulaBifissa from '../tabulae/bifissa'
-import TabulaCollata from '../tabulae/collata'
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa'
-import TabulaScapalis from '../tabulae/scapalis'
-import type Tabula from '../tabulae/tabula'
+import Ignavum from '../miscella/ignavum';
+import { NomenActum, NomenAgendum } from '../praebeunda/agenda';
+import Structor from '../praebeunda/structor';
+import { Nomen } from '../praebeunda/verba';
+import TabulaBifissa from '../tabulae/bifissa';
+import TabulaCollata from '../tabulae/collata';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
+import TabulaScapalis from '../tabulae/scapalis';
+import type Tabula from '../tabulae/tabula';
+import Anomala, { Mantela } from './anomala';
 
 export default class Nomina extends Anomala<Nomen> {
-  static se: Ignavum<Nomina> = new Ignavum(() => new Nomina())
+  static se: Ignavum<Nomina> = new Ignavum(() => new Nomina)
   protected override async numeretur(): Promise<void> {
     const Athos: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
       () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/Athōs', positor: Nomen.positor })
@@ -37,12 +37,12 @@ export default class Nomina extends Anomala<Nomen> {
     const balneum: Ignavum<TabulaBifissa> = new Ignavum(
       () =>
         new TabulaBifissa({
-          singularis: new Structor(() => new NomenAgendum())
+          singularis: new Structor(() => new NomenAgendum)
             .ponatur((nomen) => (nomen.nominativum = 'balneum'))
             .ponatur((nomen) => (nomen.genitivum = 'balneī'))
             .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
             .struatur(),
-          pluralis: new Structor(() => new NomenAgendum())
+          pluralis: new Structor(() => new NomenAgendum)
             .ponatur((nomen) => (nomen.nominativum = 'balnea'))
             .ponatur((nomen) => (nomen.genitivum = 'balneae'))
             .ponatur((nomen) => (nomen.versio = 'prima'))
@@ -53,12 +53,12 @@ export default class Nomina extends Anomala<Nomen> {
     const caelum: Ignavum<TabulaBifissa> = new Ignavum(
       () =>
         new TabulaBifissa({
-          singularis: new Structor(() => new NomenAgendum())
+          singularis: new Structor(() => new NomenAgendum)
             .ponatur((nomen) => (nomen.nominativum = 'caelum'))
             .ponatur((nomen) => (nomen.genitivum = 'caelī'))
             .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
             .struatur(),
-          pluralis: new Structor(() => new NomenAgendum())
+          pluralis: new Structor(() => new NomenAgendum)
             .ponatur((nomen) => (nomen.nominativum = 'caelus'))
             .ponatur((nomen) => (nomen.genitivum = 'caelī'))
             .ponatur((nomen) => (nomen.versio = 'secundaMasculina'))
@@ -74,7 +74,7 @@ export default class Nomina extends Anomala<Nomen> {
               new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/dea', positor: Nomen.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new NomenAgendum())
+            new Structor(() => new NomenAgendum)
               .ponatur((nomen) => (nomen.nominativum = 'dea'))
               .ponatur((nomen) => (nomen.genitivum = 'deae'))
               .ponatur((nomen) => (nomen.versio = 'prima'))
@@ -95,7 +95,7 @@ export default class Nomina extends Anomala<Nomen> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new NomenAgendum())
+            new Structor(() => new NomenAgendum)
               .ponatur((nomen) => (nomen.nominativum = 'domus'))
               .ponatur((nomen) => (nomen.genitivum = 'domūs'))
               .ponatur((nomen) => (nomen.versio = 'quarta'))
@@ -116,7 +116,7 @@ export default class Nomina extends Anomala<Nomen> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new NomenAgendum())
+            new Structor(() => new NomenAgendum)
               .ponatur((nomen) => (nomen.nominativum = 'iūgerum'))
               .ponatur((nomen) => (nomen.genitivum = 'iūgerī'))
               .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
@@ -195,7 +195,7 @@ export default class Nomina extends Anomala<Nomen> {
     )
 
     const venireRectum: Ignavum<Tabula<Nomen>> = new Ignavum(() =>
-      new Structor(() => new NomenActum())
+      new Structor(() => new NomenActum)
         .ponatur((nomen) => (nomen.infinitivum = 'venīre'))
         .ponatur((nomen) => (nomen.supinum = 'ventum'))
         .ponatur((nomen) => (nomen.versio = 'quartus'))

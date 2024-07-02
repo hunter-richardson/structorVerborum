@@ -1,7 +1,7 @@
 import file from 'file-fetch';
 import { marked, type Tokens } from 'marked';
 import path from 'path';
-import Cocutor from './cocutor';
+import Crustula from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
 
@@ -10,7 +10,7 @@ export default class Magister {
   static se: Ignavum<Magister> = new Ignavum(() => new Magister);
 
   private viator (via: string): string {
-    const lingua: string = Cocutor.se.ipse().edatur('lingua') ?? 'latina';
+    const lingua: string = Crustula.se.ipse().lingua.edatur();
     return path.join('/res/docenda', lingua, via).concat('.md');
   }
 

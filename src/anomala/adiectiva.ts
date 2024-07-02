@@ -1,17 +1,17 @@
-import Anomala, { Mantela } from './anomala'
-import { Encliticum } from '../miscella/enumerationes'
-import Ignavum from '../miscella/ignavum'
-import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda'
-import Structor from '../praebeunda/structor'
-import { Adiectivum } from '../praebeunda/verba'
-import TabulaCollata from '../tabulae/collata'
-import TabulaConiuncta from '../tabulae/coniuncta'
-import TabulaRescripta from '../tabulae/rescriptae/rescripta'
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa'
-import TabulaScapalis from '../tabulae/scapalis'
+import Anomala, { Mantela } from './anomala';
+import { Encliticum } from '../miscella/enumerationes';
+import Ignavum from '../miscella/ignavum';
+import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda';
+import Structor from '../praebeunda/structor';
+import { Adiectivum } from '../praebeunda/verba';
+import TabulaCollata from '../tabulae/collata';
+import TabulaConiuncta from '../tabulae/coniuncta';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import TabulaScapalis from '../tabulae/scapalis';
 
 export default class Adiectiva extends Anomala<Adiectivum> {
-  static se: Ignavum<Adiectiva> = new Ignavum(() => new Adiectiva())
+  static se: Ignavum<Adiectiva> = new Ignavum(() => new Adiectiva)
 
   protected override async numeretur(): Promise<void> {
     const frugi: Ignavum<TabulaScapalis<Adiectivum>> = new Ignavum(
@@ -32,7 +32,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
     )
 
     const decimum: Ignavum<Incomparabile> = new Ignavum(() =>
-      new Structor(() => new Incomparabile())
+      new Structor(() => new Incomparabile)
         .ponatur((adiectivum) => (adiectivum.nominativum = 'decimum'))
         .ponatur((adiectivum) => (adiectivum.nominativum = 'decimī'))
         .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -40,7 +40,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
     )
 
     const utrum: Ignavum<Incomparabile> = new Ignavum(() =>
-      new Structor(() => new Incomparabile())
+      new Structor(() => new Incomparabile)
         .ponatur((adiectivum) => (adiectivum.nominativum = 'utrum'))
         .ponatur((adiectivum) => (adiectivum.nominativum = 'utrī'))
         .ponatur((adiectivum) => (adiectivum.versio = 'pronominalis//cumLitteraR'))
@@ -58,7 +58,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'alium'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'aliī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'pronominalis'))
@@ -78,7 +78,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'ambum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'ambī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda//pluralis'))
@@ -98,7 +98,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'meum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'meī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -118,7 +118,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new AdiectivumAgendum())
+            new Structor(() => new AdiectivumAgendum)
               .ponatur((adiectivum) => (adiectivum.positivum = 'multum'))
               .ponatur((adiectivum) => (adiectivum.superlativum = 'maximum'))
               .ponatur((adiectivum) => (adiectivum.versio = 'positivaAutPrimaAutSecunda'))
@@ -133,7 +133,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'nōnum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'nōnī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -148,7 +148,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'octāvum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'octāvī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -163,7 +163,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'quārtum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'quārtī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -178,7 +178,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'quīntum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'quīntī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -193,7 +193,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'septimum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'septimī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -208,7 +208,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'sextum'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'sextī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
@@ -223,7 +223,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
         new TabulaConiuncta({
           positor: Adiectivum.positor,
           prima: new Ignavum(() =>
-            new Structor(() => new Incomparabile())
+            new Structor(() => new Incomparabile)
               .ponatur((adiectivum) => (adiectivum.nominativum = 'tertium'))
               .ponatur((adiectivum) => (adiectivum.nominativum = 'tertiī'))
               .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))

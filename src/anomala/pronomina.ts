@@ -1,18 +1,18 @@
-import Anomala, { Mantela } from './anomala'
-import { Encliticum } from '../miscella/enumerationes'
-import Ignavum from '../miscella/ignavum'
-import Nuntius from '../miscella/nuntius'
-import { Pronomen } from '../praebeunda/verba'
-import TabulaCollata from '../tabulae/collata'
-import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa'
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa'
-import TabulaRescripta from '../tabulae/rescriptae/rescripta'
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa'
-import TabulaScapalis from '../tabulae/scapalis'
+import Anomala, { Mantela } from './anomala';
+import { Encliticum } from '../miscella/enumerationes';
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import { Pronomen } from '../praebeunda/verba';
+import TabulaCollata from '../tabulae/collata';
+import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import TabulaScapalis from '../tabulae/scapalis';
 
 @Nuntius.factum('Pronomina')
 export default class Pronomina extends Anomala<Pronomen> {
-  static se: Ignavum<Pronomina> = new Ignavum(() => new Pronomina())
+  static se: Ignavum<Pronomina> = new Ignavum(() => new Pronomina)
 
   @Nuntius.futurus('Pronomina')
   protected async numeretur(): Promise<void> {

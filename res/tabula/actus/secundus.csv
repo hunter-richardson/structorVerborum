@@ -2,10 +2,10 @@ modus,vox,tempus,scriptum,numerus,persona
 infinitivus,activa,praesens,ēre
 infinitivus,activa,perfectum,ēvissem
 infinitivus,passiva,praesens,ērī
-participalis,activa,praesens,ēns
-participalis,passiva,perfectum,um
-participalis,passiva,futurum,endum
-participalis,activa,futurum,ūrum
+participium,activa,praesens,ēns
+participium,passiva,perfectum,um
+participium,passiva,futurum,endum
+participium,activa,futurum,ūrum
 imperativus,activa,praesens,ē,singularis,
 imperativus,activa,praesens,ēte,pluralis,
 imperativus,activa,futurum,ētō,singularis,

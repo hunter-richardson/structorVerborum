@@ -1,6 +1,4 @@
 import deepEqual from 'deep-equal';
-import Ignavum from './ignavum';
-import Nuntius from './nuntius';
 import Actus from '../anomala/actus';
 import Adiectiva from '../anomala/adiectiva';
 import { Mantela } from '../anomala/anomala';
@@ -9,8 +7,10 @@ import Pronomina from '../anomala/pronomina';
 import LectorVerbalis from '../lectores/verbalis';
 import { LectorVerbi } from '../lectores/verbi';
 import * as Agenda from '../praebeunda/agenda';
-import type { Verbum, Pronomen } from '../praebeunda/verba';
 import type { Referendum } from '../praebeunda/interfecta';
+import type { Pronomen, Verbum } from '../praebeunda/verba';
+import Ignavum from './ignavum';
+import Nuntius from './nuntius';
 
 export type Lemma = {
   categoria: string
@@ -34,7 +34,7 @@ export type Eventus = {
 
 @Nuntius.factum('Dictionarium')
 export default class Dictionarium {
-  static se: Ignavum<Dictionarium> = new Ignavum(() => new Dictionarium());
+  static se: Ignavum<Dictionarium> = new Ignavum(() => new Dictionarium);
 
   private readonly _lectorActuum: Ignavum<LectorVerbalis<Agenda.ActusAgendus>> =
     LectorVerbalis.Actuum;

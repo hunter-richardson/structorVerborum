@@ -16,7 +16,7 @@ type Percolamen = {
 
 @Nuntius.factum('PutatorIncomparabilis')
 export default class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
-  static se: Ignavum<PutatorIncomparabilis> = new Ignavum(() => new PutatorIncomparabilis());
+  static se: Ignavum<PutatorIncomparabilis> = new Ignavum(() => new PutatorIncomparabilis);
 
   radicetur(versio: string): Radicator<Incomparabile, Adiectivum> {
     switch (versio) {

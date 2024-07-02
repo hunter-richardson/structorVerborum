@@ -1,9 +1,9 @@
-import TabulaDefecta from './defecta';
 import { numeri, personae, tempora } from '../../miscella/enumerationes';
 import Ignavum from '../../miscella/ignavum';
+import type { Colamen } from '../../praebeunda/agenda';
 import { Actus } from '../../praebeunda/verba';
 import Tabula from '../tabula';
-import type { Colamen } from '../../praebeunda/agenda';
+import TabulaDefecta from './defecta';
 
 type Optanda = {
   relata: Ignavum<Tabula<Actus>>,
@@ -18,21 +18,21 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
       case 'semideponens':
         ['praesens', 'futurum', 'perfectum'].map((tempus) => {
           colamina.push({
-            modus: 'participalis',
+            modus: 'participium',
             tempus: tempus
           } as Colamen<Actus>);
         });
         break;
       case 'semideponensActiva':
         colamina.push({
-          modus: 'participalis',
+          modus: 'participium',
           tempus: 'futurum'
         } as Colamen<Actus>);
         break;
       default:
         ['futurum', 'perfectum'].map((tempus) => {
           colamina.push({
-            modus: 'participalis',
+            modus: 'participium',
             tempus: tempus
           } as Colamen<Actus>);
         });
@@ -87,7 +87,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
       case 'semideponensActiva':
         if (
           [
-            colamen.modus === 'participalis',
+            colamen.modus === 'participium',
             colamen.tempus === 'futurum',
             colamen.vox === 'passiva'
           ].any()
@@ -98,7 +98,7 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
         }
         break;
       default:
-        if ([colamen.modus === 'participalis', colamen.vox === 'passiva'].any()) {
+        if ([ colamen.modus === 'participium', colamen.vox === 'passiva' ].any()) {
           colamen.vox = '';
         } else {
           return null;

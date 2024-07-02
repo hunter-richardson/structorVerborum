@@ -52,7 +52,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
           break;
       }
 
-      return new Structor(() => new NomenActum())
+      return new Structor(() => new NomenActum)
         .ponatur((nomen) => (nomen.infinitivum = this.infinitivum))
         .ponatur((nomen) => (nomen.gerundium = radix.concat(suffixumGeriundii)))
         .ponatur((nomen) => (nomen.supinum = this.supinum))
@@ -62,7 +62,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
   }
 
   actor(genus: string): NomenAgendum | null {
-    const structor: Structor<NomenAgendum> = new Structor(() => new NomenAgendum())
+    const structor: Structor<NomenAgendum> = new Structor(() => new NomenAgendum)
           .ponatur((nomen) => (nomen.versio = 'tertiaAnimata'))
     switch (genus) {
       case 'masculinum':
@@ -248,7 +248,7 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
         ].all()
       ).scriptum;
 
-      return new Structor(() => new NomenAgendum())
+      return new Structor(() => new NomenAgendum)
         .ponatur((nomen) => (nomen.nominativum = nominativus))
         .ponatur((nomen) => (nomen.genitivum = genitivus))
         .ponatur((nomen) => (nomen.versio = versioNova))
@@ -342,7 +342,7 @@ export class Incomparabile implements Interfecta.Faciendum<Verba.Adiectivum>, In
         return null;
     }
 
-    return new Structor(() => new NomenAgendum())
+    return new Structor(() => new NomenAgendum)
       .ponatur((nomen) => (nomen.nominativum = this.nominativum))
       .ponatur((nomen) => (nomen.genitivum = this.genitivum))
       .ponatur((nomen) => (nomen.versio = versioNova))

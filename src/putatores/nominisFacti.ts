@@ -14,7 +14,7 @@ type Percolamen = {
 
 @Nuntius.factum('PutatorNominisFacti')
 export default class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
-  static se: Ignavum<PutatorNominisFacti> = new Ignavum(() => new PutatorNominisFacti());
+  static se: Ignavum<PutatorNominisFacti> = new Ignavum(() => new PutatorNominisFacti);
 
   @Nuntius.modus('PutatorNominisFacti')
   putetur(agendum: NomenActum): Tabula<Nomen> {

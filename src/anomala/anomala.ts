@@ -1,8 +1,8 @@
-import Ignavum from '../miscella/ignavum'
-import Nuntius from '../miscella/nuntius'
-import { Multiplex } from '../praebeunda/verba'
-import type { Faciendum } from '../praebeunda/interfecta'
-import type Tabula from '../tabulae/tabula'
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import type { Faciendum } from '../praebeunda/interfecta';
+import { Multiplex } from '../praebeunda/verba';
+import type Tabula from '../tabulae/tabula';
 
 export class Mantela<Hoc extends Multiplex> implements Faciendum<Hoc> {
   private readonly _tabula: Ignavum<Tabula<Hoc>>
@@ -16,7 +16,7 @@ export class Mantela<Hoc extends Multiplex> implements Faciendum<Hoc> {
 }
 
 export default abstract class Anomala<Hoc extends Multiplex> implements Disposable {
-  protected readonly contenta: Map<string, Mantela<Hoc>> = new Map()
+  protected readonly contenta: Map<string, Mantela<Hoc>> = new Map
   protected abstract numeretur(): Promise<void>
 
   @Nuntius.futurus('Anomala')

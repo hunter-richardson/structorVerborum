@@ -17,7 +17,7 @@ type Percolamen = {
 
 @Nuntius.factum('PutatorNominis')
 export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
-  static se: Ignavum<PutatorNominis> = new Ignavum(() => new PutatorNominis());
+  static se: Ignavum<PutatorNominis> = new Ignavum(() => new PutatorNominis);
 
   radicetur(versio: string): Radicator<NomenAgendum, Nomen> {
     switch (versio) {
@@ -147,7 +147,7 @@ export default class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
     } else if (fundamen === 'indeclinabilis') {
       return new TabulaInflexibilis({
         factor: (hoc: NomenAgendum) =>
-          new Structor(() => new Nomen())
+          new Structor(() => new Nomen)
             .ponatur((nomen) => (nomen.scriptum = hoc.nominativum))
             .struatur(),
         hoc: agendum

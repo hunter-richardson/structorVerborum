@@ -19,7 +19,7 @@ export default class Numerator {
   };
 
   private static fracti (): Map<number, string> {
-    const numeri: Map<number, string> = new Map();
+    const numeri: Map<number, string> = new Map;
     numeri.set(1, '·');
     numeri.set(2, ':');
     numeri.set(3, '∴');

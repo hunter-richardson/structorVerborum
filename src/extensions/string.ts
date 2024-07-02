@@ -1,6 +1,6 @@
 export {  }
 
-const apices: Map<string, string> = new Map();
+const apices: Map<string, string> = new Map;
 apices.set('Ā', 'A');
 apices.set('Ē', 'E');
 apices.set('Ī', 'I');

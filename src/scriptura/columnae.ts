@@ -1,8 +1,8 @@
-import Cocutor from '../miscella/cocutor';
+import Crustula from '../miscella/crustula';
 import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
 
-const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
 type Generanda<Hoc extends Multiplex> = {
   categoria: string,

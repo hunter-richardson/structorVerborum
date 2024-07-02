@@ -53,7 +53,7 @@ export class Numerus extends Verbum {
   }
 
   static readonly numerator: (anglicus: number) => Numerus = (anglicus: number): Numerus => {
-    return new Structor<Numerus>(() => new Numerus())
+    return new Structor<Numerus>(() => new Numerus)
       .ponatur((numerus) => (numerus.anglicus = anglicus))
       .struatur();
   };
@@ -193,11 +193,11 @@ export class Actus extends Multiplex {
   }
 
   override paratumne(): boolean {
-    return this.modus !== 'participalis' && super.paratumne();
+    return this.modus !== 'participium' && super.paratumne();
   }
 
   static readonly positor: Positor<Actus> = (istud: Agendum<Actus>): Actus => {
-    return new Structor<Actus>(() => new Actus())
+    return new Structor<Actus>(() => new Actus)
       .ponatur((actus) => (actus.modus = istud.modus))
       .ponatur((actus) => (actus.vox = istud.vox ?? ''))
       .ponatur((actus) => (actus.tempus = istud.tempus ?? ''))
@@ -208,9 +208,9 @@ export class Actus extends Multiplex {
   };
 
   async participialis(): Promise<AdiectivumAgendum> {
-    if (this.modus === 'participialis') {
+    if (this.modus === 'participium') {
       if (this.tempus === 'praesens') {
-        const structor: Structor<AdiectivumAgendum> = new Structor(() => new AdiectivumAgendum())
+        const structor: Structor<AdiectivumAgendum> = new Structor(() => new AdiectivumAgendum)
           .ponatur((adiectivum) => (adiectivum.versio = 'positivusTertia/cumTruncoVario'))
           .ponatur((adiectivum) => (adiectivum.positivum = this.scriptum));
         if (this.scriptum.slice(-3) === 'āre') {
@@ -225,7 +225,7 @@ export class Actus extends Multiplex {
 
         return structor.struatur()
       } else {
-        return new Structor(() => new AdiectivumAgendum())
+        return new Structor(() => new AdiectivumAgendum)
           .ponatur((adiectivum) => (adiectivum.versio = 'postivusAutPrimaAutSecunda'))
           .ponatur((adiectivum) => (adiectivum.positivum = this.scriptum))
           .ponatur((adiectivum) => (adiectivum.comparativum = this.scriptum.replace('um$', 'ius')))
@@ -261,7 +261,7 @@ export class Adverbium extends Multiplex {
   }
 
   static readonly positor: Positor<Adverbium> = (istud: Agendum<Adverbium>): Adverbium =>
-    new Structor<Adverbium>(() => new Adverbium())
+    new Structor<Adverbium>(() => new Adverbium)
       .ponatur((adverbium) => (adverbium.gradus = istud.gradus ?? ''))
       .ponatur((adverbium) => (adverbium.scriptum = istud.scriptum))
       .struatur();
@@ -320,7 +320,7 @@ export class Nomen extends Multiplex {
   }
 
   static readonly positor: Positor<Nomen> = (istud: Agendum<Nomen>): Nomen =>
-    new Structor<Nomen>(() => new Nomen())
+    new Structor<Nomen>(() => new Nomen)
       .ponatur((nomen) => (nomen.numerus = istud.numerus ?? ''))
       .ponatur((nomen) => (nomen.casus = istud.casus ?? ''))
       .ponatur((nomen) => (nomen.scriptum = istud.scriptum))
@@ -383,7 +383,7 @@ export class Pronomen extends Multiplex {
     if (!istud.casus || istud.casus === 'Derectus') {
       throw this.Errator('casus', istud.casus);
     } else {
-      return new Structor<Pronomen>(() => new Pronomen())
+      return new Structor<Pronomen>(() => new Pronomen)
         .ponatur((pronomen) => (pronomen.casus = istud.casus))
         .ponatur((pronomen) => (pronomen.genus = istud.genus ?? ''))
         .ponatur((pronomen) => (pronomen.numerus = istud.numerus ?? ''))
@@ -461,7 +461,7 @@ export class Adiectivum extends Multiplex {
   }
 
   static readonly positor: Positor<Adiectivum> = (istud: Agendum<Adiectivum>): Adiectivum =>
-    new Structor<Adiectivum>(() => new Adiectivum())
+    new Structor<Adiectivum>(() => new Adiectivum)
       .ponatur((adiectivum) => (adiectivum.gradus = istud.gradus ?? ''))
       .ponatur((adiectivum) => (adiectivum.genus = istud.genus ?? ''))
       .ponatur((adiectivum) => (adiectivum.numerus = istud.numerus ?? ''))
@@ -497,7 +497,7 @@ export class Numeramen extends Multiplex {
   }
 
   static readonly positor: Positor<Numeramen> = (istud: Agendum<Numeramen>): Numeramen =>
-    new Structor<Numeramen>(() => new Numeramen())
+    new Structor<Numeramen>(() => new Numeramen)
       .ponatur((numeramen) => (numeramen.referendum = istud.referendum))
       .ponatur((numeramen) => (numeramen.scriptum = istud.scriptum))
       .struatur();

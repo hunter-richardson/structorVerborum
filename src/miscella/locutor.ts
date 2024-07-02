@@ -1,13 +1,13 @@
-import Cocutor from './cocutor';
+import Crustula from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
 import { Verbum } from '../praebeunda/verba';
 
 @Nuntius.factum('Locutor')
 export default class Locutor {
-  static se: Ignavum<Locutor> = new Ignavum(() => new Locutor());
+  static se: Ignavum<Locutor> = new Ignavum(() => new Locutor);
 
-  private readonly cocutor: Cocutor = Cocutor.se.ipse();
+  private readonly crustula: Crustula = Crustula.se.ipse();
 
   private _verba: Verbum[];
   private apices?: boolean;
@@ -25,21 +25,11 @@ export default class Locutor {
   }
 
   private veliferum(): void {
-    this.apices = this.cocutor.est('apices') ?? true;
-    this.utendaU = this.cocutor.est('utendaU') ?? true;
-    this.magnas = this.cocutor.est('magnas') ?? false;
+    this.apices = this.crustula.apices.est();
+    this.utendaU = this.crustula.utendaU.est();
+    this.magnas = this.crustula.magnas.est();
 
-    switch (this.cocutor.edatur('separator')) {
-      case 'interpunctum':
-        this.separator = '·';
-        break;
-      case 'nullum':
-        this.separator = '';
-        break;
-      default:
-        this.separator = ' ';
-        break;
-    }
+    this.separator = this.crustula.separator.littera();
   }
 
   get verba(): Verbum[] {

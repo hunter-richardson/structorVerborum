@@ -1,20 +1,20 @@
-import Anomala, { Mantela } from './anomala'
-import Ignavum from '../miscella/ignavum'
-import { ActusAgendus } from '../praebeunda/agenda'
-import Structor from '../praebeunda/structor'
-import { Actus as Anomalon } from '../praebeunda/verba'
-import TabulaCollata from '../tabulae/collata'
-import TabulaImpersonalis from '../tabulae/defectae/impersonalis'
-import TabulaPerfecta from '../tabulae/defectae/perfecta'
-import TabulaFissa from '../tabulae/fissa'
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa'
-import TabulaRescripta from '../tabulae/rescriptae/rescripta'
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa'
-import TabulaScapalis from '../tabulae/scapalis'
-import type Tabula from '../tabulae/tabula'
+import Anomala, { Mantela } from './anomala';
+import Ignavum from '../miscella/ignavum';
+import { ActusAgendus } from '../praebeunda/agenda';
+import Structor from '../praebeunda/structor';
+import { Actus as Anomalon } from '../praebeunda/verba';
+import TabulaCollata from '../tabulae/collata';
+import TabulaImpersonalis from '../tabulae/defectae/impersonalis';
+import TabulaPerfecta from '../tabulae/defectae/perfecta';
+import TabulaFissa from '../tabulae/fissa';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import TabulaScapalis from '../tabulae/scapalis';
+import type Tabula from '../tabulae/tabula';
 
 export default class Actus extends Anomala<Anomalon> {
-  static se: Ignavum<Actus> = new Ignavum(() => new Actus())
+  static se: Ignavum<Actus> = new Ignavum(() => new Actus)
 
   protected override async numeretur(): Promise<void> {
     const aiere: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
@@ -63,7 +63,7 @@ export default class Actus extends Anomala<Anomalon> {
             () => new TabulaScapalis({ via: '/res/scapales/actus/dare', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.infinitivum = 'dare'))
               .ponatur((actus) => (actus.perfectum = 'dedisse'))
               .ponatur((actus) => (actus.supinum = 'dātum'))
@@ -82,7 +82,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/ferre', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.infinitivum = 'ferre'))
               .ponatur((actus) => (actus.perfectum = 'tulisse'))
               .ponatur((actus) => (actus.supinum = 'lātum'))
@@ -101,7 +101,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/facere', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.infinitivum = 'facere'))
               .ponatur((actus) => (actus.perfectum = 'fēcisse'))
               .ponatur((actus) => (actus.supinum = 'factum'))
@@ -120,7 +120,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/ferre', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.infinitivum = 'īre'))
               .ponatur((actus) => (actus.perfectum = 'īsse'))
               .ponatur((actus) => (actus.supinum = 'itum'))
@@ -153,7 +153,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/velle', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.infinitivum = 'volere'))
               .ponatur((actus) => (actus.perfectum = 'voluisse'))
               .ponatur((actus) => (actus.versio = 'tertia//semideponens'))
@@ -191,7 +191,7 @@ export default class Actus extends Anomala<Anomalon> {
               })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.perfectum = 'meminisse'))
               .ponatur((actus) => (actus.versio = 'tertia//perfecta'))
               .struatur()
@@ -274,7 +274,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/coepisse', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.perfectum = 'coepisse'))
               .ponatur((actus) => (actus.versio = 'tertia//perfecta'))
               .struatur()
@@ -438,7 +438,7 @@ export default class Actus extends Anomala<Anomalon> {
               new TabulaScapalis({ via: '/res/scapales/actus/ōdisse', positor: Anomalon.positor })
           ),
           new Ignavum(() =>
-            new Structor(() => new ActusAgendus())
+            new Structor(() => new ActusAgendus)
               .ponatur((actus) => (actus.perfectum = 'ōdisse'))
               .ponatur((actus) => (actus.versio = 'quarta//perfecta'))
               .struatur()
@@ -553,7 +553,7 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const venireRectum: Ignavum<Tabula<Anomalon>> = new Ignavum(() =>
-      new Structor(() => new ActusAgendus())
+      new Structor(() => new ActusAgendus)
         .ponatur((actus) => (actus.infinitivum = 'venīre'))
         .ponatur((actus) => (actus.perfectum = 'vēnīsse'))
         .ponatur((actus) => (actus.supinum = 'ventum'))

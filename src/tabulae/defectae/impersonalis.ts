@@ -26,7 +26,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
 
     ['praesens', 'futurum', 'perfectum'].forEach((tempus) => {
       colamina.push({
-        modus: 'participalis',
+        modus: 'participium',
         tempus: tempus
       } as Colamen<Actus>);
 
@@ -115,7 +115,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
     } else if (this._et === 'semideponensActiva') {
       if (colamen.vox === 'passiva') {
         switch (true) {
-          case [colamen.modus === 'participalis', colamen.tempus === 'futurum'].any():
+          case [ colamen.modus === 'participium', colamen.tempus === 'futurum' ].any():
             colamen.vox = '';
             break;
           default:

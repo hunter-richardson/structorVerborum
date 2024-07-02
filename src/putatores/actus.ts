@@ -20,7 +20,7 @@ type Percolamen = {
 
 @Nuntius.factum('PutatorActus')
 export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
-  static se: Ignavum<PutatorActus> = new Ignavum(() => new PutatorActus());
+  static se: Ignavum<PutatorActus> = new Ignavum(() => new PutatorActus);
 
   private radicetur(versio: string): Radicator<ActusAgendus, Actus> {
     switch (versio) {
@@ -40,7 +40,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participalis',
+              colamen.modus === 'participium',
               colamen.vox === 'passiva',
               colamen.tempus === 'futurum'
             ].all():
@@ -60,7 +60,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participalis',
+              colamen.modus === 'participium',
               colamen.vox === 'passiva',
               colamen.tempus === 'futurum'
             ].all():
@@ -94,13 +94,13 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participalis',
+              colamen.modus === 'participium',
               colamen.tempus === 'futurum',
               colamen.vox === 'activa'
             ].all():
               return actus.supinum.chop(2);
             case [
-              colamen.modus === 'participalis',
+              colamen.modus === 'participium',
               colamen.tempus === 'perfectum',
               colamen.vox === 'passiva'
             ].all():

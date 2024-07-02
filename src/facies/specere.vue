@@ -133,7 +133,7 @@
           <v-btn icon='quick_reference' id='aperi' @click='aperi();' :text="anglica ? 'Open' : 'Refer'" />
         </template>
         <template v-else-if="verbum.categoria === 'actus' &&
-          valores.includes('participalis')">
+          valores.includes('participium')">
           <v-btn icon='quick_reference' id='aperi' @click='aperi();'
                  :text="anglica ? 'Particple' : 'Participalis'" />
         </template>

@@ -10,7 +10,7 @@ export type Crustulum = {
 
 @Nuntius.factum('Cocutor')
 export default class Cocutor {
-  static se: Ignavum<Cocutor> = new Ignavum(() => new Cocutor())
+  static se: Ignavum<Cocutor> = new Ignavum(() => new Cocutor)
 
   private readonly _optiones: CookieAttributes = {
     domain: 'conans',
