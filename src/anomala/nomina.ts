@@ -507,6 +507,7 @@ export default class Nomina extends Anomala<Nomen> {
     this.contenta.set('introīre', new Mantela(introire))
     this.contenta.set('īre', new Mantela(ire))
     this.contenta.set('iūgerum', new Mantela(iugerum))
+    this.contenta.set('Iuppiter', new Mantela(Iuppiter))
     this.contenta.set('lexis', new Mantela(lexis))
     this.contenta.set('nequīre', new Mantela(nequire))
     this.contenta.set('obīre', new Mantela(obire))
