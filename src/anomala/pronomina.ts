@@ -1,4 +1,3 @@
-import Anomala, { Mantela } from './anomala';
 import { Encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
@@ -9,6 +8,7 @@ import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
 import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
+import Anomala, { Mantela } from './anomala';
 
 @Nuntius.factum('Pronomina')
 export default class Pronomina extends Anomala<Pronomen> {
@@ -17,23 +17,50 @@ export default class Pronomina extends Anomala<Pronomen> {
   @Nuntius.futurus('Pronomina')
   protected async numeretur(): Promise<void> {
     const ego: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/pronomina/ego', positor: Pronomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/pronomina/ego',
+          positor: Pronomen.positor
+        })
     )
+
     const hoc: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/pronomina/hoc', positor: Pronomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/pronomina/hoc',
+          positor: Pronomen.positor
+        })
     )
+
     const id: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/pronomina/id', positor: Pronomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/pronomina/id',
+          positor: Pronomen.positor
+        })
     )
     const illud: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/pronomina/illud', positor: Pronomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/pronomina/illud',
+          positor: Pronomen.positor
+        })
     )
+
     const se: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/pronomina/sē', positor: Pronomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/pronomina/sē',
+          positor: Pronomen.positor
+        })
     )
 
     const egomet: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: ego, suffixum: 'met' })
+      () =>
+        new TabulaSuffixa({
+          relata: ego,
+          suffixum: 'met'
+        })
     )
 
     const idem: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
@@ -137,9 +164,11 @@ export default class Pronomina extends Anomala<Pronomen> {
     const aliquid: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
       () => new TabulaPraefixa({ relata: quid, praefixum: 'ali' })
     )
+
     const aliquod: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
       () => new TabulaPraefixa({ relata: quod, praefixum: 'ali' })
     )
+
     const aliquodpiam: Ignavum<TabulaCircumfixa<Pronomen>> = new Ignavum(
       () => new TabulaCircumfixa({ relata: quod, praefixum: 'ali', suffixum: 'piam' })
     )
@@ -155,30 +184,39 @@ export default class Pronomina extends Anomala<Pronomen> {
     const ecquod: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
       () => new TabulaPraefixa({ relata: quod, praefixum: 'ec' })
     )
+
     const quidnam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quid, suffixum: 'nam' })
     )
+
     const quidpiam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quid, suffixum: 'piam' })
     )
+
     const quidquam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quid, suffixum: 'quam' })
     )
+
     const quidque: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quid, suffixum: Encliticum.Coniugans })
     )
+
     const quidvis: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quid, suffixum: 'vīs' })
     )
+
     const quodnam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quod, suffixum: 'nam' })
     )
+
     const quodpiam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quod, suffixum: 'piam' })
     )
+
     const quodvis: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: quod, suffixum: 'vīs' })
     )
+
     const semet: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
       () => new TabulaSuffixa({ relata: se, suffixum: 'met' })
     )

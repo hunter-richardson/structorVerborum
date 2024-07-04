@@ -79,7 +79,7 @@ class Separator extends Crustulum {
       valor: ' '
     }, {
       clavis: 'interpunctum',
-      valor: '·'
+      valor: '•'
     }, {
       clavis: 'nullum',
       valor: ''

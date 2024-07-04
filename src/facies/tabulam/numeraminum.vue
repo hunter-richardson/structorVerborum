@@ -49,6 +49,11 @@
         return await tabula?.tabulentur() ?? [];
       }, async oneratust (): Promise<void> {
         return new Promise(() => this.onerans = false);
+      }, async forsInflectat(): Promise<void> {
+        this.onerans = true;
+        this.referendum = await agendum.referatur(
+          this.numeramina.map(numeramen => numeramen.referendum).random()) ?? undefined;
+        return this.oneratust();
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Numeramen[] = await this.omnia();
@@ -79,6 +84,10 @@
   </template>
   <template v-else>
     <seligere :multiplicia='numeramina' :selectum='cole' />
+    <template v-if='numeramina.length > 1'>
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+    </template>
     <v-data-table :items='numeramina' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='numeramina' />

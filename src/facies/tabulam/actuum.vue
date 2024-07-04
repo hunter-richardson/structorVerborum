@@ -58,6 +58,10 @@
         return await tabula?.tabulentur() ?? [];
       }, async oneratust (): Promise<void> {
         return new Promise(() => this.onerans = false);
+      }, async forsInflectat(): Promise<void> {
+        this.onerans = true;
+        this.actus = this.actua.random()
+        return this.oneratust();
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Actus[] = await this.omnia();
@@ -88,6 +92,10 @@
   <inflectere v-else-if='referendum' :agendum='referendum' @blur='referendum = undefined;' />
   <template v-else>
     <seligere :multiplicia='actua' :selectum='cole' />
+    <template v-if='actua.length > 1'>
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+    </template>
     <v-data-table :items='actua' :headers='columnae' density='compact'
                   :loading='onerans' :disabled='onerans' id='tabula'
                   items-per-page='10' item-selectable=false>

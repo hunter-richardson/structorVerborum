@@ -215,3 +215,14 @@ export function anglicum(valor: string) {
       return '';
   }
 }
+
+export function inflectenda (categoria: string) {
+  return [
+    'actus',
+    'adiectivum',
+    'adverbium',
+    'nomen',
+    'numeramen',
+    'pronomen'
+  ].includes(categoria);
+}

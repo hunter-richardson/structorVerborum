@@ -1,4 +1,3 @@
-import Anomala, { Mantela } from './anomala';
 import Ignavum from '../miscella/ignavum';
 import { ActusAgendus } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
@@ -12,25 +11,46 @@ import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
 import type Tabula from '../tabulae/tabula';
+import Anomala, { Mantela } from './anomala';
 
 export default class Actus extends Anomala<Anomalon> {
   static se: Ignavum<Actus> = new Ignavum(() => new Actus)
 
   protected override async numeretur(): Promise<void> {
     const aiere: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/actus/aiere', positor: Anomalon.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/actus/aiere',
+          positor: Anomalon.positor
+        })
     )
     const esse: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/actus/esse', positor: Anomalon.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/actus/esse',
+          positor: Anomalon.positor
+        })
     )
     const fieri: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/actus/fierī', positor: Anomalon.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/actus/fierī',
+          positor: Anomalon.positor
+        })
     )
     const infieri: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/actus/īnfierī', positor: Anomalon.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/actus/īnfierī',
+          positor: Anomalon.positor
+        })
     )
     const inquii: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/actus/inquiī', positor: Anomalon.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/actus/inquiī',
+          positor: Anomalon.positor
+        })
     )
 
     const coesse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
@@ -38,7 +58,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/coepisse', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/coepisse',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(
             () =>
@@ -60,7 +83,11 @@ export default class Actus extends Anomala<Anomalon> {
       () =>
         new TabulaCollata(
           new Ignavum(
-            () => new TabulaScapalis({ via: '/res/scapales/actus/dare', positor: Anomalon.positor })
+            () =>
+              new TabulaScapalis({
+                via: '/res/scapales/actus/dare',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -79,7 +106,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/ferre', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/ferre',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -98,7 +128,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/facere', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/facere',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -117,7 +150,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/ferre', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/ferre',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -150,7 +186,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/velle', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/velle',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -168,7 +207,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/mālle', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/mālle',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(
             () =>
@@ -201,7 +243,11 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const abdare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dare, praefixum: 'ab' })
+      () =>
+        new TabulaPraefixa({
+          relata: dare,
+          praefixum: 'ab'
+        })
     )
     const abesse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
       () =>
@@ -211,7 +257,11 @@ export default class Actus extends Anomala<Anomalon> {
         })
     )
     const abire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ab' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ab'
+        })
     )
     const afferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
       () =>
@@ -245,7 +295,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/nōlle', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/nōlle',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(
             () =>
@@ -271,7 +324,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/coepisse', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/coepisse',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -284,13 +340,25 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const coire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'co' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'co'
+        })
     )
     const collabefieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'collabe' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'collabe'
+        })
     )
     const confieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'cōn' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'cōn'
+        })
     )
 
     const conferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -313,19 +381,39 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const dedare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dare, praefixum: 'dē' })
+      () =>
+        new TabulaPraefixa({
+          relata: dare,
+          praefixum: 'dē'
+        })
     )
     const deesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'dē' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'dē'
+        })
     )
     const deferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'dē' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'dē'
+        })
     )
     const defieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'dē' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'dē'
+        })
     )
     const deire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'de' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'de'
+        })
     )
 
     const differre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -348,10 +436,18 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const disperire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'disper' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'disper'
+        })
     )
     const didare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dare, praefixum: 'dī' })
+      () =>
+        new TabulaPraefixa({
+          relata: dare,
+          praefixum: 'dī'
+        })
     )
 
     const efferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -374,10 +470,18 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const exire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ex' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ex'
+        })
     )
     const inesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'īn' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'īn'
+        })
     )
 
     const inferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -400,34 +504,74 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const interesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'inter' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'inter'
+        })
     )
     const interferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'inter' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'inter'
+        })
     )
     const introferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'intrō' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'intrō'
+        })
     )
     const inire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'in' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'in'
+        })
     )
     const interire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'inter' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'inter'
+        })
     )
     const introire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'intro' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'intro'
+        })
     )
     const nequire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'nequ' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'nequ'
+        })
     )
     const obesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'ob' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'ob'
+        })
     )
     const obire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ob' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ob'
+        })
     )
     const obsolefieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'obsole' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'obsole'
+        })
     )
 
     const odisse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
@@ -435,7 +579,10 @@ export default class Actus extends Anomala<Anomalon> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis({ via: '/res/scapales/actus/ōdisse', positor: Anomalon.positor })
+              new TabulaScapalis({
+                via: '/res/scapales/actus/ōdisse',
+                positor: Anomalon.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new ActusAgendus)
@@ -456,10 +603,18 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const perferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'per' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'per'
+        })
     )
     const pervelle: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: velle, praefixum: 'per' })
+      () =>
+        new TabulaPraefixa({
+          relata: velle,
+          praefixum: 'per'
+        })
     )
 
     const posse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -486,13 +641,25 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const postferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'post' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'post'
+        })
     )
     const praeesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'prae' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'prae'
+        })
     )
     const praeterferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'praeter' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'praeter'
+        })
     )
 
     const prodesse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -504,16 +671,32 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const prodire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'prōd' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'prōd'
+        })
     )
     const proferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'prō' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'prō'
+        })
     )
     const quire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'qu' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'qu'
+        })
     )
     const redire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'red' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'red'
+        })
     )
 
     const referre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
@@ -525,31 +708,67 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const subesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'sub' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'sub'
+        })
     )
     const subire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'sub' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'sub'
+        })
     )
     const sufferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ferre, praefixum: 'suf' })
+      () =>
+        new TabulaPraefixa({
+          relata: ferre,
+          praefixum: 'suf'
+        })
     )
     const superesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: esse, praefixum: 'super' })
+      () =>
+        new TabulaPraefixa({
+          relata: esse,
+          praefixum: 'super'
+        })
     )
     const suffieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'suf' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'suf'
+        })
     )
     const superfieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: fieri, praefixum: 'super' })
+      () =>
+        new TabulaPraefixa({
+          relata: fieri,
+          praefixum: 'super'
+        })
     )
     const transabire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'trānsab' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'trānsab'
+        })
     )
     const transire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'trāns' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'trāns'
+        })
     )
     const venire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'vēn' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'vēn'
+        })
     )
 
     const venireRectum: Ignavum<Tabula<Anomalon>> = new Ignavum(() =>
@@ -787,31 +1006,75 @@ export default class Actus extends Anomala<Anomalon> {
     )
 
     const incalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: calfacere, suffixum: 'in' })
+      () =>
+        new TabulaSuffixa({
+          relata: calfacere,
+          suffixum: 'in'
+        })
     )
+
     const percalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: calfacere, suffixum: 'per' })
+      () =>
+        new TabulaSuffixa({
+          relata: calfacere,
+          suffixum: 'per'
+        })
     )
+
     const recalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: calfacere, suffixum: 're' })
+      () =>
+        new TabulaSuffixa({
+          relata: calfacere,
+          suffixum: 're'
+        })
     )
+
     const permadefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: madefacere, suffixum: 'per' })
+      () =>
+        new TabulaSuffixa({
+          relata: madefacere,
+          suffixum: 'per'
+        })
     )
+
     const subolfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: olfacere, suffixum: 'sub' })
+      () =>
+        new TabulaSuffixa({
+          relata: olfacere,
+          suffixum: 'sub'
+        })
     )
+
     const confervefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: fervefacere, suffixum: 'con' })
+      () =>
+        new TabulaSuffixa({
+          relata: fervefacere,
+          suffixum: 'con'
+        })
     )
+
     const defervefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: calfacere, suffixum: 'dē' })
+      () =>
+        new TabulaSuffixa({
+          relata: calfacere,
+          suffixum: 'dē'
+        })
     )
+
     const obstupefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: stupefacere, suffixum: 'ob' })
+      () =>
+        new TabulaSuffixa({
+          relata: stupefacere,
+          suffixum: 'ob'
+        })
     )
+
     const rarefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: arefacere, suffixum: 'r' })
+      () =>
+        new TabulaSuffixa({
+          relata: arefacere,
+          suffixum: 'r'
+        })
     )
 
     const advenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(

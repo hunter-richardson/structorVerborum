@@ -29,7 +29,7 @@ jobs:
       - name: struere
         run: npm run build-only
 #      - name: tentare
-#        run: npm test --passWithNoTests
+#        run: npm test
 #        env:
 #          CI: true
       - name: invenire

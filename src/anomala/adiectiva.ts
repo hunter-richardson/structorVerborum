@@ -1,4 +1,3 @@
-import Anomala, { Mantela } from './anomala';
 import { Encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda';
@@ -9,6 +8,7 @@ import TabulaConiuncta from '../tabulae/coniuncta';
 import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
+import Anomala, { Mantela } from './anomala';
 
 export default class Adiectiva extends Anomala<Adiectivum> {
   static se: Ignavum<Adiectiva> = new Ignavum(() => new Adiectiva)
@@ -16,19 +16,34 @@ export default class Adiectiva extends Anomala<Adiectivum> {
   protected override async numeretur(): Promise<void> {
     const frugi: Ignavum<TabulaScapalis<Adiectivum>> = new Ignavum(
       () =>
-        new TabulaScapalis({ via: '/res/scapales/adiectiva/frūgī', positor: Adiectivum.positor })
+        new TabulaScapalis({
+          via: '/res/scapales/adiectiva/frūgī',
+          positor: Adiectivum.positor
+        })
     )
+
     const mille: Ignavum<TabulaScapalis<Adiectivum>> = new Ignavum(
       () =>
-        new TabulaScapalis({ via: '/res/scapales/adiectiva/mīlle', positor: Adiectivum.positor })
+        new TabulaScapalis({
+          via: '/res/scapales/adiectiva/mīlle',
+          positor: Adiectivum.positor
+        })
     )
+
     const nequam: Ignavum<TabulaScapalis<Adiectivum>> = new Ignavum(
       () =>
-        new TabulaScapalis({ via: '/res/scapales/adiectiva/nēquam', positor: Adiectivum.positor })
+        new TabulaScapalis({
+          via: '/res/scapales/adiectiva/nēquam',
+          positor: Adiectivum.positor
+        })
     )
+
     const satis: Ignavum<TabulaScapalis<Adiectivum>> = new Ignavum(
       () =>
-        new TabulaScapalis({ via: '/res/scapales/adiectiva/satis', positor: Adiectivum.positor })
+        new TabulaScapalis({
+          via: '/res/scapales/adiectiva/satis',
+          positor: Adiectivum.positor
+        })
     )
 
     const decimum: Ignavum<Incomparabile> = new Ignavum(() =>
@@ -67,6 +82,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           )
         )
     )
+
     const ambo: Ignavum<TabulaCollata<Adiectivum>> = new Ignavum(
       () =>
         new TabulaCollata(
@@ -87,6 +103,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           )
         )
     )
+
     const meum: Ignavum<TabulaCollata<Adiectivum>> = new Ignavum(
       () =>
         new TabulaCollata(
@@ -107,6 +124,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           )
         )
     )
+
     const multum: Ignavum<TabulaCollata<Adiectivum>> = new Ignavum(
       () =>
         new TabulaCollata(
@@ -143,6 +161,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const octavumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -158,6 +177,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const quartumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -173,6 +193,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const quintumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -188,6 +209,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const septimumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -203,6 +225,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const sextumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -218,6 +241,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           secunda: new Ignavum(() => decimum.ipse().putetur())
         })
     )
+
     const tertiumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> = new Ignavum(
       () =>
         new TabulaConiuncta({
@@ -249,6 +273,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           suffixum: Encliticum.Coniugans
         })
     )
+
     const utrumcumque: Ignavum<TabulaSuffixa<Adiectivum>> = new Ignavum(
       () =>
         new TabulaSuffixa({
@@ -256,6 +281,7 @@ export default class Adiectiva extends Anomala<Adiectivum> {
           suffixum: 'cum'.concat(Encliticum.Coniugans.concat())
         })
     )
+
     const utrumvis: Ignavum<TabulaSuffixa<Adiectivum>> = new Ignavum(
       () =>
         new TabulaSuffixa({

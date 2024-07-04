@@ -48,6 +48,10 @@
         return await tabula?.tabulentur() ?? [];
       }, async oneratust (): Promise<void> {
         return new Promise(() => this.onerans = false);
+      }, async forsInflectat(): Promise<void> {
+        this.onerans = true;
+        this.adverbium = this.adverbia.random()
+        return this.oneratust();
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Adverbium[] = await this.omnia();
@@ -75,16 +79,20 @@
   <template v-if='adverbium'>
     <specere :verbum='adverbium' @blur='adverbium = undefined;' />
   </template>
-<template v-else>
-  <seligere :multiplicia='adverbia' :selectum='cole' />
-  <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
-                :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
-    <onerare :onerans='onerans' pittacium='adverbia' />
-    <template v-if='!onerans'>
-      <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
-             append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
-             @click='adverbium = hoc;' />
+  <template v-else>
+    <seligere :multiplicia='adverbia' :selectum='cole' />
+    <template v-if='adverbia.length > 1'>
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+              id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
-  </v-data-table>
-</template>
+    <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
+                  :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
+      <onerare :onerans='onerans' pittacium='adverbia' />
+      <template v-if='!onerans'>
+        <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+              append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
+              @click='adverbium = hoc;' />
+      </template>
+    </v-data-table>
+  </template>
 </template>

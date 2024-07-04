@@ -1,17 +1,18 @@
 <script lang='ts'>
   import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
-  import Gustulus from '../scriptura/gustulus';
+  import docere from './docere.vue';
+  import inflectere from './inflectere.vue';
   import gustulare from './gustulare.vue';
+  import Gustulus from '../scriptura/gustulus';
   import { Verbum, Multiplex, Actus, Numerus } from '../praebeunda/verba';
   import Locutor from '../miscella/locutor';
-  import inflectere from './inflectere.vue';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
   import { Encliticum } from '../miscella/enumerationes';
   import type { Eventus } from '../miscella/dictionarium';
   import type { NumeramenAgendum } from '../praebeunda/agenda';
 
   const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
-  const lingua: string | undefined = Cocutor.se.ipse().edatur('lingua');
+  const lingua: string | undefined = Crustula.se.ipse().lingua.edatur();
   const locutor: Locutor = Locutor.se.ipse();
 
   const verbum: Verbum | undefined = defineProps({ verbum: Verbum }).verbum;
@@ -20,18 +21,19 @@
 
   const componenta: ComponentOptionsWithoutProps = {
     'inflectere': inflectere,
-    'gustulare': gustulare
+    'gustulare': gustulare,
+    'docere': docere
   };
 
   const data = (): {
     eventus: Eventus | undefined,
     verbum: Verbum | undefined,
     propriabile: boolean,
-    multiplex: boolean,
-    valores: string[],
     enclitica: string[],
+    multiplex: boolean,
     encliticum: string,
     gustulus: Gustulus,
+    valores: string[],
     anglica: boolean;
   } => {
     return {
@@ -119,6 +121,11 @@
         <v-select density='compact' id='enclitica' v-model='encliticum'
                   :title="anglica ? 'Enclitics' : 'Enclitica'"
                   :items='enclitica' chips flat open-on-clear />
+      </template>
+      <docere :docendum='categoria' />
+      <template v-if='multiplex'>
+        <docere v-for='valor in valores'
+                :key='valor' :docendum='valor' />
       </template>
       <v-btn-toggle>
         <template v-if='verbum.paratumne()'>

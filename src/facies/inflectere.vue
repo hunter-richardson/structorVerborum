@@ -52,8 +52,8 @@
           <tabulaNominum :agendum='referendum' />
         </template>
         <template v-else-if="categoria === 'numeramen'">
-                  <tabulaNumeraminum :agendum='referendum' />
-                </template>
+          <tabulaNumeraminum :agendum='referendum' />
+          </template>
         <template v-else-if="categoria === 'pronomen'">
           <tabulaPronominum :agendum='referendum' />
         </template>

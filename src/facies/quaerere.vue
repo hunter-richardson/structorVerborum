@@ -7,7 +7,7 @@
   import gustulare from './gustulare.vue';
   import Gustulus from '../scriptura/gustulus';
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
-  import { anglicum, categoriae } from '../miscella/enumerationes';
+  import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
   import Cocutor from '../miscella/cocutor';
   import type { Verbum } from '../praebeunda/verba';
 
@@ -113,10 +113,22 @@
   export default defineComponent({
     components: componenta, data: data,
     methods: {
-      async sarci (): Promise<void> {
+      async oneratust(): Promise<void> {
+        return new Promise(() => this.onerans = false);
+      }, async sarci (): Promise<void> {
         this.onerans = true;
         this.lemmae = await dictionarium.quaeratur(this.quaerenda);
-        return new Promise(() => this.onerans = false);
+        return this.oneratust();
+      }, async forsSeligat(): Promise<void> {
+        this.onerans = true;
+        const eventus: Eventus = await dictionarium.forsReferatur(this.quaerenda);
+        if (inflectenda(eventus.categoria)) {
+          this.eventus = eventus;
+        } else {
+          this.verbum = eventus.referendum as Verbum ?? undefined;
+        }
+
+        return this.oneratust();
       }, async omnes (): Promise<void> {
         this.onerans = true;
         this.quaerenda.categoriae = [];
@@ -159,6 +171,8 @@
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
            id='sarci' :text="anglica ? 'Search' : 'Sarci'" />
+    <v-btn append-icon='casino' @click='forsSeligat();' :disabled='onerans'
+           id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' density='compact' id='tabula' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>

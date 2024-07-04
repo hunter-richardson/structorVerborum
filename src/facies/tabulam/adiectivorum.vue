@@ -93,6 +93,10 @@
         return await tabula?.tabulentur() ?? [];
       }, async oneratust (): Promise<void> {
         return new Promise(() => this.onerans = false);
+      }, async forsInflectat(): Promise<void> {
+        this.onerans = true;
+        this.adiectivum = this.adiectiva.random()
+        return this.oneratust();
       }, async cole (selecta: string[]): Promise<void> {
         this.onerans = true;
         const omnia: Adiectivum[] = await this.omnia();
@@ -128,6 +132,10 @@
   <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined;' />
 	<template v-else>
 		<seligere :multiplicia='adiectiva' :selectum='cole' />
+    <template v-if='adiectiva.length > 1'>
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+    </template>
 		<v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans' :disabled='onerans'
 			id='tabula' items-per-page='10' item-selectable=false>
 			<onerare :onerans='onerans' pittacium='adiectiva' />

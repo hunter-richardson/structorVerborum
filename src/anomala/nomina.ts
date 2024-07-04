@@ -13,25 +13,53 @@ export default class Nomina extends Anomala<Nomen> {
   static se: Ignavum<Nomina> = new Ignavum(() => new Nomina)
   protected override async numeretur(): Promise<void> {
     const Athos: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/Athōs', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/Athōs',
+          positor: Nomen.positor
+        })
     )
     const dare: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/dare', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/dare',
+          positor: Nomen.positor
+        })
     )
     const Iesus: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/Iēsūs', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/Iēsūs',
+          positor: Nomen.positor
+        })
     )
     const ire: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/ire', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/ire',
+          positor: Nomen.positor
+        })
     )
     const lexis: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/lexis', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/lexis',
+          positor: Nomen.positor
+        })
     )
     const vices: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/vices', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis<Nomen>({
+          via: '/res/scapales/nomina/vices',
+          positor: Nomen.positor
+        })
     )
     const vis: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () => new TabulaScapalis({ via: '/res/scapales/nomina/vis', positor: Nomen.positor })
+      () =>
+        new TabulaScapalis({
+          via: '/res/scapales/nomina/vis',
+          positor: Nomen.positor
+        })
     )
 
     const balneum: Ignavum<TabulaBifissa> = new Ignavum(
@@ -71,18 +99,19 @@ export default class Nomina extends Anomala<Nomen> {
         new TabulaCollata(
           new Ignavum(
             () =>
-              new TabulaScapalis<Nomen>({ via: '/res/scapales/nomina/dea', positor: Nomen.positor })
+              new TabulaScapalis<Nomen>({
+                via: '/res/scapales/nomina/dea',
+                positor: Nomen.positor
+              })
           ),
           new Ignavum(() =>
             new Structor(() => new NomenAgendum)
               .ponatur((nomen) => (nomen.nominativum = 'dea'))
               .ponatur((nomen) => (nomen.genitivum = 'deae'))
               .ponatur((nomen) => (nomen.versio = 'prima'))
-              .struatur()
-              .putetur()
+              .struatur().putetur()
           )
-        )
-    )
+        ))
 
     const domus: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
       () =>
@@ -99,11 +128,9 @@ export default class Nomina extends Anomala<Nomen> {
               .ponatur((nomen) => (nomen.nominativum = 'domus'))
               .ponatur((nomen) => (nomen.genitivum = 'domūs'))
               .ponatur((nomen) => (nomen.versio = 'quarta'))
-              .struatur()
-              .putetur()
+              .struatur().putetur()
           )
-        )
-    )
+        ))
 
     const iugerum: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
       () =>
@@ -120,78 +147,180 @@ export default class Nomina extends Anomala<Nomen> {
               .ponatur((nomen) => (nomen.nominativum = 'iūgerum'))
               .ponatur((nomen) => (nomen.genitivum = 'iūgerī'))
               .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
-              .struatur()
-              .putetur()
+              .struatur().putetur()
           )
-        )
-    )
+        ));
+
+    const Iuppiter: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
+      () =>
+        new TabulaCollata(
+          new Ignavum(
+            () =>
+              new TabulaScapalis({
+                via: '/res/scapales/nomina/Iuppiter.csv',
+                positor: Nomen.positor
+              })),
+          new Ignavum(() =>
+            new Structor(() => new NomenAgendum)
+              .ponatur(nomen => nomen.genitivum = 'Iovis')
+              .ponatur(nomen => nomen.versio = 'tertiaAnimata')
+              .struatur().putetur())
+        ));
 
     const semidea: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dea, praefixum: 'sēmi' })
+      () =>
+        new TabulaPraefixa({
+          relata: dea,
+          praefixum: 'sēmi'
+        })
     )
 
     const abire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ab' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ab'
+        })
     )
     const circumire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'circum' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'circum'
+        })
     )
     const coire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'co' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'co'
+        })
     )
     const deire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'de' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'de'
+        })
     )
     const disperire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'disper' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'disper'
+        })
     )
     const exire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ex' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ex'
+        })
     )
     const inire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'in' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'in'
+        })
     )
     const interire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'inter' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'inter'
+        })
     )
     const introire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'intro' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'intro'
+        })
     )
     const nequire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'nequ' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'nequ'
+        })
     )
     const obire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'ob' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'ob'
+        })
     )
     const perire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'per' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'per'
+        })
     )
     const prodire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'prōd' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'prōd'
+        })
     )
     const quire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'qu' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'qu'
+        })
     )
     const redire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'red' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'red'
+        })
     )
     const subire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'sub' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'sub'
+        })
     )
     const transabire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'trānsab' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'trānsab'
+        })
     )
     const transire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'trāns' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'trāns'
+        })
     )
     const venire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: ire, praefixum: 'vēn' })
+      () =>
+        new TabulaPraefixa({
+          relata: ire,
+          praefixum: 'vēn'
+        })
     )
     const dedare: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dare, praefixum: 'dē' })
+      () =>
+        new TabulaPraefixa({
+          relata: dare,
+          praefixum: 'dē'
+        })
     )
     const edare: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: dare, praefixum: 'ē' })
+      () =>
+        new TabulaPraefixa({
+          relata: dare,
+          praefixum: 'ē'
+        })
     )
 
     const venireRectum: Ignavum<Tabula<Nomen>> = new Ignavum(() =>

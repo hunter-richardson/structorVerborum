@@ -1,0 +1,1 @@
+**Unigenerum** [pronomen](pronomen.md) [adiectivumve](adiectivum.md) signat quod de [genu](genus.md) non inflectitur. De [numero](numerus.md) et [casu](casus.md) inflectantur et [gradu](gradus.md) (ni etiam [incomparabilest](incomparabile.md)). Hoc non signat quod datum genus nullum habet sed scripta inflexa de genu non mutantur et genera hoc situ non notabuntur.

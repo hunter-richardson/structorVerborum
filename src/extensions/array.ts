@@ -8,6 +8,8 @@ declare global {
     none(predicate?: (param: any) => boolean): boolean;
     all(): boolean;
     any(): boolean;
+    intersection (withThese: T[]): T[];
+    except (these: T[]): T[];
   }
 }
 
@@ -47,4 +49,12 @@ Array.prototype.all = function (): boolean {
 
 Array.prototype.any = function (): boolean {
   return this.some((status) => !!status);
+};
+
+Array.prototype.intersection = function <T> (withThese: T[]): T[] {
+  return this.filter(value => withThese.includes(value));
+};
+
+Array.prototype.except = function <T> (these: T[]): T[] {
+  return this.filter(value => !these.includes(value));
 };

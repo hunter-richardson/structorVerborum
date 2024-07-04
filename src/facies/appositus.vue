@@ -159,7 +159,7 @@
         <v-btn key='crustula.separator.inane' text='   '
                @click="resepara('inane');"
                id='crustula.separator.inane' />
-        <v-btn key='crustula.separator.interpunctum' text=' · '
+        <v-btn key='crustula.separator.interpunctum' text=' • '
                @click="resepara('interpunctum');"
                id='crustula.separator.interpunctum' />
         <v-btn key='crustula.separator.nullum' text=' _ '
