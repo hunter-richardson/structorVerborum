@@ -46,6 +46,7 @@
     "codeql-agent": "^0.3.4",
     "comma-separated-values": "^3.6.4",
     "cypress": "^13.7.2",
+    "cypress-map": "^1.38.0",
     "dependabot": "^0.1.1",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.1",

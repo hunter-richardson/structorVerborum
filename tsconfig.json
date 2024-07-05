@@ -40,7 +40,9 @@
     "types": [
       "@nuxt/types",
       "@nuxt/typescript-build",
-      "@types/node"
+      "@types/node",
+      "cypress",
+      "cypress-map"
     ]
   },
   "files": [],

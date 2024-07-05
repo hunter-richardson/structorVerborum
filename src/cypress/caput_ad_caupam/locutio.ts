@@ -83,7 +83,7 @@ export function loquatur (res: Res) {
       cy.get('body').click();
       // cy.wait(1000);
       cy.get('#refer').click();
-      cy.window().then((fenestra) => {
+      cy.window().then(fenestra => {
         fenestra.navigator.clipboard.readText().then((scriptum) => {
           expect(scriptum).to.eq(res.locutio);
         });

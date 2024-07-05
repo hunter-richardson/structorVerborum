@@ -1,25 +1,29 @@
 import 'cypress';
+import 'cypress-map';
 import { mount } from 'cypress/vue';
 import quaerere from '../../facies/quaerere.vue';
 import { inflectenda } from '../../miscella/enumerationes';
 
-function ullum (categoria: string): void {
-  describe('ullum invenire', () => {
+function ullum (res: {
+  categoria: string,
+  accusativa: string;
+}): void {
+  describe(res.accusativa.concat(' invenire'), () => {
     it('inveniret', () => {
       const cy: Cypress.Chainable = mount(quaerere as any);
       // cy.wait(1000);
 
       cy.get('#quaerenda.categoriae')
-        .select(categoria);
+        .select(res.categoria);
       // cy.wait(1000);
       cy.get('#quaerenda.categoriae')
         .find('option:selected')
-        .should('have.text', categoria);
+        .should('have.text', res.categoria.capitalize());
       cy.get('#fortuna')
         .click();
       // cy.wait(1000);
 
-      if (inflectenda(categoria)) {
+      if (inflectenda(res.categoria)) {
         cy.get('#tabula')
           .should('exist');
         cy.get('#fortuna')
@@ -28,45 +32,95 @@ function ullum (categoria: string): void {
       }
 
       cy.get('v-card')
-        .should('have.subtitle', categoria.capitalize())
+        .should('have.subtitle', res.categoria.capitalize())
         .its('title')
         .should('not.be.empty');
-      cy.get(`#doctum.${categoria}`)
+      cy.get(`#doctum.${res.categoria}`)
         .should('exist');
     });
   });
 }
 
 describe('omnia invenire', () => {
-  it('coniunctionem inveniret', () => {
-    ullum('coniunctio');
+  ullum({
+    categoria: 'coniunctio',
+    accusativa: 'coniunctionem'
   });
 
-  it('interiectionem inveniret', () => {
-    ullum('interiectio');
+  ullum({
+    categoria: 'interiectio',
+    accusativa: 'interiectionem'
   });
 
-  it('praepositionem inveniret', () => {
-    ullum('praepositio');
+  ullum({
+    categoria: 'praepositio',
+    accusativa: 'praepositionem'
   });
 
-  it('actum inveniret', () => {
-    ullum('actus');
+  ullum({
+    categoria: 'actus',
+    accusativa: 'actum'
   });
 
-  it('adiectivum inveniret', () => {
-    ullum('adiectivum');
+  ullum({
+    categoria: 'adiectivum',
+    accusativa: 'adiectivum',
   });
 
-  it('adverbium inveniret', () => {
-    ullum('adverbium');
+  ullum({
+    categoria: 'adverbium',
+    accusativa: 'adverbium',
   });
 
-  it('nomen inveniret', () => {
-    ullum('nomen');
+  ullum({
+    categoria: 'nomen',
+    accusativa: 'nomen',
   });
 
-  it('pronomen inveniret', () => {
-    ullum('pronoemen');
+  ullum({
+    categoria: 'pronomen',
+    accusativa: 'pronomen',
+  });
+
+  it('numeramen inveniret', () => {
+    const cy: Cypress.Chainable = mount(quaerere as any);
+    // cy.wait(1000);
+
+    cy.get('#quaerenda.categoriae')
+      .select('numeramen');
+    // cy.wait(1000);
+    cy.get('#quaerenda.categoriae')
+      .find('option:selected')
+      .should('have.text', 'Numeramen');
+    cy.get('#fortuna')
+      .click();
+    // cy.wait(1000);
+
+    let referendum: string = '';
+    cy.get('#tabula').should('exist');
+    cy.get('[id^="colamen_"]')
+      .sample().its('id')
+      .then(id => referendum = id?.replace('^colamen_', '') ?? '');
+    cy.get(`#colamen_${referendum}`).click();
+    // cy.wait(1000);
+    cy.get('[id^="aperi_"]')
+      .first().click();
+    // cy.wait(1000);
+
+    let categoria = referendum;
+    if (referendum !== 'numerus') {
+      cy.get('#tabula').should('exist');
+      cy.get('fortuna').click();
+      // cy.wait(1000);
+    } if (referendum === 'fractionale') {
+      categoria = 'nomen';
+    } else if (/(o|ca)rdinale|(distribu|multiplica)tivum$/.test(referendum)) {
+      categoria = 'adiectivum';
+    }
+
+    cy.get('v-card')
+      .should('have.subtitle', categoria.capitalize())
+      .its('title').should('not.be.empty');
+    cy.get(`[id^="doctum."]`).should('exist');
   });
 });
