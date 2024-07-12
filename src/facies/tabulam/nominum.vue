@@ -10,12 +10,12 @@
   import { NomenActum } from '../../praebeunda/agenda';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Nomen, Actus } from '../../praebeunda/verba';
-  import Cocutor from '../../miscella/cocutor';
+  import Crustula from '../../miscella/crustula';
   import Tabula from '../../tabulae/tabula';
 
   const agendum: Faciendum<Nomen> = defineProps<{ agendum: Faciendum<Nomen>; }>().agendum;
 
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const tabula: Tabula<Nomen> | null = agendum.putetur();
 
   const nomen: Nomen | undefined = defineModel<Nomen>().value;

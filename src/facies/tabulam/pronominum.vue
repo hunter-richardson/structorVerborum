@@ -8,13 +8,13 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { Pronomen } from '../../praebeunda/verba'
   import { Mantela } from '../../anomala/anomala'
-  import Cocutor from '../../miscella/cocutor'
+  import Crustula from '../../miscella/crustula'
   import Tabula from '../../tabulae/tabula'
 
   const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen>; }>().agendum;
   const pronomen: Pronomen | undefined = defineModel<Pronomen>().value;
   const tabula: Tabula<Pronomen> | null = agendum.putetur();
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
   const componenta: ComponentOptionsWithoutProps = {
     'gustulare': gustulare,

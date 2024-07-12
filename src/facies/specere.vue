@@ -12,7 +12,7 @@
   import type { NumeramenAgendum } from '../praebeunda/agenda';
 
   const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
-  const lingua: string | undefined = Crustula.se.ipse().lingua.edatur();
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const locutor: Locutor = Locutor.se.ipse();
 
   const verbum: Verbum | undefined = defineProps({ verbum: Verbum }).verbum;
@@ -38,7 +38,7 @@
   } => {
     return {
       gustulus: new Gustulus({}),
-      anglica: lingua === 'anglica',
+      anglica: anglica,
       enclitica: enclitica,
       propriabile: false,
       multiplex: false,

@@ -8,14 +8,14 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae';
   import { Numeramen } from '../../praebeunda/verba';
   import { NumeramenAgendum } from '../../praebeunda/agenda';
-  import Cocutor from '../../miscella/cocutor';
+  import Crustula from '../../miscella/crustula';
   import Tabula from '../../tabulae/tabula';
   import type { Referendum } from '../../praebeunda/interfecta';
 
   const agendum: NumeramenAgendum = defineProps<{ agendum: NumeramenAgendum; }>().agendum;
   const referendum: Referendum | undefined = defineModel<Referendum>().value;
   const tabula: Tabula<Numeramen> | null = agendum.putetur();
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
   const componenta: ComponentOptionsWithoutProps = {
     'inflectere': inflectere,

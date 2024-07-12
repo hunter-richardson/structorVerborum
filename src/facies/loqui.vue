@@ -3,14 +3,13 @@
   import draggable from 'vuedraggable'
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
   import gustulare from './gustulare.vue';
   import { Verbum } from '../praebeunda/verba'
 
   const locutor: Locutor = Locutor.se.ipse();
-  const cocutor: Cocutor = Cocutor.se.ipse();
 
-  const illustre: boolean = cocutor.edatur('facies') === 'illustre';
+  const illustre: boolean = Crustula.se.ipse().facies.est('illustre') ?? false;
 
   const Please = require('pleasejs');
   const ClassifyX = require('classifyx')

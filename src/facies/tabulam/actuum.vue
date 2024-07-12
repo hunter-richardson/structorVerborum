@@ -9,11 +9,11 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Actus, Nomen } from '../../praebeunda/verba';
-  import Cocutor from '../../miscella/cocutor';
+  import Crustula from '../../miscella/crustula';
   import Tabula from '../../tabulae/tabula';
 
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const tabula: Tabula<Actus> | null = agendum.putetur();
 
   const lectum: boolean = agendum instanceof ActusAgendus;

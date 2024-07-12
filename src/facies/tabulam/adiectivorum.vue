@@ -11,7 +11,7 @@
   import { genera, gradua, anglicum } from '../../miscella/enumerationes';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Adiectivum } from '../../praebeunda/verba';
-  import Cocutor from '../../miscella/cocutor';
+  import Crustula from '../../miscella/crustula';
   import Tabula from '../../tabulae/tabula';
 
   type Par = {
@@ -26,7 +26,7 @@
 
   const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum>; }>().agendum;
 
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const tabula: Tabula<Adiectivum> | null = agendum.putetur();
 
   const adiectivum: Adiectivum | undefined = defineModel<Adiectivum>().value;

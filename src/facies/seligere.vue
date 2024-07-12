@@ -1,7 +1,7 @@
 <script lang='ts'>
   import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps } from 'vue';
   import { Multiplex } from '../praebeunda/verba';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
 
   const multiplicia: Multiplex[] = defineProps<{ multiplicia: Multiplex[]; }>().multiplicia;
 
@@ -11,7 +11,7 @@
   ];
 
   const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value;
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
   const compnenta: ComponentOptionsWithoutProps = {
     'horizontal-scroll': HorizontalScroll

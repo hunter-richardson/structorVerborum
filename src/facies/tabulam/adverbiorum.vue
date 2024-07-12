@@ -8,13 +8,13 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { AdverbiumAgendum } from '../../praebeunda/agenda'
   import { Adverbium } from '../../praebeunda/verba'
-  import Cocutor from '../../miscella/cocutor'
+  import Crustula from '../../miscella/crustula'
   import Tabula from '../../tabulae/tabula'
 
   const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum; }>().agendum;
   const adverbium: Adverbium | undefined = defineModel<Adverbium>().value;
   const tabula: Tabula<Adverbium> | null = agendum.putetur();
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
   const componenta: ComponentOptionsWithoutProps = {
     'gustulare': gustulare,

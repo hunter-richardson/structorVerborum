@@ -1,13 +1,13 @@
 <script lang='ts'>
   import { defineComponent, defineProps } from 'vue';
   import { anglicum } from '../miscella/enumerationes';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
 
   const { onerans, pittacium } = defineProps<{
     onerans: boolean, pittacium: string;
   }>();
 
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const scriptum: string = anglica ? `Loading ${anglicum(pittacium).toUpperCase()}...` : `${pittacium.toUpperCase()} onerantur...`;
 
   const data = (): {

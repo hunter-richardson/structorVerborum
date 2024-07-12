@@ -8,7 +8,7 @@
   import Gustulus from '../scriptura/gustulus';
   import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
   import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
   import type { Verbum } from '../praebeunda/verba';
 
   type Columnae = {
@@ -20,7 +20,7 @@
   const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
   const verbum: Verbum | undefined = defineModel<Verbum>('verbum').value;
 
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
 
   const lemmae: Lemma[] = [];

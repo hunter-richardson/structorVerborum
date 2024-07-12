@@ -3,7 +3,7 @@
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import specere from './specere.vue';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
   import type { ModelRef } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
@@ -23,7 +23,7 @@
     denominator: 12
   };
 
-  const anglica: boolean = Cocutor.se.ipse().edatur('lingua') === 'anglica';
+  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string => {

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { defineComponent } from 'vue';
-  import Cocutor from '../miscella/cocutor';
+  import Crustula from '../miscella/crustula';
   import Nuntius from '../miscella/nuntius';
 
   const data = (): {
     anglica: boolean;
   } => {
     return {
-      anglica: Cocutor.se.ipse().edatur('lingua') === 'anglica'
+      anglica: Crustula.se.ipse().lingua.est('anglica') ?? false
     }
   };
 

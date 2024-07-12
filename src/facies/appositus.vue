@@ -45,8 +45,8 @@
       referret: referretne(),
       crustula: crustula,
       trahens: false,
-      annuli: [],
-      annulus: ''
+      annulus: '',
+      annuli: []
     };
   };
 
