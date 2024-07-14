@@ -1,6 +1,6 @@
 <script lang='ts'>
+  import { defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import { useTheme } from 'vuetify';
-  import { defineComponent, type ComponentOptionsWithoutProps } from 'vue';
   import draggable from 'vuedraggable';
   import { transducatur, transduceretne } from '../scriptura/transducere';
   import { referretne, referatur } from '../scriptura/referre';
@@ -21,32 +21,28 @@
   const crustula: Crustula = Crustula.se.ipse();
 
   const componenta: ComponentOptionsWithoutProps = {
-    'draggable': draggable,
-    'gustulare': gustulare,
-    'calculare': calculare,
-    'quaerere': quaerere,
-    'numerare': numerare
+    draggable, gustulare, calculare, quaerere, numerare
   };
 
   const data = (): {
+    gustulus: Ref<Gustulus | undefined>,
     transduceret: boolean,
+    trahens: Ref<boolean>,
+    annulus: Ref<string>,
     locutionis: boolean,
-    referret: boolean,
-    gustulus: Gustulus,
     crustula: Crustula,
-    trahens: boolean,
-    annulus: string,
-    annuli: Annuli;
+    referret: boolean,
+    annuli: Annuli
   } => {
     return {
       transduceret: transduceretne(),
       locutionis: locutor.locutust(),
-      gustulus: new Gustulus({}),
       referret: referretne(),
-      crustula: crustula,
-      trahens: false,
-      annulus: '',
-      annuli: []
+      trahens: ref(false),
+      annulus: ref(''),
+      gustulus: ref(),
+      annuli: [],
+      crustula
     };
   };
 
@@ -133,7 +129,7 @@
 </script>
 
 <template lang='vue'>
-	<gustulare :gustulus='gustulus' />
+  <gustulare :gustulus='gustulus' />
   <template v-if="crustula.assensus === 'assensit'">
     <draggable @start='trahens = true' @end='trahens = false'>
       <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
@@ -202,13 +198,13 @@
         </div>
       </template>
     </v-app-bar>
-    <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
+    <v-tabs v-model='annulus.value' align-tabs='center' density='compact' grow hide-slider mandatory>
       <template v-for='annulus in annuli'>
         <v-tab :v-bind:key='annulus' :value='annulus' selected-class='text-primary'
                :id="`annulus_${annulus}`" density='compact' :text='annulus.titula' tile />
       </template>
     </v-tabs>
-    <v-tabs-window v-model='annulus'>
+    <v-tabs-window v-model='annulus.value'>
       <v-tabs-window-item value='quaerere'>
         <quaerere />
       </v-tabs-window-item>

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import { Multiplex } from '../praebeunda/verba';
   import Crustula from '../miscella/crustula';
 
@@ -19,24 +19,28 @@
 
   const data = (): {
     seligenda: string[],
-    selecta: string[],
     anglica: boolean;
   } => {
     return {
-      seligenda: seligenda,
-      selecta: [],
-      anglica: anglica
+      seligenda,
+      anglica
     };
   };
 
   export default defineComponent({
     components: compnenta, data: data,
-    methods: {
-      async selige (): Promise<void> {
+    setup () {
+      const selecta: Ref<string[]> = ref([]);
+
+      async function selige (): Promise<void> {
         if (selectum) {
-          await selectum(this.selecta);
+          await selectum(selecta.value);
         }
       }
+
+      return {
+        selecta, selige
+      };
     }
   });
 </script>
@@ -46,8 +50,8 @@
 		<div id='colamina'>
 			<horizontal-scroll>
 				<v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
-					<v-chip v-for='seligendum in seligenda' :key='seligendum' @change='cole' :id=`colamen_${seligendum}`
-						:text='anglica ? anglicum(seligendum) : seligendum' />
+					<v-chip v-for='seligendum in seligenda' :key='seligendum' @change='selige()'
+						:id="`colamen_${seligendum}`" :text='anglica ? anglicum(seligendum) : seligendum' />
 				</v-chip-group>
 			</horizontal-scroll>
 		</div>

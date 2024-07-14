@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import inflectere from './inflectere.vue';
   import specere from './specere.vue';
   import loqui from './loqui.vue';
@@ -17,17 +17,8 @@
     filter: ((verbum: Verbum, quaerendum: any) => boolean);
   }[];
 
-  const eventus: Eventus | undefined = defineModel<Eventus>('eventus').value;
-  const verbum: Verbum | undefined = defineModel<Verbum>('verbum').value;
-
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const dictionarium: Dictionarium = Dictionarium.se.ipse();
-
-  const lemmae: Lemma[] = [];
-  const quaerenda: Quaerenda = {
-    categoriae: [],
-    pars: ''
-  };
 
   const Categoriae: {
     title: string,
@@ -72,89 +63,94 @@
   ];
 
   const componenta: ComponentOptionsWithoutProps = {
-    'inflectere': inflectere,
-    'gustulare': gustulare,
-    'onerare': onerare,
-    'specere': specere,
-    'loqui': loqui
+    inflectere, gustulare, onerare, specere, loqui
   };
 
   const data = (): {
     validator: ((pars: string) => boolean | string)[],
-    eventus: Eventus | undefined,
-    verbum: Verbum | undefined,
-    quaerenda: Quaerenda,
-    gustulus: Gustulus,
+    gustulus: Ref<Gustulus | undefined>,
     columnae: Columnae,
-    onerans: boolean,
     anglica: boolean,
-    lemmae: Lemma[],
-    error: boolean,
     categoriae: {
       title: string,
       value: string;
     }[];
   } => {
     return {
-      gustulus: new Gustulus({}),
-      anglica: anglica,
-      lemmae: lemmae,
-      onerans: true,
-      error: false,
-      verbum: verbum,
-      eventus: eventus,
-      quaerenda: quaerenda,
       categoriae: Categoriae,
-      columnae: columnae,
-      validator: validator
+      gustulus: ref(),
+      validator,
+      columnae,
+      anglica
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async oneratust(): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async sarci (): Promise<void> {
-        this.onerans = true;
-        this.lemmae = await dictionarium.quaeratur(this.quaerenda);
-        return this.oneratust();
-      }, async forsSeligat(): Promise<void> {
-        this.onerans = true;
-        const eventus: Eventus = await dictionarium.forsReferatur(this.quaerenda);
-        if (inflectenda(eventus.categoria)) {
-          this.eventus = eventus;
+    setup () {
+      const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'));
+      const verbum: Ref<Verbum | undefined> = ref(defineModel<Verbum>('verbum'));
+      const onerans: Ref<boolean> = ref(true);
+      const error: Ref<boolean> = ref(false);
+      const lemmae: Ref<Lemma[]> = ref([]);
+      const quaerenda: Ref<Quaerenda> = ref({
+        categoriae: [],
+        pars: ''
+      });
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
+      }
+
+      async function sarci (): Promise<void> {
+        onerans.value = true;
+        lemmae.value = await dictionarium.quaeratur(quaerenda.value);
+        return oneratust();
+      }
+
+      async function forsSeligat (): Promise<void> {
+        onerans.value = true;
+        const res: Eventus = await dictionarium.forsReferatur(quaerenda.value);
+        if (inflectenda(res.categoria)) {
+          eventus.value = res;
         } else {
-          this.verbum = eventus.referendum as Verbum ?? undefined;
+          verbum.value = res.referendum as Verbum ?? undefined;
         }
 
-        return this.oneratust();
-      }, async omnes (): Promise<void> {
-        this.onerans = true;
-        this.quaerenda.categoriae = [];
-        this.quaerenda.pars = '';
+        return oneratust();
+      }
 
-        this.sarci();
-      }, removeApices (): void {
-        if (this.validator[ 0 ](this.quaerenda.pars) === true) {
-          this.quaerenda.pars = this.quaerenda.pars.toLowerCase().removeMacra();
-          this.error = false;
-        } else {
-          this.error = true;
-        }
-      }, async aperi (lemma: Lemma): Promise<void> {
-        const eventus: Eventus | null = await dictionarium.referatur(lemma);
-        if (eventus) {
-          if ([
-            'actus', 'adiectiva', 'adverbia',
-            'nomen', 'numeramen', 'pronomen'
-          ].includes(eventus.categoria)) {
-            this.eventus = eventus;
+      async function omnia (): Promise<void> {
+        onerans.value = true;
+        quaerenda.value.categoriae = [];
+        quaerenda.value.pars = '';
+
+        sarci();
+      }
+
+      async function aperi (lemma: Lemma) {
+        const res: Eventus | null = await dictionarium.referatur(lemma);
+        if (res) {
+          if (inflectenda(res.categoria)) {
+            eventus.value = res;
           } else {
-            this.verbum = eventus.referendum as Verbum;
+            verbum.value = res.referendum as Verbum;
           }
         }
       }
+
+      function removeApices (): void {
+        if (validator[ 0 ](quaerenda.value.pars) === true) {
+          quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra();
+          error.value = false;
+        } else {
+          error.value = true;
+        }
+      }
+
+      return {
+        eventus, verbum, lemmae, onerans, quaerenda, sarci, forsSeligat, omnia, aperi, removeApices
+      };
     }
   });
 </script>
@@ -174,7 +170,8 @@
     <v-btn append-icon='casino' @click='forsSeligat();' :disabled='onerans'
            id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
   </div>
-  <v-data-table :items-per-page='10' :loading='onerans' density='compact' id='tabula' :headers='columnae'>
+  <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans'
+                density='compact' id='tabula' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <template v-for='columna in headers.flat()' :key='columna.key'>
@@ -198,7 +195,7 @@
         </template>
       </tr>
     </template>
-    <onerare :onerans='onerare' pittacium='lemmae' />
+    <onerare :onerans='onerans' pittacium='lemmae' />
     <template v-if='~!onerare' v-for='lemma in lemmae' :key='lemma'>
       <tr>
         <td>{{ lemma.categoria }}</td>

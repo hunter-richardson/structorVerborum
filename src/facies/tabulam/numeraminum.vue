@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import specere from '../specere.vue';
   import inflectere from '../inflectere.vue';
   import onerare from '../onerare.vue';
@@ -13,66 +13,73 @@
   import type { Referendum } from '../../praebeunda/interfecta';
 
   const agendum: NumeramenAgendum = defineProps<{ agendum: NumeramenAgendum; }>().agendum;
-  const referendum: Referendum | undefined = defineModel<Referendum>().value;
   const tabula: Tabula<Numeramen> | null = agendum.putetur();
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
+  async function omnia (): Promise<Numeramen[]> {
+    return await tabula?.tabulentur() ?? [];
+  }
+
   const componenta: ComponentOptionsWithoutProps = {
-    'inflectere': inflectere,
-    'gustulare': gustulare,
-    'onerare': onerare,
-    'specere': specere
+    inflectere, gustulare, onerare, specere
   };
 
   const data = (): {
-    referendum: Referendum | undefined,
-    numeramina: Numeramen[],
+    gustulus: Ref<Gustulus | undefined>,
     columnae: Columnae,
-    gustulus: Gustulus,
-    onerans: boolean,
     anglica: boolean;
   } => {
     return {
-      gustulus: new Gustulus({}),
-      referendum: referendum,
-      anglica: anglica,
-      onerans: true,
-      numeramina: [],
-      columnae: []
+      gustulus: ref(),
+      columnae: [],
+      anglica,
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async omnia (): Promise<Numeramen[]> {
-        return await tabula?.tabulentur() ?? [];
-      }, async oneratust (): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async forsInflectat(): Promise<void> {
-        this.onerans = true;
-        this.referendum = await agendum.referatur(
-          this.numeramina.map(numeramen => numeramen.referendum).random()) ?? undefined;
-        return this.oneratust();
-      }, async cole (selecta: string[]): Promise<void> {
-        this.onerans = true;
-        const omnia: Numeramen[] = await this.omnia();
-        if (omnia) {
-          this.numeramina = omnia.filter(numeramen => selecta.every(selectum =>
+    setup () {
+      const referendum: Ref<Referendum | undefined> = ref(defineModel<Referendum>());
+      const onerans: Ref<boolean> = ref(true);
+      const numeramina: Ref<Numeramen[]> = ref([]);
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
+      }
+
+      async function forsInflectat (): Promise<void> {
+        onerans.value = true;
+        referendum.value = await agendum.referatur(
+          numeramina.value.map(numeramen => numeramen.referendum).random()
+        ) ?? undefined;
+        return oneratust();
+      }
+
+      async function cole (selecta: string[]): Promise<void> {
+        onerans.value = true;
+        const omnes: Numeramen[] = await omnia();
+        if (omnes) {
+          numeramina.value = omnes.filter(numeramen => selecta.every(selectum =>
             numeramen.valores().includes(selectum)));
         }
-        return this.oneratust();
-      }, async refer (referendum: string): Promise<void> {
-        this.referendum = await agendum.referatur(referendum) ?? undefined;
+        return oneratust();
       }
+
+      async function refer (res: string): Promise<void> {
+        referendum.value = await agendum.referatur(res) ?? undefined;
+      }
+
+      return {
+        referendum, numeramina, onerans, forsInflectat, cole, refer
+      };
     }, async mounted (): Promise<void> {
-      this.numeramina = await this.omnia();
+      this.numeramina = await omnia();
       this.columnae = categoricum<Numeramen>({
         categoria: 'numeramen',
         haec: this.numeramina as Numeramen[]
       });
 
-      return this.oneratust();
+      this.onerans = false;
     }
   });
 </script>
@@ -85,7 +92,7 @@
   <template v-else>
     <seligere :multiplicia='numeramina' :selectum='cole' />
     <template v-if='numeramina.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+      <v-btn append-icon='casino' @click='forsInflectat();' :loading='onerans' :disabled='onerans'
              id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
     <v-data-table :items='numeramina' :headers='columnae' density='compact' :loading='onerans'

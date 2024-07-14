@@ -1,13 +1,10 @@
 <script lang='ts'>
-  import { defineComponent, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import draggable from 'vuedraggable'
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
   import Crustula from '../miscella/crustula';
   import gustulare from './gustulare.vue';
-  import { Verbum } from '../praebeunda/verba'
-
-  const locutor: Locutor = Locutor.se.ipse();
 
   const illustre: boolean = Crustula.se.ipse().facies.est('illustre') ?? false;
 
@@ -22,31 +19,25 @@
   });
 
   const componenta: ComponentOptionsWithoutProps = {
-    'draggable': draggable,
-    'gustulare': gustulare
+    draggable, gustulare
   };
 
   const data = (): {
-    trahens: boolean,
-    gustulus: Gustulus,
-    verba: Verbum[],
-    pellucidum: string[]
+    gustulus: Ref<Gustulus | undefined>,
+    trahens: Ref<boolean>,
+    pellucidum: string[],
+    locutor: Locutor
   } => {
     return {
-      trahens: false,
-      gustulus: new Gustulus({}),
-      verba: locutor.verba,
-      pellucidum: pellucidum
+      locutor: Locutor.se.ipse(),
+      trahens: ref(false),
+      gustulus: ref(),
+      pellucidum
     };
   };
 
   export default defineComponent({
-    component: componenta, data: data,
-    methods: {
-      remove (unicum: symbol): void {
-        locutor.removeatur(unicum);
-      }
-    }
+    component: componenta, data: data
   });
 </script>
 
@@ -55,8 +46,8 @@
 	<v-chip-group id='locutio'>
 		<draggable v-model='verba' :ghost-class='pellucidum' @start='trahens = true' @end='trahens = false'>
 			<span :class="'mr-2'.concat(trahens ? 'cursor-grab' : 'cursor-grabbing')">
-				<template v-for='verbum in verba'>
-					<v-chip :v-bind:key='verbum' @click:close='remove(verbum.unicum);' close-icon='remove'
+				<template v-for='verbum in locutor.verba'>
+					<v-chip :v-bind:key='verbum' @click:close='locutor.removeatur(verbum.unicum);' close-icon='remove'
 						:text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
 				</template>
       </span>

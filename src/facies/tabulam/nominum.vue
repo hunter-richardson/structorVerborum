@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import specere from '../specere.vue';
   import onerare from '../onerare.vue';
   import seligere from '../seligere.vue';
@@ -14,77 +14,73 @@
   import Tabula from '../../tabulae/tabula';
 
   const agendum: Faciendum<Nomen> = defineProps<{ agendum: Faciendum<Nomen>; }>().agendum;
-
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const tabula: Tabula<Nomen> | null = agendum.putetur();
-
-  const nomen: Nomen | undefined = defineModel<Nomen>().value;
-  const actus: Faciendum<Actus> | undefined = defineModel<Faciendum<Actus>>().value;
   const actum: boolean = agendum instanceof NomenActum;
 
+  async function omnia (): Promise<Nomen[]> {
+    return await tabula?.tabulentur() ?? [];
+  }
+
   const componenta: ComponentOptionsWithoutProps = {
-    'inflectere': inflectere,
-    'gustulare': gustulare,
-    'seligere': seligere,
-    'specere': specere,
-    'onerare': onerare
+    inflectere, gustulare, seligere, specere, onerare
   };
 
   const data = (): {
-    actus: Faciendum<Actus> | undefined,
+    gustulus: Ref<Gustulus | undefined>,
     agendum: Faciendum<Nomen>,
-    nomen: Nomen | undefined,
     columnae: Columnae,
-    gustulus: Gustulus,
-    onerans: boolean,
     anglica: boolean,
-    nomina: Nomen[],
-    actum: boolean
+    actum: boolean;
   } => {
     return {
-      gustulus: new Gustulus({}),
-      agendum: agendum,
-      anglica: anglica,
-      onerans: true,
-      nomen: nomen,
-      actus: actus,
-      actum: actum,
+      gustulus: ref(),
       columnae: [],
-      nomina: [],
+      agendum,
+      anglica,
+      actum
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async omnia (): Promise<Nomen[]> {
-        return await tabula?.tabulentur() ?? [];
-      }, async oneratust (): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async forsInflectat(): Promise<void> {
-        this.onerans = true;
-        this.nomen = this.nomina.random()
-        return this.oneratust();
-      }, async cole (selecta: string[]): Promise<void> {
-        this.onerans = true;
-        const omnia: Nomen[] = await this.omnia();
-        if (omnia) {
-          this.nomina = omnia.filter(nomen => selecta.every(selectum =>
-            nomen.valores().includes(selectum)));
+    setup () {
+      const actus: Ref<Faciendum<Actus> | undefined> = ref(defineModel<Faciendum<Actus>>());
+      const nomen: Ref<Nomen | undefined> = ref(defineModel<Nomen>());
+      const onerans: Ref<boolean> = ref(true);
+      const nomina: Ref<Nomen[]> = ref([]);
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
+      }
+
+      async function forsInflectat (): Promise<void> {
+        onerans.value = true;
+        nomen.value = nomina.value.random();
+        return oneratust();
+      }
+
+      async function cole (selecta: string[]): Promise<void> {
+        const omnes: Nomen[] = await omnia();
+        if (omnes) {
+          nomina.value = omnes.filter(nomen => selecta.every(selectum =>
+            nomen.valores().includes(selectum)))
         }
 
-        return this.oneratust();
-      }, async refer(): Promise<void> {
-        this.actus = await (agendum as NomenActum).actus() ?? undefined;
+        return oneratust();
       }
+
+      return {
+        nomen, nomina, actus, onerans, forsInflectat, cole
+      };
     }, async mounted (): Promise<void> {
-      this.nomina = await this.omnia();
+      this.nomina = await omnia();
       this.columnae = categoricum<Nomen>({
         categoria: 'nomen',
         haec: this.nomina as Nomen[]
       });
 
-      return this.oneratust();
+      this.onerans = false;
     }
   });
 </script>
@@ -92,18 +88,19 @@
 <template lang='vue'>
 	<gustulare :gustulus='gustulus' />
 	<specere v-if='nomen' :verbum='nomen' @blur='nomen = undefined;' />
-  <inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined;' />
+	<inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined;' />
 	<template v-else>
 		<seligere :multiplicia='nomina' :selectum='cole' />
-    <template v-if='nomina.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
-             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
-    </template>
-		<v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans' :disabled='onerans'
-			id='tabula' items-per-page='10' item-selectable=false>
+		<template v-if='nomina.length > 1'>
+			<v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+				:text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+		</template>
+    <v-data-table :items='adiectiva' :headers='columnae' density='compact'
+                  :loading='onerans' :disabled='onerans'
+                  id='tabula' items-per-page='10' item-selectable=false>
 			<onerare :onerans='onerans' pittacium='nomina' />
 			<template v-if='!onerans'>
-				<v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+				<v-btn v-for='hoc in nomina.valeu' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
 					append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`' @click='nomen = hoc;' />
 			</template>
     </v-data-table>

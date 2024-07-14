@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
@@ -10,10 +10,6 @@
     arabicus: number,
     romanus: string;
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const numerus: Numerus | undefined = defineModel<Numerus>().value;
-  const operator: string = '';
 
   const nihil: numeri = {
     arabicus: 0,
@@ -29,97 +25,103 @@
   ];
 
   const componenta: ComponentOptionsWithoutProps = {
-    'gustulare': gustulare,
-    'specere': specere
+    gustulare, specere
   };
 
   const data = (): {
-    numerus: Numerus | undefined,
-    gustulus: Gustulus,
-    operator: string,
+    gustulus: Ref<Gustulus | undefined>,
     actus: string[][],
-    praevii: numeri,
-    praesentes: numeri,
     nihil: numeri;
   } => {
     return {
-      gustulus: new Gustulus({}),
-      operator: operator,
-      numerus: numerus,
-      praevii: nihil,
-      praesentes: nihil,
+      gustulus: ref(),
       nihil: nihil,
-      actus: actus
+      actus
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      operat (actus: string): boolean {
+    setup () {
+      const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());
+      const operator: Ref<string> = ref('');
+      const praesentes: Ref<numeri> = ref(nihil);
+      const praevii: Ref<numeri> = ref(nihil);
+
+      function operat (actus: string): boolean {
         return /^\+-•÷%=$/.test(actus);
-      }, licta (actus: string): boolean {
-        return this.operat(actus) ||
-          !!this.praesentes.arabicus;
-      }, ponatur (actus: string): void {
+      }
+
+      function licta (actus: string): boolean {
+        return operat(actus) ||
+          !!praesentes.value.arabicus;
+      }
+
+      function ponatur (actus: string): void {
         if (actus === 'N') {
-          this.praevii = nihil;
-          this.praesentes = nihil;
+          praevii.value = nihil;
+          praesentes.value = nihil;
         } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
-          if (this.praesentes.arabicus) {
-            this.praesentes.romanus += actus;
+          if (praesentes.value.arabicus) {
+            praesentes.value.romanus += actus;
           } else {
-            this.praesentes.romanus = actus;
+            praesentes.value.romanus = actus;
           }
 
           try {
-            this.praesentes.arabicus = Numerator.arabicus(this.praesentes.romanus);
+            praesentes.value.arabicus = Numerator.arabicus(praesentes.value.romanus);
           } catch {
-            this.praesentes = nihil;
+            praesentes.value = nihil;
           }
-        } else if (this.operat(actus)) {
-          if (this.praevii.arabicus === 0) {
-            this.praevii = this.praesentes;
+        } else if (operat(actus)) {
+          if (praevii.value.arabicus === 0) {
+            praevii.value = praesentes.value;
           } else {
-            switch ((this.operator ?? '').trim()) {
+            switch ((operator.value ?? '').trim()) {
               case '+':
-                this.praevii.arabicus += this.praesentes.arabicus;
+                praevii.value.arabicus += praesentes.value.arabicus;
                 break;
               case '-':
-                this.praevii.arabicus -= this.praesentes.arabicus;
+                praevii.value.arabicus -= praesentes.value.arabicus;
                 break;
               case '•':
-                this.praevii.arabicus *= this.praesentes.arabicus;
+                praevii.value.arabicus *= praesentes.value.arabicus;
                 break;
               case '÷':
-                this.praevii.arabicus /= this.praesentes.arabicus;
+                praevii.value.arabicus /= praesentes.value.arabicus;
                 break;
               case '%':
-                this.praevii.arabicus %= this.praesentes.arabicus;
+                praevii.value.arabicus %= praesentes.value.arabicus;
                 break;
               default:
-                this.praevii.arabicus = this.praesentes.arabicus;
+                praevii.value.arabicus = praesentes.value.arabicus;
                 break;
             }
 
-            this.praevii.romanus = Numerator.romanus(this.praevii.arabicus);
+            praevii.value.romanus = Numerator.romanus(praevii.value.arabicus);
           }
 
-          this.operator = actus === '=' ? '' : ` ${actus} `;
-          this.praesentes = nihil;
+          operator.value = actus === '=' ? '' : ` ${actus} `;
+          praesentes.value = nihil;
         }
-      }, aequa (): void {
-        this.numerus = Numerus.numerator(this.praevii.arabicus);
       }
+
+      function aequa (): void {
+        numerus.value = Numerus.numerator(praevii.value.arabicus);
+      }
+
+      return {
+        numerus, operator, praesentes, praevii, licta, aequa, ponatur
+      };
     }
   });
 </script>
 
 <template lang='vue'>
-	<gustulare :gustulus='gustulus' />
+  <gustulare :gustulus='gustulus' />
   <template v-if='numerus'>
-    <specere :verbum='numerus'
-             @blur='numerus = null;' />
+      <specere :verbum='numerus'
+               @blur='numerus = null;' />
   </template>
   <template v-if='praevii.anglicus'>
     <div class='text-center'>
@@ -128,7 +130,7 @@
       </template>
       <v-card :text='praevii.romanus' />
       <template v-if='operator'>
-        <v-card id='operator' :text='operator' />
+        <v-card id='operator.value' :text='operator' />
       </template>
     </div>
   </template>

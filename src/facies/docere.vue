@@ -10,10 +10,7 @@
     docendum: string,
     doctum: string;
   } => {
-    return {
-      docendum: docendum,
-      doctum: doctum
-    };
+    return { docendum, doctum };
   };
 
   export default defineComponent({ data: data });

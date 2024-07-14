@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue'
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue'
   import specere from '../specere.vue'
   import seligere from '../seligere.vue'
   import onerare from '../onerare.vue'
@@ -12,64 +12,68 @@
   import Tabula from '../../tabulae/tabula'
 
   const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum; }>().agendum;
-  const adverbium: Adverbium | undefined = defineModel<Adverbium>().value;
   const tabula: Tabula<Adverbium> | null = agendum.putetur();
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
+  async function omnia (): Promise<Adverbium[]> {
+    return await tabula?.tabulentur() ?? [];
+  }
+
   const componenta: ComponentOptionsWithoutProps = {
-    'gustulare': gustulare,
-    'seligere': seligere,
-    'specere': specere,
-    'onerare': onerare
+    gustulare, seligere, specere, onerare
   };
 
   const data: () => {
-    adverbium: Adverbium | undefined,
-    adverbia: Adverbium[],
+    gustulus: Ref<Gustulus | undefined>,
     columnae: Columnae,
-    gustulus: Gustulus,
-    anglica: boolean,
-    onerans: boolean
+    anglica: boolean;
   } = () => {
     return {
-      gustulus: new Gustulus({}),
-      adverbium: adverbium,
-      anglica: anglica,
-      onerans: true,
-      adverbia: [],
-      columnae: []
+      gustulus: ref(),
+      columnae: [],
+      anglica
     };
     };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async omnia (): Promise<Adverbium[]> {
-        return await tabula?.tabulentur() ?? [];
-      }, async oneratust (): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async forsInflectat(): Promise<void> {
-        this.onerans = true;
-        this.adverbium = this.adverbia.random()
-        return this.oneratust();
-      }, async cole (selecta: string[]): Promise<void> {
-        this.onerans = true;
-        const omnia: Adverbium[] = await this.omnia();
-        if (omnia) {
-          this.adverbia = omnia.filter(adverbium => selecta.every(selectum =>
+    setup () {
+      const adverbium: Ref<Adverbium | undefined> = ref(defineModel<Adverbium>());
+      const onerans: Ref<boolean> = ref(true);
+      const adverbia: Ref<Adverbium[]> = ref([]);
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
+      }
+
+      async function forsInflectat (): Promise<void> {
+        onerans.value = true;
+        adverbium.value = adverbia.value.random();
+        return oneratust();
+      }
+
+      async function cole (selecta: string[]): Promise<void> {
+        onerans.value = true;
+        const omnes: Adverbium[] = await omnia();
+        if (omnes) {
+          adverbia.value = omnes.filter(adverbium => selecta.every(selectum =>
             adverbium.valores().includes(selectum)));
         }
 
-        return this.oneratust();
+        return oneratust();
       }
+
+      return {
+        adverbium, adverbia, onerans, forsInflectat, cole
+      };
     }, async mounted (): Promise<void> {
-      this.adverbia = await this.omnia();
+      this.adverbia = await omnia();
       this.columnae = categoricum<Adverbium>({
         categoria: 'adverbium',
         haec: this.adverbia as Adverbium[]
       });
 
-      return this.oneratust();
+      this.onerans = false;
     }
   });
 </script>

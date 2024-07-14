@@ -12,12 +12,7 @@
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
   const componenta: ComponentOptionsWithoutProps = {
-    'tabulaAdiectivorum': tabulaAdiectivorum,
-    'tabulaAdverbiorum': tabulaAdverbiorum,
-    'tabulaNumeraminum': tabulaNumeraminum,
-    'tabulaNominum': tabulaNominum,
-    'tabulaPronominum': tabulaPronominum,
-    'tabulaActuum': tabulaActuum,
+    tabulaAdiectivorum, tabulaAdverbiorum, tabulaNumeraminum, tabulaNominum, tabulaPronominum, tabulaActuum,
   };
 
   const data = (): {

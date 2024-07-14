@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import specere from '../specere.vue';
   import inflectere from '../inflectere.vue';
   import seligere from '../seligere.vue';
@@ -15,73 +15,76 @@
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
   const tabula: Tabula<Actus> | null = agendum.putetur();
-
   const lectum: boolean = agendum instanceof ActusAgendus;
-  const actus: Actus | undefined = defineModel<Actus>().value;
-  const referendum: Faciendum<Nomen> | undefined = defineModel<Faciendum<Nomen>>().value;
+
+  async function omnia (): Promise<Actus[]> {
+    return await tabula?.tabulentur() ?? [];
+  }
 
   const componenta: ComponentOptionsWithoutProps = {
-    'inflectere': inflectere,
-    'gustulare': gustulare,
-    'seligere': seligere,
-    'specere': specere
+    inflectere, gustulare, seligere, specere
   };
 
   const data = (): {
-    referendum: Faciendum<Nomen> | undefined,
+    gustulus: Ref<Gustulus | undefined>,
     agendum: Faciendum<Actus>,
-    actus: Actus | undefined,
     columnae: Columnae,
-    gustulus: Gustulus,
-    onerans: boolean,
     anglica: boolean,
-    lectum: boolean,
-    actua: Actus[]
+    lectum: boolean;
   } => {
     return {
-      gustulus: new Gustulus({}),
-      referendum: referendum,
-      anglica: anglica,
-      agendum: agendum,
-      lectum: lectum,
-      onerans: true,
+      gustulus: ref(),
       columnae: [],
-      actus: actus,
-      actua: []
+      anglica,
+      agendum,
+      lectum
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async omnia (): Promise<Actus[]> {
-        return await tabula?.tabulentur() ?? [];
-      }, async oneratust (): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async forsInflectat(): Promise<void> {
-        this.onerans = true;
-        this.actus = this.actua.random()
-        return this.oneratust();
-      }, async cole (selecta: string[]): Promise<void> {
-        this.onerans = true;
-        const omnia: Actus[] = await this.omnia();
-        if (omnia) {
-          this.actua = omnia.filter(actus => selecta.every(selectum =>
-            actus.valores().includes(selectum)));
-        }
-
-        return this.oneratust();
-      }, async refer(referendum: Promise<Faciendum<Nomen> | null>): Promise<void> {
-        this.referendum = await referendum ?? undefined;
-      }
-    }, async mounted (): Promise<void> {
-      this.actua = await this.omnia();
+    async mounted (): Promise<void> {
+      this.actua = await omnia();
       this.columnae = categoricum<Actus>({
         categoria: 'actus',
         haec: this.actua as Actus[]
       });
 
-      return this.oneratust();
+      this.onerans = false;
+    }, setup () {
+      const referendum: Ref<Faciendum<Nomen> | undefined> = ref(defineModel<Faciendum<Nomen>>());
+      const actus: Ref<Actus | undefined> = ref(defineModel<Actus>());
+      const onerans: Ref<boolean> = ref(false);
+      const actua: Ref<Actus[]> = ref([]);
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
+      }
+
+      async function forsInflectat (): Promise<void> {
+        onerans.value = true;
+        actus.value = actua.value.random();
+        return oneratust();
+      }
+
+      async function cole (selecta: string[]): Promise<void> {
+        onerans.value = true;
+        const omnes: Actus[] = await omnia();
+        if (omnes) {
+          actua.value = omnes.filter(actus => selecta.every(selectum =>
+            actus.valores().includes(selectum)));
+        }
+
+        return oneratust();
+      }
+
+      async function refer (res: Promise<Faciendum<Nomen> | null>): Promise<void> {
+        referendum.value = await res ?? undefined;
+      }
+
+      return {
+        onerans, actus, actua, forsInflectat, cole, refer
+      }
     }
   });
 </script>

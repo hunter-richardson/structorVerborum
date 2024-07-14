@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps } from 'vue'
+  import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue'
   import specere from '../specere.vue'
   import seligere from '../seligere.vue'
   import onerare from '../onerare.vue'
@@ -12,63 +12,68 @@
   import Tabula from '../../tabulae/tabula'
 
   const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen>; }>().agendum;
-  const pronomen: Pronomen | undefined = defineModel<Pronomen>().value;
   const tabula: Tabula<Pronomen> | null = agendum.putetur();
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
+  async function omnia (): Promise<Pronomen[]> {
+    return await tabula?.tabulentur() ?? [];
+  }
+
   const componenta: ComponentOptionsWithoutProps = {
-    'gustulare': gustulare,
-    'seligere': seligere,
-    'onerare': onerare,
-    'specere': specere
+    gustulare, seligere, onerare, specere
   };
 
   const data = (): {
-    pronomen: Pronomen | undefined,
-    pronomina: Pronomen[],
+    gustulus: Ref<Gustulus | undefined>,
     columnae: Columnae,
-    gustulus: Gustulus,
-    onerans: boolean,
-    anglica: boolean
+    anglica: boolean;
   } => {
     return {
-      gustulus: new Gustulus({}),
-      pronomen: pronomen,
-      anglica: anglica,
-      onerans: true,
-      pronomina: [],
-      columnae: []
+      gustulus: ref(),
+      columnae: [],
+      anglica
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      async omnia(): Promise<Pronomen[]> {
-        return await tabula?.tabulentur() ?? [];
-      }, async oneratust (): Promise<void> {
-        return new Promise(() => this.onerans = false);
-      }, async forsInflectat(): Promise<void> {
-        this.onerans = true;
-        this.pronomen = this.pronomina.random()
-        return this.oneratust();
-      }, async cole(selecta: string[]): Promise<void> {
-        this.onerans = true;
-        const omnia: Pronomen[] = await this.omnia();
-        if (omnia) {
-          this.pronomina = omnia.filter(pronomen => selecta.every(selectum =>
-              pronomen.valores().includes(selectum)));
-        }
-        return this.oneratust();
+    setup () {
+      const pronomen: Ref<Pronomen | undefined> = ref(defineModel<Pronomen>());
+      const onerans: Ref<boolean> = ref(true);
+      const pronomina: Ref<Pronomen[]> = ref([]);
+
+      async function oneratust (): Promise<void> {
+        onerans.value = false;
       }
+
+      async function forsInflectat (): Promise<void> {
+        onerans.value = true;
+        pronomen.value = pronomina.value.random();
+        return oneratust();
+      }
+
+      async function cole (selecta: string[]): Promise<void> {
+        onerans.value = true;
+        const omnes: Pronomen[] = await omnia();
+        if (omnes) {
+          pronomina.value = omnes.filter(pronomen => selecta.every(selectum =>
+            pronomen.valores().includes(selectum)))
+        }
+
+        return oneratust();
+      }
+
+      return {
+        pronomen, pronomina, onerans, forsInflectat, cole
+      };
     }, async mounted (): Promise<void> {
-      this.pronomina = await this.omnia();
+      this.pronomina = await omnia();
       this.columnae = categoricum<Pronomen>({
         categoria: 'pronomen',
         haec: this.pronomina as Pronomen[]
       });
 
-      return this.oneratust();
+      this.onerans = false;
     }
   });
 </script>
@@ -81,7 +86,7 @@
   <template v-else>
     <seligere :multiplicia='pronomina' :selectum='cole' />
     <template v-if='pronomina.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
+      <v-btn append-icon='casino' @click='forsInflectat();' :loading='onerans' :disabled='onerans'
              id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
     <v-data-table :items='pronomina' :headers='columnae' density='compact' :loading='onerans'

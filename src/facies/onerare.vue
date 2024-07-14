@@ -8,16 +8,15 @@
   }>();
 
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
-  const scriptum: string = anglica ? `Loading ${anglicum(pittacium).toUpperCase()}...` : `${pittacium.toUpperCase()} onerantur...`;
+  const scriptum: string = anglica ?
+    `Loading ${anglicum(pittacium).toUpperCase()}...` :
+    `${pittacium.toUpperCase()} onerantur...`;
 
   const data = (): {
     onerans: boolean,
     scriptum: string;
   } => {
-    return {
-      onerans: onerans,
-      scriptum: scriptum
-    };
+    return { onerans, scriptum };
   }
 
   export default defineComponent({ data: data });

@@ -1,10 +1,9 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import specere from './specere.vue';
   import Crustula from '../miscella/crustula';
-  import type { ModelRef } from 'vue';
   import Gustulus from '../scriptura/gustulus';
   import gustulare from './gustulare.vue';
 
@@ -13,15 +12,6 @@
     numerator: number,
     denominator: number
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const numerus: ModelRef<Numerus | undefined, string> = defineModel<Numerus>();
-
-  const arabicus: Arabicus = {
-    integer: 0,
-    numerator: 0,
-    denominator: 12
-  };
 
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
@@ -34,40 +24,45 @@
   ];
 
   const componenta: ComponentOptionsWithoutProps = {
-    'gustulare': gustulare,
-    'specere': specere
+    gustulare, specere
   };
 
   const data = (): {
     validator: ((arabicus: number) => boolean | string)[],
-    gustulus: Gustulus,
+    gustulus: Ref<Gustulus | undefined>,
     anglica: boolean,
-    numerus: Numerus | undefined,
-    arabicus: Arabicus,
-    romanus: string
   } => {
     return {
-      gustulus: new Gustulus({}),
-      anglica: anglica,
-      validator: validator,
-      numerus: numerus.value,
-      arabicus: arabicus,
-      romanus: ''
+      gustulus: ref(),
+      validator,
+      anglica
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
-    methods: {
-      effiat (): void {
-        this.romanus = Numerator.romanus(this.arabicus.integer + (this.arabicus.numerator / this.arabicus.denominator));
-      }, refer (): void {
-        if (this.arabicus.numerator === 0) {
-          this.numerus = Numerus.numerator(this.arabicus.integer);
+    setup () {
+      const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());
+      const romanus: Ref<string> = ref('N');
+      const arabicus: Ref<Arabicus> = ref({
+        integer: 0,
+        numerator: 0,
+        denominator: 12
+      });
+
+      function effiat (): void {
+        romanus.value = Numerator.romanus(arabicus.value.integer + arabicus.value.numerator / arabicus.value.denominator);
+      }
+
+      function refer (): void {
+        if (arabicus.value.numerator === 0) {
+          numerus.value = Numerus.numerator(arabicus.value.integer);
         }
       }
-    }, mounted(): void {
-      this.effiat();
+
+      return {
+        numerus, romanus, arabicus, effiat, refer
+      };
     }
   });
 </script>
