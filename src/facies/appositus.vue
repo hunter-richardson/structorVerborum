@@ -18,7 +18,6 @@
   }[];
 
   const locutor: Locutor = Locutor.se.ipse();
-  const crustula: Crustula = Crustula.se.ipse();
 
   const componenta: ComponentOptionsWithoutProps = {
     draggable, gustulare, calculare, quaerere, numerare
@@ -30,24 +29,74 @@
     trahens: Ref<boolean>,
     annulus: Ref<string>,
     locutionis: boolean,
-    crustula: Crustula,
     referret: boolean,
     annuli: Annuli
   } => {
     return {
-      transduceret: transduceretne(),
       locutionis: locutor.locutust(),
+      transduceret: transduceretne(),
       referret: referretne(),
       trahens: ref(false),
       annulus: ref(''),
       gustulus: ref(),
-      annuli: [],
-      crustula
+      annuli: []
     };
   };
 
   export default defineComponent({
     components: componenta, data: data,
+    setup () {
+      const crustula: Ref<Crustula | undefined> = ref();
+
+      function interverteFaciem (): void {
+        crustula.value?.facies.interverteUtrum();
+        useTheme().global.name.value = crustula.value?.facies.est('fusca') ? 'dark' : 'light';
+      }
+
+      function resepara (valor: string): void {
+        crustula.value?.separator.coquatur(valor);
+        document.querySelectorAll('[^id=crustula.separator].text-primary')
+          .forEach(element => element.classList.remove('text-primary'));
+
+        const separatoris: Element | null = document.getElementById(`crustula.separator.${valor}`);
+        if (separatoris) {
+          separatoris.classList.add('text-primary');
+        }
+      }
+
+      function negavit (): void {
+        crustula.value?.assensus.coquatur('negavit');
+        window.location.reload();
+      }
+
+      function coquantur (): void {
+        if (crustula.value) {
+          crustula.value.assensus.coquatur('assensit');
+
+          crustula.value.separator.coquatur();
+          crustula.value.apices.coquatur();
+          crustula.value.utendaU.coquatur();
+          crustula.value.magnas.coquatur();
+          crustula.value.facies.coquatur();
+
+          useTheme().global.name.value = 'dark';
+          const separatoris: Element | null = document.getElementById('#crustula.separator.inane');
+          if (separatoris) {
+            separatoris.classList.add('text-primary');
+          }
+
+          if (!crustula.value.lingua.cocutust()) {
+            crustula.value.lingua.coquatur();
+          }
+
+          window.location.reload();
+        }
+      }
+
+      return {
+        crustula, interverteFaciem, resepara, negavit, coquantur
+      };
+    },
     methods: {
       async refer (): Promise<void> {
         if (this.referret) {
@@ -57,44 +106,11 @@
         if (this.transduceret) {
           transducatur(locutor.scribantur());
         }
-      }, interverteFaciem(): void {
-        crustula.facies.interverteUtrum();
-        useTheme().global.name.value = crustula.facies.est('fusca') ? 'dark' : 'light';
-      }, resepara(valor: string): void {
-        this.crustula.separator.coquatur(valor);
-        document.querySelectorAll('[^id=crustula.separator].text-primary')
-            .forEach(element => element.classList.remove('text-primary'));
-
-            const separatoris: Element | null = document.getElementById(`crustula.separator.${valor}`);
-        if (separatoris) {
-          separatoris.classList.add('text-primary');
-        }
-      }, negavit(): void {
-        this.crustula.assensus.coquatur('negavit');
-        window.location.reload();
-      }, coquantur (): void {
-        this.crustula.assensus.coquatur('assensit');
-
-        if (!this.crustula.lingua.cocutust()) {
-          this.crustula.lingua.coquatur();
-        }
-
-        this.crustula.separator.coquatur();
-        this.crustula.apices.coquatur();
-        this.crustula.utendaU.coquatur();
-        this.crustula.magnas.coquatur();
-        this.crustula.facies.coquatur();
-
-        useTheme().global.name.value = 'dark';
-        const separatoris: Element | null = document.getElementById('#crustula.separator.inane');
-        if (separatoris) {
-          separatoris.classList.add('text-primary');
-        }
-
-        window.location.reload();
       }
-    }, async mounted (): Promise<void> {
-      if (this.crustula.assensus.est('assensit')) {
+    }, mounted (): void {
+      this.crustula = Crustula.se.ipse();
+
+      if (this.crustula?.assensus.est('assensit')) {
         const anglica: boolean = this.crustula.lingua.est('anglica') ?? false;
         document.title = anglica ? 'Phrase Factory' : 'Structor Verborum';
         this.annuli = [
@@ -124,6 +140,8 @@
           }
         ];
       }
+
+      this.annulus = this.annuli.first().valor;
     }
   });
 </script>
@@ -152,13 +170,13 @@
         <v-btn key='utendaU' id='crustula.utendaU'
                :text="crustula.utendaU.est() ? 'v' : 'u'"
                @click='crustula.utendaU.interverteUtrum();' />
-        <v-btn key='crustula.separator.inane' text='   '
+        <v-btn key='crustula.separator.inane' text=' _ '
                @click="resepara('inane');"
                id='crustula.separator.inane' />
         <v-btn key='crustula.separator.interpunctum' text=' • '
                @click="resepara('interpunctum');"
                id='crustula.separator.interpunctum' />
-        <v-btn key='crustula.separator.nullum' text=' _ '
+        <v-btn key='crustula.separator.nullum' text='   '
                @click="resepara('nullum');"
                id='crustula.separator.nullum' />
       </v-speed-dial>
@@ -216,7 +234,7 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
-  <template v-if='!crustula.assensus'>
+  <template v-if='crustula && !crustula.assensus'>
     <v-footer absolute>
       <div class='text-center'>
         <span class='text-left'>
@@ -236,7 +254,7 @@
           </div>
           <v-btn-toggle>
             <v-btn text='Agree' append-icon='handshake'
-                   @click="crustula.lingua.coquatur('anglica');
+                   @click="crustula?.lingua.coquatur('anglica');
                            coquantur();" />
             <v-btn text='Refuse' append-icon='block'
                    @click='negavit();' />
