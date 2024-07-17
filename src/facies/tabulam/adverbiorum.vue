@@ -78,7 +78,7 @@
   });
 </script>
 
-<template lang='vue'>
+<template>
   <gustulare :gustulsu='gustulus' />
   <template v-if='adverbium'>
     <specere :verbum='adverbium' @blur='adverbium = undefined;' />
@@ -86,16 +86,16 @@
   <template v-else>
     <seligere :multiplicia='adverbia' :selectum='cole' />
     <template v-if='adverbia.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
-              id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
     <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='adverbia' />
       <template v-if='!onerans'>
         <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
-              append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
-              @click='adverbium = hoc;' />
+               append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
+               @click='adverbium = hoc;' />
       </template>
     </v-data-table>
   </template>

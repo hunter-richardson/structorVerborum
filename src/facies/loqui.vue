@@ -41,15 +41,16 @@
   });
 </script>
 
-<template lang='vue'>
-	<gustulare :gustulus='gustulus' />
-	<v-chip-group id='locutio'>
-		<draggable v-model='verba' :ghost-class='pellucidum' @start='trahens = true' @end='trahens = false'>
-			<span :class="'mr-2'.concat(trahens ? 'cursor-grab' : 'cursor-grabbing')">
-				<template v-for='verbum in locutor.verba'>
-					<v-chip :v-bind:key='verbum' @click:close='locutor.removeatur(verbum.unicum);' close-icon='remove'
-						:text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
-				</template>
+<template>
+  <gustulare :gustulus='gustulus' />
+  <v-chip-group id='locutio'>
+    <draggable v-model='locutor.verba' :ghost-class='pellucidum' @start='trahens = true'
+               @end='trahens = false'>
+      <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
+        <template v-for='verbum in locutor.verba' :key='verbum.unicum'>
+          <v-chip @click:close='locutor.removeatur(verbum.unicum);' close-icon='remove'
+                  :text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
+        </template>
       </span>
     </draggable>
   </v-chip-group>

@@ -5,9 +5,11 @@
 
   const data = (): {
     anglica: boolean;
+    historia: History;
   } => {
     return {
-      anglica: Crustula.se.ipse().lingua.est('anglica') ?? false
+      anglica: Crustula.se.ipse().lingua.est('anglica') ?? false,
+      historia: history
     }
   };
 
@@ -24,14 +26,14 @@
   });
 </script>
 
-<template lang="vue">
-<v-app>
-		<v-container>
-			<v-empty-state :text="anglica ? 'The requested resource is missing' : 'Quaerenda res abest'"
-				:title="anglica ? 'Absent page' :  'Absens pagina'"
-				:headline="anglica ? 'Oops, 404!' : 'Vae CDIV!'" @click:action='history.back();'
-				image='/res/picta/latina.png' :actionText="anglica ? 'Go back' : 'Recipe'"
-				icon='arrow_back' />
-		</v-container>
-	</v-app>
+<template>
+  <v-app>
+    <v-container>
+      <v-empty-state :text="anglica ? 'The requested resource is missing' : 'Quaerenda res abest'"
+                     :title="anglica ? 'Absent page' : 'Absens pagina'"
+                     :headline="anglica ? 'Oops, 404!' : 'Vae CDIV!'"
+                     @click:action='historia.back();' image='/res/picta/latina.png'
+                     :actionText="anglica ? 'Go back' : 'Recipe'" icon='arrow_back' />
+    </v-container>
+  </v-app>
 </template>

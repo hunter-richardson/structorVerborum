@@ -82,26 +82,29 @@
         referendum.value = await res ?? undefined;
       }
 
+      function age (res: Faciendum<Nomen> | null): void {
+        referendum.value = res ?? undefined;
+      }
+
       return {
-        onerans, actus, actua, forsInflectat, cole, refer
+        onerans, actus, actua, referendum, forsInflectat, cole, refer, age
       }
     }
   });
 </script>
 
-<template lang='vue'>
+<template>
   <gustulare :gustulus='gustulus' />
   <specere v-if='actus' :verbum='actus' @blur='actus = undefined;' />
   <inflectere v-else-if='referendum' :agendum='referendum' @blur='referendum = undefined;' />
   <template v-else>
     <seligere :multiplicia='actua' :selectum='cole' />
     <template v-if='actua.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans'
-             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
-    <v-data-table :items='actua' :headers='columnae' density='compact'
-                  :loading='onerans' :disabled='onerans' id='tabula'
-                  items-per-page='10' item-selectable=false>
+    <v-data-table :items='actua' :headers='columnae' density='compact' :loading='onerans'
+                  :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
         <v-skeleton-loader :loading-text="anglica ? 'Loading verbs...' : 'Actus onerantur...'"
                            :loading='onerans' type='table-tbody' />
@@ -116,9 +119,9 @@
       <v-btn :text="anglica ? 'Gerund' : 'Nomen'" append-icon='subject' id='nomen'
              @click='refer((agendum as ActusAgendus).nomen())' />
       <v-btn :text="anglica ? 'Agent (masculine)' : 'Actor'" append-icon='man' id='actor'
-             @click="refer((agendum as ActusAgendus).actor('masculinum'))" />
+             @click="age((agendum as ActusAgendus).actor('masculinum'))" />
       <v-btn :text="anglica ? 'Agent (feminine)' : 'Actrix'" append-icon='woman' id='actrix'
-             @click="refer((agendum as ActusAgendus).actor('feminine'))" />
+             @click="age((agendum as ActusAgendus).actor('feminine'))" />
     </v-btn-toggle>
   </template>
 </template>

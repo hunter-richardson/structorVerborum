@@ -96,8 +96,7 @@
       return {
         crustula, interverteFaciem, resepara, negavit, coquantur
       };
-    },
-    methods: {
+    }, methods: {
       async refer (): Promise<void> {
         if (this.referret) {
           await referatur(locutor.scribantur());
@@ -146,130 +145,129 @@
   });
 </script>
 
-<template lang='vue'>
-  <gustulare :gustulus='gustulus' />
-  <template v-if="crustula.assensus === 'assensit'">
-    <draggable @start='trahens = true' @end='trahens = false'>
-      <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
-        <template #activator='{ props: activator }'>
-          <v-fab v-bind='activator' size='medium' icon='cake' />
-        </template>
-        <v-btn key='lingua' id='crustula.lingua' icon
-               @click="crustula.lingua.interverteUtrum();" >
-          <v-img height='36px' width='36px' :src="`/res/picta/${crustula.lingua.edatur()}.png`" />
-        </v-btn>
-        <v-btn key='facies' id='crustula.facies'
-               :icon="`${crustula.facies.est('fusca') ? 'dark' : 'light'}_mode`"
-               @click='interverteFaciem()' />
-        <v-btn key='apices' id='crustula.apices'
-              :text="crustula.apices.est() ? 'ā' : 'a'"
-              @click='crustula.apices.interverteUtrum();' />
-        <v-btn key='magnas' id='crustula.magnas'
-               :text="crustula.magnas.est() ? 'A' : 'a'"
-               @click='crustula.magnas.interverteUtrum();' />
-        <v-btn key='utendaU' id='crustula.utendaU'
-               :text="crustula.utendaU.est() ? 'v' : 'u'"
-               @click='crustula.utendaU.interverteUtrum();' />
-        <v-btn key='crustula.separator.inane' text=' _ '
-               @click="resepara('inane');"
-               id='crustula.separator.inane' />
-        <v-btn key='crustula.separator.interpunctum' text=' • '
-               @click="resepara('interpunctum');"
-               id='crustula.separator.interpunctum' />
-        <v-btn key='crustula.separator.nullum' text='   '
-               @click="resepara('nullum');"
-               id='crustula.separator.nullum' />
-      </v-speed-dial>
-    </draggable>
-  </template>
-  <v-card>
-    <v-app-bar density='compact' location='top' absolute flat tile>
-      <v-app-bar-title text='StructorVerborum' />
-      <template v-if='locutionis'>
-        <v-card location='right'>
-          <template v-if='locutionis'>
-            <v-btn-toggle density='compact'>
-              <template v-if='referret'>
-                <v-btn icon='content_copy' id='refer' @click='refer()' />
-              </template>
-              <template v-if='transduceret'>
-                <v-btn icon='file_open' id='transduc' @click='transduc()' />
-              </template>
-              </v-btn-toggle>
+<template>
+  <template v-if='crustula'>
+    <gustulare :gustulus='gustulus' />
+    <template v-if="crustula.assensus.est('assensit')">
+      <draggable @start='trahens = true' @end='trahens = false'>
+        <v-speed-dial id='crustula' location='bottom center' transition='fade-transition'
+                      open-on-click>
+          <template #activator='{ props: activator }'>
+            <v-fab v-bind='activator' size='medium' icon='cake' />
           </template>
-          <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
-            <v-hover>
-              <template #default='{ isHovering, props }'>
-                <a v-if='isHovering' target='_blank'
-                   href='https://github.com/hunter-richardson/structorverborum/issues'>
-                  <v-card v-bind='props'
-                          :text="crustula.lingua === 'anglica' ? 'Let\'s talk!' : 'Colloquamur'" />
-                </a>
-              </template>
-            </v-hover>
-          </v-avatar>
-        </v-card>
-      </template>
-      <template v-else>
-        <div id='subiciendum' class='text-center'>
-          <v-card :text="lingua === 'anglica' ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
-        </div>
-      </template>
-    </v-app-bar>
-    <v-tabs v-model='annulus.value' align-tabs='center' density='compact' grow hide-slider mandatory>
-      <template v-for='annulus in annuli'>
-        <v-tab :v-bind:key='annulus' :value='annulus' selected-class='text-primary'
-               :id="`annulus_${annulus}`" density='compact' :text='annulus.titula' tile />
-      </template>
-    </v-tabs>
-    <v-tabs-window v-model='annulus.value'>
-      <v-tabs-window-item value='quaerere'>
-        <quaerere />
-      </v-tabs-window-item>
-      <v-tabs-window-item value='numerare'>
-        <numerare />
-      </v-tabs-window-item>
-      <v-tabs-window-item value='calculare'>
-        <calculare />
-      </v-tabs-window-item>
-    </v-tabs-window>
-  </v-card>
-  <template v-if='crustula && !crustula.assensus'>
-    <v-footer absolute>
-      <div class='text-center'>
-        <span class='text-left'>
-          <div id='titulus.latinus'>
-            Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.<br><br>Noteris quod crustula plura mutabunt modum pariendo locutionum ergo infidum esset vertere huc illucque.
+          <v-btn key='lingua' id='crustula.lingua' icon @click="crustula.lingua.interverteUtrum();">
+            <v-img height='36px' width='36px' :src="`/res/picta/${crustula.lingua.edatur()}.png`" />
+          </v-btn>
+          <v-btn key='facies' id='crustula.facies'
+                 :icon="`${crustula.facies.est('fusca') ? 'dark' : 'light'}_mode`"
+                 @click='interverteFaciem()' />
+          <v-btn key='apices' id='crustula.apices' :text="crustula.apices.est() ? 'ā' : 'a'"
+                 @click='crustula.apices.interverteUtrum();' />
+          <v-btn key='magnas' id='crustula.magnas' :text="crustula.magnas.est() ? 'A' : 'a'"
+                 @click='crustula.magnas.interverteUtrum();' />
+          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.utendaU.est() ? 'v' : 'u'"
+                 @click='crustula.utendaU.interverteUtrum();' />
+          <v-btn key='crustula.separator.inane' text=' _ ' @click="resepara('inane');"
+                 id='crustula.separator.inane' />
+          <v-btn key='crustula.separator.interpunctum' text=' • ' @click="resepara('interpunctum');"
+                 id='crustula.separator.interpunctum' />
+          <v-btn key='crustula.separator.nullum' text='   ' @click="resepara('nullum');"
+                 id='crustula.separator.nullum' />
+        </v-speed-dial>
+      </draggable>
+    </template>
+    <v-card>
+      <v-app-bar density='compact' location='top' absolute flat tile>
+        <v-app-bar-title text='StructorVerborum' />
+        <template v-if='locutionis'>
+          <v-card location='right'>
+            <template v-if='locutionis'>
+              <v-btn-toggle density='compact'>
+                <template v-if='referret'>
+                  <v-btn icon='content_copy' id='refer' @click='refer()' />
+                </template>
+                <template v-if='transduceret'>
+                  <v-btn icon='file_open' id='transduc' @click='transduc()' />
+                </template>
+              </v-btn-toggle>
+            </template>
+            <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
+              <v-hover>
+                <template #default='{ isHovering, props }'>
+                  <a v-if='isHovering' target='_blank'
+                     href='https://github.com/hunter-richardson/structorverborum/issues'>
+                    <v-card v-bind='props'
+                            :text="crustula?.lingua.est('anglica') ? 'Let\'s talk!' : 'Colloquamur'" />
+                  </a>
+                </template>
+              </v-hover>
+            </v-avatar>
+          </v-card>
+        </template>
+        <template v-else>
+          <div id='subiciendum' class='text-center'>
+            <v-card
+                    :text="crustula?.lingua.est('anglica') ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
           </div>
-          <v-btn-toggle>
-            <v-btn text='Assentio' id='assentio' append-icon='handshake'
-                   @click='coquantur();' />
-            <v-btn text='Nego' id='nego' append-icon='block'
-                   @click='negavit();' />
-          </v-btn-toggle>
-        </span>
-        <span class='text-left'>
-          <div id='titulus.anglicus'>
-            Here cookies are used so that you may choose details for your own experience. Or you can choose not to store cookies and use the site unchanged; in this case, the only cookie stored would be your refusal of them.<br><br>Note that most of these cookies will modify the method of generating phrases, so switching them back-and-forth between modes will be unreliable.
-          </div>
-          <v-btn-toggle>
-            <v-btn text='Agree' append-icon='handshake'
-                   @click="crustula?.lingua.coquatur('anglica');
-                           coquantur();" />
-            <v-btn text='Refuse' append-icon='block'
-                   @click='negavit();' />
-          </v-btn-toggle>
-        </span>
-      </div>
-    </v-footer>
+        </template>
+      </v-app-bar>
+      <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
+        <template v-for='res in annuli' :key='res'>
+          <v-tab :value='res' selected-class='text-primary' :id="`annulus_${res}`" density='compact'
+                 :text='res.titula' tile />
+        </template>
+      </v-tabs>
+      <v-tabs-window v-model='annulus'>
+        <v-tabs-window-item value='quaerere'>
+          <quaerere />
+        </v-tabs-window-item>
+        <v-tabs-window-item value='numerare'>
+          <numerare />
+        </v-tabs-window-item>
+        <v-tabs-window-item value='calculare'>
+          <calculare />
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-card>
+    <template v-if='!crustula.assensus'>
+      <v-footer absolute>
+        <v-container>
+          <v-row no-gutters>
+            <v-col>
+              <v-sheet class='pa-1'>
+                <div id='titulus.latinus'>Hic crustula utantur ut singulas opteris pro usu tibi, aut
+                  crustula condita negare optares et situm immutatum utereris, atque solum crustulum
+                  conditum erit renutus eorum.<br><br>Noteris quod crustula plura mutabunt modum
+                  pariendo locutionum ergo infidum esset vertere huc illucque.</div>
+                <v-btn-toggle>
+                  <v-btn text='Assentio' id='assentio' append-icon='handshake'
+                         @click='coquantur();' />
+                  <v-btn text='Nego' id='nego' append-icon='block' @click='negavit();' />
+                </v-btn-toggle>
+              </v-sheet>
+            </v-col>
+            <v-col>
+              <v-sheet class='pa-1'>
+                <div id='titulus.anglicus'>Here cookies are used so that you may choose details for
+                  your own experience. Or you can choose not to store cookies and use the site
+                  unchanged; in this case, the only cookie stored would be your refusal of
+                  them.<br><br>Note that most of these cookies will modify the method of generating
+                  phrases, so switching them back-and-forth between modes will be unreliable.</div>
+                <v-btn-toggle>
+                  <v-btn text='Agree' append-icon='handshake' @click="crustula?.lingua.coquatur('anglica');
+                  coquantur();" />
+                  <v-btn text='Refuse' append-icon='block' @click='negavit();' />
+                </v-btn-toggle>
+              </v-sheet>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-footer>
+    </template>
   </template>
 </template>
 
 <style>
-  .v-speed-dial {
-    position: absolute;
-  }
-
   .v-btn--floating {
     position: relative;
   }

@@ -14,7 +14,6 @@
   type Columnae = {
     title: string,
     key: string,
-    filter: ((verbum: Verbum, quaerendum: any) => boolean);
   }[];
 
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
@@ -33,21 +32,14 @@
   const columnae: Columnae = [
     {
       latinum: 'lemma',
-      anglicum: 'term',
-      cultor: (verbum: Verbum, quaerendum: string): boolean => {
-        return verbum.scriptum.includes(quaerendum);
-      }
+      anglicum: 'term'
     }, {
       latinum: 'categoriae',
-      anglicum: 'categories',
-      cultor: (verbum: Verbum, selecta: string[]): boolean => {
-        return selecta.includes(verbum.categoria);
-      }
+      anglicum: 'categories'
     }
   ].map(columna => {
     return {
       title: (anglica ? columna.anglicum : columna.latinum).capitalize(),
-      filter: columna.cultor,
       key: columna.latinum
     };
   });
@@ -149,14 +141,14 @@
       }
 
       return {
-        eventus, verbum, lemmae, onerans, quaerenda, sarci, forsSeligat, omnia, aperi, removeApices
+        eventus, verbum, lemmae, onerans, quaerenda, error, sarci, forsSeligat, omnia, aperi, removeApices
       };
     }
   });
 </script>
 
-<template lang='vue'>
-	<gustulare :gustulus='gustulus' />
+<template>
+  <gustulare :gustulus='gustulus' />
   <loqui />
   <template v-if='verbum'>
     <specere :verbum='verbum' @blur='verbum = undefined;' />
@@ -165,13 +157,13 @@
     <inflectere :eventus='eventus as Eventus' @blur='eventus = undefined;' />
   </template>
   <div class='text-center'>
-    <v-btn append-icon='search' @click='sarci();' :disabled='onerans'
-           id='sarci' :text="anglica ? 'Search' : 'Sarci'" />
-    <v-btn append-icon='casino' @click='forsSeligat();' :disabled='onerans'
-           id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
+    <v-btn append-icon='search' @click='sarci();' :disabled='onerans' id='sarci'
+           :text="anglica ? 'Search' : 'Sarci'" />
+    <v-btn append-icon='casino' @click='forsSeligat();' :disabled='onerans' id='fortuna'
+           :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
   </div>
-  <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans'
-                density='compact' id='tabula' :headers='columnae'>
+  <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans' density='compact'
+                id='tabula' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <template v-for='columna in headers.flat()' :key='columna.key'>
@@ -190,25 +182,28 @@
                         v-model='quaerenda.categoriae' :disabled='onerans' :label='columna.title'
                         :items='categoriae' chips flat multiple open-on-clear />
             </template>
-            <span class='mr-2 cursor-pointer' :id="`ordina_${columna.key}`" @click='toggleSort(columna)' />
+            <span class='mr-2 cursor-pointer' :id="`ordina_${columna.key}`"
+                  @click='toggleSort(columna)' />
           </td>
         </template>
       </tr>
     </template>
     <onerare :onerans='onerans' pittacium='lemmae' />
-    <template v-if='~!onerare' v-for='lemma in lemmae' :key='lemma'>
-      <tr>
-        <td>{{ lemma.categoria }}</td>
-      </tr>
-      <tr>
-        <td>{{ lemma.scriptum }}</td>
-      </tr>
-      <tr>
-        <td>
-          <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error'
-                 id='aperi' append-icon='open_in_full' @click='aperi(lemma);' />
-        </td>
-      </tr>
+    <template v-if='!onerans'>
+      <template v-for='lemma in lemmae' :key='lemma'>
+        <tr>
+          <td>{{ lemma.categoria }}</td>
+        </tr>
+        <tr>
+          <td>{{ lemma.scriptum }}</td>
+        </tr>
+        <tr>
+          <td>
+            <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' id='aperi'
+                   append-icon='open_in_full' @click='aperi(lemma);' />
+          </td>
+        </tr>
+      </template>
     </template>
   </v-data-table>
 </template>

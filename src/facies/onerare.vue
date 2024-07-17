@@ -22,8 +22,8 @@
   export default defineComponent({ data: data });
 </script>
 
-<template lang='vue'>
-	<template v-if='onerans'>
-		<v-skeleton-loader :loading-text='scriptum' :loading='onerans' type='table-tbody' />
-	</template>
+<template>
+  <template v-if='onerans'>
+    <v-skeleton-loader :loading-text='scriptum' :loading='onerans' type='table-tbody' />
+  </template>
 </template>

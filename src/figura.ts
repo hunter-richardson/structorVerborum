@@ -43,6 +43,8 @@ export default createVuetify({
         tile: true
       }, VTabsWindowItem: {
         transition: 'v-tab-transition'
+      }, VSpeedDial: {
+        position: 'absolute'
       }
     }
   }

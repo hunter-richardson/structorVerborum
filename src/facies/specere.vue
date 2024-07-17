@@ -108,11 +108,11 @@
   });
 </script>
 
-<template lang='vue'>
-	<gustulare :gustulus='gustulus' />
-	<template v-if='eventus'>
-		<inflectere :eventus='eventus' @blur='eventus = undefined;' />
-	</template>
+<template>
+  <gustulare :gustulus='gustulus' />
+  <template v-if='eventus'>
+    <inflectere :eventus='eventus' @blur='eventus = undefined;' />
+  </template>
   <v-dialog v-else-if='verbum'>
     <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>
       <template v-if='multiplex'>
@@ -121,13 +121,12 @@
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
         <v-select density='compact' id='enclitica' v-model='encliticum'
-                  :title="anglica ? 'Enclitics' : 'Enclitica'"
-                  :items='enclitica' chips flat open-on-clear />
+                  :title="anglica ? 'Enclitics' : 'Enclitica'" :items='enclitica' chips flat
+                  open-on-clear />
       </template>
-      <docere :docendum='categoria' />
+      <docere :docendum='verbum.categoria' />
       <template v-if='multiplex'>
-        <docere v-for='valor in valores'
-                :key='valor' :docendum='valor' />
+        <docere v-for='valor in valores' :key='valor' :docendum='valor' />
       </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
@@ -139,7 +138,8 @@
                  :text="anglica ? 'Add this to my phrase as a proper name' : 'Adde hoc locutioni ut proprium'" />
         </template>
         <template v-else-if="verbum?.categoria === 'numerus'">
-          <v-btn icon='quick_reference' id='aperi' @click='aperi();' :text="anglica ? 'Open' : 'Refer'" />
+          <v-btn icon='quick_reference' id='aperi' @click='aperi();'
+                 :text="anglica ? 'Open' : 'Refer'" />
         </template>
         <template v-else-if="verbum?.categoria === 'actus' &&
           valores.includes('participium')">

@@ -16,13 +16,7 @@
     romanus: 'N'
   };
 
-  const actus: string[][] = [
-    [ 'I', 'C', '·', '+' ],
-    [ 'V', 'D', ':', '-' ],
-    [ 'X', 'M', '∴', '•' ],
-    [ 'L', '|', '×', '÷' ],
-    [ '=', 'N', 'S', '%' ]
-  ];
+  const actus: string = 'IC·+VD:-XM∴•L|×÷=NS%';
 
   const componenta: ComponentOptionsWithoutProps = {
     gustulare, specere
@@ -30,7 +24,7 @@
 
   const data = (): {
     gustulus: Ref<Gustulus | undefined>,
-    actus: string[][],
+    actus: string,
     nihil: numeri;
   } => {
     return {
@@ -117,13 +111,12 @@
   });
 </script>
 
-<template lang='vue'>
+<template>
   <gustulare :gustulus='gustulus' />
   <template v-if='numerus'>
-      <specere :verbum='numerus'
-               @blur='numerus = null;' />
+    <specere :verbum='numerus' @blur='numerus = undefined;' />
   </template>
-  <template v-if='praevii.anglicus'>
+  <template v-if='praevii.arabicus'>
     <div class='text-center'>
       <template v-if='Number.isInteger(praevii.arabicus)'>
         <v-btn id='refer' icon='aequa' @click='aequa();' />
@@ -135,12 +128,10 @@
     </div>
   </template>
   <v-card :text='praesentes.romanus' />
-  <div class='text-center' v-for='linea in actus' :key='linea'>
-    <span class='text-center' v-for='littera in linea' :key='littera'>
-      <v-card :text=` ${littera} ` :id='`actus_${littera}`'
-              :disabled='licta(littera)' density='comfortable'
-              @click='ponatur(littera);'
-              position='absolute' border hover />
+  <div class='text-center' v-for="linea in Array.from(actus)" :key='linea'>
+    <span class='text-center' v-for="littera in Array.from(linea)" :key='littera'>
+      <v-card :text="` ${littera} `" :id='`actus_${littera}`' :disabled='licta(littera)'
+              density='comfortable' @click='ponatur(littera);' position='absolute' border hover />
     </span>
   </div>
 </template>

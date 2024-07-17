@@ -31,27 +31,27 @@
   });
 </script>
 
-<template lang='vue'>
+<template>
   <template v-if='referendum'>
-      <v-dialog @blur='referendum = undefined;'>
-        <template v-if="categoria === 'actus'">
-          <tabulaActuum :agendum='referendum' />
-        </template>
-        <template v-else-if="categoria === 'adiectivum'">
-          <tabulaAdiectivorum :agendum='referendum' />
-        </template>
-        <template v-else-if="categoria === 'adverbium'">
-          <tabulaAdverbiorum :agendum='referendum' />
-        </template>
-        <template v-else-if="categoria === 'nomen'">
-          <tabulaNominum :agendum='referendum' />
-        </template>
-        <template v-else-if="categoria === 'numeramen'">
-          <tabulaNumeraminum :agendum='referendum' />
-          </template>
-        <template v-else-if="categoria === 'pronomen'">
-          <tabulaPronominum :agendum='referendum' />
-        </template>
+    <v-dialog @blur='referendum = undefined;'>
+      <template v-if="categoria === 'actus'">
+        <tabulaActuum :agendum='referendum' />
+      </template>
+      <template v-else-if="categoria === 'adiectivum'">
+        <tabulaAdiectivorum :agendum='referendum' />
+      </template>
+      <template v-else-if="categoria === 'adverbium'">
+        <tabulaAdverbiorum :agendum='referendum' />
+      </template>
+      <template v-else-if="categoria === 'nomen'">
+        <tabulaNominum :agendum='referendum' />
+      </template>
+      <template v-else-if="categoria === 'numeramen'">
+        <tabulaNumeraminum :agendum='referendum' />
+      </template>
+      <template v-else-if="categoria === 'pronomen'">
+        <tabulaPronominum :agendum='referendum' />
+      </template>
     </v-dialog>
   </template>
 </template>

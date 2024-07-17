@@ -16,6 +16,9 @@
   export default defineComponent({ data: data });
 </script>
 
-<template lang='vue'>
+<template>
+  <template v-if='[
+    docendum, doctum
+  ].all()'></template>
   <div :id="`doctum.${docendum}`">{{ doctum }}</div>
 </template>

@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { defineModel, defineComponent, defineProps, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { anglicum } from '../miscella/enumerationes';
   import { Multiplex } from '../praebeunda/verba';
   import Crustula from '../miscella/crustula';
 
@@ -39,21 +40,22 @@
       }
 
       return {
-        selecta, selige
+        selecta, selige, anglicum
       };
     }
   });
 </script>
 
-<template lang='vue'>
-	<template v-if='[ seligenda, selectum ].all()'>
-		<div id='colamina'>
-			<horizontal-scroll>
-				<v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
-					<v-chip v-for='seligendum in seligenda' :key='seligendum' @change='selige()'
-						:id="`colamen_${seligendum}`" :text='anglica ? anglicum(seligendum) : seligendum' />
-				</v-chip-group>
-			</horizontal-scroll>
-		</div>
-	</template>
+<template>
+  <template v-if='seligenda'>
+    <div id='colamina'>
+      <horizontal-scroll>
+        <v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
+          <v-chip v-for='seligendum in seligenda' :key='seligendum' @change='selige()'
+                  :id="`colamen_${seligendum}`"
+                  :text='anglica ? anglicum(seligendum) : seligendum' />
+        </v-chip-group>
+      </horizontal-scroll>
+    </div>
+  </template>
 </template>

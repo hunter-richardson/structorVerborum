@@ -70,8 +70,12 @@
         return oneratust();
       }
 
+      async function refer (): Promise<void> {
+        actus.value = await (agendum as NomenActum).actus() ?? undefined;
+      }
+
       return {
-        nomen, nomina, actus, onerans, forsInflectat, cole
+        nomen, nomina, actus, onerans, forsInflectat, cole, refer
       };
     }, async mounted (): Promise<void> {
       this.nomina = await omnia();
@@ -85,26 +89,26 @@
   });
 </script>
 
-<template lang='vue'>
-	<gustulare :gustulus='gustulus' />
-	<specere v-if='nomen' :verbum='nomen' @blur='nomen = undefined;' />
-	<inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined;' />
-	<template v-else>
-		<seligere :multiplicia='nomina' :selectum='cole' />
-		<template v-if='nomina.length > 1'>
-			<v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
-				:text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
-		</template>
-    <v-data-table :items='adiectiva' :headers='columnae' density='compact'
-                  :loading='onerans' :disabled='onerans'
-                  id='tabula' items-per-page='10' item-selectable=false>
-			<onerare :onerans='onerans' pittacium='nomina' />
-			<template v-if='!onerans'>
-				<v-btn v-for='hoc in nomina.valeu' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
-					append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`' @click='nomen = hoc;' />
-			</template>
+<template>
+  <gustulare :gustulus='gustulus' />
+  <specere v-if='nomen' :verbum='nomen' @blur='nomen = undefined;' />
+  <inflectere v-else-if='actus' :agendum='actus' @blur='actus = undefined;' />
+  <template v-else>
+    <seligere :multiplicia='nomina' :selectum='cole' />
+    <template v-if='nomina.length > 1'>
+      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+    </template>
+    <v-data-table :items='nomina' :headers='columnae' density='compact' :loading='onerans'
+                  :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
+      <onerare :onerans='onerans' pittacium='nomina' />
+      <template v-if='!onerans'>
+        <v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+               append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
+               @click='nomen = hoc;' />
+      </template>
     </v-data-table>
-    <v-btn v-if='actum' :text="anglica ? 'Verb' : 'Actus'" append-icon='sprint'
-           id='actus' @click='refer()' />
+    <v-btn v-if='actum' :text="anglica ? 'Verb' : 'Actus'" append-icon='sprint' id='actus'
+           @click='refer()' />
   </template>
 </template>

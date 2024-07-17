@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/res/picta/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>Structor Verborum</title> -->
+    <style>
+      .dialog {
+        display: flex;
+        justify-content: center;
+      } .dialog .iframe {
+        height: 100%;
+        width: 100%;
+      } .column {
+        flex: auto;
+        width: 50%;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/src/figura.ts"></script>
+    <noscript>
+      <dialog open>
+        <header>
+          <div class='column'>
+            <h3>Your browser does not support <a href='https://developer.mozilla.org/docs/Web/JavaScript'>JavaScript</a>!</h3>
+          </div>
+          <div class='column'>
+            <h3>Tonsor tuus <a href='https://developer.mozilla.org/docs/Web/JavaScript'>ScripturamIavam</a> non fert!</h3>
+          </div>
+        </header>
+        <div class='column'>
+          <p>Please update your browser or enable JavaScript to use this application.</p>
+        </div>
+        <div class='column'>
+          <p>Renovato tonsorem licetove ScripturamIavam ut appositum utaris.</p>
+        </div>
+      </dialog>
+    </noscript>
   </body>
 </html>

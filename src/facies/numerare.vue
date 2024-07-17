@@ -67,23 +67,23 @@
   });
 </script>
 
-<template lang='vue'>
-	<gustulare :gustulus='gustulus' />
-	<template v-if='numerus'>
-		<specere :verbum='numerus' @blur='numerus = undefined' />
-	</template>
+<template>
+  <gustulare :gustulus='gustulus' />
+  <template v-if='numerus'>
+    <specere :verbum='numerus' @blur='numerus = undefined' />
+  </template>
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
-    <template v-if='anglicus.numerator === 0'>
+    <template v-if='arabicus.numerator === 0'>
       <v-btn icon='equal' id='aequa' @click='refer();' />
     </template>
   </div>
   <div class='text-center'>
     <v-number-input @change='effiat();' id='integer' :rules='validator' validateOn='input'
-                    v-model='anglicus.integer' autofocus clearable flat reverse />
+                    v-model='arabicus.integer' autofocus clearable flat reverse />
     <v-card text=' + ' />
     <v-number-input @change='effiat();' id='numerator' :rules='validator' validateOn='input'
-                    v-model='anglicus.numerator' clearable flat />
-    <v-card :text="' ÷ '.concat(anglicus.denominator.toString())" />
+                    v-model='arabicus.numerator' clearable flat />
+    <v-card :text="` + ${arabicus.denominator.toString()}`" />
   </div>
 </template>
