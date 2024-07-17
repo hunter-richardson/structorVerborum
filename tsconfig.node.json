@@ -9,6 +9,7 @@
   ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "incremental": true,
     "types": [ "node" ]
   }
 }
