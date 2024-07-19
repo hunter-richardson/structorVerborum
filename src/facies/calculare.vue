@@ -16,7 +16,7 @@
     romanus: 'N'
   };
 
-  const actus: string = 'IC·+VD:-XM∴•L|×÷=NS%';
+  const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%';
 
   const componenta: ComponentOptionsWithoutProps = {
     gustulare, specere
@@ -123,12 +123,12 @@
       </template>
       <v-card :text='praevii.romanus' />
       <template v-if='operator'>
-        <v-card id='operator.value' :text='operator' />
+        <v-card id='operator' :text='operator' />
       </template>
     </div>
   </template>
   <v-card :text='praesentes.romanus' />
-  <div class='text-center' v-for="linea in Array.from(actus)" :key='linea'>
+  <div class='text-center' v-for="linea in actus.split(' ')" :key='linea'>
     <span class='text-center' v-for="littera in Array.from(linea)" :key='littera'>
       <v-card :text="` ${littera} `" :id='`actus_${littera}`' :disabled='licta(littera)'
               density='comfortable' @click='ponatur(littera);' position='absolute' border hover />
