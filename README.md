@@ -46,4 +46,5 @@
   * *Valor inhaerendus: `inane`*
 
 ## *Grammatica Latina* / Latin grammar
+
 *Conatus scribere [Latinas](/res/docenda/latina) [Anglicaque](/res/docenda/anglica) definitiones explicationesque simplices verbis grammaticis multis usis situi huic sum. Haec articula [pagina speciendo](/src/facies/specere.vue) cum attentis scribentur ut hospites intellegere iuventur. Fidem dare illis Latinam discere utendo situs huius nequeo at aliquatenus adiuvare spero.* / I have tried to write simplified definitions and explanations in both [Latin](/res/docenda/latina) and [English](/res/docenda/anglica) for many of the grammar terms used on this website. These articles will be printed in the [word summary page](/src/facies/specere.vue) when they are relevant, in hopes to aid visitors' understanding. I cannot guarantee they will learn Latin by using this website, but hopefully it will be of some help.

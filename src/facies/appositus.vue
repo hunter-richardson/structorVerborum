@@ -30,7 +30,8 @@
     annulus: Ref<string>,
     locutionis: boolean,
     referret: boolean,
-    annuli: Annuli
+    annuli: Annuli,
+    titula: string
   } => {
     return {
       locutionis: locutor.locutust(),
@@ -39,7 +40,8 @@
       trahens: ref(false),
       annulus: ref(''),
       gustulus: ref(),
-      annuli: []
+      annuli: [],
+      titula: ''
     };
   };
 
@@ -111,7 +113,7 @@
 
       if (this.crustula?.assensus.est('assensit')) {
         const anglica: boolean = this.crustula.lingua.est('anglica') ?? false;
-        document.title = anglica ? 'Phrase Factory' : 'Structor Verborum';
+        this.titula = anglica ? 'Phrase Factory' : 'Structor Verborum';
         this.annuli = [
           {
             titula: anglica ? 'Search' : 'Quaerere',
@@ -141,6 +143,7 @@
       }
 
       this.annulus = this.annuli.first().valor;
+      document.title = this.titula;
     }
   });
 </script>
@@ -155,12 +158,11 @@
           <template #activator='{ props: activator }'>
             <v-fab v-bind='activator' size='medium' icon='cake' />
           </template>
-          <v-btn key='lingua' id='crustula.lingua' icon @click="crustula.lingua.interverteUtrum();">
+          <v-btn key='lingua' id='crustula.lingua' @click="crustula.lingua.interverteUtrum();" icon>
             <v-img height='36px' width='36px' :src="`/res/picta/${crustula.lingua.edatur()}.png`" />
           </v-btn>
-          <v-btn key='facies' id='crustula.facies'
-                 :icon="`${crustula.facies.est('fusca') ? 'dark' : 'light'}_mode`"
-                 @click='interverteFaciem()' />
+          <v-btn key='facies' id='crustula.facies' @click='interverteFaciem()'
+                 :icon="`${crustula.facies.est('fusca') ? 'dark' : 'light'}_mode`" />
           <v-btn key='apices' id='crustula.apices' :text="crustula.apices.est() ? 'ā' : 'a'"
                  @click='crustula.apices.interverteUtrum();' />
           <v-btn key='magnas' id='crustula.magnas' :text="crustula.magnas.est() ? 'A' : 'a'"
@@ -178,30 +180,17 @@
     </template>
     <v-card>
       <v-app-bar density='compact' location='top' absolute flat tile>
-        <v-app-bar-title text='StructorVerborum' />
+        <v-app-bar-title :text='titula' />
         <template v-if='locutionis'>
           <v-card location='right'>
-            <template v-if='locutionis'>
-              <v-btn-toggle density='compact'>
-                <template v-if='referret'>
-                  <v-btn icon='content_copy' id='refer' @click='refer()' />
-                </template>
-                <template v-if='transduceret'>
-                  <v-btn icon='file_open' id='transduc' @click='transduc()' />
-                </template>
-              </v-btn-toggle>
-            </template>
-            <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
-              <v-hover>
-                <template #default='{ isHovering, props }'>
-                  <a v-if='isHovering' target='_blank'
-                     href='https://github.com/hunter-richardson/structorverborum/issues'>
-                    <v-card v-bind='props'
-                            :text="crustula?.lingua.est('anglica') ? 'Let\'s talk!' : 'Colloquamur'" />
-                  </a>
-                </template>
-              </v-hover>
-            </v-avatar>
+            <v-btn-toggle density='compact'>
+              <template v-if='referret'>
+                <v-btn icon='content_copy' id='refer' @click='refer()' />
+              </template>
+              <template v-if='transduceret'>
+                <v-btn icon='file_open' id='transduc' @click='transduc()' />
+              </template>
+            </v-btn-toggle>
           </v-card>
         </template>
         <template v-else>
@@ -210,6 +199,17 @@
                     :text="crustula?.lingua.est('anglica') ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
           </div>
         </template>
+        <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
+          <v-hover>
+            <template #default='{ isHovering, props }'>
+              <a v-if='isHovering' target='_blank'
+                 href='https://github.com/hunter-richardson/structorverborum/issues'>
+                <v-card v-bind='props'
+                        :text="crustula?.lingua.est('anglica') ? 'Let\'s talk!' : 'Colloquamur'" />
+              </a>
+            </template>
+          </v-hover>
+        </v-avatar>
       </v-app-bar>
       <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
         <template v-for='res in annuli' :key='res'>
@@ -254,8 +254,8 @@
                   them.<br><br>Note that most of these cookies will modify the method of generating
                   phrases, so switching them back-and-forth between modes will be unreliable.</div>
                 <v-btn-toggle>
-                  <v-btn text='Agree' append-icon='handshake' @click="crustula?.lingua.coquatur('anglica');
-                  coquantur();" />
+                  <v-btn text='Agree' append-icon='handshake'
+                         @click="crustula?.lingua.coquatur('anglica'); coquantur();" />
                   <v-btn text='Refuse' append-icon='block' @click='negavit();' />
                 </v-btn-toggle>
               </v-sheet>

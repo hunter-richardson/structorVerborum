@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD041 -->>
 "Number" may describe one of two concepts for this website.
 
 First, a number is a word that represents counting numerals used by ancient Romans, e.g. I, VI, XIX, etc. Numbers may be calculated using the [numerator](../../../src/facies/numerare.vue) page, and may be used to reference several other words by [numeramina](numeramen.md).

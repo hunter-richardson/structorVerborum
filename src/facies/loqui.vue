@@ -1,10 +1,10 @@
 <script lang='ts'>
   import { defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
   import draggable from 'vuedraggable'
+  import gustulare from './gustulare.vue';
   import Gustulus from '../scriptura/gustulus';
   import Locutor from '../miscella/locutor';
   import Crustula from '../miscella/crustula';
-  import gustulare from './gustulare.vue';
 
   const illustre: boolean = Crustula.se.ipse().facies.est('illustre') ?? false;
 

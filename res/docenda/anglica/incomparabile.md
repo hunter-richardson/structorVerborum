@@ -1,1 +1,2 @@
+<!-- markdownlint-disable MD041 -->>
 **Incomparable** indicates an [adjective](adiectivum.md) or [adverb](adverbium.md) that does not inflect by [grades](gradus.md). The adjecitve should still inflect by [numbers](numerus.md), by [cases](casus.md), and by [gender](genus.md) (unless it is also [ungendered](unigenerum.md)). All values appear to be [positive](positivus.md), but may or may not be so-noted.

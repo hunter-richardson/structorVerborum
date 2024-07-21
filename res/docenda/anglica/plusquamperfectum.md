@@ -1,1 +1,2 @@
+<!-- markdownlint-disable MD041 -->>
 The **pluperfect** is a possible value of [tense](tempus.md). It denotes with the [subjunctive mode](subiunctivus.md) that the author/speaker acknowledges the possibility of the given [verb](actus.md) to have been performed in the past; and with the [indicative](indicativus.md) that the performance of the given [verb](actus.md) had been completed at some past event noted contextually.

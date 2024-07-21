@@ -1,1 +1,2 @@
+<!-- markdownlint-disable MD041 -->>
 **Ungendered** indicates a [pronoun](pronomen.md) or [adjective](adiectivum.md) that does not inflect by [gender](genus.md). They should still inflect by [numbers](numerus.md) and by [cases](casus.md), and the adjective by [grades](gradus.md) (unless it is also [incomparable](incomparabile.md)). This is not to say that the given terms have no gender; only that their inflected values do not change with respect to gender and their genders will not be noted on this website.

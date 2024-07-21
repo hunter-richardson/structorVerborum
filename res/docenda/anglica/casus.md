@@ -1,1 +1,2 @@
+<!-- markdownlint-disable MD041 -->>
 The **case** is an inflection parameter used to determine what contextual function the given [noun](nomen.md), [adjective](adiectivum.md), or [pronoun](pronomen.md) serves. The case may be seven values: [nominative](nominativus.md), [genitive](genitivus.md), [dative](dativus.md), [accusative](accusativus.md), [ablative](ablativus.md), [locative](locativus.md), or [vocative](vocativus.md).

@@ -1,1 +1,2 @@
+<!-- markdownlint-disable MD041 -->>
 **Casus** est parametrum inflexionis usum statuendo munum contextualem serviendum ab dato [nomine](nomen.md) aut [adiectivo](adiectivum.md) aut [pronomine](pronomen.md). Septem valores interesset: [nominativum](nominativus.md), [genitivum](genitivus.md), [dativum](dativus.md), [accusativum](accusativus.md), [ablativum](ablativus.md), [locativum](locativus.md), or [vocativum](vocativus.md).

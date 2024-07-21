@@ -17,8 +17,7 @@
 </script>
 
 <template>
-  <template v-if='[
-    docendum, doctum
-  ].all()'></template>
-  <div :id="`doctum.${docendum}`">{{ doctum }}</div>
+  <template v-if='[ docendum, doctum ].all()'>
+    <div :id="`doctum.${docendum}`">{{ doctum }}</div>
+  </template>
 </template>
