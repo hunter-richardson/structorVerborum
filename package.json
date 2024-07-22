@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "pleasejs": "^0.4.2",
-    "vue": "^3.4.21"
+    "vue": "^3.4.33"
   },
   "devDependencies": {
     "@8hobbies/typedoc-plugin-404": "^2.2.0",
