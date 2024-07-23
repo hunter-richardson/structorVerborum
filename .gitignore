@@ -31,3 +31,5 @@ wwwroot
 codeql-agent-results
 
 /.vscode
+
+*.js
