@@ -78,7 +78,7 @@
     "vue-tsc": "^2.0.21",
     "vuedraggable": "^4.1.0",
     "vuetify": "^3.6.10",
-    "winston": "^3.13.0",
+    "winston": "^3.13.1",
     "winston-daily-rotate-file": "^5.0.0"
   }
 }
