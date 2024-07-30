@@ -50,7 +50,7 @@
     "dependabot": "^0.1.1",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.1",
-    "eslint-plugin-vue": "^9.26.0",
+    "eslint-plugin-vue": "^9.27.0",
     "execa": "^9.3.0",
     "fs": "^0.0.1-security",
     "jsdom": "^24.0.0",
