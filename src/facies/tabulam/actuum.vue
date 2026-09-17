@@ -1,16 +1,16 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
-  import specere from '../specere.vue';
-  import inflectere from '../inflectere.vue';
-  import seligere from '../seligere.vue';
-  import gustulare from '../gustulare.vue';
-  import Gustulus from '../../scriptura/gustulus';
+  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+  import Crustula from '../../miscella/crustula';
   import { ActusAgendus } from '../../praebeunda/agenda';
-  import { type Columnae, categoricum } from '../../scriptura/columnae';
   import type { Faciendum } from '../../praebeunda/interfecta';
   import { Actus, Nomen } from '../../praebeunda/verba';
-  import Crustula from '../../miscella/crustula';
+  import { categoricum, type Columnae } from '../../scriptura/columnae';
+  import Gustulus from '../../scriptura/gustulus';
   import Tabula from '../../tabulae/tabula';
+  import gustulare from '../gustulare.vue';
+  import inflectere from '../inflectere.vue';
+  import seligere from '../seligere.vue';
+  import specere from '../specere.vue';
 
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
@@ -21,29 +21,23 @@
     return await tabula?.tabulentur() ?? [];
   }
 
-  const componenta: ComponentOptionsWithoutProps = {
-    inflectere, gustulare, seligere, specere
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    agendum: Faciendum<Actus>,
-    columnae: Columnae,
-    anglica: boolean,
-    lectum: boolean;
-  } => {
-    return {
-      gustulus: ref(),
-      columnae: [],
-      anglica,
-      agendum,
-      lectum
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    async mounted (): Promise<void> {
+    components: { inflectere, gustulare, seligere, specere },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      agendum: Faciendum<Actus>,
+      columnae: Columnae,
+      anglica: boolean,
+      lectum: boolean;
+    } => {
+      return {
+        gustulus: ref(),
+        columnae: [],
+        anglica,
+        agendum,
+        lectum
+      };
+    }, async mounted (): Promise<void> {
       this.actua = await omnia();
       this.columnae = categoricum<Actus>({
         categoria: 'actus',

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineComponent, type Ref, ref } from 'vue';
   import { useTheme } from 'vuetify';
   import draggable from 'vuedraggable';
   import { transducatur, transduceretne } from '../scriptura/transducere';
@@ -19,35 +19,29 @@
 
   const locutor: Locutor = Locutor.se.ipse();
 
-  const componenta: ComponentOptionsWithoutProps = {
-    draggable, gustulare, calculare, quaerere, numerare
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    transduceret: boolean,
-    trahens: Ref<boolean>,
-    annulus: Ref<string>,
-    locutionis: boolean,
-    referret: boolean,
-    annuli: Annuli,
-    titula: string
-  } => {
-    return {
-      locutionis: locutor.locutust(),
-      transduceret: transduceretne(),
-      referret: referretne(),
-      trahens: ref(false),
-      annulus: ref(''),
-      gustulus: ref(),
-      annuli: [],
-      titula: ''
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { draggable, gustulare, calculare, quaerere, numerare },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      transduceret: boolean,
+      trahens: Ref<boolean>,
+      annulus: Ref<string>,
+      locutionis: boolean,
+      referret: boolean,
+      annuli: Annuli,
+      titula: string;
+    } => {
+      return {
+        locutionis: locutor.locutust(),
+        transduceret: transduceretne(),
+        referret: referretne(),
+        trahens: ref(false),
+        annulus: ref(''),
+        gustulus: ref(),
+        annuli: [],
+        titula: ''
+      };
+    }, setup () {
       const crustula: Ref<Crustula | undefined> = ref();
 
       function interverteFaciem (): void {
@@ -212,7 +206,7 @@
         </v-avatar>
       </v-app-bar>
       <v-tabs v-model='annulus' align-tabs='center' density='compact' grow hide-slider mandatory>
-        <template v-for='res in annuli' :key='res'>
+        <template v-for='res in annuli' :key='res.valor'>
           <v-tab :value='res' selected-class='text-primary' :id="`annulus_${res}`" density='compact'
                  :text='res.titula' tile />
         </template>

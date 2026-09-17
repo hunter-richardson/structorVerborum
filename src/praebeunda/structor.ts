@@ -1,4 +1,4 @@
-type Generator<Hoc> = () => Hoc;
+import type { Generator } from '../miscella/ignavum';
 type Actio<Hoc> = (hoc: Hoc) => void;
 
 export default class Structor<Hoc extends object> {
