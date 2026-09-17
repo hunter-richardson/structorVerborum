@@ -1,16 +1,16 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-  import Crustula from '../../miscella/crustula';
-  import { ActusAgendus } from '../../praebeunda/agenda';
-  import type { Faciendum } from '../../praebeunda/interfecta';
-  import { Actus, Nomen } from '../../praebeunda/verba';
-  import { categoricum, type Columnae } from '../../scriptura/columnae';
-  import Gustulus from '../../scriptura/gustulus';
-  import Tabula from '../../tabulae/tabula';
-  import gustulare from '../gustulare.vue';
-  import inflectere from '../inflectere.vue';
-  import seligere from '../seligere.vue';
-  import specere from '../specere.vue';
+import Crustula from '../../miscella/crustula';
+import { ActusAgendus } from '../../praebeunda/agenda';
+import type { Faciendum } from '../../praebeunda/interfecta';
+import { Actus, Nomen } from '../../praebeunda/verba';
+import { categoricum, type Columnae } from '../../scriptura/columnae';
+import Gustulus from '../../scriptura/gustulus';
+import Tabula from '../../tabulae/tabula';
+import gustulare from '../gustulare.vue';
+import inflectere from '../inflectere.vue';
+import seligere from '../seligere.vue';
+import specere from '../specere.vue';
 
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus>; }>().agendum;
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
@@ -33,9 +33,9 @@
       return {
         gustulus: ref(),
         columnae: [],
-        anglica,
-        agendum,
-        lectum
+        anglica: anglica,
+        agendum: agendum,
+        lectum: lectum
       };
     }, async mounted (): Promise<void> {
       this.actua = await omnia();

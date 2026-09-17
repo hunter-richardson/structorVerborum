@@ -6,14 +6,12 @@
   const docendum: string = defineProps<{ docendum: string; }>().docendum;
   const doctum: string = await magister.doceatur(docendum);
 
-  const data = (): {
-    docendum: string,
-    doctum: string;
-  } => {
-    return { docendum, doctum };
-  };
-
-  export default defineComponent({ data: data });
+  export default defineComponent({ data: (): {
+      docendum: string,
+      doctum: string;
+    } => {
+      return { docendum, doctum };
+    } });
 </script>
 
 <template>

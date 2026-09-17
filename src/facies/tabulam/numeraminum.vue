@@ -30,7 +30,7 @@
       return {
         gustulus: ref(),
         columnae: [],
-        anglica,
+        anglica: anglica,
       };
     }, setup () {
       const referendum: Ref<Referendum | undefined> = ref(defineModel<Referendum>());

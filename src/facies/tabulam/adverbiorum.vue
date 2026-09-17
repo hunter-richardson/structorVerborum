@@ -29,7 +29,7 @@
     return {
       gustulus: ref(),
       columnae: [],
-      anglica
+      anglica: anglica
     };
   }, setup() {
       const adverbium: Ref<Adverbium | undefined> = ref(defineModel<Adverbium>());

@@ -11,13 +11,6 @@
   const Please = require('pleasejs');
   const ClassifyX = require('classifyx')
 
-  const pellucidum: string[] = ClassifyX({
-    opacity: 0.5,
-    background: Please.make_color({
-      value: illustre ? 0.25 : 0.75
-    })
-  });
-
   export default defineComponent({
     component: { draggable, gustulare },
     data: (): {
@@ -30,7 +23,12 @@
         locutor: Locutor.se.ipse(),
         trahens: ref(false),
         gustulus: ref(),
-        pellucidum
+        pellucidum: ClassifyX({
+          opacity: 0.5,
+          background: Please.make_color({
+            value: illustre ? 0.25 : 0.75
+          })
+        })
       };
     }
   });

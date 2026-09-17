@@ -34,9 +34,9 @@
       return {
         gustulus: ref(),
         columnae: [],
-        agendum,
-        anglica,
-        actum
+        agendum: agendum,
+        anglica: anglica,
+        actum: actum
       };
     }, setup () {
       const actus: Ref<Faciendum<Actus> | undefined> = ref(defineModel<Faciendum<Actus>>());

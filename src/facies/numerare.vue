@@ -33,7 +33,7 @@
       return {
         gustulus: ref(),
         validator,
-        anglica
+        anglica: anglica
       };
     }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());

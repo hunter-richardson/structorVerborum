@@ -3,19 +3,16 @@
   import Crustula from '../miscella/crustula';
   import Nuntius from '../miscella/nuntius';
 
-  const data = (): {
-    anglica: boolean;
-    historia: History;
-  } => {
-    return {
-      anglica: Crustula.se.ipse().lingua.est('anglica') ?? false,
-      historia: history
-    }
-  };
-
   export default defineComponent({
-    data: data,
-    mounted (): void {
+    data: (): {
+      anglica: boolean;
+      historia: History;
+    } => {
+      return {
+        anglica: Crustula.se.ipse().lingua.est('anglica') ?? false,
+        historia: history
+      };
+    }, mounted (): void {
       if ([ location.href, location.href !== '404' ].all()) {
         Nuntius.timeo({
           nomen: '404.vue',

@@ -20,8 +20,8 @@
       anglica: boolean;
     } => {
       return {
-        seligenda,
-        anglica
+        seligenda: seligenda,
+        anglica: anglica
       };
     }, setup () {
       const selecta: Ref<string[]> = ref([]);

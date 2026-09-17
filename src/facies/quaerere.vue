@@ -69,9 +69,9 @@
       return {
         categoriae: Categoriae,
         gustulus: ref(),
-        validator,
-        columnae,
-        anglica
+        validator: validator,
+        columnae: columnae,
+        anglica: anglica
       };
     }, setup () {
       const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'));

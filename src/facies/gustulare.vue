@@ -3,13 +3,12 @@
   import Gustulus from '../scriptura/gustulus'
 
   const gustulus: Gustulus = defineProps<{ gustulus: Gustulus; }>().gustulus;
-  const data = (): {
-    gustulus: Ref<Gustulus>;
-  } => {
-    return { gustulus: ref(gustulus) };
-  };
 
-  export default defineComponent({ data: data });
+  export default defineComponent({ data: (): {
+      gustulus: Ref<Gustulus>;
+    } => {
+      return { gustulus: ref(gustulus) };
+    } });
 </script>
 
 <template>

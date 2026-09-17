@@ -16,8 +16,6 @@
     romanus: 'N'
   };
 
-  const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%';
-
   export default defineComponent({
     components: { gustulare, specere },
     data: (): {
@@ -28,7 +26,7 @@
       return {
         gustulus: ref(),
         nihil: nihil,
-        actus
+        actus: 'IC·+ VD:- XM∴• L|×÷ =NS%'
       };
     }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());

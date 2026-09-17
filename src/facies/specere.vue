@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref, toRef } from 'vue';
+  import { defineComponent, defineModel, type Ref, ref, toRef } from 'vue';
   import docere from './docere.vue';
   import inflectere from './inflectere.vue';
   import gustulare from './gustulare.vue';
@@ -13,27 +13,21 @@
 
   const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
 
-  const componenta: ComponentOptionsWithoutProps = {
-    inflectere, gustulare, docere
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    valores: string[],
-    enclitica: string[],
-    anglica: boolean;
-  } => {
-    return {
-      gustulus: ref(),
-      valores: [],
-      enclitica: [],
-      anglica
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { inflectere, gustulare, docere },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      valores: string[],
+      enclitica: string[],
+      anglica: boolean;
+    } => {
+      return {
+        gustulus: ref(),
+        valores: [],
+        enclitica: [],
+        anglica: anglica
+      };
+    }, setup () {
       const verbum: Ref<Verbum> = toRef(defineProps<{ verbum: Verbum; }>(), 'verbum');
       const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>());
       const propriabile: Ref<boolean> = ref(false);

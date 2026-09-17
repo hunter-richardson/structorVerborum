@@ -12,14 +12,12 @@
     `Loading ${anglicum(pittacium).toUpperCase()}...` :
     `${pittacium.toUpperCase()} onerantur...`;
 
-  const data = (): {
-    onerans: boolean,
-    scriptum: string;
-  } => {
-    return { onerans, scriptum };
-  }
-
-  export default defineComponent({ data: data });
+  export default defineComponent({ data: (): {
+      onerans: boolean,
+      scriptum: string;
+    } => {
+      return { onerans, scriptum };
+    } });
 </script>
 
 <template>

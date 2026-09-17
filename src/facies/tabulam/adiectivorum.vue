@@ -61,9 +61,9 @@
         incomparabilium,
         gustulus: ref(),
         columnae: [],
-        agendum,
-        anglica,
-        lectum,
+        agendum: agendum,
+        anglica: anglica,
+        lectum: lectum,
       };
     }, setup () {
       const adiectivum: Ref<Adiectivum | undefined> = ref(defineModel<Adiectivum>());

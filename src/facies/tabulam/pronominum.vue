@@ -29,7 +29,7 @@
       return {
         gustulus: ref(),
         columnae: [],
-        anglica
+        anglica: anglica
       };
     }, setup () {
       const pronomen: Ref<Pronomen | undefined> = ref(defineModel<Pronomen>());
