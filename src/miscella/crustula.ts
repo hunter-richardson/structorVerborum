@@ -1,4 +1,3 @@
-import type { CookieAttributes } from 'node_modules/typescript-cookie/dist/types';
 import { getCookie, setCookie } from 'typescript-cookie';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
@@ -11,7 +10,7 @@ type Optanda = {
 
 @Nuntius.factum('Crustulum')
 class Crustulum {
-  private static readonly _optiones: CookieAttributes = {
+  private static readonly _optiones: {
     domain: 'conans',
     expires: 30,
     sameSite: 'strict',

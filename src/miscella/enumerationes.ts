@@ -5,7 +5,7 @@ export enum Encliticum {
 }
 
 export enum Mensa {
-  Ianuarius = 1,
+  Ianuarius,
   Februarius,
   Mars,
   Aprilis,

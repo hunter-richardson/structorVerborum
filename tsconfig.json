@@ -13,7 +13,6 @@
     "declaration": true,
     "downlevelIteration": true,
     "emitDecoratorMetadata": true,
-    "emitDeclarationOnly": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
@@ -22,6 +21,7 @@
     "moduleDetection": "auto",
     "moduleResolution": "NodeNext",
     "newLine": "lf",
+    "noEmit": true,
     "noEmitOnError": true,
     "noErrorTruncation": true,
     "noImplicitAny": true,
@@ -35,7 +35,8 @@
     "paths": {
       "facies": [ "./src/facies/*.vue" ],
       "figura": [ "./src/figura.ts" ],
-      "scriptura": [ "./src/scriptura/*.ts" ]
+      "scriptura": [ "./src/scriptura/*.ts" ],
+      "productura": [ "./src/extensions/*.ts" ]
     },
     "sourceMap": true,
     "target": "ES2022",

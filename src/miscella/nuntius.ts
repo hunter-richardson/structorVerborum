@@ -1,4 +1,4 @@
-import mkdir from 'make-dir';
+import { makeDirectorySync as makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes';
@@ -8,7 +8,7 @@ const scribatur = (parametra: {
   nomen?: string
   res: {
     level: string
-    message: string
+    message: unknown
   }
 }): string => {
   if (parametra.nomen) {
@@ -201,7 +201,7 @@ export default class Nuntius implements Disposable {
         zippedArchive: true
       });
 
-      mkdir.makeDirectorySync(navigium.dirname);
+      makeDirectorySync(navigium.dirname);
 
       // navigium.on('new', (hoc: string) => { });
       // navigium.on('rotate', (illud: string, hoc: string) => { });

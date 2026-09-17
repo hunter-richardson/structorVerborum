@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineComponent, type Ref, ref } from 'vue';
   import draggable from 'vuedraggable'
   import gustulare from './gustulare.vue';
   import Gustulus from '../scriptura/gustulus';
@@ -18,26 +18,21 @@
     })
   });
 
-  const componenta: ComponentOptionsWithoutProps = {
-    draggable, gustulare
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    trahens: Ref<boolean>,
-    pellucidum: string[],
-    locutor: Locutor
-  } => {
-    return {
-      locutor: Locutor.se.ipse(),
-      trahens: ref(false),
-      gustulus: ref(),
-      pellucidum
-    };
-  };
-
   export default defineComponent({
-    component: componenta, data: data
+    component: { draggable, gustulare },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      trahens: Ref<boolean>,
+      pellucidum: string[],
+      locutor: Locutor;
+    } => {
+      return {
+        locutor: Locutor.se.ipse(),
+        trahens: ref(false),
+        gustulus: ref(),
+        pellucidum
+      };
+    }
   });
 </script>
 
