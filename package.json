@@ -18,7 +18,9 @@
   },
   "devDependencies": {
     "@8hobbies/typedoc-plugin-404": "^3.2.1",
+    "@microsoft/eslint-formatter-sarif": "^3.1.0",
     "@neoncitylights/sets": "^1.1.0",
+    "@rushstack/eslint-patch": "^1.16.1",
     "@tsconfig/node20": "^20.1.10",
     "@types/deep-equal": "^1.0.4",
     "@types/file-fetch": "^1.6.6",
