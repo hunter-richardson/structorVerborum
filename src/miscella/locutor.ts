@@ -1,7 +1,7 @@
+import { Verbum } from '../praebeunda/verba';
 import Crustula from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-import { Verbum } from '../praebeunda/verba';
 
 @Nuntius.factum('Locutor')
 export default class Locutor {

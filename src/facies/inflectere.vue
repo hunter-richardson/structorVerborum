@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineProps, defineComponent, type ComponentOptionsWithoutProps } from 'vue';
+  import { defineProps, defineComponent } from 'vue';
   import actuum from './tabulam/actuum.vue';
   import adiectivorum from './tabulam/adiectivorum.vue';
   import adverbiorum from './tabulam/adverbiorum.vue';
@@ -11,23 +11,17 @@
 
   const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
 
-  const componenta: ComponentOptionsWithoutProps = {
-    actuum, adiectivorum, adverbiorum, numeraminum, nominum, pronominum
-  };
-
-  const data = (): {
-    referendum: Referendum | undefined,
-    categoria: string
-  } => {
-    return {
-      referendum: eventus.referendum,
-      categoria: eventus.categoria
-    };
-  };
-
   export default defineComponent({
-    components: componenta,
-    data: data
+    components: { actuum, adiectivorum, adverbiorum, numeraminum, nominum, pronominum },
+    data: (): {
+      referendum: Referendum | undefined,
+      categoria: string;
+    } => {
+      return {
+        referendum: eventus.referendum,
+        categoria: eventus.categoria
+      };
+    }
   });
 </script>
 

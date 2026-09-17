@@ -1,4 +1,4 @@
-type Generator<Hoc> = () => Hoc
+export type Generator<Hoc> = () => Hoc;
 export default class Ignavum<Hoc> {
   private _se?: Hoc;
   private readonly _generator: Generator<Hoc>;

@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineModel, defineProps, defineComponent, type Ref, ref } from 'vue';
   import specere from '../specere.vue';
   import seligere from '../seligere.vue';
   import onerare from '../onerare.vue';
@@ -43,35 +43,29 @@
     return await tabula?.tabulentur() ?? [];
   }
 
-  const componenta: ComponentOptionsWithoutProps = {
-    inflectere, gustulare, seligere, specere, onerare
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    agendum: Faciendum<Adiectivum>,
-    incomparabilium: boolean,
-    columnae: Columnae,
-    anglica: boolean,
-    lectum: boolean,
-    genera: Par[],
-    gradua: Par[],
-  } => {
-    return {
-      gradua: paria(gradua),
-      genera: paria(genera),
-      incomparabilium,
-      gustulus: ref(),
-      columnae: [],
-      agendum,
-      anglica,
-      lectum,
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { inflectere, gustulare, seligere, specere, onerare },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      agendum: Faciendum<Adiectivum>,
+      incomparabilium: boolean,
+      columnae: Columnae,
+      anglica: boolean,
+      lectum: boolean,
+      genera: Par[],
+      gradua: Par[],
+    } => {
+      return {
+        gradua: paria(gradua),
+        genera: paria(genera),
+        incomparabilium,
+        gustulus: ref(),
+        columnae: [],
+        agendum,
+        anglica,
+        lectum,
+      };
+    }, setup () {
       const adiectivum: Ref<Adiectivum | undefined> = ref(defineModel<Adiectivum>());
       const nomen: Ref<NomenAgendum | undefined> = ref(defineModel<NomenAgendum>());
       const onerans: Ref<boolean> = ref(true);

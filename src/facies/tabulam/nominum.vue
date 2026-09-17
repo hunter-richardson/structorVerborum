@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineModel, defineProps, defineComponent, type Ref, ref } from 'vue';
   import specere from '../specere.vue';
   import onerare from '../onerare.vue';
   import seligere from '../seligere.vue';
@@ -22,29 +22,23 @@
     return await tabula?.tabulentur() ?? [];
   }
 
-  const componenta: ComponentOptionsWithoutProps = {
-    inflectere, gustulare, seligere, specere, onerare
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    agendum: Faciendum<Nomen>,
-    columnae: Columnae,
-    anglica: boolean,
-    actum: boolean;
-  } => {
-    return {
-      gustulus: ref(),
-      columnae: [],
-      agendum,
-      anglica,
-      actum
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { inflectere, gustulare, seligere, specere, onerare },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      agendum: Faciendum<Nomen>,
+      columnae: Columnae,
+      anglica: boolean,
+      actum: boolean;
+    } => {
+      return {
+        gustulus: ref(),
+        columnae: [],
+        agendum,
+        anglica,
+        actum
+      };
+    }, setup () {
       const actus: Ref<Faciendum<Actus> | undefined> = ref(defineModel<Faciendum<Actus>>());
       const nomen: Ref<Nomen | undefined> = ref(defineModel<Nomen>());
       const onerans: Ref<boolean> = ref(true);

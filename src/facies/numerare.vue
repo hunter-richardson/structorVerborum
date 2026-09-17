@@ -23,25 +23,19 @@
     }
   ];
 
-  const componenta: ComponentOptionsWithoutProps = {
-    gustulare, specere
-  };
-
-  const data = (): {
-    validator: ((arabicus: number) => boolean | string)[],
-    gustulus: Ref<Gustulus | undefined>,
-    anglica: boolean,
-  } => {
-    return {
-      gustulus: ref(),
-      validator,
-      anglica
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { gustulare, specere },
+    data: (): {
+      validator: ((arabicus: number) => boolean | string)[],
+      gustulus: Ref<Gustulus | undefined>,
+      anglica: boolean,
+    } => {
+      return {
+        gustulus: ref(),
+        validator,
+        anglica
+      };
+    }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());
       const romanus: Ref<string> = ref('N');
       const arabicus: Ref<Arabicus> = ref({
