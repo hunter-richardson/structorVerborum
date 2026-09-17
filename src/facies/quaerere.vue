@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineComponent, defineModel, type Ref, ref } from 'vue';
   import inflectere from './inflectere.vue';
   import specere from './specere.vue';
   import loqui from './loqui.vue';
@@ -54,32 +54,26 @@
     }
   ];
 
-  const componenta: ComponentOptionsWithoutProps = {
-    inflectere, gustulare, onerare, specere, loqui
-  };
-
-  const data = (): {
-    validator: ((pars: string) => boolean | string)[],
-    gustulus: Ref<Gustulus | undefined>,
-    columnae: Columnae,
-    anglica: boolean,
-    categoriae: {
-      title: string,
-      value: string;
-    }[];
-  } => {
-    return {
-      categoriae: Categoriae,
-      gustulus: ref(),
-      validator,
-      columnae,
-      anglica
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { inflectere, gustulare, onerare, specere, loqui },
+    data: (): {
+      validator: ((pars: string) => boolean | string)[],
+      gustulus: Ref<Gustulus | undefined>,
+      columnae: Columnae,
+      anglica: boolean,
+      categoriae: {
+        title: string,
+        value: string;
+      }[];
+    } => {
+      return {
+        categoriae: Categoriae,
+        gustulus: ref(),
+        validator,
+        columnae,
+        anglica
+      };
+    }, setup () {
       const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'));
       const verbum: Ref<Verbum | undefined> = ref(defineModel<Verbum>('verbum'));
       const onerans: Ref<boolean> = ref(true);
@@ -166,7 +160,7 @@
                 id='tabula' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
-        <template v-for='columna in headers.flat()' :key='columna.key'>
+        <template v-for='columna in headers.flat()' :key='columna.key ?? ""'>
           <td>
             <template v-if='isSorted(columna)'>
               <v-icon :icon='getSortIcon(columna)' />
@@ -190,7 +184,7 @@
     </template>
     <onerare :onerans='onerans' pittacium='lemmae' />
     <template v-if='!onerans'>
-      <template v-for='lemma in lemmae' :key='lemma'>
+      <template v-for='lemma in lemmae' :key="`${lemma.scriptum}_${lemma.categoria}`">
         <tr>
           <td>{{ lemma.categoria }}</td>
         </tr>

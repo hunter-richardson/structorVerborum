@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type ComponentOptionsWithoutProps, type Ref, ref } from 'vue';
+  import { defineComponent, defineModel, type Ref, ref } from 'vue';
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
@@ -18,25 +18,19 @@
 
   const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%';
 
-  const componenta: ComponentOptionsWithoutProps = {
-    gustulare, specere
-  };
-
-  const data = (): {
-    gustulus: Ref<Gustulus | undefined>,
-    actus: string,
-    nihil: numeri;
-  } => {
-    return {
-      gustulus: ref(),
-      nihil: nihil,
-      actus
-    };
-  };
-
   export default defineComponent({
-    components: componenta, data: data,
-    setup () {
+    components: { gustulare, specere },
+    data: (): {
+      gustulus: Ref<Gustulus | undefined>,
+      actus: string,
+      nihil: numeri;
+    } => {
+      return {
+        gustulus: ref(),
+        nihil: nihil,
+        actus
+      };
+    }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>());
       const operator: Ref<string> = ref('');
       const praesentes: Ref<numeri> = ref(nihil);

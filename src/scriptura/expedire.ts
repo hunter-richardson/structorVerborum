@@ -1,10 +1,10 @@
-import { execaCommand, type Options, type Result } from 'execa';
+import { execa, type Options, type Result } from 'execa';
 
 type Eventus = Result<Options>;
 
 async function aguntur(imperia: string[]): Promise<boolean> {
   imperia.forEach(async (imperium) => {
-    const eventus: Eventus = await execaCommand(imperium);
+    const eventus: Eventus = await execa`${imperium}`;
     if (eventus.failed) {
       throw new Error(eventus.shortMessage ?? eventus.stderr?.toString());
     }
