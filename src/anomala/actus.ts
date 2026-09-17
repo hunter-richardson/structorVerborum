@@ -478,9 +478,9 @@ export default class Actus extends Anomala<Anomalon> {
     )
     const inesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
       () =>
-        new TabulaPraefixa({
+        new TabulaRescripta({
           relata: esse,
-          praefixum: 'īn'
+          rescriptor: (scriptum) => (scriptum.startsWith('e') ? "in" : "īn").concat(scriptum)
         })
     )
 
