@@ -34,6 +34,8 @@ codeql-agent-results
 
 *.js
 
-cypress/e2e
-cypress/fixtures
-cypress/support
+src/cypress/e2e/example.cy.ts
+src/cypress/e2e/tsconfig.json
+src/cypress/fixtures/example.json
+src/cypress/support/commands.ts
+src/cypress/support/e2e.ts
