@@ -1,22 +1,16 @@
 <script lang='ts'>
   import { defineComponent, type Ref, ref } from 'vue';
-  import draggable from 'vuedraggable'
-  import gustulare from './gustulare.vue';
-  import Gustulus from '../scriptura/gustulus';
-  import Locutor from '../miscella/locutor';
-  import Crustula from '../miscella/crustula';
+import draggable from 'vuedraggable';
+import { crustula } from '../miscella/crustula';
+import type Ignavum from '../miscella/ignavum';
+import { locutor, type Locutor } from '../miscella/locutor';
+import Gustulus from '../scriptura/gustulus';
+import gustulare from './gustulare.vue';
 
-  const illustre: boolean = Crustula.se.ipse().facies.est('illustre') ?? false;
+  const illustre: boolean = crustula.hoc().facies.est('illustre') ?? false
 
-  const Please = require('pleasejs');
+  const Please = require('pleasejs')
   const ClassifyX = require('classifyx')
-
-  const pellucidum: string[] = ClassifyX({
-    opacity: 0.5,
-    background: Please.make_color({
-      value: illustre ? 0.25 : 0.75
-    })
-  });
 
   export default defineComponent({
     component: { draggable, gustulare },
@@ -24,26 +18,31 @@
       gustulus: Ref<Gustulus | undefined>,
       trahens: Ref<boolean>,
       pellucidum: string[],
-      locutor: Locutor;
+      locutor: Ignavum<Locutor>
     } => {
       return {
-        locutor: Locutor.se.ipse(),
+        locutor: locutor,
         trahens: ref(false),
         gustulus: ref(),
-        pellucidum
-      };
+        pellucidum: ClassifyX({
+          opacity: 0.5,
+          background: Please.make_color({
+            value: illustre ? 0.25 : 0.75
+          })
+        })
+      }
     }
-  });
+  })
 </script>
 
 <template>
   <gustulare :gustulus='gustulus' />
   <v-chip-group id='locutio'>
-    <draggable v-model='locutor.verba' :ghost-class='pellucidum' @start='trahens = true'
+    <draggable v-model='locutor.hoc().verba' :ghost-class='pellucidum' @start='trahens = true'
                @end='trahens = false'>
       <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
-        <template v-for='verbum in locutor.verba' :key='verbum.unicum'>
-          <v-chip @click:close='locutor.removeatur(verbum.unicum);' close-icon='remove'
+        <template v-for='verbum in locutor.hoc().verba' :key='verbum.unicum'>
+          <v-chip @click:close='locutor.hoc().removeatur(verbum.unicum)' close-icon='remove'
                   :text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
         </template>
       </span>

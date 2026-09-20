@@ -1,23 +1,45 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type Ref, ref } from 'vue';
-  import inflectere from './inflectere.vue';
-  import specere from './specere.vue';
-  import loqui from './loqui.vue';
-  import onerare from './onerare.vue'
-  import gustulare from './gustulare.vue';
-  import Gustulus from '../scriptura/gustulus';
-  import Dictionarium, { type Lemma, type Eventus, type Quaerenda } from '../miscella/dictionarium';
-  import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
-  import Crustula from '../miscella/crustula';
-  import type { Verbum } from '../praebeunda/verba';
+  import { computed, defineComponent, defineModel, type Ref, ref } from 'vue';
+import { crustula } from '../miscella/crustula';
+import { dictionarium, type Eventus, type Lemma, type Quaerenda } from '../miscella/dictionarium';
+import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
+import { type Verbum } from '../praebeunda/verba';
+import Gustulus from '../scriptura/gustulus';
+import gustulare from './gustulare.vue';
+import inflectere from './inflectere.vue';
+import loqui from './loqui.vue';
+import onerare from './onerare.vue';
+import specere from './specere.vue';
+import { useRoute } from 'vuetify/lib/composables/router.mjs';
+import { monstrator, type Monstranda } from '../miscella/monstrator';
+
+  const via = useRoute();
+  const nomen: string = (computed(() => via.value) as unknown) as string;
+  const monstranda: Monstranda = await monstrator.hoc().monstrentur(nomen)
+
+  type Nuntium = {
+    deLitteris: string
+  }
+
+  type Nuntia = {
+    anglicum: Nuntium,
+    latinum: Nuntium
+  }
+
+  const nuntia: Nuntia = {
+    latinum: {
+      deLitteris: monstranda.first((monstrandum) => monstrandum.unicum === 'anglicum.deLitteris').nuntium
+    }, anglicum: {
+      deLitteris: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.deLitteris').nuntium
+    }
+  }
 
   type Columnae = {
     title: string,
     key: string,
-  }[];
+  }[]
 
-  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
-  const dictionarium: Dictionarium = Dictionarium.se.ipse();
+  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
   const Categoriae: {
     title: string,
@@ -26,8 +48,8 @@
     return {
       title: (anglica ? anglicum(categoria) : categoria).capitalize(),
       value: categoria
-    };
-  });
+    }
+  })
 
   const columnae: Columnae = [
     {
@@ -41,18 +63,18 @@
     return {
       title: (anglica ? columna.anglicum : columna.latinum).capitalize(),
       key: columna.latinum
-    };
-  });
+    }
+  })
 
   const validator: ((pars: string) => boolean | string)[] = [
     (pars: string): boolean | string => {
-      const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/;
-      const validum: boolean = licta.test(pars.toLowerCase());
+      const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
+      const validum: boolean = licta.test(pars.toLowerCase())
       const error: string = anglica ?
-        'Only Latin letters allowed' : 'Latinae litterae solae licuntur';
-      return validum || error;
+        nuntia.anglicum.deLitteris : nuntia.latinum.deLitteris
+      return validum || error
     }
-  ];
+  ]
 
   export default defineComponent({
     components: { inflectere, gustulare, onerare, specere, loqui },
@@ -63,97 +85,97 @@
       anglica: boolean,
       categoriae: {
         title: string,
-        value: string;
-      }[];
+        value: string
+      }[]
     } => {
       return {
         categoriae: Categoriae,
         gustulus: ref(),
-        validator,
-        columnae,
-        anglica
-      };
+        validator: validator,
+        columnae: columnae,
+        anglica: anglica
+      }
     }, setup () {
-      const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'));
-      const verbum: Ref<Verbum | undefined> = ref(defineModel<Verbum>('verbum'));
-      const onerans: Ref<boolean> = ref(true);
-      const error: Ref<boolean> = ref(false);
-      const lemmae: Ref<Lemma[]> = ref([]);
+      const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'))
+      const verbum: Ref<Verbum | undefined> = ref(defineModel<Verbum>('verbum'))
+      const onerans: Ref<boolean> = ref(true)
+      const error: Ref<boolean> = ref(false)
+      const lemmae: Ref<Lemma[]> = ref([])
       const quaerenda: Ref<Quaerenda> = ref({
         categoriae: [],
         pars: ''
-      });
+      })
 
       async function oneratust (): Promise<void> {
-        onerans.value = false;
+        onerans.value = false
       }
 
       async function sarci (): Promise<void> {
-        onerans.value = true;
-        lemmae.value = await dictionarium.quaeratur(quaerenda.value);
-        return oneratust();
+        onerans.value = true
+        lemmae.value = await dictionarium.hoc().quaeratur(quaerenda.value)
+        return oneratust()
       }
 
       async function forsSeligat (): Promise<void> {
-        onerans.value = true;
-        const res: Eventus = await dictionarium.forsReferatur(quaerenda.value);
+        onerans.value = true
+        const res: Eventus = await dictionarium.hoc().forsReferatur(quaerenda.value)
         if (inflectenda(res.categoria)) {
-          eventus.value = res;
+          eventus.value = res
         } else {
-          verbum.value = res.referendum as Verbum ?? undefined;
+          verbum.value = res as Verbum ?? undefined
         }
 
-        return oneratust();
+        return oneratust()
       }
 
       async function omnia (): Promise<void> {
-        onerans.value = true;
-        quaerenda.value.categoriae = [];
-        quaerenda.value.pars = '';
+        onerans.value = true
+        quaerenda.value.categoriae = []
+        quaerenda.value.pars = ''
 
-        sarci();
+        sarci()
       }
 
       async function aperi (lemma: Lemma) {
-        const res: Eventus | null = await dictionarium.referatur(lemma);
+        const res: Eventus | null = await dictionarium.hoc().referatur(lemma)
         if (res) {
           if (inflectenda(res.categoria)) {
-            eventus.value = res;
+            eventus.value = res
           } else {
-            verbum.value = res.referendum as Verbum;
+            verbum.value = res as Verbum
           }
         }
       }
 
       function removeApices (): void {
         if (validator[ 0 ](quaerenda.value.pars) === true) {
-          quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra();
-          error.value = false;
+          quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra()
+          error.value = false
         } else {
-          error.value = true;
+          error.value = true
         }
       }
 
       return {
         eventus, verbum, lemmae, onerans, quaerenda, error, sarci, forsSeligat, omnia, aperi, removeApices
-      };
+      }
     }
-  });
+  })
 </script>
 
 <template>
   <gustulare :gustulus='gustulus' />
   <loqui />
   <template v-if='verbum'>
-    <specere :verbum='verbum' @blur='verbum = undefined;' />
+    <specere :verbum='verbum' @blur='verbum = undefined' />
   </template>
   <template v-else-if='eventus'>
-    <inflectere :eventus='eventus as Eventus' @blur='eventus = undefined;' />
+    <inflectere :eventus='eventus as Eventus' @blur='eventus = undefined' />
   </template>
   <div class='text-center'>
-    <v-btn append-icon='search' @click='sarci();' :disabled='onerans' id='sarci'
+    <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
            :text="anglica ? 'Search' : 'Sarci'" />
-    <v-btn append-icon='casino' @click='forsSeligat();' :disabled='onerans' id='fortuna'
+    <v-btn append-icon='casino' @click='forsSeligat()' :disabled='onerans' id='fortuna'
            :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans' density='compact'
@@ -168,7 +190,7 @@
             <template v-if="columna.key === 'lemma'">
               <v-text-field :label='columna.title' v-model='quaerenda.pars' :disabled='onerans'
                             :loading='onerans' validate-on='input' :rules='validator'
-                            id='quaerenda.pars' density='compact' @blur='removeApices();' autofocus
+                            id='quaerenda.pars' density='compact' @blur='removeApices()' autofocus
                             flat single-line />
             </template>
             <template v-else-if="columna.key === 'categoriae'">
@@ -194,7 +216,7 @@
         <tr>
           <td>
             <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' id='aperi'
-                   append-icon='open_in_full' @click='aperi(lemma);' />
+                   append-icon='open_in_full' @click='aperi(lemma)' />
           </td>
         </tr>
       </template>

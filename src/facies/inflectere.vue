@@ -1,33 +1,33 @@
 <script lang='ts'>
-  import { defineProps, defineComponent } from 'vue';
-  import actuum from './tabulam/actuum.vue';
-  import adiectivorum from './tabulam/adiectivorum.vue';
-  import adverbiorum from './tabulam/adverbiorum.vue';
-  import nominum from './tabulam/nominum.vue';
-  import numeraminum from './tabulam/numeraminum.vue';
-  import pronominum from './tabulam/pronominum.vue';
-  import type { Eventus } from '../miscella/dictionarium';
-  import type { Referendum } from '../praebeunda/interfecta';
+  import { defineComponent, defineProps } from 'vue';
+import { type Eventus } from '../miscella/dictionarium';
+import { type Referendum } from '../praebeunda/interfecta';
+import actuum from './tabulam/actuum.vue';
+import adiectivorum from './tabulam/adiectivorum.vue';
+import adverbiorum from './tabulam/adverbiorum.vue';
+import nominum from './tabulam/nominum.vue';
+import numeraminum from './tabulam/numeraminum.vue';
+import pronominum from './tabulam/pronominum.vue';
 
-  const eventus: Eventus = defineProps<{ eventus: Eventus; }>().eventus;
+  const eventus: Eventus = defineProps<{ eventus: Eventus }>().eventus
 
   export default defineComponent({
     components: { actuum, adiectivorum, adverbiorum, numeraminum, nominum, pronominum },
     data: (): {
       referendum: Referendum | undefined,
-      categoria: string;
+      categoria: string
     } => {
       return {
         referendum: eventus.referendum,
         categoria: eventus.categoria
-      };
+      }
     }
-  });
+  })
 </script>
 
 <template>
   <template v-if='referendum'>
-    <v-dialog @blur='referendum = undefined;'>
+    <v-dialog @blur='referendum = undefined'>
       <template v-if="categoria === 'actus'">
         <actuum :agendum='referendum' />
       </template>

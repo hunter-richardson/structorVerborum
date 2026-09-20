@@ -1,42 +1,42 @@
 <script lang='ts'>
-  import { defineModel, defineComponent, defineProps, type Ref, ref } from 'vue';
-  import { anglicum } from '../miscella/enumerationes';
-  import { Multiplex } from '../praebeunda/verba';
-  import Crustula from '../miscella/crustula';
+  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+import { crustula } from '../miscella/crustula';
+import { anglicum } from '../miscella/enumerationes';
+import { Multiplex } from '../praebeunda/verba';
 
-  const multiplicia: Multiplex[] = defineProps<{ multiplicia: Multiplex[]; }>().multiplicia;
+  const multiplicia: Multiplex[] = defineProps<{ multiplicia: Multiplex[] }>().multiplicia
 
   const seligenda: string[] = [
     ...new Set(multiplicia?.map(multiplex => multiplex.valores()).flat())
-  ];
+  ]
 
-  const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value;
-  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
+  const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value
+  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
   export default defineComponent({
     components: {},
     data: (): {
       seligenda: string[],
-      anglica: boolean;
+      anglica: boolean
     } => {
       return {
-        seligenda,
-        anglica
-      };
+        seligenda: seligenda,
+        anglica: anglica
+      }
     }, setup () {
-      const selecta: Ref<string[]> = ref([]);
+      const selecta: Ref<string[]> = ref([])
 
       async function selige (): Promise<void> {
         if (selectum) {
-          await selectum(selecta.value);
+          await selectum(selecta.value)
         }
       }
 
       return {
         selecta, selige, anglicum
-      };
+      }
     }
-  });
+  })
 </script>
 
 <template>

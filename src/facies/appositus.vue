@@ -1,23 +1,75 @@
 <script lang='ts'>
-  import { defineComponent, type Ref, ref } from 'vue';
-  import { useTheme } from 'vuetify';
-  import draggable from 'vuedraggable';
-  import { transducatur, transduceretne } from '../scriptura/transducere';
-  import { referretne, referatur } from '../scriptura/referre';
-  import Crustula from '../miscella/crustula';
-  import quaerere from './quaerere.vue';
-  import numerare from './numerare.vue';
-  import calculare from './calculare.vue';
-  import gustulare from './gustulare.vue';
-  import Gustulus from '../scriptura/gustulus';
-  import Locutor from '../miscella/locutor';
+  import { computed, defineComponent, type Ref, ref } from 'vue'
+  import { useTheme } from 'vuetify'
+  import draggable from 'vuedraggable'
+  import { transducatur, transduceretne } from '../scriptura/transducere'
+  import { referretne, referatur } from '../scriptura/referre'
+  import { crustula, type Crustula } from '../miscella/crustula'
+  import quaerere from './quaerere.vue'
+  import numerare from './numerare.vue'
+  import calculare from './calculare.vue'
+  import gustulare from './gustulare.vue'
+  import Gustulus from '../scriptura/gustulus'
+  import { locutor } from '../miscella/locutor'
+import type Ignavum from '../miscella/ignavum'
+import { useRoute } from 'vuetify/lib/composables/router.mjs';
+import { monstrator, type Monstranda } from '../miscella/monstrator';
+
+  const via = useRoute();
+  const nomen: string = (computed(() => via.value) as unknown) as string;
+  const monstranda: Monstranda = await monstrator.hoc().monstrentur(nomen)
+
+  type Nuntium = {
+    titula: string,
+    rogatum: string,
+    colloqui: string,
+    assentire: string,
+    negare: string,
+    deCrustulis: string,
+    annuli: {
+      quaerere: string,
+      numerare: string,
+      calculare: string
+    },
+  }
+
+  type Nuntia = {
+    anglicum: Nuntium,
+    latinum: Nuntium
+  }
 
   type Annuli = {
     titula: string,
-    valor: string;
-  }[];
+    valor: string
+  }[]
 
-  const locutor: Locutor = Locutor.se.ipse();
+  const nuntia: Nuntia = {
+    latinum: {
+      titula: monstranda.first((monstrandum) => monstrandum.unicum === 'latina.titula').nuntium,
+      rogatum: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.rogatum').nuntium,
+      colloqui: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.colloqui').nuntium,
+      assentire: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.assentire').nuntium,
+      negare: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.negare').nuntium,
+      deCrustulis: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.deCrustulis').nuntium,
+      annuli: {
+        quaerere: monstranda.first((monstrandum) => monstrandum.unicum === 'latini.annuli.quaerere').nuntium,
+        numerare: monstranda.first((monstrandum) => monstrandum.unicum === 'latini.annuli.numerare').nuntium,
+        calculare: monstranda.first((monstrandum) => monstrandum.unicum === 'latini.annuli.calculare').nuntium,
+      }
+    }, anglicum: {
+        titula: monstranda.first((monstrandum) => monstrandum.unicum === 'anglica.titula').nuntium,
+        rogatum: monstranda.first((monstrandum) => monstrandum.unicum === 'anglicum.rogatum').nuntium,
+        colloqui: monstranda.first((monstrandum) => monstrandum.unicum === 'anglicum.colloqui').nuntium,
+        assentire: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.assentire').nuntium,
+        negare: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.negare').nuntium,
+        deCrustulis: monstranda.first((monstrandum) => monstrandum.unicum === 'anglicum.deCrustulis').nuntium,
+        annuli: {
+          quaerere: monstranda.first((monstrandum) => monstrandum.unicum === 'anglici.annuli.quaerere').nuntium,
+          numerare: monstranda.first((monstrandum) => monstrandum.unicum === 'anglici.annuli.numerare').nuntium,
+          calculare: monstranda.first((monstrandum) => monstrandum.unicum === 'anglici.annuli.calculare').nuntium,
+      }
+    }
+  };
 
   export default defineComponent({
     components: { draggable, gustulare, calculare, quaerere, numerare },
@@ -28,153 +80,152 @@
       annulus: Ref<string>,
       locutionis: boolean,
       referret: boolean,
+      nuntia: Nuntia,
       annuli: Annuli,
-      titula: string;
     } => {
       return {
-        locutionis: locutor.locutust(),
+        locutionis: locutor.hoc().locutust(),
         transduceret: transduceretne(),
         referret: referretne(),
         trahens: ref(false),
         annulus: ref(''),
         gustulus: ref(),
+        nuntia: nuntia,
         annuli: [],
-        titula: ''
-      };
+      }
     }, setup () {
-      const crustula: Ref<Crustula | undefined> = ref();
+      const crustula: Ref<Ignavum<Crustula> | undefined> = ref()
 
       function interverteFaciem (): void {
-        crustula.value?.facies.interverteUtrum();
-        useTheme().global.name.value = crustula.value?.facies.est('fusca') ? 'dark' : 'light';
+        crustula.value?.hoc().facies.interverteUtrum()
+        useTheme().global.name.value = crustula.value?.hoc().facies.est('fusca') ? 'dark' : 'light'
       }
 
       function resepara (valor: string): void {
-        crustula.value?.separator.coquatur(valor);
+        crustula.value?.hoc().separator.coquatur(valor)
         document.querySelectorAll('[^id=crustula.separator].text-primary')
-          .forEach(element => element.classList.remove('text-primary'));
+          .forEach(element => element.classList.remove('text-primary'))
 
-        const separatoris: Element | null = document.getElementById(`crustula.separator.${valor}`);
+        const separatoris: Element | null = document.getElementById(`crustula.separator.${valor}`)
         if (separatoris) {
-          separatoris.classList.add('text-primary');
+          separatoris.classList.add('text-primary')
         }
       }
 
       function negavit (): void {
-        crustula.value?.assensus.coquatur('negavit');
-        window.location.reload();
+        crustula.value?.hoc().assensus.coquatur('negavit')
+        window.location.reload()
       }
 
       function coquantur (): void {
         if (crustula.value) {
-          crustula.value.assensus.coquatur('assensit');
+          crustula.value.hoc().assensus.coquatur('assensit')
 
-          crustula.value.separator.coquatur();
-          crustula.value.apices.coquatur();
-          crustula.value.utendaU.coquatur();
-          crustula.value.magnas.coquatur();
-          crustula.value.facies.coquatur();
+          crustula.value.hoc().separator.coquatur()
+          crustula.value.hoc().apices.coquatur()
+          crustula.value.hoc().utendaU.coquatur()
+          crustula.value.hoc().magnas.coquatur()
+          crustula.value.hoc().facies.coquatur()
 
-          useTheme().global.name.value = 'dark';
-          const separatoris: Element | null = document.getElementById('#crustula.separator.inane');
+          useTheme().global.name.value = 'dark'
+          const separatoris: Element | null = document.getElementById('#crustula.separator.inane')
           if (separatoris) {
-            separatoris.classList.add('text-primary');
+            separatoris.classList.add('text-primary')
           }
 
-          if (!crustula.value.lingua.cocutust()) {
-            crustula.value.lingua.coquatur();
+          if (!crustula.value.hoc().lingua.cocutust()) {
+            crustula.value.hoc().lingua.coquatur()
           }
 
-          window.location.reload();
+          window.location.reload()
         }
       }
 
       return {
         crustula, interverteFaciem, resepara, negavit, coquantur
-      };
+      }
     }, methods: {
       async refer (): Promise<void> {
         if (this.referret) {
-          await referatur(locutor.scribantur());
+          await referatur(locutor.hoc().scribantur())
         }
       }, transduc (): void {
         if (this.transduceret) {
-          transducatur(locutor.scribantur());
+          transducatur(locutor.hoc().scribantur())
         }
       }
     }, mounted (): void {
-      this.crustula = Crustula.se.ipse();
+      this.crustula = crustula
 
-      if (this.crustula?.assensus.est('assensit')) {
-        const anglica: boolean = this.crustula.lingua.est('anglica') ?? false;
-        this.titula = anglica ? 'Phrase Factory' : 'Structor Verborum';
+      if (this.crustula?.hoc().assensus.est('assensit')) {
+        const anglica: boolean = this.crustula.hoc().lingua.est('anglica') ?? false
+        document.title = anglica ? nuntia.anglicum.titula : nuntia.latinum.titula
         this.annuli = [
           {
-            titula: anglica ? 'Search' : 'Quaerere',
+            titula: anglica ? nuntia.anglicum.annuli.quaerere : nuntia.latinum.annuli.quaerere,
             valor: 'quaerere'
           }, {
-            titula: anglica ? 'Ennumerate' : 'Numerare',
+            titula: anglica ? nuntia.anglicum.annuli.numerare : nuntia.latinum.annuli.numerare,
             valor: 'numerare'
           }, {
-            titula: anglica ? 'Calculate' : 'Calculare',
+            titula: anglica ? nuntia.anglicum.annuli.calculare : nuntia.latinum.annuli.calculare,
             valor: 'calculare'
           }
-        ];
+        ]
       } else {
-        document.title = 'Structor Verborum';
+        document.title = nuntia.latinum.titula
         this.annuli = [
           {
-            titula: 'Quaerere',
+            titula: nuntia.latinum.annuli.quaerere,
             valor: 'quaerere'
           }, {
-            titula: 'Numerare',
+            titula: nuntia.latinum.annuli.numerare,
             valor: 'numerare'
           }, {
-            titula: 'Calculare',
+            titula: nuntia.latinum.annuli.calculare,
             valor: 'calculare'
           }
-        ];
+        ]
       }
 
-      this.annulus = this.annuli.first().valor;
-      document.title = this.titula;
+      this.annulus = this.annuli.first().valor
     }
-  });
+  })
 </script>
 
 <template>
   <template v-if='crustula'>
     <gustulare :gustulus='gustulus' />
-    <template v-if="crustula.assensus.est('assensit')">
+    <template v-if="crustula.hoc().assensus.est('assensit')">
       <draggable @start='trahens = true' @end='trahens = false'>
         <v-speed-dial id='crustula' location='bottom center' transition='fade-transition'
                       open-on-click>
           <template #activator='{ props: activator }'>
             <v-fab v-bind='activator' size='medium' icon='cake' />
           </template>
-          <v-btn key='lingua' id='crustula.lingua' @click="crustula.lingua.interverteUtrum();" icon>
-            <v-img height='36px' width='36px' :src="`/res/picta/${crustula.lingua.edatur()}.png`" />
+          <v-btn key='lingua' id='crustula.lingua' @click="crustula.hoc().lingua.interverteUtrum()" icon>
+            <v-img height='36px' width='36px' :src="`/res/picta/${crustula.hoc().lingua.edatur()}.png`" />
           </v-btn>
           <v-btn key='facies' id='crustula.facies' @click='interverteFaciem()'
-                 :icon="`${crustula.facies.est('fusca') ? 'dark' : 'light'}_mode`" />
-          <v-btn key='apices' id='crustula.apices' :text="crustula.apices.est() ? 'ā' : 'a'"
-                 @click='crustula.apices.interverteUtrum();' />
-          <v-btn key='magnas' id='crustula.magnas' :text="crustula.magnas.est() ? 'A' : 'a'"
-                 @click='crustula.magnas.interverteUtrum();' />
-          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.utendaU.est() ? 'v' : 'u'"
-                 @click='crustula.utendaU.interverteUtrum();' />
-          <v-btn key='crustula.separator.inane' text=' _ ' @click="resepara('inane');"
+                 :icon="`${crustula.hoc().facies.est('fusca') ? 'dark' : 'light'}_mode`" />
+          <v-btn key='apices' id='crustula.apices' :text="crustula.hoc().apices.est() ? 'ā' : 'a'"
+                 @click='crustula.hoc().apices.interverteUtrum()' />
+          <v-btn key='magnas' id='crustula.magnas' :text="crustula.hoc().magnas.est() ? 'A' : 'a'"
+                 @click='crustula.hoc().magnas.interverteUtrum()' />
+          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.hoc().utendaU.est() ? 'v' : 'u'"
+                 @click='crustula.hoc().utendaU.interverteUtrum()' />
+          <v-btn key='crustula.separator.inane' text=' _ ' @click="resepara('inane')"
                  id='crustula.separator.inane' />
-          <v-btn key='crustula.separator.interpunctum' text=' • ' @click="resepara('interpunctum');"
+          <v-btn key='crustula.separator.interpunctum' text=' • ' @click="resepara('interpunctum')"
                  id='crustula.separator.interpunctum' />
-          <v-btn key='crustula.separator.nullum' text='   ' @click="resepara('nullum');"
+          <v-btn key='crustula.separator.nullum' text='   ' @click="resepara('nullum')"
                  id='crustula.separator.nullum' />
         </v-speed-dial>
       </draggable>
     </template>
     <v-card>
       <v-app-bar density='compact' location='top' absolute flat tile>
-        <v-app-bar-title :text='titula' />
+        <v-app-bar-title :text="crustula.hoc().lingua.est('anglica') ? nuntia.anglicum.titula : nuntia.latinum.titula" />
         <template v-if='locutionis'>
           <v-card location='right'>
             <v-btn-toggle density='compact'>
@@ -189,8 +240,7 @@
         </template>
         <template v-else>
           <div id='subiciendum' class='text-center'>
-            <v-card
-                    :text="crustula?.lingua.est('anglica') ? 'What would you like to do or say?' : 'Quid agere loquive velles'" />
+            <v-card :text="crustula.hoc().lingua.est('anglica') ? nuntia.anglicum.rogatum : nuntia.latinum.rogatum" />
           </div>
         </template>
         <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
@@ -199,7 +249,7 @@
               <a v-if='isHovering' target='_blank'
                  href='https://github.com/hunter-richardson/structorverborum/issues'>
                 <v-card v-bind='props'
-                        :text="crustula?.lingua.est('anglica') ? 'Let\'s talk!' : 'Colloquamur'" />
+                        :text="crustula.hoc().lingua.est('anglica') ? nuntia.anglicum.colloqui : nuntia.latinum.colloqui" />
               </a>
             </template>
           </v-hover>
@@ -223,34 +273,31 @@
         </v-tabs-window-item>
       </v-tabs-window>
     </v-card>
-    <template v-if='!crustula.assensus'>
+    <template v-if='!crustula.hoc().assensus'>
       <v-footer absolute>
         <v-container>
           <v-row no-gutters>
             <v-col>
               <v-sheet class='pa-1'>
-                <div id='titulus.latinus'>Hic crustula utantur ut singulas opteris pro usu tibi, aut
-                  crustula condita negare optares et situm immutatum utereris, atque solum crustulum
-                  conditum erit renutus eorum.<br><br>Noteris quod crustula plura mutabunt modum
-                  pariendo locutionum ergo infidum esset vertere huc illucque.</div>
+                <div id='titulus.latinus'>
+                  <v-card :text="nuntia.latinum.titula" />
+                </div>
                 <v-btn-toggle>
-                  <v-btn text='Assentio' id='assentio' append-icon='handshake'
-                         @click='coquantur();' />
-                  <v-btn text='Nego' id='nego' append-icon='block' @click='negavit();' />
+                  <v-btn :text='nuntia.latinum.assentire' id='assentio' append-icon='handshake'
+                         @click='coquantur()' />
+                  <v-btn :text='nuntia.latinum.negare' id='nego' append-icon='block' @click='negavit()' />
                 </v-btn-toggle>
               </v-sheet>
             </v-col>
             <v-col>
               <v-sheet class='pa-1'>
-                <div id='titulus.anglicus'>Here cookies are used so that you may choose details for
-                  your own experience. Or you can choose not to store cookies and use the site
-                  unchanged; in this case, the only cookie stored would be your refusal of
-                  them.<br><br>Note that most of these cookies will modify the method of generating
-                  phrases, so switching them back-and-forth between modes will be unreliable.</div>
+                <div id='titulus.anglicus'>
+                  <v-card :text="nuntia.anglicum.titula" />
+                </div>
                 <v-btn-toggle>
-                  <v-btn text='Agree' append-icon='handshake'
-                         @click="crustula?.lingua.coquatur('anglica'); coquantur();" />
-                  <v-btn text='Refuse' append-icon='block' @click='negavit();' />
+                  <v-btn :text='nuntia.anglicum.assentire' append-icon='handshake'
+                         @click="crustula.hoc().lingua.coquatur('anglica') coquantur()" />
+                  <v-btn :text='nuntia.anglicum.negare' append-icon='block' @click='negavit()' />
                 </v-btn-toggle>
               </v-sheet>
             </v-col>
@@ -263,6 +310,6 @@
 
 <style>
   .v-btn--floating {
-    position: relative;
+    position: relative
   }
 </style>

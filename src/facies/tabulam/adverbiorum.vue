@@ -8,79 +8,80 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { AdverbiumAgendum } from '../../praebeunda/agenda'
   import { Adverbium } from '../../praebeunda/verba'
-  import Crustula from '../../miscella/crustula'
+  import { crustula } from '../../miscella/crustula'
   import Tabula from '../../tabulae/tabula'
+import type Ignavum from '../../miscella/ignavum'
 
-  const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum; }>().agendum;
-  const tabula: Tabula<Adverbium> | null = agendum.putetur();
-  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
+  const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum }>().agendum
+  const tabula: Ignavum<Tabula<Adverbium>> | undefined = agendum.putetur()
+  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
   async function omnia (): Promise<Adverbium[]> {
-    return await tabula?.tabulentur() ?? [];
+    return await tabula?.hoc().tabulentur() ?? []
   }
 
   export default defineComponent({
     components: { gustulare, seligere, specere, onerare },
-    data: () => {
+    data: (): {
       gustulus: Ref<Gustulus | undefined>,
       columnae: Columnae,
-      anglica: boolean;
-    } = () => {
+      anglica: boolean
+    } => {
     return {
       gustulus: ref(),
       columnae: [],
-      anglica
-    };
+      anglica: anglica
+    }
   }, setup() {
-      const adverbium: Ref<Adverbium | undefined> = ref(defineModel<Adverbium>());
-      const onerans: Ref<boolean> = ref(true);
-      const adverbia: Ref<Adverbium[]> = ref([]);
+      const adverbium: Ref<Adverbium | undefined> = ref(defineModel<Adverbium>())
+      const onerans: Ref<boolean> = ref(true)
+      const adverbia: Ref<Adverbium[]> = ref([])
 
       async function oneratust (): Promise<void> {
-        onerans.value = false;
+        onerans.value = false
       }
 
       async function forsInflectat (): Promise<void> {
-        onerans.value = true;
-        adverbium.value = adverbia.value.random();
-        return oneratust();
+        onerans.value = true
+        adverbium.value = adverbia.value.random()
+        return oneratust()
       }
 
       async function cole (selecta: string[]): Promise<void> {
-        onerans.value = true;
-        const omnes: Adverbium[] = await omnia();
+        onerans.value = true
+        const omnes: Adverbium[] = await omnia()
         if (omnes) {
           adverbia.value = omnes.filter(adverbium => selecta.every(selectum =>
-            adverbium.valores().includes(selectum)));
+            adverbium.valores().includes(selectum)))
         }
 
-        return oneratust();
+        return oneratust()
       }
 
       return {
         adverbium, adverbia, onerans, forsInflectat, cole
-      };
+      }
     }, async mounted (): Promise<void> {
-      this.adverbia = await omnia();
+      this.adverbia = await omnia()
       this.columnae = categoricum<Adverbium>({
         categoria: 'adverbium',
         haec: this.adverbia as Adverbium[]
-      });
+      })
 
-      this.onerans = false;
+      this.onerans = false
     }
-  });
+  })
 </script>
 
 <template>
   <gustulare :gustulsu='gustulus' />
   <template v-if='adverbium'>
-    <specere :verbum='adverbium' @blur='adverbium = undefined;' />
+    <specere :verbum='adverbium' @blur='adverbium = undefined' />
   </template>
   <template v-else>
     <seligere :multiplicia='adverbia' :selectum='cole' />
     <template v-if='adverbia.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+      <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
              :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
     <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
@@ -89,7 +90,7 @@
       <template v-if='!onerans'>
         <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
-               @click='adverbium = hoc;' />
+               @click='adverbium = hoc' />
       </template>
     </v-data-table>
   </template>

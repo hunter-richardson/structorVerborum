@@ -1,46 +1,47 @@
 <script lang='ts'>
-  import { defineModel, defineProps, defineComponent, type Ref, ref } from 'vue';
-  import specere from '../specere.vue';
-  import seligere from '../seligere.vue';
-  import onerare from '../onerare.vue';
-  import inflectere from '../inflectere.vue';
-  import gustulare from '../gustulare.vue';
-  import Gustulus from '../../scriptura/gustulus';
-  import { NomenAgendum, AdiectivumAgendum, Incomparabile } from '../../praebeunda/agenda'
-  import { type Columnae, categoricum } from '../../scriptura/columnae';
-  import { genera, gradua, anglicum } from '../../miscella/enumerationes';
-  import type { Faciendum } from '../../praebeunda/interfecta';
-  import { Adiectivum } from '../../praebeunda/verba';
-  import Crustula from '../../miscella/crustula';
-  import Tabula from '../../tabulae/tabula';
+  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+import { crustula } from '../../miscella/crustula';
+import { anglicum, genera, gradua } from '../../miscella/enumerationes';
+import type Ignavum from '../../miscella/ignavum';
+import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
+import { type Faciendum } from '../../praebeunda/interfecta';
+import { Adiectivum } from '../../praebeunda/verba';
+import { categoricum, type Columnae } from '../../scriptura/columnae';
+import Gustulus from '../../scriptura/gustulus';
+import Tabula from '../../tabulae/tabula';
+import gustulare from '../gustulare.vue';
+import inflectere from '../inflectere.vue';
+import onerare from '../onerare.vue';
+import seligere from '../seligere.vue';
+import specere from '../specere.vue';
 
   type Par = {
     title: string,
     value: string
-  };
+  }
 
   type Et = {
     gradus: string,
     genus: string
-  };
+  }
 
-  const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum>; }>().agendum;
-  const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
-  const tabula: Tabula<Adiectivum> | null = agendum.putetur();
-  const lectum: boolean = agendum instanceof AdiectivumAgendum;
-  const incomparabilium: boolean = agendum instanceof Incomparabile;
+  const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum> }>().agendum
+  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
+  const tabula: Ignavum<Tabula<Adiectivum>> | undefined = agendum.putetur()
+  const lectum: boolean = agendum instanceof AdiectivumAgendum
+  const incomparabilium: boolean = agendum instanceof Incomparabile
 
   function paria(valores: string[]): Par[] {
     return valores.map(valor => {
       return {
         title: (anglica ? anglicum(valor) : valor).toUpperCase(),
         value: valor
-      };
-    });
+      }
+    })
   }
 
   async function omnia (): Promise<Adiectivum[]> {
-    return await tabula?.tabulentur() ?? [];
+    return await tabula?.hoc().tabulentur() ?? []
   }
 
   export default defineComponent({
@@ -61,75 +62,75 @@
         incomparabilium,
         gustulus: ref(),
         columnae: [],
-        agendum,
-        anglica,
-        lectum,
-      };
+        agendum: agendum,
+        anglica: anglica,
+        lectum: lectum,
+      }
     }, setup () {
-      const adiectivum: Ref<Adiectivum | undefined> = ref(defineModel<Adiectivum>());
-      const nomen: Ref<NomenAgendum | undefined> = ref(defineModel<NomenAgendum>());
-      const onerans: Ref<boolean> = ref(true);
-      const adiectiva: Ref<Adiectivum[]> = ref([]);
+      const adiectivum: Ref<Adiectivum | undefined> = ref(defineModel<Adiectivum>())
+      const nomen: Ref<NomenAgendum | undefined> = ref(defineModel<NomenAgendum>())
+      const onerans: Ref<boolean> = ref(true)
+      const adiectiva: Ref<Adiectivum[]> = ref([])
       const et: Ref<Et> = ref({
         gradus: '',
         genus: ''
-      });
+      })
 
       async function oneratust (): Promise<void> {
-        onerans.value = false;
+        onerans.value = false
       }
 
       async function forsInflectat (): Promise<void> {
-        onerans.value = true;
-        adiectivum.value = adiectiva.value.random();
-        return oneratust();
+        onerans.value = true
+        adiectivum.value = adiectiva.value.random()
+        return oneratust()
       }
 
       async function cole (selecta: string[]): Promise<void> {
-        onerans.value = true;
-        const omnes: Adiectivum[] = await omnia();
+        onerans.value = true
+        const omnes: Adiectivum[] = await omnia()
         if (omnes) {
           adiectiva.value = omnes.filter(adiectivum => selecta.every(selectum =>
-            adiectivum.valores().includes(selectum)));
+            adiectivum.valores().includes(selectum)))
         }
 
-        return oneratust();
+        return oneratust()
       }
 
       function referIncomparabile (): void {
-        nomen.value = (agendum as Incomparabile).probetur(et.value.genus) ?? undefined;
+        nomen.value = (agendum as Incomparabile).probetur(et.value.genus) ?? undefined
       }
 
       async function referComparabile (): Promise<void> {
         nomen.value = await (agendum as AdiectivumAgendum).probetur({
           gradus: et.value.gradus,
           genus: et.value.genus
-        }) ?? undefined;
+        }) ?? undefined
       }
 
       return {
         adiectivum, adiectiva, nomen, onerans, et, forsInflectat, cole, referIncomparabile, referComparabile
-      };
+      }
     }, async mounted (): Promise<void> {
-      this.adiectiva = await omnia();
+      this.adiectiva = await omnia()
       this.columnae = categoricum<Adiectivum>({
         categoria: 'adiectivum',
         haec: this.adiectiva as Adiectivum[]
-      });
+      })
 
-      this.onerans = false;
+      this.onerans = false
     }
-  });
+  })
 </script>
 
 <template>
   <gustulare :gustulus='gustulus' />
-  <specere v-if='adiectivum' :verbum='adiectivum' @blur='adiectivum = undefined;' />
-  <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined;' />
+  <specere v-if='adiectivum' :verbum='adiectivum' @blur='adiectivum = undefined' />
+  <inflectere v-else-if='nomen' :agendum='nomen' @blur='nomen = undefined' />
   <template v-else>
     <seligere :multiplicia='adiectiva' :selectum='cole' />
     <template v-if='adiectiva.length > 1'>
-      <v-btn append-icon='casino' @click='forsInflectat();' :disabled='onerans' id='fortuna'
+      <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
              :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
     </template>
     <v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans'
@@ -138,7 +139,7 @@
       <template v-if='!onerans'>
         <v-btn v-show='!onerans' v-for='hoc in adiectiva' :key='hoc.unicum'
                :text="anglica ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
-               :id='`selige_${hoc.unicum.toString()}`' @click='adiectivum = hoc;' />
+               :id='`selige_${hoc.unicum.toString()}`' @click='adiectivum = hoc' />
       </template>
     </v-data-table>
     <template v-if='lectum || incomparabilium'>

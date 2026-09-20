@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { defineComponent, defineProps, type Ref, ref } from 'vue'
-  import Gustulus from '../scriptura/gustulus'
+  import { defineComponent, defineProps, type Ref, ref } from 'vue';
+import Gustulus from '../scriptura/gustulus';
 
-  const gustulus: Gustulus = defineProps<{ gustulus: Gustulus; }>().gustulus;
-  const data = (): {
-    gustulus: Ref<Gustulus>;
-  } => {
-    return { gustulus: ref(gustulus) };
-  };
+  const gustulus: Gustulus = defineProps<{ gustulus: Gustulus }>().gustulus
 
-  export default defineComponent({ data: data });
+  export default defineComponent({
+    data: (): {
+      gustulus: Ref<Gustulus>
+    } => {
+      return { gustulus: ref(gustulus) }
+    } })
 </script>
 
 <template>
