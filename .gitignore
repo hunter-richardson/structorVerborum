@@ -33,3 +33,7 @@ codeql-agent-results
 /.vscode
 
 *.js
+
+cypress/e2e
+cypress/fixtures
+cypress/support
