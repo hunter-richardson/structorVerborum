@@ -13,11 +13,11 @@ jobs:
       fail-fast: true
     steps:
       - name: vellere
-        uses: actions/checkout@v4
+        uses: actions/checkout@latest
         with:
           fetch-depth: 0
       - name: tollere
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@latest
         with:
           node-version: 'latest'
       - name: inaugurare
