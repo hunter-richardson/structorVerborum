@@ -22,7 +22,7 @@ export type Positor<Hoc extends Verba.Multiplex> = (agendum: Agendum<Hoc>) => Ho
 
 export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfecta.Lectum {
   versio!: string
-  infinitivum!: string
+  infinitivum?: string
   perfectum?: string
   supinum?: string
 
@@ -31,11 +31,11 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
   }
 
   async nomen(): Promise<Interfecta.Faciendum<Verba.Nomen> | undefined> {
-    if ((await nomina.omnia()).includes(this.infinitivum)) {
-      return (await nomina.feratur(this.infinitivum))
+    if ((await nomina.omnia()).includes(this.infinitivum ?? '')) {
+      return (await nomina.feratur(this.infinitivum ?? ''))
     } else {
       const versioNova: string = `${this.versio.split('/')[0]}${this.supinum?.trim() ? '//prona' : ''}`
-      const radix: string = this.infinitivum.chop(3)
+      const radix: string = this.infinitivum?.chop(3) ?? ''
       let suffixumGeriundii: string
       switch (this.versio.split('/')[0]) {
         case 'prima':
@@ -52,7 +52,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
       }
 
       return new Structor(NomenActum)
-        .ponatur((nomen) => (nomen.infinitivum = this.infinitivum))
+        .ponatur((nomen) => (nomen.infinitivum = this.infinitivum ?? ''))
         .ponatur((nomen) => (nomen.gerundium = `${radix}${suffixumGeriundii}`))
         .ponatur((nomen) => (nomen.supinum = this.supinum ?? ''))
         .ponatur((nomen) => (nomen.versio = versioNova))

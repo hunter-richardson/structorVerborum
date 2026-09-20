@@ -1,4 +1,3 @@
-import Anomala, { Mantela } from './anomala';
 import Ignavum from '../miscella/ignavum';
 import { ActusAgendus } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
@@ -9,9 +8,9 @@ import TabulaPerfecta from '../tabulae/defectae/perfecta';
 import TabulaFissa from '../tabulae/fissa';
 import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
 import TabulaRescripta from '../tabulae/rescriptae/rescripta';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
-import type Tabula from '../tabulae/tabula'
+import type Tabula from '../tabulae/tabula';
+import Anomala, { Mantela } from './anomala';
 
 class Actus extends Anomala<Anomalon> {
   protected override async numeretur(): Promise<void> {
@@ -81,7 +80,7 @@ class Actus extends Anomala<Anomalon> {
                             .ponatur((actus) => (actus.infinitivum = 'ferere'))
                             .ponatur((actus) => (actus.perfectum = 'tulisse'))
                             .ponatur((actus) => (actus.supinum = 'lātum'))
-                            .ponatur((actus) => (actus.versio = 'tertia/cumImperativoBrevi'))]
+                            .ponatur((actus) => (actus.versio = 'tertia/cumImperativoBrevi'))
                    ]
                  })
     const facere: Ignavum<TabulaCollata<Anomalon>> =
@@ -368,7 +367,7 @@ class Actus extends Anomala<Anomalon> {
     const obire: Ignavum<TabulaPraefixa<Anomalon>> =
              new Ignavum(TabulaPraefixa<Anomalon>, {
                    relata: ire,
-                   praefixa: 'ob'
+                   praefixum: 'ob'
                  })
     const obsolefieri: Ignavum<TabulaPraefixa<Anomalon>> =
                    new Ignavum(TabulaPraefixa<Anomalon>, {
@@ -383,8 +382,8 @@ class Actus extends Anomala<Anomalon> {
                             positor: Anomalon.positor
                           }),
                       new Structor(ActusAgendus)
-                            .ponatur((actus) => (actus.perfectum 'ōdisse'))
-                            .ponatur((actus) => (actus.perfectum 'quarta//perfecta'))
+                            .ponatur((actus) => (actus.perfectum = 'ōdisse'))
+                            .ponatur((actus) => (actus.perfectum = 'quarta//perfecta'))
                     ]
                   })
     const offerre: Ignavum<TabulaRescripta<Anomalon>> =
@@ -513,9 +512,9 @@ class Actus extends Anomala<Anomalon> {
                           .ponatur((actus) => (actus.supinum = 'ventum'))
                           .ponatur((actus) => (actus.versio = 'quartus//impersonalis//passivo'))
                           .struatur().putetur()
-    const facereFalsum: Ignavnum<TabulaRescripta<Anomalon>> =
+    const facereFalsum: Ignavum<TabulaRescripta<Anomalon>> =
                     new Ignavum(TabulaRescripta<Anomalon>, {
-                          relata: facere
+                          relata: facere,
                           rescriptor: (scriptum: string): string => scriptum === 'fac' ? 'face' : scriptum
                         })
     const arefacere: Ignavum<TabulaPraefixa<Anomalon>> =
@@ -733,29 +732,29 @@ class Actus extends Anomala<Anomalon> {
                        praefixum: 'con'
                      })
     const contravenire: Ignavum<TabulaPraefixa<Anomalon>> =
-                    new Ignavum(TabulaPraefixa<Anomalon>. {
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
                           relata: venireRectum,
                           praefixum: 'contrā'
                         })
     const disconvenire: Ignavum<TabulaPraefixa<Anomalon>> =
-                    new Ignavum(TabularPraefixa<Anomalon>, {
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
                           relata: venireRectum,
-                          praefixa: 'discon'
+                          praefixum: 'discon'
                         })
     const devenire: Ignavum<TabulaPraefixa<Anomalon>> =
                 new Ignavum(TabulaPraefixa<Anomalon>, {
                       relata: venireRectum,
-                      praefixa: 'dē'
+                      praefixum: 'dē'
                     })
     const evenire: Ignavum<TabulaPraefixa<Anomalon>> =
                new Ignavum(TabulaPraefixa<Anomalon>, {
                      relata: venireRectum,
-                     praefixa: 'ē'
+                     praefixum: 'ē'
                    })
     const invenire: Ignavum<TabulaPraefixa<Anomalon>> =
                 new Ignavum(TabulaPraefixa<Anomalon>, {
                       relata: venireRectum,
-                      praefixa: 'in'
+                      praefixum: 'in'
                     })
     const intervenire: Ignavum<TabulaPraefixa<Anomalon>> =
                    new Ignavum(TabulaPraefixa<Anomalon>, {
@@ -765,37 +764,37 @@ class Actus extends Anomala<Anomalon> {
     const obvenire: Ignavum<TabulaPraefixa<Anomalon>> =
                 new Ignavum(TabulaPraefixa<Anomalon>, {
                       relata: venireRectum,
-                      praefixa: 'ob'
+                      praefixum: 'ob'
                     })
     const pervenire: Ignavum<TabulaPraefixa<Anomalon>> =
                  new Ignavum(TabulaPraefixa<Anomalon>, {
                        relata: venireRectum,
-                       praefixa: 'per'
+                       praefixum: 'per'
                      })
     const praevenire: Ignavum<TabulaPraefixa<Anomalon>> =
                   new Ignavum(TabulaPraefixa<Anomalon>, {
                         relata: venireRectum,
-                        praefixa: 'prae'
+                        praefixum: 'prae'
                       })
     const provenire: Ignavum<TabulaPraefixa<Anomalon>> =
                  new Ignavum(TabulaPraefixa<Anomalon>, {
                        relata: venireRectum,
-                       praefixa: 'prō'
+                       praefixum: 'prō'
                      })
     const subvenire: Ignavum<TabulaPraefixa<Anomalon>> =
                  new Ignavum(TabulaPraefixa<Anomalon>, {
                        relata: venireRectum,
-                       praefixa: 'sub'
+                       praefixum: 'sub'
                      })
     const supervenire: Ignavum<TabulaPraefixa<Anomalon>> =
                    new Ignavum(TabulaPraefixa<Anomalon>, {
                          relata: venireRectum,
-                         praefixa: 'super'
+                         praefixum: 'super'
                        })
     const transvenire: Ignavum<TabulaPraefixa<Anomalon>> =
                    new Ignavum(TabulaPraefixa, {
                          relata: venireRectum,
-                         praefixa: 'trāns'
+                         praefixum: 'trāns'
                        })
 
     this.contenta.set('abdare', new Mantela(abdare))

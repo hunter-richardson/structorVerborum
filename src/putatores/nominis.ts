@@ -1,14 +1,13 @@
+import type { casus, numerus } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { NomenAgendum } from '../praebeunda/agenda';
-import Structor from '../praebeunda/structor';
 import { Errator, Nomen } from '../praebeunda/verba';
 import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis';
 import TabulaInflexibilis from '../tabulae/inflexibilis';
 import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
-import type { casus, numerus } from '../miscella/enumerationes';
 import type { Putaturum, Radicator } from './putaturum';
 
 export interface Percolamen {
@@ -114,15 +113,15 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       }
 
       return new Ignavum(TabulaVicaria, {
-                   hoc: agendum,
                    prima: {
                      scapum: '/res/vices/nomina',
                      via: agendum.versio
                    }, secunda: {
                       scapum: '/res/tabula/nomina',
                       via: fundamen
-                   }, positor: Nomen.positor,
-                   radicator: this.radicetur(agendum.versio)
+                   }, radicator: this.radicetur(agendum.versio),
+                   positor: Nomen.positor,
+                   hoc: agendum
                  })
     } else if (
       [
@@ -137,11 +136,11 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       ].includes(fundamen)
     ) {
       return new Ignavum(TabulaRecta, {
-                   radicator: this.radicetur(agendum.versio)
+                   radicator: this.radicetur(agendum.versio),
                    scapum: '/res/tabula/nomina',
                    positor: Nomen.positor,
                    via: agendum.versio,
-                   hoc: agendum,
+                   hoc: agendum
                  })
     } else if (fundamen === 'indeclinabilis') {
       return new Ignavum(TabulaInflexibilis, {

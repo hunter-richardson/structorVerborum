@@ -1,19 +1,19 @@
 <script lang='ts'>
-  import { computed, defineComponent, type Ref, ref } from 'vue'
-  import { useTheme } from 'vuetify'
-  import draggable from 'vuedraggable'
-  import { transducatur, transduceretne } from '../scriptura/transducere'
-  import { referretne, referatur } from '../scriptura/referre'
-  import { crustula, type Crustula } from '../miscella/crustula'
-  import quaerere from './quaerere.vue'
-  import numerare from './numerare.vue'
-  import calculare from './calculare.vue'
-  import gustulare from './gustulare.vue'
-  import Gustulus from '../scriptura/gustulus'
-  import { locutor } from '../miscella/locutor'
-import type Ignavum from '../miscella/ignavum'
+  import { computed, defineComponent, ref, type Ref } from 'vue';
+import draggable from 'vuedraggable';
+import { useTheme } from 'vuetify';
 import { useRoute } from 'vuetify/lib/composables/router.mjs';
+import { crustula, type Crustula } from '../miscella/crustula';
+import type Ignavum from '../miscella/ignavum';
+import { locutor } from '../miscella/locutor';
 import { monstrator, type Monstranda } from '../miscella/monstrator';
+import Gustulus from '../scriptura/gustulus';
+import { referatur, referretne } from '../scriptura/referre';
+import { transducatur, transduceretne } from '../scriptura/transducere';
+import calculare from './calculare.vue';
+import gustulare from './gustulare.vue';
+import numerare from './numerare.vue';
+import quaerere from './quaerere.vue';
 
   const via = useRoute();
   const nomen: string = (computed(() => via.value) as unknown) as string;
@@ -296,7 +296,7 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
                 </div>
                 <v-btn-toggle>
                   <v-btn :text='nuntia.anglicum.assentire' append-icon='handshake'
-                         @click="crustula.hoc().lingua.coquatur('anglica') coquantur()" />
+                         @click="crustula.hoc().lingua.coquatur('anglica'); coquantur()" />
                   <v-btn :text='nuntia.anglicum.negare' append-icon='block' @click='negavit()' />
                 </v-btn-toggle>
               </v-sheet>

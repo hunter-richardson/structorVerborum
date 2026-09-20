@@ -1,4 +1,4 @@
-import Anomala, { Mantela } from './anomala';
+import { type encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
@@ -8,7 +8,7 @@ import TabulaConiuncta from '../tabulae/coniuncta';
 import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
-import { type encliticum } from '../miscella/enumerationes'
+import Anomala, { Mantela } from './anomala';
 
 class Adiectiva extends Anomala<Adiectivum> {
   protected override async numeretur(): Promise<void> {
@@ -46,7 +46,7 @@ class Adiectiva extends Anomala<Adiectivum> {
              new Ignavum(TabulaCollata<Adiectivum>, {
                    relatae: [
                      new Ignavum(TabulaScapalis<Adiectivum>, {
-                           via: '/res/scapales/adiectiva/aliud'
+                           via: '/res/scapales/adiectiva/aliud',
                            positor: Adiectivum.positor
                          }),
                      new Structor(Incomparabile)
@@ -87,12 +87,12 @@ class Adiectiva extends Anomala<Adiectivum> {
                       new Ignavum(TabulaScapalis, {
                             via: '/res/scapales/adiectiva/multum',
                             positor: Adiectiva.positor
-                      })
-                    ],
+                      }),
                       new Structor(AdiectivumAgendum)
                             .ponatur((adiectivum) => (adiectivum.positivum = 'multum'))
                             .ponatur((adiectivum) => (adiectivum.superlativum = 'maximum'))
                             .ponatur((adiectivum) => (adiectivum.versio = 'positivaAutPrimaAutSecunda'))
+                    ]
                   })
     const nonumdecimum: Ignavum<TabulaConiuncta<Adiectivum>> =
                     new Ignavum(TabulaConiuncta<Adiectivum>, {
