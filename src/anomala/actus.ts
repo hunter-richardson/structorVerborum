@@ -1,3 +1,4 @@
+import Anomala, { Mantela } from './anomala';
 import Ignavum from '../miscella/ignavum';
 import { ActusAgendus } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
@@ -10,1216 +11,792 @@ import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
 import TabulaRescripta from '../tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 import TabulaScapalis from '../tabulae/scapalis';
-import type Tabula from '../tabulae/tabula';
-import Anomala, { Mantela } from './anomala';
+import type Tabula from '../tabulae/tabula'
 
-export default class Actus extends Anomala<Anomalon> {
-  static se: Ignavum<Actus> = new Ignavum(() => new Actus)
-
+class Actus extends Anomala<Anomalon> {
   protected override async numeretur(): Promise<void> {
-    const aiere: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/actus/aiere',
-          positor: Anomalon.positor
-        })
-    )
-    const esse: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/actus/esse',
-          positor: Anomalon.positor
-        })
-    )
-    const fieri: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/actus/fierī',
-          positor: Anomalon.positor
-        })
-    )
-    const infieri: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/actus/īnfierī',
-          positor: Anomalon.positor
-        })
-    )
-    const inquii: Ignavum<TabulaScapalis<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/actus/inquiī',
-          positor: Anomalon.positor
-        })
-    )
-
-    const coesse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/coepisse',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(
-            () =>
-              new TabulaFissa({
-                relata: new Ignavum(
-                  () =>
-                    new TabulaRescripta({
-                      relata: esse,
-                      rescriptor: (scriptum) => (scriptum.startsWith('f') ? 'cōn' : 'co')
+    const aiere: Ignavum<TabulaScapalis<Anomalon>> =
+             new Ignavum(TabulaScapalis<Anomalon>, {
+                   via: '/res/scapales/actus/aiere',
+                   positor: Anomalon.positor
+                 })
+    const esse: Ignavum<TabulaScapalis<Anomalon>> =
+            new Ignavum(TabulaScapalis<Anomalon>, {
+                  via: '/res/scapales/actus/esse',
+                  positor: Anomalon.positor
+                })
+    const fieri: Ignavum<TabulaScapalis<Anomalon>> =
+             new Ignavum(TabulaScapalis<Anomalon>, {
+                   via: '/res/scapales/actus/fierī',
+                   positor: Anomalon.positor
+                 })
+    const infieri: Ignavum<TabulaScapalis<Anomalon>> =
+               new Ignavum(TabulaScapalis<Anomalon>, {
+                      via: '/res/scapales/actus/īnfierī',
+                      positor: Anomalon.positor
                     })
-                ),
-                tabula: TabulaPerfecta.apponatur()
+    const inquii: Ignavum<TabulaScapalis<Anomalon>> =
+              new Ignavum(TabulaScapalis<Anomalon>, {
+                    via: '/res/scapales/actus/inquiī',
+                    positor: Anomalon.positor
+                  })
+    const coesse: Ignavum<TabulaCollata<Anomalon>> =
+              new Ignavum(TabulaCollata<Anomalon>, {
+                    relatae: [
+                      new Ignavum(TabulaScapalis<Anomalon>, {
+                            via: '/res/scapales/actus/coepisse',
+                            positor: Anomalon.positor
+                          }),
+                      new Ignavum(TabulaFissa<Anomalon>, {
+                            relata: new Ignavum(TabulaRescripta<Anomalon>, {
+                                          relata: esse,
+                                          rescriptor: (scriptum) =>
+                                                   `${(scriptum.startsWith('f') ? 'cōn' : 'co')}${scriptum}`
+                                        }), colamina: TabulaPerfecta.apponatur()
+                          })
+                    ]
+                  })
+    const dare: Ignavum<TabulaCollata<Anomalon>> =
+            new Ignavum(TabulaCollata<Anomalon>, {
+                  relatae: [
+                    new Ignavum(TabulaScapalis<Anomalon>, {
+                          via: '/res/scapales/actus/dare',
+                          positor: Anomalon.positor
+                        }),
+                    new Structor(ActusAgendus)
+                          .ponatur((actus) => (actus.infinitivum = 'dare'))
+                          .ponatur((actus) => (actus.perfectum = 'dedisse'))
+                          .ponatur((actus) => (actus.supinum = 'dātum'))
+                          .ponatur((actus) => (actus.versio = 'prima'))
+                  ]
+                })
+    const ferre: Ignavum<TabulaCollata<Anomalon>> =
+             new Ignavum(TabulaCollata<Anomalon>, {
+                   relatae: [
+                     new Ignavum(TabulaScapalis<Anomalon>, {
+                                   via: '/res/scapales/actus/ferre',
+                                   positor: Anomalon.positor
+                                 }),
+                      new Structor(ActusAgendus)
+                            .ponatur((actus) => (actus.infinitivum = 'ferere'))
+                            .ponatur((actus) => (actus.perfectum = 'tulisse'))
+                            .ponatur((actus) => (actus.supinum = 'lātum'))
+                            .ponatur((actus) => (actus.versio = 'tertia/cumImperativoBrevi'))]
+                   ]
+                 })
+    const facere: Ignavum<TabulaCollata<Anomalon>> =
+              new Ignavum(TabulaCollata<Anomalon>, {
+                    relatae: [
+                      new Ignavum(TabulaScapalis<Anomalon>, {
+                            via: '/res/scapales/actus/facere',
+                            positor: Anomalon.positor
+                          }),
+                      new Structor(ActusAgendus)
+                            .ponatur((actus) => (actus.infinitivus = 'facere'))
+                            .ponatur((actus) => (actus.perfectum = 'fēcisse'))
+                            .ponatur((actus) => (actus.supinum = 'factum'))
+                            .ponatur((actus) => (actus.versio = 'tertaVaria/cumImperativoBrevi'))
+                    ]
+                  })
+    const ire: Ignavum<TabulaScapalis<Anomalon>> =
+           new Ignavum(TabulaScapalis<Anomalon>, {
+                 via: '/res/scapales/actus/īre',
+                 positor: Anomalon.positor
+               })
+    const perire: Ignavum<TabulaFissa<Anomalon>> =
+              new Ignavum(TabulaFissa<Anomalon>, {
+                    relata: new Ignavum(TabulaPraefixa<Anomalon>, {
+                                  relata: ire,
+                                  praefixum: 'per'
+                                }), colamina: TabulaImpersonalis.apponatur('passivo')
+                  })
+    const velle: Ignavum<TabulaCollata<Anomalon>> =
+             new Ignavum(TabulaCollata<Anomalon>, {
+                   relatae: [
+                     new Ignavum(TabulaScapalis<Anomalon>, {
+                           via: '/res/scapales/actus/velle',
+                           positor: Anomalon.positor
+                         }),
+                     new Structor(ActusAgendus)
+                           .ponatur((actus) => (actus.infinitivum = 'volere'))
+                           .ponatur((actus) => (actus.perfectum = 'voluisse'))
+                           .ponatur((actus) => (actus.versio = 'tertia//semideponens'))
+                   ]
+                 })
+    const malle: Ignavum<TabulaCollata<Anomalon>> =
+             new Ignavum(TabulaCollata<Anomalon>, {
+                   relatae: [
+                     new Ignavum(TabulaScapalis<Anomalon>, {
+                           via: '/res/scapales/actus/mālle',
+                           positor: Anomalon.positor
+                         }),
+                     new Ignavum(TabulaRescripta<Anomalon>, {
+                           relata: velle,
+                           rescriptor: (scriptum: string) => scriptum.replace('ve', 'mā')
+                         })
+                   ]
+                 })
+    const meminisse: Ignavum<TabulaCollata<Anomalon>> =
+                 new Ignavum(TabulaCollata<Anomalon>, {
+                       relatae: [
+                         new Ignavum(TabulaScapalis<Anomalon>, {
+                               via: '/res/scapales/actus/meminisse',
+                               positor: Anomalon.positor
+                             }),
+                         new Structor(ActusAgendus)
+                               .ponatur((actus) => (actus.perfectum = 'meminisse'))
+                               .ponatur((actus) => (actus.versio = 'tertia//perfecta'))
+                       ]
+                     })
+    const abdare: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: dare,
+                    praefixum: 'ab'
+                  })
+    const abesse: Ignavum<TabulaRescripta<Anomalon>> =
+              new Ignavum(TabulaRescripta<Anomalon>, {
+                    relata: esse,
+                    rescriptor: (scriptum: string) => `${scriptum.startsWith('f') ? 'ā' : 'ab'}${scriptum}`
               })
-          )
-        )
-    )
-
-    const dare: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/dare',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.infinitivum = 'dare'))
-              .ponatur((actus) => (actus.perfectum = 'dedisse'))
-              .ponatur((actus) => (actus.supinum = 'dātum'))
-              .ponatur((actus) => (actus.versio = 'prima'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const ferre: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/ferre',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.infinitivum = 'ferre'))
-              .ponatur((actus) => (actus.perfectum = 'tulisse'))
-              .ponatur((actus) => (actus.supinum = 'lātum'))
-              .ponatur((actus) => (actus.versio = 'tertia'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const facere: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/facere',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.infinitivum = 'facere'))
-              .ponatur((actus) => (actus.perfectum = 'fēcisse'))
-              .ponatur((actus) => (actus.supinum = 'factum'))
-              .ponatur((actus) => (actus.versio = 'tertiaVaria/cumImperativoBrevi'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const ire: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/ferre',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.infinitivum = 'īre'))
-              .ponatur((actus) => (actus.perfectum = 'īsse'))
-              .ponatur((actus) => (actus.supinum = 'itum'))
-              .ponatur((actus) => (actus.versio = 'secunda'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const perire: Ignavum<TabulaFissa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaFissa({
-          relata: new Ignavum(
-            () =>
-              new TabulaPraefixa({
-                relata: ire,
-                praefixum: 'per'
-              })
-          ),
-          tabula: TabulaImpersonalis.apponatur('passivo')
-        })
-    )
-
-    const velle: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/velle',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.infinitivum = 'volere'))
-              .ponatur((actus) => (actus.perfectum = 'voluisse'))
-              .ponatur((actus) => (actus.versio = 'tertia//semideponens'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const malle: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/mālle',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(
-            () =>
-              new TabulaRescripta({
-                relata: velle,
-                rescriptor: (scriptum) => scriptum.replace('ve', 'mā')
-              })
-          )
-        )
-    )
-
-    const meminisse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/meminisse',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.perfectum = 'meminisse'))
-              .ponatur((actus) => (actus.versio = 'tertia//perfecta'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const abdare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dare,
-          praefixum: 'ab'
-        })
-    )
-    const abesse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: dare,
-          rescriptor: (scriptum) => (scriptum.startsWith('f') ? 'ā' : 'ab')
-        })
-    )
-    const abire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ab'
-        })
-    )
-    const afferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor: (scriptum) => 'a'.concat(scriptum.at(0) ?? '', scriptum)
-        })
-    )
-
-    const auferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor(scriptum) {
-            switch (scriptum.at(0)) {
-              case 'f':
-                return 'au'.concat(scriptum)
-              case 't':
-                return 'abs'.concat(scriptum)
-              case 'l':
-                return 'ab'.concat(scriptum)
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const nolle: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/nōlle',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(
-            () =>
-              new TabulaRescripta({
-                relata: velle,
-                rescriptor(scriptum) {
-                  switch (scriptum) {
-                    case 'vīs':
-                    case 'vult':
-                    case 'vultis':
-                      return ''
-                    default:
-                      return scriptum.replace('ve', 'nō')
-                  }
-                }
-              })
-          )
-        )
-    )
-
-    const coepisse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/coepisse',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.perfectum = 'coepisse'))
-              .ponatur((actus) => (actus.versio = 'tertia//perfecta'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const coire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'co'
-        })
-    )
-    const collabefieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'collabe'
-        })
-    )
-    const confieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'cōn'
-        })
-    )
-
-    const conferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor(scriptum) {
-            switch (scriptum.at(0)) {
-              case 'f':
-                return 'cōn'.concat(scriptum)
-              case 't':
-                return 'con'.concat(scriptum)
-              case 'l':
-                return 'col'.concat(scriptum)
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const dedare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dare,
-          praefixum: 'dē'
-        })
-    )
-    const deesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'dē'
-        })
-    )
-    const deferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'dē'
-        })
-    )
-    const defieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'dē'
-        })
-    )
-    const deire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'de'
-        })
-    )
-
-    const differre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor(scriptum) {
-            switch (scriptum.at(0)) {
-              case 'f':
-                return 'dif'.concat(scriptum)
-              case 't':
-                return 'dis'.concat(scriptum)
-              case 'l':
-                return 'dī'.concat(scriptum)
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const disperire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'disper'
-        })
-    )
-    const didare: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dare,
-          praefixum: 'dī'
-        })
-    )
-
-    const efferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor(scriptum) {
-            switch (scriptum.at(0)) {
-              case 'f':
-                return 'ef'.concat(scriptum)
-              case 't':
-                return 'ex'.concat(scriptum)
-              case 'l':
-                return 'ē'.concat(scriptum)
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const exire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ex'
-        })
-    )
-    const inesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: esse,
-          rescriptor: (scriptum) => (scriptum.startsWith('e') ? "in" : "īn").concat(scriptum)
-        })
-    )
-
-    const inferre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor(scriptum) {
-            switch (scriptum.at(0)) {
-              case 'f':
-                return 'īn'.concat(scriptum)
-              case 't':
-                return 'in'.concat(scriptum)
-              case 'l':
-                return 'il'.concat(scriptum)
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const interesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'inter'
-        })
-    )
-    const interferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'inter'
-        })
-    )
-    const introferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'intrō'
-        })
-    )
-    const inire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'in'
-        })
-    )
-    const interire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'inter'
-        })
-    )
-    const introire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'intro'
-        })
-    )
-    const nequire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'nequ'
-        })
-    )
-    const obesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'ob'
-        })
-    )
-    const obire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ob'
-        })
-    )
-    const obsolefieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'obsole'
-        })
-    )
-
-    const odisse: Ignavum<TabulaCollata<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/actus/ōdisse',
-                positor: Anomalon.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new ActusAgendus)
-              .ponatur((actus) => (actus.perfectum = 'ōdisse'))
-              .ponatur((actus) => (actus.versio = 'quarta//perfecta'))
-              .struatur()
-              .putetur()
-          )
-        )
-    )
-
-    const offerre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: ferre,
-          rescriptor: (scriptum) => (scriptum.startsWith('f') ? 'of' : 'ob').concat(scriptum)
-        })
-    )
-
-    const perferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'per'
-        })
-    )
-    const pervelle: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: velle,
-          praefixum: 'per'
-        })
-    )
-
-    const posse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: esse,
-          rescriptor(scriptum) {
-            switch (true) {
-              case scriptum === 'esse':
-                return 'posse'
-              case scriptum === 'estō':
-                return ''
-              case scriptum.startsWith('s'):
-                return 'pos'.concat(scriptum)
-              case scriptum.startsWith('e'):
-                return 'pot'.concat(scriptum)
-              case scriptum.startsWith('f'):
-                return 'pot'.concat(scriptum.substring(1))
-              default:
-                return ''
-            }
-          }
-        })
-    )
-
-    const postferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'post'
-        })
-    )
-    const praeesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'prae'
-        })
-    )
-    const praeterferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'praeter'
-        })
-    )
-
-    const prodesse: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: esse,
-          rescriptor: (scriptum) => (scriptum.startsWith('e') ? 'prō' : 'prōd').concat(scriptum)
-        })
-    )
-
-    const prodire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'prōd'
-        })
-    )
-    const proferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'prō'
-        })
-    )
-    const quire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'qu'
-        })
-    )
-    const redire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'red'
-        })
-    )
-
-    const referre: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: esse,
-          rescriptor: (scriptum) => (scriptum.startsWith('t') ? 'ret' : 're').concat(scriptum)
-        })
-    )
-
-    const subesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'sub'
-        })
-    )
-    const subire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'sub'
-        })
-    )
-    const sufferre: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ferre,
-          praefixum: 'suf'
-        })
-    )
-    const superesse: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: esse,
-          praefixum: 'super'
-        })
-    )
-    const suffieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'suf'
-        })
-    )
-    const superfieri: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: fieri,
-          praefixum: 'super'
-        })
-    )
-    const transabire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'trānsab'
-        })
-    )
-    const transire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'trāns'
-        })
-    )
-    const venire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'vēn'
-        })
-    )
-
-    const venireRectum: Ignavum<Tabula<Anomalon>> = new Ignavum(() =>
-      new Structor(() => new ActusAgendus)
-        .ponatur((actus) => (actus.infinitivum = 'venīre'))
-        .ponatur((actus) => (actus.perfectum = 'vēnīsse'))
-        .ponatur((actus) => (actus.supinum = 'ventum'))
-        .ponatur((actus) => (actus.versio = 'quartus//impersonalis//passivo'))
-        .struatur()
-        .putetur()
-    )
-
-    const arefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'āre'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const arfacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'ār'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const benefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'bene'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const calfacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'cal'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const calefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'cale'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const commonefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'commone'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const condocfacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'condoce'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const consuefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'cōnsuē'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const expergefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'expergē'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const fervefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'fervē'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const infervefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'inferve'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const labefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'labe'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const liquifacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'liqui'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const madefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'made'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const malefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'male'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const mollifacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'molli'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const multifacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'multi'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const mansuefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'mānsuē'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const olfacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'ol'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const patefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'pate'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const pavefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'pave'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const putrefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'putre'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const satisfacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'satis'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const stupefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'stupe'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const tepefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'tepe'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const tremefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'treme'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const tumefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'tume'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const vacuefacere: Ignavum<TabulaRescripta<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: facere,
-          rescriptor: (scriptum) => 'vacuē'.concat(scriptum === 'fac' ? 'face' : scriptum)
-        })
-    )
-
-    const incalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: calfacere,
-          suffixum: 'in'
-        })
-    )
-
-    const percalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: calfacere,
-          suffixum: 'per'
-        })
-    )
-
-    const recalfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: calfacere,
-          suffixum: 're'
-        })
-    )
-
-    const permadefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: madefacere,
-          suffixum: 'per'
-        })
-    )
-
-    const subolfacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: olfacere,
-          suffixum: 'sub'
-        })
-    )
-
-    const confervefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: fervefacere,
-          suffixum: 'con'
-        })
-    )
-
-    const defervefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: calfacere,
-          suffixum: 'dē'
-        })
-    )
-
-    const obstupefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: stupefacere,
-          suffixum: 'ob'
-        })
-    )
-
-    const rarefacere: Ignavum<TabulaSuffixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: arefacere,
-          suffixum: 'r'
-        })
-    )
-
-    const advenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ad'
-        })
-    )
-
-    const adinvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'adin'
-        })
-    )
-
-    const antevenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ante'
-        })
-    )
-
-    const circumvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'circum'
-        })
-    )
-
-    const convenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'con'
-        })
-    )
-
-    const contravenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'contrā'
-        })
-    )
-
-    const disconvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'discon'
-        })
-    )
-
-    const devenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'dē'
-        })
-    )
-
-    const evenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ē'
-        })
-    )
-
-    const invenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'in'
-        })
-    )
-
-    const intervenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'inter'
-        })
-    )
-
-    const obvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ob'
-        })
-    )
-
-    const pervenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'per'
-        })
-    )
-
-    const praevenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'prae'
-        })
-    )
-
-    const provenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'prō'
-        })
-    )
-
-    const subvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'sub'
-        })
-    )
-
-    const supervenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'super'
-        })
-    )
-
-    const transvenire: Ignavum<TabulaPraefixa<Anomalon>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'trāns'
-        })
-    )
+    const abire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'ab'
+                 })
+    const afferre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: ferre,
+                     rescriptor: (scriptum: string) => `a${scriptum[0]}${scriptum}`
+               })
+    const auferre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: ferre,
+                     rescriptor: (scriptum: string) => {
+                       switch(scriptum[0]) {
+                         case 'f': return `au${scriptum}`
+                         case 'l': return `abs${scriptum}`
+                         case 't': return `ab${scriptum}`
+                         default: return ''
+                       }
+                     }
+                   })
+    const nolle: Ignavum<TabulaCollata<Anomalon>> =
+             new Ignavum(TabulaCollata<Anomalon>, {
+                   relatae: [
+                     new Ignavum(TabulaScapalis<Anomalon>, {
+                           via: '/res/scapales/actus/nōlle',
+                           positor: Anomalon.positor
+                         }),
+                     new Ignavum(TabulaRescripta<Anomalon>, {
+                           relata: velle,
+                           rescriptor(scriptum: string): string {
+                             switch(scriptum) {
+                               case 'vīs':
+                               case 'vult':
+                               case 'vultis':
+                                 return ''
+                               default:
+                                 return scriptum.replace('ve', 'nō')
+                             }
+                           }
+                     })
+                   ]
+                 })
+    const coepisse: Ignavum<TabulaCollata<Anomalon>> =
+                new Ignavum(TabulaCollata<Anomalon>, {
+                      relatae: [
+                        new Ignavum(TabulaScapalis<Anomalon>, {
+                              via: '/res/scapales/actus/coepisse',
+                              positor: Anomalon.positor
+                            }),
+                        new Structor(ActusAgendus)
+                              .ponatur((actus) => (actus.perfectum = 'coepisse'))
+                              .ponatur((actus) => (actus.versio = 'tertia//pefecta'))
+                      ]
+                })
+    const coire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'co'
+                 })
+    const collabefieri: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: fieri,
+                          praefixum: 'collabe'
+                        })
+    const confieri: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: fieri,
+                      praefixum: 'cōn'
+                    })
+
+    const conferre: Ignavum<TabulaRescripta<Anomalon>> =
+                new Ignavum(TabulaRescripta<Anomalon>, {
+                      relata: ferre,
+                      rescriptor(scriptum: string): string {
+                        switch(scriptum[0]) {
+                          case 'f': return `cōn${scriptum}`
+                          case 't': return `con${scriptum}`
+                          case 'l': return `col${scriptum}`
+                          default: return scriptum
+                        }
+                      }
+                    })
+    const dedare: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: dare,
+                    praefixum: 'dē'
+                  })
+    const deesse: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: esse,
+                    praefixum: 'dē'
+                  })
+    const deferre: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: ferre,
+                     praefixum: 'dē'
+                   })
+    const defieri: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: fieri,
+                     praefixum: 'dē'
+                   })
+    const deire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'de'
+                 })
+    const differre: Ignavum<TabulaRescripta<Anomalon>> =
+                new Ignavum(TabulaRescripta<Anomalon>, {
+                      relata: ferre,
+                      rescriptor(scriptum: string): string {
+                        switch(scriptum[0]) {
+                          case 'f': return `dif${scriptum}`
+                          case 't': return `dis${scriptum}`
+                          case 'l': return `dī${scriptum}`
+                          default: return scriptum
+                        }
+                      }
+                    })
+    const disperire: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: ire,
+                       praefixum: 'disper'
+                     })
+    const didare: Ignavum<TabulaPraefixa<Anomalon>> =
+                      new Ignavum(TabulaPraefixa<Anomalon>, {
+                            relata: dare,
+                            praefixum: 'dī'
+                          })
+    const efferre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: ferre,
+                     rescriptor(scriptum: string): string {
+                      switch(scriptum[0]) {
+                        case 'f': return `ef${scriptum}`
+                        case 't': return `ex${scriptum}`
+                        case 'l': return `ē${scriptum}`
+                        default: return scriptum
+                      }
+                     }
+                   })
+    const exire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'ex'
+                 })
+    const inesse: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: esse,
+                    rescriptor: (scriptum: string): string => `${(scriptum.startsWith('e') ? 'in' : 'īn')}${scriptum}`
+                  })
+
+    const inferre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: ferre,
+                     rescriptor(scriptum: string): string {
+                       switch(scriptum[0]) {
+                         case 'f': return `īn${scriptum}`
+                         case 't': return `in${scriptum}`
+                         case 'l': return `il${scriptum}`
+                         default: return scriptum
+                       }
+                     }
+                   })
+
+    const interesse: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: esse,
+                       praefixum: 'inter'
+                     })
+    const interferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: ferre,
+                        praefixum: 'inter'
+                      })
+    const introferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: ferre,
+                        praefixum: 'intrō'
+                      })
+    const inire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'in'
+                 })
+    const interire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ire,
+                      praefixum: 'inter'
+                    })
+    const introire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ire,
+                      praefixum: 'intro'
+                    })
+    const nequire: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: ire,
+                     praefixum: 'nequ'
+                   })
+    const obesse: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: esse,
+                    praefixum: 'ob'
+                  })
+    const obire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixa: 'ob'
+                 })
+    const obsolefieri: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: fieri,
+                         praefixum: 'obsole'
+                       })
+    const odisse: Ignavum<TabulaCollata<Anomalon>> =
+              new Ignavum(TabulaCollata<Anomalon>, {
+                    relatae: [
+                      new Ignavum(TabulaScapalis<Anomalon>, {
+                            via: '/res/scapales/actus/ōdisse',
+                            positor: Anomalon.positor
+                          }),
+                      new Structor(ActusAgendus)
+                            .ponatur((actus) => (actus.perfectum 'ōdisse'))
+                            .ponatur((actus) => (actus.perfectum 'quarta//perfecta'))
+                    ]
+                  })
+    const offerre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: ferre,
+                     rescriptor: (scriptum: string): string => `${scriptum.startsWith('f') ? 'of' : 'ob'}${scriptum}`
+                   })
+    const perferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ferre,
+                      praefixum: 'per'
+                    })
+    const pervelle: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: velle,
+                      praefixum: 'per'
+                    })
+    const posse: Ignavum<TabulaRescripta<Anomalon>> =
+             new Ignavum(TabulaRescripta<Anomalon>, {
+                   relata: esse,
+                   rescriptor(scriptum: string): string {
+                     switch(true) {
+                       case scriptum === 'esse': return 'posse'
+                       case scriptum === 'estō': return ''
+                       case scriptum.startsWith('s'): return `pos${scriptum}`
+                       case scriptum.startsWith('e'): return `pot${scriptum}`
+                       case scriptum.startsWith('f'): return `pot${scriptum.substring(1)}`
+                       default: return ''
+                     }
+                   }
+                 })
+    const postferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: ferre,
+                       praefixum: 'post'
+                     })
+    const praeesse: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: esse,
+                      praefixum: 'prae'
+                    })
+    const praeterferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: ferre,
+                          praefixum: 'praeter'
+                        })
+    const prodesse: Ignavum<TabulaRescripta<Anomalon>> =
+                new Ignavum(TabulaRescripta<Anomalon>, {
+                      relata: esse,
+                      rescriptor: (scriptum: string): string => `${scriptum.startsWith('e' ? 'prō' : 'prōd')}${scriptum}`
+                    })
+    const prodire: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: ire,
+                     praefixum: 'prōd'
+                   })
+    const proferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ferre,
+                      praefixum: 'prō'
+                    })
+    const quire: Ignavum<TabulaPraefixa<Anomalon>> =
+             new Ignavum(TabulaPraefixa<Anomalon>, {
+                   relata: ire,
+                   praefixum: 'qu'
+                 })
+    const redire: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: ire,
+                    praefixum: 'red'
+                  })
+    const referre: Ignavum<TabulaRescripta<Anomalon>> =
+               new Ignavum(TabulaRescripta<Anomalon>, {
+                     relata: esse,
+                     rescriptor: (scriptum: string): string => `${scriptum.startsWith('t') ? 'ret' : 're'}${scriptum}`
+                   })
+    const subesse: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: esse,
+                     praefixum: 'sub'
+                   })
+    const subire: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: ire,
+                    praefixum: 'sub'
+                  })
+    const sufferre: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ferre,
+                      praefixum: 'suf'
+                    })
+    const superesse: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: esse,
+                       praefixum: 'super'
+                     })
+    const suffieri: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: fieri,
+                      praefixum: 'suf'
+                    })
+    const superfieri: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: fieri,
+                        praefixum: 'super'
+                      })
+    const transabire: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: ire,
+                        praefixum: 'trānsab'
+                      })
+    const transire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: ire,
+                      praefixum: 'trāns'
+                    })
+    const venire: Ignavum<TabulaPraefixa<Anomalon>> =
+              new Ignavum(TabulaPraefixa<Anomalon>, {
+                    relata: ire,
+                    praefixum: 'vēn'
+                  })
+    const venireRectum: Ignavum<Tabula<Anomalon>> =
+                    new Structor(ActusAgendus)
+                          .ponatur((actus) => (actus.infinitivum = 'venīre'))
+                          .ponatur((actus) => (actus.perfectum = 'vēnīsse'))
+                          .ponatur((actus) => (actus.supinum = 'ventum'))
+                          .ponatur((actus) => (actus.versio = 'quartus//impersonalis//passivo'))
+                          .struatur().putetur()
+    const facereFalsum: Ignavnum<TabulaRescripta<Anomalon>> =
+                    new Ignavum(TabulaRescripta<Anomalon>, {
+                          relata: facere
+                          rescriptor: (scriptum: string): string => scriptum === 'fac' ? 'face' : scriptum
+                        })
+    const arefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: facereFalsum,
+                       praefixum: 'āre'
+                     })
+    const arfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: facereFalsum,
+                      praefixum: 'ār'
+                    })
+    const benefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'bene'
+                      })
+    const calfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: facereFalsum,
+                       praefixum: 'cal'
+                     })
+    const calefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'cale'
+                      })
+    const commonefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: facereFalsum,
+                           praefixum: 'commone'
+                         })
+    const condocfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: facereFalsum,
+                          praefixum: 'condoce'
+                        })
+    const consuefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: facereFalsum,
+                          praefixum: 'cōnsuē'
+                        })
+    const expergefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: facereFalsum,
+                           praefixum: 'expergē'
+                         })
+    const fervefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'fervē'
+                       })
+    const infervefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: facereFalsum,
+                           praefixum: 'inferve'
+                         })
+    const labefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'labe'
+                      })
+    const liquifacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'liqui'
+                       })
+    const madefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'made'
+                      })
+    const malefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'male'
+                      })
+    const mollifacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'molli'
+                       })
+    const multifacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'multi'
+                       })
+    const mansuefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: facereFalsum,
+                          praefixum: 'mansuē'
+                        })
+    const olfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: facereFalsum,
+                      praefixum: 'ol'
+                    })
+    const patefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'pate'
+                      })
+    const pavefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'pave'
+                      })
+    const putrefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'putre'
+                       })
+    const satisfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'satis'
+                       })
+    const stupefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'stupe'
+                       })
+    const tepefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'tepe'
+                      })
+    const tremefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'treme'
+                       })
+    const tumefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: facereFalsum,
+                        praefixum: 'tume'
+                      })
+    const vacuefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: facereFalsum,
+                         praefixum: 'vacuē'
+                       })
+    const incalfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: calfacere,
+                         praefixum: 'in'
+                       })
+    const percalfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: calfacere,
+                          praefixum: 'per'
+                        })
+
+    const recalfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: calfacere,
+                         praefixum: 're'
+                       })
+    const permadefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: madefacere,
+                           praefixum: 'per'
+                         })
+    const subolfacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: olfacere,
+                         praefixum: 'sub'
+                       })
+    const confervefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                      new Ignavum(TabulaPraefixa<Anomalon>, {
+                            relata: fervefacere,
+                            praefixum: 'con'
+                          })
+
+    const defervefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: fervefacere,
+                           praefixum: 'dē'
+                         })
+    const obstupefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                     new Ignavum(TabulaPraefixa<Anomalon>, {
+                           relata: stupefacere,
+                           praefixum: 'ob'
+                         })
+
+    const rarefacere: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: arefacere,
+                        praefixum: 'r'
+                      })
+
+    const advenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: venireRectum,
+                      praefixum: 'ad'
+                    })
+    const adinvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: venireRectum,
+                        praefixum: 'adin'
+                      })
+    const antevenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: venireRectum,
+                        praefixum: 'ante'
+                      })
+    const circumvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>, {
+                          relata: venireRectum,
+                          praefixum: 'circum'
+                        })
+    const convenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: venireRectum,
+                       praefixum: 'con'
+                     })
+    const contravenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabulaPraefixa<Anomalon>. {
+                          relata: venireRectum,
+                          praefixum: 'contrā'
+                        })
+    const disconvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                    new Ignavum(TabularPraefixa<Anomalon>, {
+                          relata: venireRectum,
+                          praefixa: 'discon'
+                        })
+    const devenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: venireRectum,
+                      praefixa: 'dē'
+                    })
+    const evenire: Ignavum<TabulaPraefixa<Anomalon>> =
+               new Ignavum(TabulaPraefixa<Anomalon>, {
+                     relata: venireRectum,
+                     praefixa: 'ē'
+                   })
+    const invenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: venireRectum,
+                      praefixa: 'in'
+                    })
+    const intervenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: venireRectum,
+                         praefixum: 'inter'
+                       })
+    const obvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                new Ignavum(TabulaPraefixa<Anomalon>, {
+                      relata: venireRectum,
+                      praefixa: 'ob'
+                    })
+    const pervenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: venireRectum,
+                       praefixa: 'per'
+                     })
+    const praevenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                  new Ignavum(TabulaPraefixa<Anomalon>, {
+                        relata: venireRectum,
+                        praefixa: 'prae'
+                      })
+    const provenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: venireRectum,
+                       praefixa: 'prō'
+                     })
+    const subvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                 new Ignavum(TabulaPraefixa<Anomalon>, {
+                       relata: venireRectum,
+                       praefixa: 'sub'
+                     })
+    const supervenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa<Anomalon>, {
+                         relata: venireRectum,
+                         praefixa: 'super'
+                       })
+    const transvenire: Ignavum<TabulaPraefixa<Anomalon>> =
+                   new Ignavum(TabulaPraefixa, {
+                         relata: venireRectum,
+                         praefixa: 'trāns'
+                       })
 
     this.contenta.set('abdare', new Mantela(abdare))
     this.contenta.set('abesse', new Mantela(abesse))
@@ -1350,3 +927,5 @@ export default class Actus extends Anomala<Anomalon> {
     this.contenta.set('venīre', new Mantela(venireRectum))
   }
 }
+
+export const actus = new Ignavum(Actus)

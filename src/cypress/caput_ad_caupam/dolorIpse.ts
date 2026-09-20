@@ -37,7 +37,7 @@ describe('dolet', () => {
       verba: [
         neque, porro, quisquam, est, qui, dolorem, ipsum
       ]
-    });
+    })
 
     const quia: Verbum = {
       categoria: 'coniunctio',
@@ -66,14 +66,14 @@ describe('dolet', () => {
       categoria: 'actus',
       lemma: 'velle',
       valores: [ 'subiunctivus', 'praesens', 'singularis', 'tertia' ]
-    };
+    }
 
     loquatur({
       locutio: 'Quia dolor sit amet cōnsectetur adipīscī velit',
       verba: [
         quia, dolor, sit, amet, consectetur, adipisci, velit
       ]
-    });
+    })
 
     const sed: Verbum = {
       categoria: 'coniunctio',
@@ -108,7 +108,7 @@ describe('dolet', () => {
       verba: [
         sed, quia, non, numquam, eius, modi, tempora, incidunt
       ]
-    });
+    })
 
     const ut: Verbum = {
       categoria: 'coniunctio',
@@ -140,13 +140,13 @@ describe('dolet', () => {
       categoria: 'nomen',
       lemma: 'voluptās',
       valores: [ 'singularis', 'accusativus' ]
-    };
+    }
 
     loquatur({
       locutio: 'Ut labōre et dolōre magnam aliquam quaerat voluptātem',
       verba: [
         ut, labore, et, dolore, magnam, aliquam, quaerat, voluptatem
       ]
-    });
-  });
-});
+    })
+  })
+})

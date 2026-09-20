@@ -1,7 +1,9 @@
+import type { modus, numerus, persona, tempus, vox } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { ActusAgendus } from '../praebeunda/agenda';
 import { Actus } from '../praebeunda/verba';
+import { Errator } from '../praebeunda/verba.ts';
 import TabulaDeponens from '../tabulae/defectae/deponens';
 import TabulaImpersonalis from '../tabulae/defectae/impersonalis';
 import TabulaPerfecta from '../tabulae/defectae/perfecta';
@@ -10,18 +12,17 @@ import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
 import type { Putaturum, Radicator } from './putaturum';
 
-type Percolamen = {
-  modus: string
-  vox: string
-  tempus: string
-  numerus: string
-  persona: string
-};
+
+interface Percolamen {
+  modus?: modus
+  tempus?: tempus
+  vox?: vox
+  numerus?: numerus
+  persona?: persona
+}
 
 @Nuntius.factum('PutatorActus')
-export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
-  static se: Ignavum<PutatorActus> = new Ignavum(() => new PutatorActus);
-
+class PutatorActus implements Putaturum<ActusAgendus, Actus> {
   private radicetur(versio: string): Radicator<ActusAgendus, Actus> {
     switch (versio) {
       case 'prima':
@@ -35,7 +36,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
       case 'tertia/perfecta':
       case 'tertia//perfecta':
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (actus: ActusAgendus, colamen: Percolamen): string => actus.perfectum.chop(4);
+        return (actus: ActusAgendus,): string => actus.perfectum?.chop(4) ?? ''
       case 'quartus':
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
@@ -44,13 +45,13 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
               colamen.vox === 'passiva',
               colamen.tempus === 'futurum'
             ].all():
-              return actus.supinum.chop(2);
-            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus):
-              return actus.perfectum.chop(4);
+              return actus.supinum?.chop(2) ?? ''
+            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
+              return actus.perfectum?.chop(4) ?? ''
             default:
-              return actus.infinitivum.chop(3);
+              return actus.infinitivum.chop(3)
           }
-        };
+        }
       case 'tertia':
       case 'tertiaVaria':
       case 'tertia/impersonalis':
@@ -64,13 +65,13 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
               colamen.vox === 'passiva',
               colamen.tempus === 'futurum'
             ].all():
-              return actus.supinum.chop(2);
-            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus):
-              return actus.perfectum.chop(4);
+              return actus.supinum?.chop(2) ?? ''
+            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
+              return actus.perfectum?.chop(4) ?? ''
             default:
-              return actus.infinitivum.chop(1);
+              return actus.infinitivum.chop(1)
           }
-        };
+        }
       case 'prima/deponens':
       case 'prima//deponens':
       case 'secunda/deponens':
@@ -98,17 +99,17 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
               colamen.tempus === 'futurum',
               colamen.vox === 'activa'
             ].all():
-              return actus.supinum.chop(2);
+              return actus.supinum?.chop(2) ?? ''
             case [
               colamen.modus === 'participium',
               colamen.tempus === 'perfectum',
               colamen.vox === 'passiva'
             ].all():
-              return actus.supinum.chop(2);
+              return actus.supinum?.chop(2) ?? ''
             default:
-              return actus.infinitivum.chop(3);
+              return actus.infinitivum.chop(3)
           }
-        };
+        }
       case 'prima/semideponensActiva':
       case 'prima//semideponensActiva':
       case 'secunda/semideponensActiva':
@@ -116,7 +117,7 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
       case 'tertia/semideponensActiva':
       case 'tertia//semideponensActiva':
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (actus: ActusAgendus, colamen: Percolamen): string => actus.infinitivum.chop(3);
+        return (actus: ActusAgendus,): string => actus.infinitivum.chop(3)
       case 'prima/impersonalis/semideponensActiva':
       case 'prima//impersonalis/semideponensActiva':
       case 'secunda/impersonalis/semideponensActiva':
@@ -130,72 +131,76 @@ export default class PutatorActus implements Putaturum<ActusAgendus, Actus> {
               colamen.tempus === 'perfectum',
               colamen.vox === 'passiva'
             ].all():
-              return actus.perfectum;
+              return actus.perfectum ?? ''
             default:
-              return actus.infinitivum.chop(3);
+              return actus.infinitivum.chop(3)
           }
-        };
+        }
       default:
-        throw Actus.Errator('versio', versio);
+        throw Errator({ versio: versio })
     }
   }
 
   @Nuntius.modus('PutatorActus')
-  putetur(agendus: ActusAgendus): Tabula<Actus> {
+  putetur(agendus: ActusAgendus): Ignavum<Tabula<Actus>> {
     // eslint-disable-next-line prefer-const
-    const [fundamen, vices, defectus, defectusSecundus] = agendus.versio.split('/');
+    const [fundamen, vices, defectus, defectusSecundus] = agendus.versio.split('/')
     if (defectus) {
       agendus.versio = [fundamen, vices].join('/')
       switch (defectus) {
         case 'deponens':
         case 'semideponens':
         case 'semideponensActiva':
-          return new TabulaDeponens({
-            relata: new Ignavum(() => this.putetur(agendus)),
-            ut: defectus
-          });
+          return new Ignavum(TabulaDeponens, {
+                       relata: this.putetur(agendus),
+                       ut: defectus
+                     })
         case 'impersonalis':
-          return new TabulaImpersonalis({
-            relata: new Ignavum(() => this.putetur(agendus)),
-            et: defectusSecundus
-          });
+          return new Ignavum(TabulaImpersonalis, {
+                       relata: this.putetur(agendus),
+                       et: defectusSecundus
+                     })
         case 'perfectus':
-          return new TabulaPerfecta(new Ignavum(() => this.putetur(agendus)));
+          return new Ignavum(TabulaPerfecta, {
+                       relata: this.putetur(agendus)
+                     })
         default:
-          throw Actus.Errator('versio', agendus.versio);
+          throw Errator({ versio: agendus.versio })
       }
     } else if (vices) {
-      agendus.versio = fundamen;
+      agendus.versio = fundamen
       if (vices === 'cumImperativoBrevi') {
-        return new TabulaVicaria({
-          hoc: agendus,
-          prima: {
-            scapum: '/res/vices/actus',
-            via: [fundamen, vices].join('/')
-          }, secunda: {
-            scapum: '/res/tabula/actus',
-            via: fundamen
-          }, positor: Actus.positor,
-          radicator: this.radicetur(fundamen)
-        });
+        return new Ignavum(TabulaVicaria, {
+                     prima: {
+                       scapum: '/res/vices/actus',
+                       via: [fundamen, vices].join('/')
+                     }, secunda: {
+                       scapum: '/res/tabula/actus',
+                       via: fundamen
+                     }, radicator: this.radicetur(fundamen),
+                     positor: Actus.positor,
+                     hoc: agendus
+                   })
       } else {
-        throw Actus.Errator('versio', agendus.versio);
+        throw Errator({ versio: agendus.versio })
       }
     } else {
       if ([
         'prima', 'secunda', 'tertia', 'tertiaVaria', 'quarta'
       ].includes(fundamen)) {
         agendus.versio = fundamen
-        return new TabulaRecta({
-          radicator: this.radicetur(agendus.versio),
-          scapum: '/res/tabula/actus',
-          positor: Actus.positor,
-          via: agendus.versio,
-          hoc: agendus
-        });
+        return new Ignavum(TabulaRecta, {
+                     radicator: this.radicetur(agendus.versio),
+                     scapum: '/res/tabula/actus',
+                     positor: Actus.positor,
+                     via: agendus.versio,
+                     hoc: agendus
+        })
       } else {
-        throw Actus.Errator('versio', agendus.versio);
+        throw Errator({ versio: agendus.versio })
       }
     }
   }
 }
+
+export const actus = new Ignavum(PutatorActus)

@@ -1,21 +1,23 @@
-type Optanda = {
-  nuntium?: string,
-  vita?: number,
+interface Optanda {
+  nuntium?: string
+  vita?: number
   color?: string,
-};
+}
+
+const Please = require('pleasejs');
 
 export default class Gustulus {
-  readonly nuntium: string;
-  readonly vita: number;
-  readonly color: string;
-  readonly visibile: boolean;
+  private _vita: number = 0
+  public nuntium: string = ''
+  public color: string = Please.make_color()
+  public visibile: boolean = this._vita > 0
 
-  constructor(optanda: Optanda) {
-    const Please = require('pleasejs');
+  public get vita() {
+    return this._vita
+  }
 
-    this.nuntium = optanda.nuntium ?? '';
-    this.vita = optanda.vita ?? 0;
-    this.color = optanda.color ?? Please.make_color();
-    this.visibile = !!optanda.vita && optanda.vita > 0;
+  public set vita(valor: number) {
+    this.vita = valor
+    this.visibile = this.vita > 0
   }
 }

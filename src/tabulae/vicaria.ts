@@ -1,55 +1,50 @@
+import Ignavum from '../miscella/ignavum';
+import Nuntius from '../miscella/nuntius';
+import { type Positor } from '../praebeunda/agenda';
+import { type Faciendum } from '../praebeunda/interfecta';
+import { Multiplex } from '../praebeunda/verba';
+import { type Radicator } from '../putatores/putaturum';
 import TabulaRecta from './recta';
 import Tabula from './tabula';
-import Nuntius from '../miscella/nuntius';
-import { Multiplex } from '../praebeunda/verba';
-import type { Positor } from '../praebeunda/agenda';
-import type { Faciendum } from '../praebeunda/interfecta';
-import type { Radicator } from '../putatores/putaturum';
 
-type Optanda<Hoc extends Faciendum<Illud>, Illud extends Multiplex> = {
-  prima: {
-    scapum?: string,
-    via: string
-  }, secunda: {
-    scapum?: string,
-    via: string
-  }, hoc: Hoc,
-  radicator: Radicator<Hoc, Illud>
-  positor: Positor<Illud>
+interface Vicaria {
+  scapum?: string
+  via: string
 }
 
 @Nuntius.factum('TabulaVicaria')
 export default class TabulaVicaria<Hoc extends Faciendum<Illud>, Illud extends Multiplex> extends Tabula<Illud> {
-  private readonly _: Optanda<Hoc, Illud>;
-
-  constructor(optanda: Optanda<Hoc, Illud>) {
-    super();
-    this._ = optanda;
-  }
+  prima!: Vicaria
+  secunda!: Vicaria
+  hoc!: Hoc
+  radicator!: Radicator<Hoc, Illud>
+  positor!: Positor<Illud>
 
   @Nuntius.futurus('TabulaVicaria')
   async plenetur(): Promise<void> {
-    const prima: TabulaRecta<Hoc, Illud> = new TabulaRecta({
-      radicator: this._.radicator,
-      positor: this._.positor,
-      scapum: this._.prima.scapum,
-      via: this._.prima.via,
-      hoc: this._.hoc
-    });
+    const tabulaPrima: Ignavum<TabulaRecta<Hoc, Illud>> =
+                   new Ignavum(TabulaRecta, {
+                         radicator: this.radicator,
+                         positor: this.positor as Positor<Multiplex>,
+                         scapum: this.prima.scapum,
+                         via: this.prima.via,
+                         hoc: this.hoc
+                       })
 
-    const secunda: TabulaRecta<Hoc, Illud> = new TabulaRecta({
-      radicator: this._.radicator,
-      positor: this._.positor,
-      scapum: this._.secunda.scapum,
-      via: this._.secunda.via,
-      hoc: this._.hoc
-    });
+    const tabulaSecunda: Ignavum<TabulaRecta<Hoc, Illud>> =
+                     new Ignavum(TabulaRecta, {
+                           radicator: this.radicator,
+                           positor: this.positor as Positor<Multiplex>,
+                           scapum: this.secunda.scapum,
+                           via: this.secunda.via,
+                           hoc: this.hoc
+                       })
 
     this.tabula = [
       ...new Set([
-        ...(await prima.tabulentur()),
-        ...(await secunda.tabulentur())
+        ...(await tabulaPrima.hoc().tabulentur()),
+        ...(await tabulaSecunda.hoc().tabulentur())
       ])
-    ];
+    ]
   }
 }

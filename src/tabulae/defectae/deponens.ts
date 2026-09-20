@@ -1,18 +1,11 @@
 import { numeri, personae, tempora } from '../../miscella/enumerationes';
-import Ignavum from '../../miscella/ignavum';
-import type { Colamen } from '../../praebeunda/agenda';
+import { type Colamen } from '../../praebeunda/agenda';
 import { Actus } from '../../praebeunda/verba';
-import Tabula from '../tabula';
 import TabulaDefecta from './defecta';
-
-type Optanda = {
-  relata: Ignavum<Tabula<Actus>>,
-  ut: string
-};
 
 export default class TabulaDeponens extends TabulaDefecta<Actus> {
   static apponatur(ut: string): Colamen<Actus>[] {
-    const colamina: Colamen<Actus>[] = [{ modus: 'infinitivus' } as Colamen<Actus>];
+    const colamina: Colamen<Actus>[] = [{ modus: 'infinitivus' } as Colamen<Actus>]
 
     switch (ut) {
       case 'semideponens':
@@ -20,24 +13,24 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           colamina.push({
             modus: 'participium',
             tempus: tempus
-          } as Colamen<Actus>);
-        });
-        break;
+          } as Colamen<Actus>)
+        })
+        break
       case 'semideponensActiva':
         colamina.push({
           modus: 'participium',
           tempus: 'futurum'
-        } as Colamen<Actus>);
-        break;
+        } as Colamen<Actus>)
+        break
       default:
         ['futurum', 'perfectum'].map((tempus) => {
           colamina.push({
             modus: 'participium',
             tempus: tempus
-          } as Colamen<Actus>);
-        });
-        break;
-    }
+          } as Colamen<Actus>)
+        })
+        break
+    };
 
     ['praesens', 'futurum'].forEach((tempus) => {
       numeri.forEach((numerus) => {
@@ -45,8 +38,8 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           modus: 'imperativus',
           tempus: tempus,
           numerus: numerus
-        } as Colamen<Actus>);
-      });
+        } as Colamen<Actus>)
+      })
     });
     ['indicativus', 'subiunctivus'].forEach((modus) => {
       tempora.forEach((tempus) => {
@@ -58,32 +51,27 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
                 tempus: tempus,
                 numerus: numerus,
                 persona: persona
-              } as Colamen<Actus>);
-            });
-          });
+              } as Colamen<Actus>)
+            })
+          })
         }
-      });
-    });
+      })
+    })
 
-    return colamina;
+    return colamina
   }
 
-  private readonly _ut: string;
-
-  constructor(optanda: Optanda) {
-    super(optanda.relata);
-    this._ut = optanda.ut;
-  }
+  public ut!: string
 
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
-    switch (this._ut) {
+    switch (this.ut) {
       case 'semideponens':
         if (colamen.modus === 'particpalis') {
-          colamen.vox = '';
+          colamen.vox = ''
         } else if (colamen.vox === 'passiva') {
-          return null;
+          return null
         }
-        break;
+        break
       case 'semideponensActiva':
         if (
           [
@@ -92,20 +80,20 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
             colamen.vox === 'passiva'
           ].any()
         ) {
-          colamen.vox = '';
+          colamen.vox = ''
         } else if (colamen.vox === 'passiva') {
-          return null;
+          return null
         }
-        break;
+        break
       default:
         if ([ colamen.modus === 'participium', colamen.vox === 'passiva' ].any()) {
-          colamen.vox = '';
+          colamen.vox = ''
         } else {
-          return null;
+          return null
         }
-        break;
+        break
     }
 
-    return colamen;
+    return colamen
   }
 }

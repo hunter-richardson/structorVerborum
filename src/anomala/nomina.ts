@@ -6,475 +6,325 @@ import TabulaBifissa from '../tabulae/bifissa';
 import TabulaCollata from '../tabulae/collata';
 import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
 import TabulaScapalis from '../tabulae/scapalis';
-import type Tabula from '../tabulae/tabula';
 import Anomala, { Mantela } from './anomala';
 
-export default class Nomina extends Anomala<Nomen> {
-  static se: Ignavum<Nomina> = new Ignavum(() => new Nomina)
+class Nomina extends Anomala<Nomen> {
   protected override async numeretur(): Promise<void> {
-    const Athos: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/Athōs',
-          positor: Nomen.positor
-        })
-    )
-    const dare: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/dare',
-          positor: Nomen.positor
-        })
-    )
-    const Iesus: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/Iēsūs',
-          positor: Nomen.positor
-        })
-    )
-    const ire: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/ire',
-          positor: Nomen.positor
-        })
-    )
-    const lexis: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/lexis',
-          positor: Nomen.positor
-        })
-    )
-    const vices: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis<Nomen>({
-          via: '/res/scapales/nomina/vices',
-          positor: Nomen.positor
-        })
-    )
-    const vis: Ignavum<TabulaScapalis<Nomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/nomina/vis',
-          positor: Nomen.positor
-        })
-    )
-
-    const balneum: Ignavum<TabulaBifissa> = new Ignavum(
-      () =>
-        new TabulaBifissa({
-          singularis: new Structor(() => new NomenAgendum)
-            .ponatur((nomen) => (nomen.nominativum = 'balneum'))
-            .ponatur((nomen) => (nomen.genitivum = 'balneī'))
-            .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
-            .struatur(),
-          pluralis: new Structor(() => new NomenAgendum)
-            .ponatur((nomen) => (nomen.nominativum = 'balnea'))
-            .ponatur((nomen) => (nomen.genitivum = 'balneae'))
-            .ponatur((nomen) => (nomen.versio = 'prima'))
-            .struatur()
-        })
-    )
-
-    const caelum: Ignavum<TabulaBifissa> = new Ignavum(
-      () =>
-        new TabulaBifissa({
-          singularis: new Structor(() => new NomenAgendum)
-            .ponatur((nomen) => (nomen.nominativum = 'caelum'))
-            .ponatur((nomen) => (nomen.genitivum = 'caelī'))
-            .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
-            .struatur(),
-          pluralis: new Structor(() => new NomenAgendum)
-            .ponatur((nomen) => (nomen.nominativum = 'caelus'))
-            .ponatur((nomen) => (nomen.genitivum = 'caelī'))
-            .ponatur((nomen) => (nomen.versio = 'secundaMasculina'))
-            .struatur()
-        })
-    )
-
-    const dea: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis<Nomen>({
-                via: '/res/scapales/nomina/dea',
-                positor: Nomen.positor
+    const Athos: Ignavum<TabulaScapalis<Nomen>> =
+             new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/Athōs',
+                   positor: Nomen.positor
+                 })
+    const dare: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/dare',
+                   positor: Nomen.positor
+                 })
+    const Iesus: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/Iēsūs',
+                   positor: Nomen.positor
+                 })
+    const ire: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/īre',
+                   positor: Nomen.positor
+                 })
+    const lexis: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/lexis',
+                   positor: Nomen.positor
+                 })
+    const vices: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/vicēs',
+                   positor: Nomen.positor
+                 })
+    const vis: Ignavum<TabulaScapalis<Nomen>> =
+            new Ignavum(TabulaScapalis<Nomen>, {
+                   via: '/res/scapales/nomina/vīs',
+                   positor: Nomen.positor
+                 })
+    const balneum: Ignavum<TabulaBifissa> =
+               new Ignavum(TabulaBifissa, {
+                     singularis: new Structor(NomenAgendum)
+                                       .ponatur((nomen) => (nomen.nominativum = 'balneum'))
+                                       .ponatur((nomen) => (nomen.genitivum = 'balneī'))
+                                       .ponatur((nomen) => (nomen.versio = 'secundaNeutra')),
+                     pluralis: new Structor(NomenAgendum)
+                                     .ponatur((nomen) => (nomen.nominativum = 'balnea'))
+                                     .ponatur((nomen) => (nomen.genitivum = 'balneae'))
+                                     .ponatur((nomen) => (nomen.versio = 'prima'))
+                   })
+    const caelum: Ignavum<TabulaBifissa> =
+              new Ignavum(TabulaBifissa, {
+                    singularis: new Structor(NomenAgendum)
+                                      .ponatur((nomen) => (nomen.nominativum = 'caelum'))
+                                      .ponatur((nomen) => (nomen.genitivum = 'caelī'))
+                                      .ponatur((nomen) => (nomen.versio = 'secundaNeutra')),
+                    pluralis: new Structor(NomenAgendum)
+                                    .ponatur((nomen) => (nomen.nominativum = 'caelus'))
+                                    .ponatur((nomen) => (nomen.genitivum = 'caelī'))
+                                    .ponatur((nomen) => (nomen.versio = 'secundaMasculina'))
               })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new NomenAgendum)
-              .ponatur((nomen) => (nomen.nominativum = 'dea'))
-              .ponatur((nomen) => (nomen.genitivum = 'deae'))
-              .ponatur((nomen) => (nomen.versio = 'prima'))
-              .struatur().putetur()
-          )
-        ))
+    const dea: Ignavum<TabulaCollata<Nomen>> =
+           new Ignavum(TabulaCollata<Nomen>, {
+                 relatae: [
+                   new Ignavum(TabulaScapalis, {
+                         via: '/res/scapales/nomina/dea',
+                         positor: Nomen.positor
+                       }),
+                   new Structor(NomenAgendum)
+                         .ponatur((nomen) => nomen.nominativum = 'dea')
+                         .ponatur((nomen) => nomen.genitivum = 'deae')
+                         .ponatur((nomen) => nomen.versio = 'prima')
+                 ]
+               })
+    const domus: Ignavum<TabulaCollata<Nomen>> =
+             new Ignavum(TabulaCollata<Nomen>, {
+               relatae: [
+                 new Ignavum(TabulaScapalis, {
+                       via: '/res/scapales/nomina/domus',
+                       positor: Nomen.positor
+                     }),
+                 new Structor(NomenAgendum)
+                       .ponatur((nomen) => (nomen.nominativum = 'domus'))
+                       .ponatur((nomen) => (nomen.genitivum = 'domūs'))
+                       .ponatur((nomen) => (nomen.versio = 'quarta'))
+               ]
+             })
+    const iugerum: Ignavum<TabulaCollata<Nomen>> =
+               new Ignavum(TabulaCollata<Nomen>, {
+                     relata: [
+                       new Ignavum(TabulaScapalis, {
+                             via: '/res/scapales/nomina/iūgerum',
+                             positor: Nomen.positor
+                           }),
+                       new Structor(NomenAgendum)
+                             .ponatur((nomen) => (nomen.nominativum = 'iūgerum'))
+                             .ponatur((nomen) => (nomen.genitivum = 'iūgerī'))
+                             .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
+                     ]
+                   })
+    const Iuppiter: Ignavum<TabulaCollata<Nomen>> =
+                new Ignavum(TabulaCollata<Nomen>, {
+                      relatae: [
+                        new Ignavum(TabulaScapalis, {
+                              via: '/res/scapales/nomina/Iuppiter',
+                              positor: Nomen.positor
+                            }),
+                        new Structor(NomenAgendum)
+                              .ponatur(nomen => nomen.genitivum = 'Iovis')
+                              .ponatur(nomen => nomen.versio = 'tertiaAnimata')
+                      ]
+                    })
+    const semidea: Ignavum<TabulaPraefixa<Nomen>> =
+               new Ignavum(TabulaPraefixa<Nomen>, {
+                     relata: dea,
+                     praefixum: 'sēmi'
+                   })
+    const abire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                     relata: ire,
+                     praefixum: 'ab'
+                   })
+    const circumire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: ire,
+                       praefixum: 'circum'
+                     })
+    const coire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'co'
+                 })
+    const deire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'de'
+                 })
+    const disperire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: ire,
+                       praefixum: 'disper'
+                     })
+    const exire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'ex'
+                  })
+    const inire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'in'
+                 })
+    const interire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: ire,
+                      praefixum: 'inter'
+                    })
+    const introire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: ire,
+                      praefixum: 'intro'
+                    })
+    const nequire: Ignavum<TabulaPraefixa<Nomen>> =
+               new Ignavum(TabulaPraefixa<Nomen>, {
+                     relata: ire,
+                     praefixum: 'nequ'
+                   })
+    const obire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'ob'
+                 })
+    const perire: Ignavum<TabulaPraefixa<Nomen>> =
+              new Ignavum(TabulaPraefixa<Nomen>, {
+                    relata: ire,
+                    praefixum: 'per'
+                  })
+    const prodire: Ignavum<TabulaPraefixa<Nomen>> =
+               new Ignavum(TabulaPraefixa<Nomen>, {
+                     relata: ire,
+                     praefixum: 'prōd'
+                   })
+    const quire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'qu'
+                 })
+    const redire: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                   relata: ire,
+                   praefixum: 'red'
+                 })
+    const subire: Ignavum<TabulaPraefixa<Nomen>> =
+              new Ignavum(TabulaPraefixa<Nomen>, {
+                    relata: ire,
+                    praefixum: 'sub'
+                  })
+    const transabire: Ignavum<TabulaPraefixa<Nomen>> =
+                  new Ignavum(TabulaPraefixa<Nomen>, {
+                        relata: ire,
+                        praefixum: 'trānsab'
+                      })
+    const transire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: ire,
+                      praefixum: 'trāns'
+                    })
+    const venire: Ignavum<TabulaPraefixa<Nomen>> =
+              new Ignavum(TabulaPraefixa<Nomen>, {
+                    relata: ire,
+                    praefixum: 'vēn'
+                  })
+    const dedare: Ignavum<TabulaPraefixa<Nomen>> =
+              new Ignavum(TabulaPraefixa<Nomen>, {
+                    relata: dare,
+                    praefixum: 'dē'
+                  })
+    const edare: Ignavum<TabulaPraefixa<Nomen>> =
+             new Ignavum(TabulaPraefixa<Nomen>, {
+                  relata: dare,
+                  praefixum: 'ē'
+                 })
 
-    const domus: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/nomina/domus',
-                positor: Nomen.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new NomenAgendum)
-              .ponatur((nomen) => (nomen.nominativum = 'domus'))
-              .ponatur((nomen) => (nomen.genitivum = 'domūs'))
-              .ponatur((nomen) => (nomen.versio = 'quarta'))
-              .struatur().putetur()
-          )
-        ))
+    const venireRectum: Structor<NomenActum> =
+                    new Structor(NomenActum)
+                          .ponatur((nomen) => (nomen.infinitivum = 'venīre'))
+                          .ponatur((nomen) => (nomen.supinum = 'ventum'))
+                          .ponatur((nomen) => (nomen.versio = 'quartus'))
+    const advenire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: venireRectum,
+                      praefixum: 'ad'
+                    })
+    const adinvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                  new Ignavum(TabulaPraefixa<Nomen>, {
+                        relata: venireRectum,
+                        praefixum: 'adin'
+                      })
+    const antevenire: Ignavum<TabulaPraefixa<Nomen>> =
+                  new Ignavum(TabulaPraefixa<Nomen>, {
+                        relata: venireRectum,
+                        praefixum: 'ante'
+                      })
+    const circumvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                    new Ignavum(TabulaPraefixa<Nomen>, {
+                          relata: venireRectum,
+                          praefixum: 'circum'
+                        })
+    const convenire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: venireRectum,
+                       praefixum: 'con'
+                     })
+    const contravenire: Ignavum<TabulaPraefixa<Nomen>> =
+                    new Ignavum(TabulaPraefixa<Nomen>, {
+                          relata: venireRectum,
+                          praefixum: 'contrā'
+                        })
+    const disconvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                    new Ignavum(TabulaPraefixa<Nomen>, {
+                          relata: venireRectum,
+                          praefixum: 'discon'
+                        })
+    const devenire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: venireRectum,
+                      praefixum: 'dē'
+                    })
+    const evenire: Ignavum<TabulaPraefixa<Nomen>> =
+               new Ignavum(TabulaPraefixa<Nomen>, {
+                     relata: venireRectum,
+                     praefixum: 'ē'
+                   })
+    const invenire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: venireRectum,
+                      praefixum: 'in'
+                    })
+    const intervenire: Ignavum<TabulaPraefixa<Nomen>> =
+                   new Ignavum(TabulaPraefixa<Nomen>, {
+                         relata: venireRectum,
+                         praefixum: 'inter'
+                       })
+    const obvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                new Ignavum(TabulaPraefixa<Nomen>, {
+                      relata: venireRectum,
+                      praefixum: 'ob'
+                    })
+    const pervenire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: venireRectum,
+                       praefixum: 'per'
+                     })
+    const praevenire: Ignavum<TabulaPraefixa<Nomen>> =
+                  new Ignavum(TabulaPraefixa<Nomen>, {
+                        relata: venireRectum,
+                        praefixum: 'prae'
+                      })
+    const provenire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: venireRectum,
+                       praefixum: 'prō'
+                     })
+    const subvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                 new Ignavum(TabulaPraefixa<Nomen>, {
+                       relata: venireRectum,
+                       praefixum: 'sub'
+                     })
+    const supervenire: Ignavum<TabulaPraefixa<Nomen>> =
+                   new Ignavum(TabulaPraefixa<Nomen>, {
+                         relata: venireRectum,
+                         praefixum: 'super'
+                       })
 
-    const iugerum: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/nomina/iūgerum',
-                positor: Nomen.positor
-              })
-          ),
-          new Ignavum(() =>
-            new Structor(() => new NomenAgendum)
-              .ponatur((nomen) => (nomen.nominativum = 'iūgerum'))
-              .ponatur((nomen) => (nomen.genitivum = 'iūgerī'))
-              .ponatur((nomen) => (nomen.versio = 'secundaNeutra'))
-              .struatur().putetur()
-          )
-        ));
-
-    const Iuppiter: Ignavum<TabulaCollata<Nomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/nomina/Iuppiter.csv',
-                positor: Nomen.positor
-              })),
-          new Ignavum(() =>
-            new Structor(() => new NomenAgendum)
-              .ponatur(nomen => nomen.genitivum = 'Iovis')
-              .ponatur(nomen => nomen.versio = 'tertiaAnimata')
-              .struatur().putetur())
-        ));
-
-    const semidea: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dea,
-          praefixum: 'sēmi'
-        })
-    )
-
-    const abire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ab'
-        })
-    )
-    const circumire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'circum'
-        })
-    )
-    const coire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'co'
-        })
-    )
-    const deire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'de'
-        })
-    )
-    const disperire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'disper'
-        })
-    )
-    const exire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ex'
-        })
-    )
-    const inire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'in'
-        })
-    )
-    const interire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'inter'
-        })
-    )
-    const introire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'intro'
-        })
-    )
-    const nequire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'nequ'
-        })
-    )
-    const obire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'ob'
-        })
-    )
-    const perire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'per'
-        })
-    )
-    const prodire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'prōd'
-        })
-    )
-    const quire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'qu'
-        })
-    )
-    const redire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'red'
-        })
-    )
-    const subire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'sub'
-        })
-    )
-    const transabire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'trānsab'
-        })
-    )
-    const transire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'trāns'
-        })
-    )
-    const venire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: ire,
-          praefixum: 'vēn'
-        })
-    )
-    const dedare: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dare,
-          praefixum: 'dē'
-        })
-    )
-    const edare: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: dare,
-          praefixum: 'ē'
-        })
-    )
-
-    const venireRectum: Ignavum<Tabula<Nomen>> = new Ignavum(() =>
-      new Structor(() => new NomenActum)
-        .ponatur((nomen) => (nomen.infinitivum = 'venīre'))
-        .ponatur((nomen) => (nomen.supinum = 'ventum'))
-        .ponatur((nomen) => (nomen.versio = 'quartus'))
-        .struatur()
-        .putetur()
-    )
-
-    const advenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ad'
-        })
-    )
-
-    const adinvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'adin'
-        })
-    )
-
-    const antevenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ante'
-        })
-    )
-
-    const circumvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'circum'
-        })
-    )
-
-    const convenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'con'
-        })
-    )
-
-    const contravenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'contrā'
-        })
-    )
-
-    const disconvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'discon'
-        })
-    )
-
-    const devenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'dē'
-        })
-    )
-
-    const evenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ē'
-        })
-    )
-
-    const invenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'in'
-        })
-    )
-
-    const intervenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'inter'
-        })
-    )
-
-    const obvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'ob'
-        })
-    )
-
-    const pervenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'per'
-        })
-    )
-
-    const praevenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'prae'
-        })
-    )
-
-    const provenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'prō'
-        })
-    )
-
-    const subvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'sub'
-        })
-    )
-
-    const supervenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'super'
-        })
-    )
-
-    const transvenire: Ignavum<TabulaPraefixa<Nomen>> = new Ignavum(
-      () =>
-        new TabulaPraefixa({
-          relata: new Ignavum(() => venireRectum.ipse()),
-          praefixum: 'trāns'
-        })
-    )
+    const transvenire: Ignavum<TabulaPraefixa<Nomen>> =
+                   new Ignavum(TabulaPraefixa<Nomen>, {
+                         relata: venireRectum,
+                         praefixum: 'trāns'
+                       })
 
     this.contenta.set('abīre', new Mantela(abire))
     this.contenta.set('advenīre', new Mantela(advenire))
@@ -532,3 +382,5 @@ export default class Nomina extends Anomala<Nomen> {
     this.contenta.set('vīs', new Mantela(vis))
   }
 }
+
+export const nomina = new Nomina()

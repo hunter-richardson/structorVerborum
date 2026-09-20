@@ -1,18 +1,20 @@
-import Crustula from '../miscella/crustula';
+import { crustula } from '../miscella/crustula';
 import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
 
-const anglica: boolean = Crustula.se.ipse().lingua.est('anglica') ?? false;
+const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
-type Generanda<Hoc extends Multiplex> = {
-  categoria: string,
-  haec: Hoc[];
-};
+interface Generanda<Hoc extends Multiplex> {
+  categoria: string
+  haec: Hoc[]
+}
 
-export type Columnae = {
-  title: string,
-  key: string;
-}[];
+interface Columna {
+  title: string
+  key: string
+}
+
+export type Columnae = Columna[]
 
 export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): Columnae {
   return Multiplex.colamina(generanda.categoria)
@@ -22,6 +24,6 @@ export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): 
       return {
         title: (anglica ? anglicum(clavis) : clavis).capitalize(),
         key: clavis
-      };
-    });
+      }
+    })
 }

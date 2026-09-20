@@ -1,17 +1,14 @@
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
-import type { Faciendum } from '../praebeunda/interfecta';
 import { Multiplex } from '../praebeunda/verba';
+import { type Faciendum } from '../praebeunda/interfecta';
 import type Tabula from '../tabulae/tabula';
 
 export class Mantela<Hoc extends Multiplex> implements Faciendum<Hoc> {
-  private readonly _tabula: Ignavum<Tabula<Hoc>>
-  constructor(tabula: Ignavum<Tabula<Hoc>>) {
-    this._tabula = tabula
-  }
+  constructor(private readonly _tabula: Ignavum<Tabula<Hoc>>) {}
 
-  putetur(): Tabula<Hoc> {
-    return this._tabula.ipse()
+  putetur(): Ignavum<Tabula<Hoc>> {
+    return this._tabula
   }
 }
 

@@ -35,6 +35,6 @@ describe('Carthago delendast', () => {
           }
         }
       ]
-    });
-  });
-});
+    })
+  })
+})

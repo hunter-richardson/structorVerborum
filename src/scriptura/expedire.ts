@@ -1,16 +1,16 @@
 import { execa, type Options, type Result } from 'execa';
 
-type Eventus = Result<Options>;
+type Eventus = Result<Options>
 
 async function aguntur(imperia: string[]): Promise<boolean> {
   imperia.forEach(async (imperium) => {
-    const eventus: Eventus = await execa`${imperium}`;
+    const eventus: Eventus = await execa`${imperium}`
     if (eventus.failed) {
-      throw new Error(eventus.shortMessage ?? eventus.stderr?.toString());
+      throw new Error(eventus.shortMessage ?? eventus.stderr?.toString())
     }
-  });
+  })
 
-  return true;
+  return true
 }
 
 (async (): Promise<void> => {
@@ -20,7 +20,7 @@ async function aguntur(imperia: string[]): Promise<boolean> {
       'git checkout --orgphan gh-pages'
     ])) {
       // eslint-disable-next-line no-console
-      console.log('Inceptust collegi');
+      console.log('Inceptust collegi')
 
       if (await aguntur([
           'npm run build',
@@ -28,9 +28,9 @@ async function aguntur(imperia: string[]): Promise<boolean> {
           "git --work-tree commit -m 'expedire'"
         ])) {
         // eslint-disable-next-line no-console
-        console.log('Successu collectust');
+        console.log('Successu collectust')
         // eslint-disable-next-line no-console
-        console.log('Inceptust expediri');
+        console.log('Inceptust expediri')
 
         if (await aguntur([
             'git push origin HEAD:gh-pages --force --verbose',
@@ -39,12 +39,12 @@ async function aguntur(imperia: string[]): Promise<boolean> {
             'git branch -D gh-pages'
           ])) {
           // eslint-disable-next-line no-console
-          console.log('Expeditust successu');
+          console.log('Expeditust successu')
         }
       }
     }
   } catch (error) {
-    console.log(error);
-    process.exit(1);
+    console.log(error)
+    process.exit(1)
   }
-})();
+})()

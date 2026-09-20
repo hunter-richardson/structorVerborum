@@ -1,8 +1,6 @@
-import TabulaDefecta from './defecta';
-import Ignavum from '../../miscella/ignavum';
+import { type Colamen } from '../../praebeunda/agenda';
 import { Nomen } from '../../praebeunda/verba';
-import Tabula from '../tabula';
-import type { Colamen } from '../../praebeunda/agenda';
+import TabulaDefecta from './defecta';
 
 export default class TabulaProna extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {
@@ -18,17 +16,13 @@ export default class TabulaProna extends TabulaDefecta<Nomen> {
       colamina.push({
         actum: 'gerundium',
         casus: casus
-      } as Colamen<Nomen>);
-    });
+      } as Colamen<Nomen>)
+    })
 
-    return colamina;
-  }
-
-  constructor(relata: Ignavum<Tabula<Nomen>>) {
-    super(relata);
+    return colamina
   }
 
   referatur(colamen: Colamen<Nomen>): Colamen<Nomen> | null {
-    return colamen.actum === 'supinum' ? null : colamen;
+    return colamen.actum === 'supinum' ? null : colamen
   }
 }

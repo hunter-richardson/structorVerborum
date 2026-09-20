@@ -2,9 +2,9 @@ import { NewTabOpener } from 'new-tab-opener';
 
 export function transduceretne(): boolean {
   try {
-    return !!new Blob;
+    return !!new Blob
   } catch {
-    return false;
+    return false
   }
 }
 
@@ -13,9 +13,9 @@ export function transducatur(locutio: string): void {
     (new NewTabOpener).open(
       URL.createObjectURL(
         new Blob([locutio], {
-          type: 'text/plain;charset=utf-8'
+          type: 'text/plaincharset=utf-8'
         })
       )
-    );
+    )
   }
 }

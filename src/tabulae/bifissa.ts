@@ -1,38 +1,30 @@
-import Tabula from './tabula';
 import Nuntius from '../miscella/nuntius';
 import { NomenAgendum } from '../praebeunda/agenda';
 import { Nomen } from '../praebeunda/verba';
-
-type Optanda = {
-  singularis: NomenAgendum,
-  pluralis: NomenAgendum
-};
+import Tabula from './tabula';
 
 @Nuntius.factum('TabulaBifissa')
 export default class TabulaBifissa extends Tabula<Nomen> {
-  private readonly _: Optanda;
-  constructor(optanda: Optanda) {
-    super();
-    this._ = optanda;
-  }
+  singularis!: NomenAgendum
+  pluralis!: NomenAgendum
 
   @Nuntius.futurus('TabulaBifissa')
   async plenetur(): Promise<void> {
     [
       {
         numerus: 'singularis',
-        agendum: this._.singularis
+        agendum: this.singularis
       }, {
         numerus: 'pluralis',
-        agendum: this._.pluralis
+        agendum: this.pluralis
       }
     ].forEach(async (res) => {
-      const tabula: Tabula<Nomen> | null = res.agendum.putetur();
+      const tabula: Tabula<Nomen> | undefined = res.agendum.putetur()
       if (tabula) {
         (await tabula.tabulentur())
           .filter((nomen) => nomen.numerus === res.numerus)
-          .forEach((nomen) => this.tabula.push(nomen));
+          .forEach((nomen) => this.tabula.push(nomen))
       }
-    });
+    })
   }
 }

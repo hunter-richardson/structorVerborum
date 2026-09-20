@@ -13,7 +13,7 @@ import seligere from '../seligere.vue';
 import specere from '../specere.vue';
 
   const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen> }>().agendum
-  const tabula: Ignavum<Tabula<Pronomen>> = agendum.tabula
+  const tabula: Ignavum<Tabula<Pronomen>> = agendum.putetur()
   const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
   async function omnia (): Promise<Pronomen[]> {

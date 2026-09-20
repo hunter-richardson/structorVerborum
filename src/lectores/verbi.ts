@@ -1,25 +1,24 @@
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
-import type { Verbum } from '../praebeunda/verba';
-import LectorVerbalis from './verbalis';
+import { type Verbum } from '../praebeunda/verba';
+import { LectorVerbalis } from './verbalis';
 
 @Nuntius.factum('LectorVerbi')
-export class LectorVerbi extends LectorVerbalis<Verbum> {
-  static se: Ignavum<LectorVerbi> = new Ignavum(() => new LectorVerbi)
-  private constructor() {
-    super('/res/lemmae/verba')
-  }
-
+class LectorVerbi extends LectorVerbalis<Verbum> {
   @Nuntius.futurus('LectorVerbi')
   override async omnia(): Promise<string[]> {
     const ordo: string[] = [];
     (await super.omnia()).forEach(async (lemma) => {
-      const verbum: Verbum | null = await super.legatur(lemma);
+      const verbum: Verbum | undefined = await super.legatur(lemma)
       if (verbum) {
-        ordo.push([verbum.categoria, verbum.scriptum].join('/'));
+        ordo.push([verbum.categoria, verbum.scriptum].join('/'))
       }
     })
 
-    return ordo;
+    return ordo
   }
 }
+
+export const verborum = new Ignavum(LectorVerbi, {
+                              scapum: '/res/lemmae/verba'
+                            })

@@ -6,7 +6,7 @@ import appositus from './facies/appositus.vue';
 
 useFavicon('/res/picta/favicon.png')
 
-export const app: App<Element> = createApp(appositus as any);
+export const app: App<Element> = createApp(appositus as any)
 
 export default createVuetify({
   blueprint: md3,
@@ -48,4 +48,4 @@ export default createVuetify({
       }
     }
   }
-});
+})

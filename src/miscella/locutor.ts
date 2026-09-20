@@ -1,111 +1,96 @@
 import { Verbum } from '../praebeunda/verba';
-import Crustula from './crustula';
+import { crustula } from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
 
 @Nuntius.factum('Locutor')
-export default class Locutor {
-  static se: Ignavum<Locutor> = new Ignavum(() => new Locutor);
+export class Locutor {
 
-  private readonly crustula: Crustula = Crustula.se.ipse();
-
-  private _verba: Verbum[];
-  private apices?: boolean;
-  private utendaU?: boolean;
-  private magnas?: boolean;
-  private separator?: string;
+  private _verba: Verbum[] = []
+  private apices?: boolean
+  private utendaU?: boolean
+  private magnas?: boolean
+  private separator?: string
 
   constructor() {
-    this._verba = [];
-    this.veliferum();
+    this.veliferum()
   }
 
   locutust(): boolean {
-    return this._verba.length > 0;
+    return this._verba.length > 0
   }
 
   private veliferum(): void {
-    this.apices = this.crustula.apices.est();
-    this.utendaU = this.crustula.utendaU.est();
-    this.magnas = this.crustula.magnas.est();
-
-    this.separator = this.crustula.separator.littera();
+    this.apices = crustula.hoc().apices.est()
+    this.utendaU = crustula.hoc().utendaU.est()
+    this.magnas = crustula.hoc().magnas.est()
+    this.separator = crustula.hoc().separator.littera()
   }
 
   get verba(): Verbum[] {
-    return this._verba;
+    return this._verba
   }
 
   @Nuntius.modus('Locutor')
   addatur(verbum: Verbum): void {
-    const praevium: Verbum = this._verba.last();
+    const praevium: Verbum = this._verba.last()
     if (praevium.categoria === 'praepositio') {
-      verbum.scriptum.startsWithVowel();
-      switch (praevium.scriptum) {
-        case 'ā':
-          if (verbum.scriptum.startsWithVowel()) {
-            this.removeatur(praevium.unicum);
-            praevium.scriptum = 'ab';
-            this.addatur(praevium);
+      if(verbum.scriptum.startsWithVowel()){
+        const adaequatur: boolean = (/^(ab|ex)$/iu).test(praevium.scriptum)
+        if(adaequatur) {
+          this.removeatur(praevium.unicum)
+          switch(praevium.scriptum) {
+            case 'ab': praevium.scriptum = 'ā'; break
+            case 'ex': praevium.scriptum = 'ē'; break
+          } this.addatur(praevium)
+        } else {
+          const adaequatur: boolean = (/^(ā|ē)$/iu).test(praevium.scriptum)
+          if (adaequatur) {
+            this.removeatur(praevium.unicum)
+            switch (praevium.scriptum) {
+              case 'ā': praevium.scriptum = 'ab'; break
+              case 'ē': praevium.scriptum = 'ex'; break
+            } this.addatur(praevium)
           }
-          break
-        case 'ē':
-          if (verbum.scriptum.startsWithVowel()) {
-            this.removeatur(praevium.unicum);
-            praevium.scriptum = 'ex';
-            this.addatur(praevium);
-          }
-          break
-        case 'ab':
-          if (verbum.scriptum.startsWithVowel()) {
-            this.removeatur(praevium.unicum);
-            praevium.scriptum = 'ā';
-            this.addatur(praevium);
-          }
-          break
-        case 'ex':
-          if (verbum.scriptum.startsWithVowel()) {
-            this.removeatur(praevium.unicum);
-            praevium.scriptum = 'ē';
-            this.addatur(praevium);
-          }
-          break
+        }
       }
     }
 
-    this.veliferum();
+    this.veliferum()
     if (this.utendaU) {
       if (['Ū', 'U', 'ū', 'u'].some((littera) => verbum.scriptum.includes(littera))) {
-        verbum.scriptum = verbum.scriptum.replace('Ū', 'V');
-        verbum.scriptum = verbum.scriptum.replace('U', 'V');
-        verbum.scriptum = verbum.scriptum.replace('ū', 'v');
-        verbum.scriptum = verbum.scriptum.replace('u', 'v');
+        verbum.scriptum = verbum.scriptum.replace('Ū', 'V')
+        verbum.scriptum = verbum.scriptum.replace('U', 'V')
+        verbum.scriptum = verbum.scriptum.replace('ū', 'v')
+        verbum.scriptum = verbum.scriptum.replace('u', 'v')
       }
     }
 
     if (!this.apices) {
-      verbum.scriptum = verbum.scriptum.removeMacra();
+      verbum.scriptum = verbum.scriptum.removeMacra()
     }
 
-    this._verba.push(verbum);
+    this._verba.push(verbum)
   }
 
   loquitur(unicum: symbol): boolean {
-    return this.verba.some((verbum) => verbum.unicum === unicum);
+    return this.verba.some((verbum) => verbum.unicum === unicum)
   }
 
   removeatur(unicum: symbol): string {
-    this._verba = this._verba.filter((verba) => verba.unicum !== unicum);
-    return this.scribantur();
+    this._verba = this._verba.filter((verba) => verba.unicum !== unicum)
+    return this.scribantur()
   }
 
   scribantur(): string {
-    this.veliferum();
-    const locutio: string = this.verba.map((verba) => verba.scriptum).join(this.separator);
+    this.veliferum()
+    const locutio: string = this.verba.map((verba) => verba.scriptum).join(this.separator)
     if (this.magnas) {
-      return locutio.toUpperCase();
+      return locutio.toUpperCase()
     } else {
-      return locutio.capitalize();
+      return locutio.capitalize()
     }
   }
 }
+
+export const locutor = new Ignavum(Locutor)

@@ -1,20 +1,10 @@
 import Gustulus from './gustulus';
 
-type Optanda<T> = {
-  valor?: T,
-  nuntium: Gustulus
-};
-
 export default class Nuntiator<T> {
-  readonly valor?: T;
-  readonly nuntium: Gustulus;
-
-  constructor(optanda: Optanda<T>) {
-    this.valor = optanda.valor;
-    this.nuntium = optanda.nuntium;
-  }
+  public valor?: T
+  public nuntium!: Gustulus
 
   successum(): boolean {
-    return this.valor ? true : false;
+    return this.valor ? true : false
   }
 }

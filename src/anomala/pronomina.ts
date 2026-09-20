@@ -1,4 +1,4 @@
-import { Encliticum } from '../miscella/enumerationes';
+import { type encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { Pronomen } from '../praebeunda/verba';
@@ -11,231 +11,198 @@ import TabulaScapalis from '../tabulae/scapalis';
 import Anomala, { Mantela } from './anomala';
 
 @Nuntius.factum('Pronomina')
-export default class Pronomina extends Anomala<Pronomen> {
-  static se: Ignavum<Pronomina> = new Ignavum(() => new Pronomina)
-
+class Pronomina extends Anomala<Pronomen> {
   @Nuntius.futurus('Pronomina')
   protected async numeretur(): Promise<void> {
-    const ego: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/pronomina/ego',
-          positor: Pronomen.positor
-        })
-    )
-
-    const hoc: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/pronomina/hoc',
-          positor: Pronomen.positor
-        })
-    )
-
-    const id: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/pronomina/id',
-          positor: Pronomen.positor
-        })
-    )
-    const illud: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/pronomina/illud',
-          positor: Pronomen.positor
-        })
-    )
-
-    const se: Ignavum<TabulaScapalis<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaScapalis({
-          via: '/res/scapales/pronomina/sē',
-          positor: Pronomen.positor
-        })
-    )
-
-    const egomet: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: ego,
-          suffixum: 'met'
-        })
-    )
-
-    const idem: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: id,
-          rescriptor(scriptum: string): string {
-            switch (scriptum) {
-              case 'is':
-              case 'eī':
-                return 'īdem'
-              default:
-                return scriptum.concat('dem')
-            }
-          }
-        })
-    )
-
-    const ipsum: Ignavum<TabulaCollata<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum<TabulaScapalis<Pronomen>>(
-            () =>
-              new TabulaScapalis({
-                via: '/res/scapales/pronomina/ipsum',
+    const ego: Ignavum<TabulaScapalis<Pronomen>> =
+           new Ignavum(TabulaScapalis<Pronomen>, {
+                 via: '/res/scapales/pronomina/ego',
+                 positor: Pronomen.positor
+               })
+    const hoc: Ignavum<TabulaScapalis<Pronomen>> =
+           new Ignavum(TabulaScapalis<Pronomen>, {
+                 via: '/res/scapales/pronomina/hoc',
+                 positor: Pronomen.positor
+               })
+    const id: Ignavum<TabulaScapalis<Pronomen>> =
+          new Ignavum(TabulaScapalis<Pronomen>, {
+                via: '/res/scapales/pronomina/id',
                 positor: Pronomen.positor
               })
-          ),
-          new Ignavum<TabulaRescripta<Pronomen>>(
-            () =>
-              new TabulaRescripta({
-                relata: illud,
-                rescriptor: (scriptum) => scriptum.replace('ill', 'ips')
+    const illud: Ignavum<TabulaScapalis<Pronomen>> =
+             new Ignavum(TabulaScapalis<Pronomen>, {
+                   via: '/res/scapales/pronomina/illud',
+                   positor: Pronomen.positor
+                 })
+    const se: Ignavum<TabulaScapalis<Pronomen>> =
+          new Ignavum(TabulaScapalis<Pronomen>, {
+                via: '/res/scapales/pronomina/sē',
+                positor: Pronomen.positor
               })
-          )
-        )
-    )
 
-    const istud: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: illud,
-          rescriptor: (scriptum) => scriptum.replace('ll', 'st')
-        })
-    )
-
-    const quid: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: id,
-          rescriptor(scriptum: string): string {
-            switch (scriptum) {
-              case 'ea':
-              case 'eae':
-                return 'quae'
-              case 'eum':
-                return 'quem'
-              case 'eius':
-                return 'cuius'
-              default:
-                return scriptum.replace('e', 'qu')
-            }
-          }
-        })
-    )
-
-    const quod: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: quid,
-          rescriptor(scriptum: string): string {
-            switch (scriptum) {
-              case 'quid':
-                return 'quod'
-              case 'quis':
-                return 'quī'
-              default:
-                return scriptum
-            }
-          }
-        })
-    )
-
-    const tu: Ignavum<TabulaCollata<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaCollata(
-          new Ignavum<TabulaScapalis<Pronomen>>(
-            () =>
-              new TabulaScapalis({ via: '/res/scapales/pronomina/tū', positor: Pronomen.positor })
-          ),
-          new Ignavum<TabulaRescripta<Pronomen>>(
-            () =>
-              new TabulaRescripta({
-                relata: se,
-                rescriptor: (scriptum) => scriptum.replace('s', 't')
+    const egomet: Ignavum<TabulaSuffixa<Pronomen>> =
+              new Ignavum(TabulaSuffixa<Pronomen>, {
+                    relata: ego,
+                    suffixum: 'met'
+                  })
+    const idem: Ignavum<TabulaRescripta<Pronomen>> =
+            new Ignavum(TabulaRescripta<Pronomen>, {
+                  relata: id,
+                  rescriptor(scriptum: string): string {
+                    switch(scriptum) {
+                      case 'is':
+                      case 'eī':
+                        return 'īdem'
+                      default:
+                        return `${scriptum}dem`
+                    }
+                  }
+                })
+    const ipsum: Ignavum<TabulaCollata<Pronomen>> =
+             new Ignavum(TabulaCollata<Pronomen>, {
+                   relatae: [
+                     new Ignavum(TabulaScapalis<Pronomen>, {
+                           via: '/res/scapales/pronomina/ipsum',
+                           positor: Pronomen.positor
+                         }),
+                     new Ignavum(TabulaRescripta<Pronomen>, {
+                           relata: illud,
+                           rescriptor: (scriptum: string): string => scriptum.replace('ll', 'ps')
+                         })
+                   ]
+                 })
+    const istud: Ignavum<TabulaRescripta<Pronomen>> =
+             new Ignavum(TabulaRescripta<Pronomen>, {
+                   relata: illud,
+                   rescriptor: (scriptum: string): string => scriptum.replace('ll', 'st')
+                 })
+    const quid: Ignavum<TabulaRescripta<Pronomen>> =
+            new Ignavum(TabulaRescripta<Pronomen>, {
+                  relata: id,
+                  rescriptor(scriptum: string): string {
+                    switch(scriptum) {
+                      case 'ea':
+                      case 'eae':
+                        return 'quae'
+                      case 'eum':
+                        return 'quem'
+                      case 'eius':
+                        return 'cuius'
+                      case 'eī':
+                        return 'cui'
+                      default:
+                        return scriptum.replace('e', 'qu')
+                    }
+                  }
+                })
+    const quod: Ignavum<TabulaRescripta<Pronomen>> =
+            new Ignavum(TabulaRescripta<Pronomen>, {
+                  relata: quid,
+                  rescriptor(scriptum: string): string {
+                    switch(scriptum) {
+                      case 'quid':
+                        return 'quod'
+                      case 'quis':
+                        return 'quī'
+                      default:
+                        return scriptum
+                    }
+                  }
+                })
+    const tu: Ignavum<TabulaCollata<Pronomen>> =
+          new Ignavum(TabulaCollata<Pronomen>, {
+                relatae: [
+                  new Ignavum(TabulaScapalis<Pronomen>, {
+                        via: '/res/scapales/pronomina/tū',
+                        positor: Pronomen.positor
+                      }),
+                  new Ignavum(TabulaRescripta<Pronomen>, {
+                        relata: se,
+                        rescriptor: (scriptum: string): string => scriptum.replace('s', 't')
+                      })
+                ]
               })
-          )
-        )
-    )
-
-    const aliquid: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: quid, praefixum: 'ali' })
-    )
-
-    const aliquod: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: quod, praefixum: 'ali' })
-    )
-
-    const aliquodpiam: Ignavum<TabulaCircumfixa<Pronomen>> = new Ignavum(
-      () => new TabulaCircumfixa({ relata: quod, praefixum: 'ali', suffixum: 'piam' })
-    )
-
-    const ecquid: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: quid,
-          rescriptor: (scriptum) => (scriptum === 'cuius' ? 'ecculus' : 'ec'.concat(scriptum))
-        })
-    )
-
-    const ecquod: Ignavum<TabulaPraefixa<Pronomen>> = new Ignavum(
-      () => new TabulaPraefixa({ relata: quod, praefixum: 'ec' })
-    )
-
-    const quidnam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quid, suffixum: 'nam' })
-    )
-
-    const quidpiam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quid, suffixum: 'piam' })
-    )
-
-    const quidquam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quid, suffixum: 'quam' })
-    )
-
-    const quidque: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quid, suffixum: Encliticum.Coniugans })
-    )
-
-    const quidvis: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quid, suffixum: 'vīs' })
-    )
-
-    const quodnam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quod, suffixum: 'nam' })
-    )
-
-    const quodpiam: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quod, suffixum: 'piam' })
-    )
-
-    const quodvis: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: quod, suffixum: 'vīs' })
-    )
-
-    const semet: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () => new TabulaSuffixa({ relata: se, suffixum: 'met' })
-    )
-
-    const tute: Ignavum<TabulaRescripta<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaRescripta({
-          relata: tu,
-          rescriptor: (scriptum) => (scriptum === 'tū' ? 'tūte' : scriptum)
-        })
-    )
-
-    const tutemet: Ignavum<TabulaSuffixa<Pronomen>> = new Ignavum(
-      () =>
-        new TabulaSuffixa({
-          relata: tute,
-          suffixum: 'met'
-        })
-    )
+    const aliquid: Ignavum<TabulaPraefixa<Pronomen>> =
+               new Ignavum(TabulaPraefixa<Pronomen>, {
+                     relata: quid,
+                     praefixum: 'ali'
+                   })
+    const aliquod: Ignavum<TabulaPraefixa<Pronomen>> =
+               new Ignavum(TabulaPraefixa<Pronomen>, {
+                     relata: quod,
+                     praefixum: 'ali'
+                   })
+    const aliquodpiam: Ignavum<TabulaCircumfixa<Pronomen>> =
+                   new Ignavum(TabulaCircumfixa<Pronomen>, {
+                         relata: quod,
+                         praefixum: 'ali',
+                         suffixum: 'piam'
+                       })
+    const ecquid: Ignavum<TabulaRescripta<Pronomen>> =
+              new Ignavum(TabulaRescripta<Pronomen>, {
+                    relata: quid,
+                    rescriptor: (scriptum: string): string => (scriptum === 'cuius' ? 'ecculus' : `ec${scriptum}`)
+                  })
+    const ecquod: Ignavum<TabulaPraefixa<Pronomen>> =
+              new Ignavum(TabulaPraefixa<Pronomen>, {
+                    relata: quod,
+                    praefixa: 'ec'
+                  })
+    const quidnam: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: quid,
+                     suffixum: 'nam'
+                   })
+    const quidpiam: Ignavum<TabulaSuffixa<Pronomen>> =
+                new Ignavum(TabulaSuffixa<Pronomen>, {
+                      relata: quid,
+                      suffixum: 'piam'
+                    })
+    const quidquam: Ignavum<TabulaSuffixa<Pronomen>> =
+                new Ignavum(TabulaSuffixa<Pronomen>, {
+                      relata: quid,
+                      suffixum: 'quam'
+                    })
+    const quidque: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: quid,
+                     suffixum: encliticum.coniugans
+                   })
+    const quidvis: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: quid,
+                     suffixum: 'vīs'
+                   })
+    const quodnam: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: quod,
+                     suffixa: 'nam'
+                   })
+    const quodpiam: Ignavum<TabulaSuffixa<Pronomen>> =
+                new Ignavum(TabulaSuffixa<Pronomen>, {
+                      relata: quod,
+                      suffixa: 'piam'
+                    })
+    const quodvis: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: quod,
+                     suffixa: 'vīs'
+                   })
+    const semet: Ignavum<TabulaSuffixa<Pronomen>> =
+             new Ignavum(TabulaSuffixa<Pronomen>, {
+                   relata: se,
+                   suffixum: 'met'
+                 })
+    const tute: Ignavum<TabulaRescripta<Pronomen>> =
+            new Ignavum(TabulaRescripta<Pronomen>, {
+                  relata: tu,
+                  rescriptor: (scriptum: string): string => scriptum === 'tū' ? 'tūte' : scriptum
+                })
+    const tutemet: Ignavum<TabulaSuffixa<Pronomen>> =
+               new Ignavum(TabulaSuffixa<Pronomen>, {
+                     relata: tute,
+                     suffixum: 'met'
+                   })
 
     this.contenta.set('aliquid', new Mantela(aliquid))
     this.contenta.set('aliquod', new Mantela(aliquod))
@@ -267,3 +234,5 @@ export default class Pronomina extends Anomala<Pronomen> {
     this.contenta.set('tūtemet', new Mantela(tutemet))
   }
 }
+
+export const pronomina = new Pronomina()
