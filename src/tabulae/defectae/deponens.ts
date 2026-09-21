@@ -1,7 +1,7 @@
-import { numeri, personae, tempora } from '../../miscella/enumerationes';
-import { type Colamen } from '../../praebeunda/agenda';
-import { Actus } from '../../praebeunda/verba';
 import TabulaDefecta from './defecta';
+import { numeri, personae, tempora } from '../../miscella/enumerationes';
+import { Actus } from '../../praebeunda/verba';
+import { type Colamen } from '../../praebeunda/agenda';
 
 export default class TabulaDeponens extends TabulaDefecta<Actus> {
   static apponatur(ut: string): Colamen<Actus>[] {
@@ -66,11 +66,8 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
     switch (this.ut) {
       case 'semideponens':
-        if (colamen.modus === 'particpalis') {
-          colamen.vox = ''
-        } else if (colamen.vox === 'passiva') {
-          return null
-        }
+        if (colamen.modus === 'particpalis') colamen.vox = ''
+        else if (colamen.vox === 'passiva') return null
         break
       case 'semideponensActiva':
         if (
@@ -81,16 +78,14 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           ].any()
         ) {
           colamen.vox = ''
-        } else if (colamen.vox === 'passiva') {
-          return null
-        }
+        } else if (colamen.vox === 'passiva') return null
         break
       default:
-        if ([ colamen.modus === 'participium', colamen.vox === 'passiva' ].any()) {
-          colamen.vox = ''
-        } else {
-          return null
-        }
+        if ([
+              colamen.modus === 'participium',
+              colamen.vox === 'passiva'
+            ].any()) colamen.vox = ''
+        else return null
         break
     }
 

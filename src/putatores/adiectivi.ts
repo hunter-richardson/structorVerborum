@@ -39,17 +39,11 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
           switch (colamen.gradus) {
             case 'positivus':
-              if (
-                [
-                  colamen.genus === 'masculinum',
-                  colamen.numerus === 'singularis',
-                  ['nominativus', 'vocativus'].includes(colamen.casus ?? '')
-                ].all()
-              ) {
-                return adiectivum.positivum
-              } else {
-                return adiectivum.positivum.chop(1)
-              }
+              return adiectivum.positivum.chop([
+                colamen.genus === 'masculinum',
+                colamen.numerus === 'singularis',
+                [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+              ].all() ? 0 : 1)
             case 'comparativus':
               return adiectivum.comparativum.chop(3)
             case 'superlativus':
@@ -70,16 +64,11 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
           switch (colamen.gradus) {
             case 'positivus':
-              switch (true) {
-                case [
-                  colamen.genus === 'neutrum',
-                  colamen.numerus === 'singularis',
-                  colamen.casus === 'accusativus'
-                ].all():
-                  return adiectivum.positivum
-                default:
-                  return adiectivum.comparativum.chop(3)
-              }
+              return [
+                colamen.genus === 'neutrum',
+                colamen.numerus === 'singularis',
+                colamen.casus === 'accusativus'
+              ].all() ? adiectivum.positivum : adiectivum.comparativum.chop(3)
             case 'comparativus':
               return adiectivum.comparativum.chop(3)
             case 'superlativus':
@@ -119,8 +108,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
               return ''
           }
         }
-      default:
-        throw Errator({ versio: versio })
+      default: throw Errator({ versio: versio })
     }
   }
 
@@ -149,10 +137,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
         'nominativusUnigenerCumTruncoVario'
       ].includes(vices)
     ) {
-      if (vices === 'cumLitteraR') {
-        vices = 'nominativusDirectus'
-      }
-
+      if (vices === 'cumLitteraR') vices = 'nominativusDirectus'
       return new Ignavum(TabulaVicaria, {
                    prima: {
                      scapum: '/res/vices/adiectiva',
@@ -164,7 +149,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
                    positor: Adiectivum.positor,
                    hoc: agendum
                  })
-    } else if (['positivaAutPrimaAutSecunda', 'positivaTertia'].includes(fundamen)) {
+    } else if (['positivaAutPrimaAutSecunda', 'positivaTertia'].includes(fundamen))
       return new Ignavum(TabulaRecta, {
                    radicator: this.radicetur(agendum.versio),
                    scapum: '/res/tabula/adiectiva',
@@ -172,14 +157,12 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
                    via: agendum.versio,
                    hoc: agendum
                  })
-    } else if (fundamen === 'indeclinabilis') {
+    else if (fundamen === 'indeclinabilis')
       return new Ignavum(TabulaInflexibilis, {
                    positor: Adiectivum.positor,
                    hoc: agendum
                  })
-    } else {
-      throw Errator({ versio: agendum.versio })
-    }
+    else throw Errator({ versio: agendum.versio })
   }
 }
 

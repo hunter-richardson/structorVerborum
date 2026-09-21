@@ -16,15 +16,14 @@ export default class Lector<Hoc> {
   public scapum!: string
 
   protected seratur(): string {
-    if(!this.scapum.startsWith('/res')) {
-      this.scapum = path.join('/res', this.scapum)
-    } return this.scapum
+    if(!this.scapum.startsWith('/res'))
+    { this.scapum = path.join('/res', this.scapum) }
+    return this.scapum
   }
 
   protected viator(via: string): string {
-    if(!via.endsWith('.csv')) {
-      via = `${via}.csv`
-    } return path.join(this.seratur(), via)
+    if(!via.endsWith('.csv')) via = `${via}.csv`
+    return path.join(this.seratur(), via)
   }
 
   private async aperiatur(via: string): Promise<string> {
@@ -51,9 +50,7 @@ export default class Lector<Hoc> {
           error: error as Error
         })
       }
-    }
-
-    Nuntius.plusGarrio({
+    }; Nuntius.plusGarrio({
       nomen: 'Lector',
       nuntium: `Lemma nulla'st ${lemma}`
     }); return undefined

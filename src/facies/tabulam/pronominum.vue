@@ -16,9 +16,7 @@ import specere from '../specere.vue';
   const tabula: Ignavum<Tabula<Pronomen>> = agendum.putetur()
   const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
-  async function omnia (): Promise<Pronomen[]> {
-    return await tabula?.hoc().tabulentur() ?? []
-  }
+  async function omnia (): Promise<Pronomen[]> { return await tabula?.hoc().tabulentur() ?? [] }
 
   export default defineComponent({
     components: { gustulare, seligere, onerare, specere },
@@ -37,9 +35,7 @@ import specere from '../specere.vue';
       const onerans: Ref<boolean> = ref(true)
       const pronomina: Ref<Pronomen[]> = ref([])
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
@@ -50,25 +46,18 @@ import specere from '../specere.vue';
       async function cole (selecta: string[]): Promise<void> {
         onerans.value = true
         const omnes: Pronomen[] = await omnia()
-        if (omnes) {
-          pronomina.value = omnes.filter(pronomen => selecta.every(selectum =>
-            pronomen.valores().includes(selectum)))
-        }
-
+        if (omnes)
+        { pronomina.value = omnes.filter(pronomen => selecta.every(selectum => pronomen.valores().includes(selectum))) }
         return oneratust()
       }
 
-      return {
-        pronomen, pronomina, onerans, forsInflectat, cole
-      }
+      return { pronomen, pronomina, onerans, forsInflectat, cole }
     }, async mounted (): Promise<void> {
       this.pronomina = await omnia()
       this.columnae = categoricum<Pronomen>({
         categoria: 'pronomen',
         haec: this.pronomina as Pronomen[]
-      })
-
-      this.onerans = false
+      }); this.onerans = false
     }
   })
 </script>

@@ -1,4 +1,4 @@
-import { type encliticum } from '../miscella/enumerationes';
+import { encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda';
 import Structor from '../praebeunda/structor';
@@ -23,12 +23,12 @@ class Adiectiva extends Anomala<Adiectivum> {
                    positor: Adiectivum.positor
                  })
     const nequam: Ignavum<TabulaScapalis<Adiectivum>> =
-              new Ignavum(TabulaScapalis, {
+              new Ignavum(TabulaScapalis<Adiectivum>, {
                     via: '/res/scapales/adiectiva/nēquam',
                     positor: Adiectivum.positor
                   })
     const satis: Ignavum<TabulaScapalis<Adiectivum>> =
-             new Ignavum(TabulaScapalis, {
+             new Ignavum(TabulaScapalis<Adiectivum>, {
                    via: '/res/scapales/adiectiva/satis',
                    positor: Adiectivum.positor
                  })
@@ -38,9 +38,9 @@ class Adiectiva extends Anomala<Adiectivum> {
                      .ponatur((adiectivum) => (adiectivum.nominativum = 'decimī'))
                      .ponatur((adiectivum) => (adiectivum.versio = 'autPrimaAutSecunda'))
     const utrum: Structor<Incomparabile> =
-             new Structor(() => new Incomparabile)
+             new Structor(Incomparabile)
                    .ponatur((adiectivum) => (adiectivum.nominativum = 'utrum'))
-                   .ponatur((adiectivum) => (adiectivum.nominativum = 'utrī'))
+                   .ponatur((adiectivum) => (adiectivum.genitivum = 'utrī'))
                    .ponatur((adiectivum) => (adiectivum.versio = 'pronominalis//cumLitteraR'))
     const aliud: Ignavum<TabulaCollata<Adiectivum>> =
              new Ignavum(TabulaCollata<Adiectivum>, {
@@ -84,7 +84,7 @@ class Adiectiva extends Anomala<Adiectivum> {
     const multum: Ignavum<TabulaCollata<Adiectivum>> =
               new Ignavum(TabulaCollata<Adiectivum>, {
                     relatae: [
-                      new Ignavum(TabulaScapalis, {
+                      new Ignavum(TabulaScapalis<Adiectivum>, {
                             via: '/res/scapales/adiectiva/multum',
                             positor: Adiectiva.positor
                       }),

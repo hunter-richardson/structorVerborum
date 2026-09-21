@@ -5,12 +5,12 @@ import { magister } from '../miscella/magister';
   const docendum: string = defineProps<{ docendum: string; }>().docendum;
   const doctum: string = await magister.hoc().doceatur(docendum);
 
-  export default defineComponent({ data: (): {
-      docendum: string,
-      doctum: string
-    } => {
-      return { docendum, doctum }
-    } })
+  export default defineComponent({
+      data: (): {
+        docendum: string,
+        doctum: string
+      } => { return { docendum, doctum } }
+    })
 </script>
 
 <template>

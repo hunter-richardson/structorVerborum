@@ -6,20 +6,19 @@ const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
 interface Generanda<Hoc extends Multiplex> {
   categoria: string
-  haec: Hoc[]
+       haec: Hoc[]
 }
 
 interface Columna {
   title: string
-  key: string
+    key: string
 }
 
 export type Columnae = Columna[]
 
 export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): Columnae {
   return Multiplex.colamina(generanda.categoria)
-    .filter(clavis => generanda.haec.some(hoc =>
-      Object.keys(hoc).includes(clavis)))
+    .filter(clavis => generanda.haec.some(hoc => Object.keys(hoc).includes(clavis)))
     .map(clavis => {
       return {
         title: (anglica ? anglicum(clavis) : clavis).capitalize(),

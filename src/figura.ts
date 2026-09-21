@@ -12,8 +12,11 @@ export default createVuetify({
   blueprint: md3,
   defaults: {
     global: {
-      ripple: true,
+      VTabsWindowItem: { transition: 'v-tab-transition' },
+      VSpeedDial: { position: 'absolute' },
+      VSnackbar: { rounded: 'pill' },
       VBtn: { rounded: 'pill' },
+      ripple: true,
       VNumberInput: {
         controlVariant: 'stacked',
         inset: true
@@ -33,18 +36,12 @@ export default createVuetify({
         location: 'center',
         scrim: false,
         scrollable: true
-      }, VSnackbar: {
-        rounded: 'pill'
       }, VChip: {
         closeable: true,
         filter: true,
         pill: true,
         rounded: true,
         tile: true
-      }, VTabsWindowItem: {
-        transition: 'v-tab-transition'
-      }, VSpeedDial: {
-        position: 'absolute'
       }
     }
   }

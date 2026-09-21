@@ -107,9 +107,7 @@ import quaerere from './quaerere.vue';
           .forEach(element => element.classList.remove('text-primary'))
 
         const separatoris: Element | null = document.getElementById(`crustula.separator.${valor}`)
-        if (separatoris) {
-          separatoris.classList.add('text-primary')
-        }
+        if (separatoris) separatoris.classList.add('text-primary')
       }
 
       function negavit (): void {
@@ -120,7 +118,6 @@ import quaerere from './quaerere.vue';
       function coquantur (): void {
         if (crustula.value) {
           crustula.value.hoc().assensus.coquatur('assensit')
-
           crustula.value.hoc().separator.coquatur()
           crustula.value.hoc().apices.coquatur()
           crustula.value.hoc().utendaU.coquatur()
@@ -129,31 +126,17 @@ import quaerere from './quaerere.vue';
 
           useTheme().global.name.value = 'dark'
           const separatoris: Element | null = document.getElementById('#crustula.separator.inane')
-          if (separatoris) {
-            separatoris.classList.add('text-primary')
-          }
+          if (separatoris) separatoris.classList.add('text-primary')
 
-          if (!crustula.value.hoc().lingua.cocutust()) {
-            crustula.value.hoc().lingua.coquatur()
-          }
-
+          if (!crustula.value.hoc().lingua.cocutust()) crustula.value.hoc().lingua.coquatur()
           window.location.reload()
         }
       }
 
-      return {
-        crustula, interverteFaciem, resepara, negavit, coquantur
-      }
+      return { crustula, interverteFaciem, resepara, negavit, coquantur }
     }, methods: {
-      async refer (): Promise<void> {
-        if (this.referret) {
-          await referatur(locutor.hoc().scribantur())
-        }
-      }, transduc (): void {
-        if (this.transduceret) {
-          transducatur(locutor.hoc().scribantur())
-        }
-      }
+      async refer (): Promise<void> { if (this.referret) await referatur(locutor.hoc().scribantur()) },
+      transduc (): void { if (this.transduceret) transducatur(locutor.hoc().scribantur()) }
     }, mounted (): void {
       this.crustula = crustula
 

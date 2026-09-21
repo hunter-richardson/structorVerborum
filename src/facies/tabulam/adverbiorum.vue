@@ -16,9 +16,7 @@ import type Ignavum from '../../miscella/ignavum'
   const tabula: Ignavum<Tabula<Adverbium>> | undefined = agendum.putetur()
   const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
-  async function omnia (): Promise<Adverbium[]> {
-    return await tabula?.hoc().tabulentur() ?? []
-  }
+  async function omnia (): Promise<Adverbium[]> { return await tabula?.hoc().tabulentur() ?? [] }
 
   export default defineComponent({
     components: { gustulare, seligere, specere, onerare },
@@ -37,9 +35,7 @@ import type Ignavum from '../../miscella/ignavum'
       const onerans: Ref<boolean> = ref(true)
       const adverbia: Ref<Adverbium[]> = ref([])
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
@@ -50,25 +46,18 @@ import type Ignavum from '../../miscella/ignavum'
       async function cole (selecta: string[]): Promise<void> {
         onerans.value = true
         const omnes: Adverbium[] = await omnia()
-        if (omnes) {
-          adverbia.value = omnes.filter(adverbium => selecta.every(selectum =>
-            adverbium.valores().includes(selectum)))
-        }
-
+        if (omnes)
+        { adverbia.value = omnes.filter(adverbium => selecta.every(selectum => adverbium.valores().includes(selectum))) }
         return oneratust()
       }
 
-      return {
-        adverbium, adverbia, onerans, forsInflectat, cole
-      }
+      return { adverbium, adverbia, onerans, forsInflectat, cole }
     }, async mounted (): Promise<void> {
       this.adverbia = await omnia()
       this.columnae = categoricum<Adverbium>({
         categoria: 'adverbium',
         haec: this.adverbia as Adverbium[]
-      })
-
-      this.onerans = false
+      }); this.onerans = false
     }
   })
 </script>

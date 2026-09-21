@@ -6,10 +6,7 @@ export default abstract class Tabula<Hoc extends Multiplex> {
   protected abstract plenetur(): Promise<void>
 
   async tabulentur(): Promise<Hoc[]> {
-    if (this._vacua) {
-      await this.plenetur().then(() => (this._vacua = false))
-    }
-
+    if (this._vacua) await this.plenetur().then(() => (this._vacua = false))
     return this.tabula
   }
 }

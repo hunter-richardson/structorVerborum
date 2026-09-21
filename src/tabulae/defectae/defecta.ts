@@ -1,8 +1,8 @@
-import type Ignavum from '../../miscella/ignavum';
 import Nuntius from '../../miscella/nuntius';
-import { type Colamen } from '../../praebeunda/agenda';
 import { Multiplex } from '../../praebeunda/verba';
 import Tabula from '../tabula';
+import type Ignavum from '../../miscella/ignavum';
+import { type Colamen } from '../../praebeunda/agenda';
 
 @Nuntius.factum('TabulaDefecta')
 export default abstract class TabulaDefecta<Hoc extends Multiplex> extends Tabula<Hoc> {
@@ -15,13 +15,12 @@ export default abstract class TabulaDefecta<Hoc extends Multiplex> extends Tabul
     (await this.relata.hoc().tabulentur()).forEach((hoc) => {
       const { scriptum, categoria, ...ista } = hoc
       const illa: Colamen<Hoc> | null = this.referatur(ista as any)
-      if (illa) {
+      if (illa)
         this.tabula.push({
           ...illa,
           scriptum,
           categoria
         } as Hoc)
-      }
     })
   }
 }

@@ -106,9 +106,7 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
         pars: ''
       })
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function sarci (): Promise<void> {
         onerans.value = true
@@ -119,12 +117,8 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
       async function forsSeligat (): Promise<void> {
         onerans.value = true
         const res: Eventus = await dictionarium.hoc().forsReferatur(quaerenda.value)
-        if (inflectenda(res.categoria)) {
-          eventus.value = res
-        } else {
-          verbum.value = res as Verbum ?? undefined
-        }
-
+        if (inflectenda(res.categoria)) eventus.value = res
+        else verbum.value = res as Verbum ?? undefined
         return oneratust()
       }
 
@@ -132,33 +126,25 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
         onerans.value = true
         quaerenda.value.categoriae = []
         quaerenda.value.pars = ''
-
         sarci()
       }
 
       async function aperi (lemma: Lemma) {
         const res: Eventus | null = await dictionarium.hoc().referatur(lemma)
         if (res) {
-          if (inflectenda(res.categoria)) {
-            eventus.value = res
-          } else {
-            verbum.value = res as Verbum
-          }
+          if (inflectenda(res.categoria)) eventus.value = res
+          else verbum.value = res as Verbum
         }
       }
 
       function removeApices (): void {
-        if (validator[ 0 ](quaerenda.value.pars) === true) {
+        if (validator[ 0 ](quaerenda.value.pars)) {
           quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra()
           error.value = false
-        } else {
-          error.value = true
-        }
+        } else error.value = true
       }
 
-      return {
-        eventus, verbum, lemmae, onerans, quaerenda, error, sarci, forsSeligat, omnia, aperi, removeApices
-      }
+      return { eventus, verbum, lemmae, onerans, quaerenda, error, sarci, forsSeligat, omnia, aperi, removeApices }
     }
   })
 </script>

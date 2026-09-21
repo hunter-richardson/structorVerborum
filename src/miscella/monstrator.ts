@@ -11,9 +11,7 @@ export type Monstrandum = {
 export type Monstranda = Monstrandum[]
 
 class Monstrator {
-  private viator(via: string): string {
-    return path.join('/res/monstranda/', `${via}.csv`)
-  }
+  private viator(via: string): string { return path.join('/res/monstranda/', `${via}.csv`) }
 
   private async aperiatur (via: string): Promise<string> {
     const corpus: Body = await fileFetch(new URL(this.viator(via)));

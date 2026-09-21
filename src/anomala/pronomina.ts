@@ -1,4 +1,4 @@
-import { type encliticum } from '../miscella/enumerationes';
+import { encliticum } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { Pronomen } from '../praebeunda/verba';

@@ -63,100 +63,63 @@ export const enclitica: string[] = Object.keys(encliticum)
 type Valor = categoria | casus | modus | referendum | tempus | genus | gradus | persona | vox | factum
 type VALOR = CATEGORIA | CASUS | MODUS | REFERENDUM | TEMPUS | GENUS | GRADUS | PERSONA | VOX | FACTUM
 
-export function magnificeturPrima (valor: Valor): VALOR {
-  return (valor as string).capitalize() as VALOR
-}
+export function magnificeturPrima (valor: Valor): VALOR { return (valor as string).capitalize() as VALOR }
 
-export function minuatur (valor: VALOR): Valor {
-  return (valor as string).toLowerCase()
-}
+export function minuatur (valor: VALOR): Valor { return (valor as string).toLowerCase() }
 
 function anglicaCategoria(valor: categoria): string {
   switch(valor) {
-    case 'actus': return 'verb'
-    case 'adiectivum': return 'adjective'
-    case 'adverbium': return 'adverb'
-    case 'coniunctio': return 'conjunction'
-    case 'nomen': return 'nomen'
-    case 'numeramen': return 'numeramen'
+    case       'actus': return 'verb'
+    case  'adiectivum': return 'adjective'
+    case   'adverbium': return 'adverb'
+    case  'coniunctio': return 'conjunction'
+    case       'nomen': return 'nomen'
+    case   'numeramen': return 'numeramen'
     case 'praepositio': return 'preposition'
-    case 'pronomen': return 'pronoun'
-    default: return ''
+    case    'pronomen': return 'pronoun'
+               default: return ''
   }
 }
 
-function anglicusCasus(valor: casus): string {
-  switch(valor) {
-    case 'derectus': return 'direct'
-    default: return `${valor.chop(2)}e`
-  }
-}
+function anglicusCasus(valor: casus): string { return valor === 'derectus' ? 'direct' : `${valor.chop(2)}e` }
 
-function anglicusModus(valor: modus): string {
-  switch(valor) {
-    case 'participium': return 'participle'
-    default: return `${valor.chop(2)}e`
-  }
-}
+function anglicusModus(valor: modus): string { return valor === 'participium' ? 'participle' : `${valor.chop(2)}e` }
 
 function anglicumReferendum(valor: referendum): string {
-  if(valor.endsWith('dinale')) {
-    return valor.chop(1)
-  } if(valor.endsWith('um')) {
-    return `${valor.chop(2)}e`
-  }
-  switch(valor) {
-    case 'numerus': return 'number'
-    default: return valor.chop(3)
-  }
+  if(valor.endsWith('dinale')) return valor.chop(1)
+  if(valor.endsWith('um')) return `${valor.chop(2)}e`
+  return valor === 'numerus' ? 'number' : valor.chop(3)
 }
 
 function anglicumTempus(valor: tempus): string {
   switch(valor) {
-    case 'nullum': return 'none'
-    case 'praesens': return 'present'
-    case 'infectum': return 'imperfect'
-    case 'futurum': return 'future'
-    case 'perfectum': return 'perfect'
+    case            'nullum': return 'none'
+    case          'praesens': return 'present'
+    case          'infectum': return 'imperfect'
+    case           'futurum': return 'future'
+    case         'perfectum': return 'perfect'
     case 'plusquamperfectum': return 'plu-perfect'
-    case 'exigendum': return 'future-perfect'
-    default: return ''
+    case         'exigendum': return 'future-perfect'
+                     default: return ''
   }
 }
 
-function anglicumGenus(valor: genus): string {
-  switch(valor) {
-    case 'neutrum': return 'neuter'
-    default: return `${valor.chop(2)}e`
-  }
-}
+function anglicumGenus(valor: genus): string { return valor === 'neutrum' ? 'neuter' : `${valor.chop(2)}e` }
 
-function anglicusGradus(valor: gradus): string {
-  return `${valor.chop(2)}e`
-}
+function anglicusGradus(valor: gradus): string { return `${valor.chop(2)}e` }
 
 function anglicaPersona(valor: persona): string {
   switch(valor) {
-    case 'prima': return 'first'
+    case   'prima': return 'first'
     case 'secunda': return 'second'
-    case 'tertia': return 'third'
-    default: return 'none'
+    case  'tertia': return 'third'
+           default: return 'none'
   }
 }
 
-function anglicusNumerus(valor: numerus): string {
-  switch(valor) {
-    case 'nullus': return 'none'
-    default: return `${valor.chop(2)}`
-  }
-}
+function anglicusNumerus(valor: numerus): string { return valor === 'nullus' ? 'none' : `${valor.chop(2)}` }
 
-function anglicaVox(valor: vox): string {
-  switch(valor) {
-    case 'nulla': return 'none'
-    default: return `${valor.chop(1)}e`
-  }
-}
+function anglicaVox(valor: vox): string { return valor === 'nulla' ? 'none' : `${valor.chop(1)}e` }
 
 export function anglicum(valor: string) {
   if(categoriae.includes(valor)) {
@@ -178,30 +141,29 @@ export function anglicum(valor: string) {
   } if(voces.includes(valor)) {
     return anglicaVox(valor)
   } switch (valor) {
-    case 'adiectiva': return 'adjectives'
-    case 'casus': return 'case'
-    case 'coniunctiones': return 'conjunctions'
-    case 'scriptum': return 'form'
-    case 'genus': return 'gender'
-    case 'gerundium': return 'gerund'
-    case 'gerundia': return 'gerunds'
-    case 'gradus': return 'grade'
-    case 'modus': return 'mode'
-    case 'nomina': return 'nouns'
-    case 'numeri': return 'numbers'
-    case 'numeramina': return 'numerals'
-    case 'persona': return 'person'
-    case 'positivus': return 'positive'
+    case      'adiectiva': return 'adjectives'
+    case          'casus': return 'case'
+    case  'coniunctiones': return 'conjunctions'
+    case       'scriptum': return 'form'
+    case          'genus': return 'gender'
+    case      'gerundium': return 'gerund'
+    case       'gerundia': return 'gerunds'
+    case         'gradus': return 'grade'
+    case          'modus': return 'mode'
+    case         'nomina': return 'nouns'
+    case         'numeri': return 'numbers'
+    case     'numeramina': return 'numerals'
+    case        'persona': return 'person'
     case 'praepositiones': return 'prepositions'
-    case 'pronomina': return 'pronouns'
-    case 'referendum': return 'reference'
-    case 'supinum': return 'supine'
-    case 'tempus': return 'tense'
-    case 'actua': return 'verbs'
-    case 'vox': return 'voice'
-    case 'verbum': return 'word'
-    case 'verba': return 'words'
-    default: return 'none'
+    case      'pronomina': return 'pronouns'
+    case     'referendum': return 'reference'
+    case        'supinum': return 'supine'
+    case         'tempus': return 'tense'
+    case          'actua': return 'verbs'
+    case            'vox': return 'voice'
+    case         'verbum': return 'word'
+    case          'verba': return 'words'
+                  default: return 'none'
   }
 }
 

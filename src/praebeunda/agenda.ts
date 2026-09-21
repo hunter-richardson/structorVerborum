@@ -21,14 +21,12 @@ export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>
 export type Positor<Hoc extends Verba.Multiplex> = (agendum: Agendum<Hoc>) => Hoc
 
 export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfecta.Lectum {
-  versio!: string
+       versio!: string
   infinitivum?: string
-  perfectum?: string
-  supinum?: string
+    perfectum?: string
+      supinum?: string
 
-  putetur(): Ignavum<Tabula<Verba.Actus>> {
-    return actus.hoc().putetur(this)
-  }
+  putetur(): Ignavum<Tabula<Verba.Actus>> { return actus.hoc().putetur(this) }
 
   async nomen(): Promise<Interfecta.Faciendum<Verba.Nomen> | undefined> {
     if ((await nomina.omnia()).includes(this.infinitivum ?? '')) {
@@ -52,66 +50,56 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
       }
 
       return new Structor(NomenActum)
-        .ponatur((nomen) => (nomen.infinitivum = this.infinitivum ?? ''))
-        .ponatur((nomen) => (nomen.gerundium = `${radix}${suffixumGeriundii}`))
-        .ponatur((nomen) => (nomen.supinum = this.supinum ?? ''))
-        .ponatur((nomen) => (nomen.versio = versioNova))
-        .struatur()
+                   .ponatur((nomen) => (nomen.infinitivum = this.infinitivum ?? ''))
+                   .ponatur((nomen) => (nomen.gerundium = `${radix}${suffixumGeriundii}`))
+                   .ponatur((nomen) => (nomen.supinum = this.supinum ?? ''))
+                   .ponatur((nomen) => (nomen.versio = versioNova))
+                   .struatur()
     }
   }
 
   actor(genus: string): NomenAgendum | null {
     const structor: Structor<NomenAgendum> = new Structor(NomenAgendum)
-          .ponatur((nomen) => (nomen.versio = 'tertiaAnimata'))
+                      .ponatur((nomen) => (nomen.versio = 'tertiaAnimata'))
     switch (genus) {
       case 'masculinum':
-        structor
-          .ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('um$', 'or') ?? ''))
-          .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('um$', 'ōris') ?? ''))
+        structor.ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('um$', 'or') ?? ''))
+                .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('um$', 'ōris') ?? ''))
         break
       case 'femininum':
-        structor
-          .ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('t?um$', 'trīx') ?? ''))
-          .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('t?um$', 'trīcis') ?? ''))
+        structor.ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('t?um$', 'trīx') ?? ''))
+                .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('t?um$', 'trīcis') ?? ''))
         break
       default:
         return null
-    }
-
-    return structor.struatur()
+    } return structor.struatur()
   }
 }
 
 export class AdverbiumAgendum implements Interfecta.Faciendum<Verba.Adverbium>, Interfecta.Lectum {
-  versio!: string
-  positivum!: string
+        versio!: string
+     positivum!: string
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adverbium>> | undefined {
-    return new Ignavum(TabulaAdverbii, { agendum: this })
-  }
+  putetur(): Ignavum<Tabula<Verba.Adverbium>> | undefined { return new Ignavum(TabulaAdverbii, { agendum: this }) }
 }
 
 export class NomenAgendum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
-  versio!: string
+       versio!: string
   nominativum!: string
-  genitivum!: string
+    genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> {
-    return nominis.hoc().putetur(this)
-  }
+  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined { return nominis.hoc().putetur(this) }
 }
 
 export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
-  versio!: string
+       versio!: string
   infinitivum!: string
-  gerundium!: string
-  supinum!: string
+    gerundium!: string
+      supinum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> {
-    return nominisFacti.hoc().putetur(this)
-  }
+  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined { return nominisFacti.hoc().putetur(this) }
 
   async actus(): Promise<Interfecta.Faciendum<Verba.Actus> | undefined> {
     return await ((await actuum.hoc().omnia()).includes(this.infinitivum) ?
@@ -120,114 +108,95 @@ export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta
 }
 
 export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>, Interfecta.Lectum {
-  versio!: string
-  positivum!: string
+        versio!: string
+     positivum!: string
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> {
-    return adiectivi.hoc().putetur(this)
-  }
+  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined { return adiectivi.hoc().putetur(this) }
 
   async probetur(colamen: {
     gradus: string
-    genus: string
+     genus: string
   }): Promise<NomenAgendum | null> {
     let versioNova: string
-    if (colamen.gradus === 'comparativus') {
-      versioNova = 'generandaTertiae'
-    } else if (colamen.gradus === 'superlativus') {
-      versioNova = 'generanda'
-    } else {
-      switch (this.versio) {
-        case 'positivaAutPrimaAutSecunda':
-          versioNova = 'generanda'
-          break
-        case 'positivaAutPrimaAutSecunda/nominativusDirectus':
-          versioNova = 'secundaMasculina/nominativusDirectus'
-          break
-        case 'positivaAutPrimaAutSecunda//pluralis':
-          versioNova = 'generanda//pluralis'
-          break
-        case 'positivaAutPrimaAutSecunda/nominativusDirectus/pluralis':
-          versioNova = 'secundaMasculina/nominativusDirectus/pluralis'
-          break
-        case 'positivaAutPrimaAutSecunda/cumLitteraR':
-          versioNova = 'secundaMasculina/cumLitteraR'
-          break
-        case 'positivaAutPrimaAutSecunda/cumLitteraR/pluralis':
-          versioNova = 'secundaMasculina/cumLitteraR/pluralis'
-          break
-        case 'positivaTertia':
-        case 'positivaTertia/nominativusUnigener':
-          versioNova = 'generandaTertiae'
-          break
-        case 'positivaTertia//pluralis':
-        case 'positivaTertia/nominativusUnigener/pluralis':
-          versioNova = 'generandaTertiae//pluralis'
-          break
-        case 'positivaTertia/cumGenitivoVario':
-        case 'positivaTertia/nominativusUnigenerCumGenitivoVario':
-          versioNova = 'generandaTertiae/cumGenitivoVario'
-          break
-        case 'positivaTertia/cumGenitivoVario/pluralis':
-        case 'positivaTertia/nominativusUnigenerCumGenitivoVario/pluralis':
-          versioNova = 'generandaTertiae/cumGenitivoVario/pluralis'
-          break
-        case 'positivaTertia/cumAblativoVario':
-        case 'positivaTertia/nominativusUnigenerCumAblativoVario':
-          versioNova = 'generandaTertiae/cumAblativoVario'
-          break
-        case 'positivaTertia/cumAblativoVario/pluralis':
-        case 'positivaTertia/nominativusUnigenerCumAblativoVario/pluralis':
-          versioNova = 'generandaTertiae/cumAblativoVario/pluralis'
-          break
-        case 'positivaTertia/cumGenitivoAblativoqueVario':
-        case 'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario':
-          versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario'
-          break
-        case 'positivaTertia/cumGenitivoAblativoVario/pluralis':
-        case 'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis':
-          versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario/pluralis'
-          break
-        case 'positivaTertia/cumTruncoVario':
-        case 'positivaTertia/nominativusUnigenerCumTruncoVario':
-          versioNova = 'generandaTertiae/cumTruncoVario'
-          break
-        case 'positivaTertia/cumTruncoVario/pluralis':
-        case 'positivaTertia/nominativusUnigenerCumTruncoVario/pluralis':
-          versioNova = 'generandaTertiae/cumTruncoVario/pluralis'
-          break
-        default:
-          return null
-      }
+    switch(colamen.gradus) {
+      case 'comparativus': versioNova = 'generandaTertiae'; break
+      case 'superlativus': versioNova = 'generanda'; break
+      default:
+        switch (this.versio) {
+          case 'positivaAutPrimaAutSecunda':
+            versioNova = 'generanda'; break
+          case 'positivaAutPrimaAutSecunda/nominativusDirectus':
+            versioNova = 'secundaMasculina/nominativusDirectus'; break
+          case 'positivaAutPrimaAutSecunda//pluralis':
+            versioNova = 'generanda//pluralis'; break
+          case 'positivaAutPrimaAutSecunda/nominativusDirectus/pluralis':
+            versioNova = 'secundaMasculina/nominativusDirectus/pluralis'; break
+          case 'positivaAutPrimaAutSecunda/cumLitteraR':
+            versioNova = 'secundaMasculina/cumLitteraR'; break
+          case 'positivaAutPrimaAutSecunda/cumLitteraR/pluralis':
+            versioNova = 'secundaMasculina/cumLitteraR/pluralis'; break
+          case 'positivaTertia':
+          case 'positivaTertia/nominativusUnigener':
+            versioNova = 'generandaTertiae'; break
+          case 'positivaTertia//pluralis':
+          case 'positivaTertia/nominativusUnigener/pluralis':
+            versioNova = 'generandaTertiae//pluralis'; break
+          case 'positivaTertia/cumGenitivoVario':
+          case 'positivaTertia/nominativusUnigenerCumGenitivoVario':
+            versioNova = 'generandaTertiae/cumGenitivoVario'; break
+          case 'positivaTertia/cumGenitivoVario/pluralis':
+          case 'positivaTertia/nominativusUnigenerCumGenitivoVario/pluralis':
+            versioNova = 'generandaTertiae/cumGenitivoVario/pluralis'; break
+          case 'positivaTertia/cumAblativoVario':
+          case 'positivaTertia/nominativusUnigenerCumAblativoVario':
+            versioNova = 'generandaTertiae/cumAblativoVario'; break
+          case 'positivaTertia/cumAblativoVario/pluralis':
+          case 'positivaTertia/nominativusUnigenerCumAblativoVario/pluralis':
+            versioNova = 'generandaTertiae/cumAblativoVario/pluralis'; break
+          case 'positivaTertia/cumGenitivoAblativoqueVario':
+          case 'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario':
+            versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario'; break
+          case 'positivaTertia/cumGenitivoAblativoVario/pluralis':
+          case 'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis':
+            versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario/pluralis'; break
+          case 'positivaTertia/cumTruncoVario':
+          case 'positivaTertia/nominativusUnigenerCumTruncoVario':
+            versioNova = 'generandaTertiae/cumTruncoVario'; break
+          case 'positivaTertia/cumTruncoVario/pluralis':
+          case 'positivaTertia/nominativusUnigenerCumTruncoVario/pluralis':
+            versioNova = 'generandaTertiae/cumTruncoVario/pluralis'; break
+          default:
+            return null
+        }
     }
 
     switch (colamen.genus) {
       case 'neutrum':
         versioNova = versioNova
-          .replace('generandaTertiae', 'tertiaNeutra')
-          .replace('generanda', 'secundaNeutra')
+                       .replace('generandaTertiae', 'tertiaNeutra')
+                       .replace('generanda', 'secundaNeutra')
         break
       case 'masculinum':
         versioNova = versioNova
-          .replace('generandaTertiae', 'tertiaAnimata')
-          .replace('generanda', 'secundaMasculina')
+                       .replace('generandaTertiae', 'tertiaAnimata')
+                       .replace('generanda', 'secundaMasculina')
         break
       case 'femininimum':
         versioNova = versioNova
-          .replace('generandaTertiae', 'tertiaAnimata')
-          .replace('generanda', 'prima')
+                       .replace('generandaTertiae', 'tertiaAnimata')
+                       .replace('generanda', 'prima')
         break
       default:
         return null
     }
 
-    const tabula: Ignavum<Tabula<Verba.Adiectivum>> = this.putetur()
+    const tabula: Ignavum<Tabula<Verba.Adiectivum>> | undefined = this.putetur()
     if (tabula) {
-      const adiectiva: Verba.Adiectivum[] = await tabula?.hoc().tabulentur()
+      const adiectiva: Verba.Adiectivum[] = await tabula.hoc().tabulentur()
 
-      const nominativus: string = adiectiva.first((adiectivum) =>
+      const nominativus: string | undefined = adiectiva.first((adiectivum) =>
         [
           (adiectivum.gradus = colamen.gradus),
           (adiectivum.genus = colamen.genus),
@@ -236,7 +205,7 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
         ].all()
       ).scriptum
 
-      const genitivus: string = adiectiva.first((adiectivum) =>
+      const genitivus: string | undefined = adiectiva.first((adiectivum) =>
         [
           (adiectivum.gradus = colamen.gradus),
           (adiectivum.genus = colamen.genus),
@@ -246,125 +215,96 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
       ).scriptum
 
       return new Structor(NomenAgendum)
-        .ponatur((nomen) => (nomen.nominativum = nominativus))
-        .ponatur((nomen) => (nomen.genitivum = genitivus))
-        .ponatur((nomen) => (nomen.versio = versioNova))
-        .struatur()
-    } else {
-      return null
-    }
+                   .ponatur((nomen) => (nomen.nominativum = nominativus ?? ''))
+                   .ponatur((nomen) => (nomen.genitivum = genitivus ?? ''))
+                   .ponatur((nomen) => (nomen.versio = versioNova ?? ''))
+                   .struatur()
+    } else return null
   }
 }
 
 export class Incomparabile implements Interfecta.Faciendum<Verba.Adiectivum>, Interfecta.Lectum {
-  versio!: string
+       versio!: string
   nominativum!: string
-  genitivum!: string
+    genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> {
-    return incomparabilis.hoc().putetur(this)
-  }
+  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined { return incomparabilis.hoc().putetur(this) }
 
   probetur(genus: string): NomenAgendum | null {
     let versioNova: string
     switch (this.versio) {
       case 'autPrimaAutSecunda':
-        versioNova = 'generanda'
-        break
+        versioNova = 'generanda'; break
       case 'autPrimaAutSecunda//pluralis':
-        versioNova = 'generanda//plualis'
-        break
+        versioNova = 'generanda//plualis'; break
       case 'autPrimaAutSecunda/nominativusDirectus':
-        versioNova = 'secundaMasculina/nominativusDirectus'
-        break
+        versioNova = 'secundaMasculina/nominativusDirectus'; break
       case 'autPrimaAutSecunda/cumLitteraR':
-        versioNova = 'secundaMasculina/cumLitteraR'
-        break
+        versioNova = 'secundaMasculina/cumLitteraR'; break
       case 'tertia':
       case 'tertia/nominativusUnigener':
-        versioNova = 'generandaTertiae'
-        break
+        versioNova = 'generandaTertiae'; break
       case 'tertia/cumGenitivoVario':
       case 'tertia/nominativusUnigenerCumGenitivoVario':
-        versioNova = 'generandaTertiae/cumGenitivoVario'
-        break
+        versioNova = 'generandaTertiae/cumGenitivoVario'; break
       case 'tertia/cumAblativoVario':
       case 'tertia/nominativusUnigenerCumAblativoVario':
-        versioNova = 'generandaTertiae/cumAblativoVario'
-        break
+        versioNova = 'generandaTertiae/cumAblativoVario'; break
       case 'tertia/cumGenitivoAblativoVario':
       case 'tertia/nominativusUnigenerCumGenitivoAblativoqueVario':
-        versioNova = 'generandaTertiae/cumGenitivoAblativoVario'
-        break
+        versioNova = 'generandaTertiae/cumGenitivoAblativoVario'; break
       case 'tertia/cumTruncoVario':
       case 'tertia/nominativusUnigenerCumTruncoVario':
-        versioNova = 'generandaTertiae/cumTruncoVario'
-        break
+        versioNova = 'generandaTertiae/cumTruncoVario'; break
       case 'tertia/nominativusUnigener/pluralis':
-        versioNova = 'generandaTertiae//pluralis'
-        break
+        versioNova = 'generandaTertiae//pluralis'; break
       case 'tertia/nominativusUnigenerCumGenitivoVario/pluralis':
-        versioNova = 'generandaTertiae/cumGenitivoVario/pluralis'
-        break
+        versioNova = 'generandaTertiae/cumGenitivoVario/pluralis'; break
       case 'tertia/nominativusUnigenerCumAblativoVario/pluralis':
-        versioNova = 'generandaTertiae/cumAblativoVario/pluralis'
-        break
+        versioNova = 'generandaTertiae/cumAblativoVario/pluralis'; break
       case 'tertia/nominativusUnigenerCumGenitivoAblativoVario/pluralis':
-        versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario/pluralis'
-        break
+        versioNova = 'generandaTertiae/cumGenitivoAblativoqueVario/pluralis'; break
       case 'tertia/nominativusUnigenerCumTruncoVario/pluralis':
-        versioNova = 'generandaTertiae/cumTruncoVario/pluralis'
-        break
+        versioNova = 'generandaTertiae/cumTruncoVario/pluralis'; break
       default:
         return null
     }
 
     switch (genus) {
       case 'neutrum':
-        versioNova
-          .replace('generandaTertae', 'tertiaNeutra')
-          .replace('generanda', 'secundaNeutra')
-        break
+        versioNova.replace('generandaTertae', 'tertiaNeutra')
+                  .replace('generanda', 'secundaNeutra'); break
       case 'masculinum':
-        versioNova
-          .replace('generandaTertae', 'tertiaAnimata')
-          .replace('generanda', 'secundaMasculina')
-        break
+        versioNova.replace('generandaTertae', 'tertiaAnimata')
+                  .replace('generanda', 'secundaMasculina'); break
       case 'femininum':
-        versioNova
-          .replace('generandaTertae', 'tertiaAnimata')
-          .replace('generanda', 'prima')
-        break
+        versioNova.replace('generandaTertae', 'tertiaAnimata')
+                  .replace('generanda', 'prima'); break
       default:
         return null
     }
 
     return new Structor(NomenAgendum)
-      .ponatur((nomen) => (nomen.nominativum = this.nominativum))
-      .ponatur((nomen) => (nomen.genitivum = this.genitivum))
-      .ponatur((nomen) => (nomen.versio = versioNova))
-      .struatur()
+                 .ponatur((nomen) => (nomen.nominativum = this.nominativum))
+                 .ponatur((nomen) => (nomen.genitivum = this.genitivum))
+                 .ponatur((nomen) => (nomen.versio = versioNova))
+                 .struatur()
   }
 }
 
 export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, Interfecta.Lectum {
-  numerus!: string
-  ordinale?: string
-  cardinale?: string
-  adverbium?: string
   multiplicativum?: string
-  distributivum?: string
-  fractionale?: string
+    distributivum?: string
+      fractionale?: string
+        cardinale?: string;
+        adverbium?: string
+         ordinale?: string;
+          numerus!: string;
 
-  putetur(): Ignavum<Tabula<Verba.Numeramen>> | undefined {
-    return new Ignavum(TabulaNumeraminis, { agendum: this})
-  }
+  putetur(): Ignavum<Tabula<Verba.Numeramen>> | undefined { return new Ignavum(TabulaNumeraminis, { agendum: this}) }
 
   async referatur(referendum: string): Promise<Interfecta.Referendum | undefined> {
-    let lemma: Lemma = {
-      categoria: '',
-      scriptum: ''
-    }
+    let lemma: Lemma = { categoria: '', scriptum: '' }
 
     switch (referendum) {
       case 'numerus': {
@@ -407,8 +347,7 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
           scriptum: this.distributivum ?? ''
         }
         break
-      default:
-        return undefined
+      default: return undefined
     }
 
     return await dictionarium.hoc().referatur(lemma) ?? undefined

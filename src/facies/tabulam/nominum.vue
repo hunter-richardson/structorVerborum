@@ -19,9 +19,7 @@ import specere from '../specere.vue';
   const tabula: Ignavum<Tabula<Nomen>> | undefined = agendum.putetur()
   const actum: boolean = agendum instanceof NomenActum
 
-  async function omnia (): Promise<Nomen[]> {
-    return await tabula?.hoc().tabulentur() ?? []
-  }
+  async function omnia (): Promise<Nomen[]> { return await tabula?.hoc().tabulentur() ?? [] }
 
   export default defineComponent({
     components: { inflectere, gustulare, seligere, specere, onerare },
@@ -45,9 +43,7 @@ import specere from '../specere.vue';
       const onerans: Ref<boolean> = ref(true)
       const nomina: Ref<Nomen[]> = ref([])
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
@@ -57,29 +53,20 @@ import specere from '../specere.vue';
 
       async function cole (selecta: string[]): Promise<void> {
         const omnes: Nomen[] = await omnia()
-        if (omnes) {
-          nomina.value = omnes.filter(nomen => selecta.every(selectum =>
-            nomen.valores().includes(selectum)))
-        }
-
+        if (omnes)
+        { nomina.value = omnes.filter(nomen => selecta.every(selectum => nomen.valores().includes(selectum))) }
         return oneratust()
       }
 
-      async function refer (): Promise<void> {
-        actus.value = await (agendum as NomenActum).actus() ?? undefined
-      }
+      async function refer (): Promise<void> { actus.value = await (agendum as NomenActum).actus() ?? undefined }
 
-      return {
-        nomen, nomina, actus, onerans, forsInflectat, cole, refer
-      }
+      return { nomen, nomina, actus, onerans, forsInflectat, cole, refer }
     }, async mounted (): Promise<void> {
       this.nomina = await omnia()
       this.columnae = categoricum<Nomen>({
         categoria: 'nomen',
         haec: this.nomina as Nomen[]
-      })
-
-      this.onerans = false
+      }); this.onerans = false
     }
   })
 </script>

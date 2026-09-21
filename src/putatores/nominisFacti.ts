@@ -10,7 +10,7 @@ import { type Putaturum } from './putaturum';
 
 interface Percolamen {
   factum?: factum
-  casus?: casus
+   casus?: casus
 }
 
 @Nuntius.factum('PutatorNominisFacti')
@@ -20,9 +20,7 @@ class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
     const [versio, pronus] = agendum.versio.split('/')
     if (pronus === 'prona') {
       agendum.versio = versio
-      return new Ignavum(TabulaProna, {
-                   relata: this.putetur(agendum)
-                 })
+      return new Ignavum(TabulaProna, { relata: this.putetur(agendum) })
     } else if (['prima', 'secunda', 'tertia', 'tertiaVaria', 'quarta'].includes(versio)) {
       return new Ignavum(TabulaRecta, {
                    via: versio,
@@ -38,9 +36,7 @@ class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
                      }
                    }
                  })
-    } else {
-      throw Errator({ versio: agendum.versio })
-    }
+    } else throw Errator({ versio: agendum.versio })
   }
 }
 

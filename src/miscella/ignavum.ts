@@ -15,16 +15,13 @@ export default class Ignavum<Hoc extends ([keyof Hoc] extends never ? never : ob
                   .filter(([clavis, ]) => hoc[clavis] === undefined)
   }
 
-  structum(): boolean {
-    return !!this._hoc
-  }
+  structum(): boolean { return !!this._hoc }
 
   hoc(): Hoc {
     if(!this._hoc) {
       const illud: Hoc = new this._structor
-      for(const [ clavis, valor ] of this.#ista(illud)) {
-        (illud as any)[ clavis ] = valor
-      } this._hoc = illud
+      for(const [ clavis, valor ] of this.#ista(illud)) (illud as any)[ clavis ] = valor
+      this._hoc = illud
     } return this._hoc
   }
 }

@@ -20,26 +20,18 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
     switch (versio) {
       case 'autPrimaAutSecunda':
       case 'pronominalis':
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (adiectivum: Incomparabile, colamen: Percolamen): string => adiectivum.nominativum.chop(2)
+        return (adiectivum: Incomparabile,): string => adiectivum.nominativum.chop(2)
       case 'autPrimaAutSecunda/nominativusDirectus':
       case 'pronominalis/nominativusDirectus':
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (adiectivum: Incomparabile, colamen: Percolamen): string => adiectivum.nominativum
+        return (adiectivum: Incomparabile,): string => adiectivum.nominativum
       case 'autPrimaAutSecunda/cumLitteraR':
       case 'pronominalis/cumLitteraR':
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
-          if (
-            [
-              colamen.genus === 'masculinum',
-              colamen.numerus === 'singularis',
-              ['nominativus', 'vocativus'].includes(colamen.casus ?? '')
-            ].all()
-          ) {
-            return adiectivum.nominativum
-          } else {
-            return adiectivum.genitivum.chop(1)
-          }
+          return [
+            colamen.genus === 'masculinum',
+            colamen.numerus === 'singularis',
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+          ].all() ? adiectivum.nominativum : adiectivum.genitivum.chop(1)
         }
       case 'tertia':
       case 'tertia/cumGenitivoVario':
@@ -47,16 +39,11 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
       case 'tertia/cumGenitivoAblativoqueVario':
       case 'tertia/cumTruncoVario':
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
-          switch (true) {
-            case [
-              ['masculinum', 'femininum'].includes(colamen.genus ?? ''),
-              ['nominativus', 'vocativus'].includes(colamen.casus ?? ''),
-              colamen.numerus === 'singularis'
-            ].all():
-              return adiectivum.nominativum
-            default:
-              return adiectivum.genitivum.chop(2)
-          }
+          return [
+            [ 'masculinum', 'femininum' ].includes(colamen.genus ?? ''),
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? ''),
+            colamen.numerus === 'singularis'
+          ].all() ? adiectivum.nominativum : adiectivum.genitivum.chop(2)
         }
       case 'tertia/nominativusUnigener':
       case 'tertia/nominativusUnigenerCumGenitivoVario':
@@ -80,8 +67,7 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
               return adiectivum.genitivum.chop(2)
           }
         }
-      default:
-        throw Errator({ versio: versio })
+      default: throw Errator({ versio: versio })
     }
   }
 
@@ -110,9 +96,8 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
         'nominativusUnigenerCumTruncoVario'
       ].includes(vices)
     ) {
-      if (vices === 'cumLitteraR') {
-        vices = 'nominativusDirectus'
-      } return new Ignavum(TabulaVicaria, {
+      if (vices === 'cumLitteraR') vices = 'nominativusDirectus'
+      return new Ignavum(TabulaVicaria, {
                      prima: {
                        scapum: '/res/vices/adiectiva/incomparabilia',
                        via: agendum.versio
@@ -123,7 +108,7 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
                      positor: Adiectivum.positor,
                      hoc: agendum
                    })
-    } else if (['autPrimaAutSecunda', 'tertia', 'pronominalis'].includes(fundamen)) {
+    } else if (['autPrimaAutSecunda', 'tertia', 'pronominalis'].includes(fundamen))
       return new Ignavum(TabulaRecta, {
                    scapum: '/res/tabula/adiectiva/incomparabilia',
                    hoc: agendum,
@@ -131,9 +116,7 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
                    positor: Adiectivum.positor,
                    radicator: this.radicetur(agendum.versio)
                  })
-    } else {
-      throw Errator({ versio: agendum.versio })
-    }
+    else throw Errator({ versio: agendum.versio })
   }
 }
 

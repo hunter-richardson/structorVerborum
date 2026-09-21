@@ -34,71 +34,37 @@ import specere from './specere.vue';
       const praesentes: Ref<numeri> = ref(nihil)
       const praevii: Ref<numeri> = ref(nihil)
 
-      function operat (actus: string): boolean {
-        return /^\+-•÷%=$/.test(actus)
-      }
+      function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus) }
 
-      function licta (actus: string): boolean {
-        return operat(actus) ||
-          !!praesentes.value.arabicus
-      }
+      function licta (actus: string): boolean { return operat(actus) || !!praesentes.value.arabicus }
 
       function ponatur (actus: string): void {
         if (actus === 'N') {
-          praevii.value = nihil
-          praesentes.value = nihil
+          praevii.value = praesentes.value = nihil
         } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
-          if (praesentes.value.arabicus) {
-            praesentes.value.romanus += actus
-          } else {
-            praesentes.value.romanus = actus
-          }
-
-          try {
-            praesentes.value.arabicus = Numerator.arabicus(praesentes.value.romanus)
-          } catch {
-            praesentes.value = nihil
-          }
+          if (praesentes.value.arabicus) praesentes.value.romanus += actus
+          else praesentes.value.romanus = actus
+          try { praesentes.value.arabicus = Numerator.arabicus(praesentes.value.romanus) }
+          catch { praesentes.value = nihil }
         } else if (operat(actus)) {
-          if (praevii.value.arabicus === 0) {
-            praevii.value = praesentes.value
-          } else {
+          if (praevii.value.arabicus === 0) praevii.value = praesentes.value
+          else {
             switch ((operator.value ?? '').trim()) {
-              case '+':
-                praevii.value.arabicus += praesentes.value.arabicus
-                break
-              case '-':
-                praevii.value.arabicus -= praesentes.value.arabicus
-                break
-              case '•':
-                praevii.value.arabicus *= praesentes.value.arabicus
-                break
-              case '÷':
-                praevii.value.arabicus /= praesentes.value.arabicus
-                break
-              case '%':
-                praevii.value.arabicus %= praesentes.value.arabicus
-                break
-              default:
-                praevii.value.arabicus = praesentes.value.arabicus
-                break
-            }
-
-            praevii.value.romanus = Numerator.romanus(praevii.value.arabicus)
-          }
-
-          operator.value = actus === '=' ? '' : ` ${actus} `
+              case '+': praevii.value.arabicus += praesentes.value.arabicus; break
+              case '-': praevii.value.arabicus -= praesentes.value.arabicus; break
+              case '•': praevii.value.arabicus *= praesentes.value.arabicus; break
+              case '÷': praevii.value.arabicus /= praesentes.value.arabicus; break
+              case '%': praevii.value.arabicus %= praesentes.value.arabicus; break
+              default: praevii.value.arabicus = praesentes.value.arabicus; break
+            } praevii.value.romanus = Numerator.romanus(praevii.value.arabicus)
+          } operator.value = actus === '=' ? '' : ` ${actus} `
           praesentes.value = nihil
         }
       }
 
-      function aequa (): void {
-        numerus.value = Numerus.numerator(praevii.value.arabicus)
-      }
+      function aequa (): void { numerus.value = Numerus.numerator(praevii.value.arabicus) }
 
-      return {
-        numerus, operator, praesentes, praevii, licta, aequa, ponatur
-      }
+      return { numerus, operator, praesentes, praevii, licta, aequa, ponatur }
     }
   })
 </script>

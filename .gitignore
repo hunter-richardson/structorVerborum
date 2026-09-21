@@ -26,7 +26,7 @@ coverage
 *.tsbuildinfo
 
 nuntia
-wwwroot
+dist
 
 codeql-agent-results
 

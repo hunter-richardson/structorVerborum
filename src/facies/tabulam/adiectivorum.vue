@@ -76,9 +76,7 @@ import specere from '../specere.vue';
         genus: ''
       })
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
@@ -89,17 +87,12 @@ import specere from '../specere.vue';
       async function cole (selecta: string[]): Promise<void> {
         onerans.value = true
         const omnes: Adiectivum[] = await omnia()
-        if (omnes) {
-          adiectiva.value = omnes.filter(adiectivum => selecta.every(selectum =>
-            adiectivum.valores().includes(selectum)))
-        }
-
+        if (omnes)
+        { adiectiva.value = omnes.filter(adiectivum => selecta.every(selectum => adiectivum.valores().includes(selectum))) }
         return oneratust()
       }
 
-      function referIncomparabile (): void {
-        nomen.value = (agendum as Incomparabile).probetur(et.value.genus) ?? undefined
-      }
+      function referIncomparabile (): void { nomen.value = (agendum as Incomparabile).probetur(et.value.genus) ?? undefined }
 
       async function referComparabile (): Promise<void> {
         nomen.value = await (agendum as AdiectivumAgendum).probetur({
@@ -108,17 +101,13 @@ import specere from '../specere.vue';
         }) ?? undefined
       }
 
-      return {
-        adiectivum, adiectiva, nomen, onerans, et, forsInflectat, cole, referIncomparabile, referComparabile
-      }
+      return { adiectivum, adiectiva, nomen, onerans, et, forsInflectat, cole, referIncomparabile, referComparabile }
     }, async mounted (): Promise<void> {
       this.adiectiva = await omnia()
       this.columnae = categoricum<Adiectivum>({
         categoria: 'adiectivum',
         haec: this.adiectiva as Adiectivum[]
-      })
-
-      this.onerans = false
+      }); this.onerans = false
     }
   })
 </script>

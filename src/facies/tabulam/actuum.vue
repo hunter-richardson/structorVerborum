@@ -52,9 +52,7 @@ import specere from '../specere.vue';
       const onerans: Ref<boolean> = ref(false)
       const actua: Ref<Actus[]> = ref([])
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
@@ -65,25 +63,16 @@ import specere from '../specere.vue';
       async function cole (selecta: string[]): Promise<void> {
         onerans.value = true
         const omnes: Actus[] = await omnia()
-        if (omnes) {
-          actua.value = omnes.filter(actus => selecta.every(selectum =>
-            actus.valores().includes(selectum)))
-        }
-
+        if (omnes)
+        { actua.value = omnes.filter(actus => selecta.every(selectum => actus.valores().includes(selectum))) }
         return oneratust()
       }
 
-      async function refer (res: Promise<Faciendum<Nomen> | null>): Promise<void> {
-        referendum.value = await res ?? undefined
-      }
+      async function refer (res: Promise<Faciendum<Nomen> | null>): Promise<void> { referendum.value = await res ?? undefined }
 
-      function age (res: Faciendum<Nomen> | null): void {
-        referendum.value = res ?? undefined
-      }
+      function age (res: Faciendum<Nomen> | null): void { referendum.value = res ?? null }
 
-      return {
-        onerans, actus, actua, referendum, forsInflectat, cole, refer, age
-      }
+      return { onerans, actus, actua, referendum, forsInflectat, cole, refer, age }
     }
   })
 </script>

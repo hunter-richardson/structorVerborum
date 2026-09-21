@@ -1,24 +1,21 @@
-import { Verbum } from '../praebeunda/verba';
+import { capitalize } from 'vue';
 import { crustula } from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
+import { Verbum } from '../praebeunda/verba';
 
 @Nuntius.factum('Locutor')
 export class Locutor {
 
   private _verba: Verbum[] = []
-  private apices?: boolean
-  private utendaU?: boolean
-  private magnas?: boolean
+  private    apices?: boolean
+  private   utendaU?: boolean
+  private    magnas?: boolean
   private separator?: string
 
-  constructor() {
-    this.veliferum()
-  }
+  constructor() { this.veliferum() }
 
-  locutust(): boolean {
-    return this._verba.length > 0
-  }
+  locutust(): boolean { return this._verba.length > 0 }
 
   private veliferum(): void {
     this.apices = crustula.hoc().apices.est()
@@ -27,9 +24,7 @@ export class Locutor {
     this.separator = crustula.hoc().separator.littera()
   }
 
-  get verba(): Verbum[] {
-    return this._verba
-  }
+  get verba(): Verbum[] { return this._verba }
 
   @Nuntius.modus('Locutor')
   addatur(verbum: Verbum): void {
@@ -66,16 +61,11 @@ export class Locutor {
       }
     }
 
-    if (!this.apices) {
-      verbum.scriptum = verbum.scriptum.removeMacra()
-    }
-
+    if (!this.apices) verbum.scriptum = verbum.scriptum.removeMacra()
     this._verba.push(verbum)
   }
 
-  loquitur(unicum: symbol): boolean {
-    return this.verba.some((verbum) => verbum.unicum === unicum)
-  }
+  loquitur(unicum: symbol): boolean { return this.verba.some((verbum) => verbum.unicum === unicum) }
 
   removeatur(unicum: symbol): string {
     this._verba = this._verba.filter((verba) => verba.unicum !== unicum)
@@ -85,11 +75,7 @@ export class Locutor {
   scribantur(): string {
     this.veliferum()
     const locutio: string = this.verba.map((verba) => verba.scriptum).join(this.separator)
-    if (this.magnas) {
-      return locutio.toUpperCase()
-    } else {
-      return locutio.capitalize()
-    }
+    return locutio[this.magnas ? 'toUpperCase' : 'capitalize']()
   }
 }
 

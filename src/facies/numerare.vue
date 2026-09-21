@@ -1,11 +1,34 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, type Ref, ref } from 'vue';
+  import { computed, defineComponent, defineModel, type Ref, ref } from 'vue';
 import { crustula } from '../miscella/crustula';
 import Numerator from '../miscella/numerator';
 import { Numerus } from '../praebeunda/verba';
 import Gustulus from '../scriptura/gustulus';
 import gustulare from './gustulare.vue';
 import specere from './specere.vue';
+import { useRoute } from 'vuetify/lib/composables/router.mjs';
+import { monstrator, type Monstranda } from '../miscella/monstrator';
+
+  const via = useRoute();
+  const nomen: string = (computed(() => via.value) as unknown) as string;
+  const monstranda: Monstranda = await monstrator.hoc().monstrentur(nomen);
+
+  type Nuntium = {
+    deNumeris: string;
+  };
+
+  type Nuntia = {
+    anglicum: Nuntium,
+    latinum: Nuntium;
+  }
+
+  const nuntia: Nuntia = {
+    latinum: {
+      deNumeris: monstranda.first((monstrandum) => (monstrandum.unicum === 'latinum.deNumeris')).nuntium
+    }, anglicum: {
+      deNumeris: monstranda.first((monstrandum) => (monstrandum.unicum === 'anglicum.deNumeris')).nuntium
+    },
+  }
 
   type Arabicus = {
     integer: number,
@@ -17,8 +40,7 @@ import specere from './specere.vue';
 
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string => {
-      const error: string = anglica ?
-        'Only Roman numerals allowed' : 'Romani numeri soli licuntur'
+      const error: string = anglica ? nuntia.latinum.deNumeris : nuntia.latinum.deNumeris
       return Number.isInteger(arabicus) || error
     }
   ]

@@ -3,7 +3,7 @@ import Nuntius from './nuntius';
 
 interface Par {
   arabicus: number
-  latinum: string
+   latinum: string
 }
 
 @Nuntius.factum('Numerator')
@@ -41,25 +41,21 @@ export default class Numerator {
   @Nuntius.modus('Numerator')
   static romanus(arabicus: number): string {
     if (this.convertibilis(arabicus)) {
-      if (arabicus === Numerator.minimus.arabicus) {
-        return Numerator.minimus.latinum
-      } else if (Number.isInteger(arabicus)) {
+      if (arabicus === Numerator.minimus.arabicus) return Numerator.minimus.latinum
+      else if (arabicus === Numerator.maximus.arabicus) return Numerator.maximus.latinum
+      else if (Number.isInteger(arabicus)) {
         if (arabicus >= 4000) {
           const inferior: number = arabicus % 4000
           const superior: number = (arabicus - inferior) / 1000
           return `|${new RomanNumeral(superior)}|${new RomanNumeral(inferior)}`
-        } else {
-          return new RomanNumeral(arabicus).toString()
-        }
+        } else return new RomanNumeral(arabicus).toString()
       } else {
         const integer: number = Math.floor(arabicus)
         const fractus: number = 12 * (arabicus - integer)
         const fractum: string = this.fracti().get(fractus) ?? ''
         return `${this.romanus(integer)}${fractum}`
       }
-    } else {
-      throw new Error(`Iacta interfuturu'st valor: ${arabicus}`)
-    }
+    } else throw new Error(`Iacta interfuturu'st valor: ${arabicus}`)
   }
 
   @Nuntius.modus('Numerator')
@@ -73,14 +69,10 @@ export default class Numerator {
       ].first((valor) => valor[1] === fractus)[0]
       romanus = romanus.replace(fractus, '')
       return this.arabicus(romanus) + numerator / 12.0
-    } else if (romanus === 'N') {
-      return 0
-    } else if (romanus.startsWith('|')) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } else if (romanus === 'N') return 0
+    else if (romanus.startsWith('|')) {
       const [_, superior, inferior] = romanus.split('|')
       return 10 * this.arabicus(superior) + this.arabicus(inferior)
-    } else {
-      return new RomanNumeral(romanus).toInt()
-    }
+    } else return new RomanNumeral(romanus).toInt()
   }
 }

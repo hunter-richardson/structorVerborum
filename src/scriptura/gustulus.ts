@@ -1,7 +1,7 @@
 interface Optanda {
-  nuntium?: string
-  vita?: number
-  color?: string,
+  nuntium?: string,
+    color?: string,
+     vita?: number
 }
 
 const Please = require('pleasejs');
@@ -12,9 +12,7 @@ export default class Gustulus {
   public color: string = Please.make_color()
   public visibile: boolean = this._vita > 0
 
-  public get vita() {
-    return this._vita
-  }
+  public get vita() { return this._vita }
 
   public set vita(valor: number) {
     this.vita = valor

@@ -40,7 +40,7 @@ import inflectere from './inflectere.vue';
             const actus: Actus = verbum.value as Actus
             if (actus.modus === 'participium') {
               eventus.value = {
-                referendum: await actus.participialis(),
+                ...(await actus.participialis()),
                 categoria: 'adiectivum'
               }
             }
@@ -52,7 +52,7 @@ import inflectere from './inflectere.vue';
             const agendum: NumeramenAgendum | null = await numerus.numeramen()
             if (agendum) {
               eventus.value = {
-                referendum: agendum,
+                ...agendum,
                 categoria: 'numeramen'
               }
             }
@@ -63,30 +63,21 @@ import inflectere from './inflectere.vue';
 
       function adde (): void {
         if (verbum.value) {
-          if ([ multiplex, encliticum ].every(res => !!res.value)) {
-            (verbum.value as Multiplex).encliticum = encliticum.value
-          }
-
+          if ([ multiplex, encliticum ].every(res => !!res.value))
+          { (verbum.value as Multiplex).encliticum = encliticum.value }
           locutor.hoc().addatur(verbum.value)
         }
       }
 
       function addeProprium (): void {
-        if (verbum.value && propriabile.value) {
-          verbum.value.scriptum = verbum.value.scriptum.capitalize()
-        }
-
+        if (verbum.value && propriabile.value) verbum.value.scriptum = verbum.value.scriptum.capitalize()
         adde()
       }
 
-      return {
-        eventus, verbum, encliticum, multiplex, propriabile, aperi, adde, addeProprium
-      }
+      return { eventus, verbum, encliticum, multiplex, propriabile, aperi, adde, addeProprium }
     }, mounted (): void {
       this.multiplex = this.verbum ? this.verbum instanceof Multiplex : false
-      if (this.multiplex) {
-        this.valores = (this.verbum as Multiplex)?.valores()
-      }
+      if (this.multiplex) this.valores = (this.verbum as Multiplex)?.valores()
 
       this.propriabile = [
         [
@@ -96,7 +87,7 @@ import inflectere from './inflectere.vue';
       ].all()
 
       this.enclitica = Object.keys(Encliticum)
-        .filter(encliticum => !this.verbum?.scriptum.endsWith(encliticum))
+                             .filter(encliticum => !this.verbum?.scriptum.endsWith(encliticum))
     }
   })
 </script>

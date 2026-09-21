@@ -1,7 +1,7 @@
 import { casua, genera, gradua } from '../../../miscella/enumerationes';
-import { type Colamen } from '../../../praebeunda/agenda';
 import { Adiectivum } from '../../../praebeunda/verba';
 import TabulaDefecta from '../defecta';
+import { type Colamen } from '../../../praebeunda/agenda';
 
 export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
   static apponatur(): Colamen<Adiectivum>[] {
@@ -13,7 +13,7 @@ export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
                 genus: genus,
                 casus: casus
               } as Colamen<Adiectivum>
-            })
+            }).flat()
           }).flat()
       }).flat()
   }

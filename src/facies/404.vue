@@ -50,7 +50,7 @@ import Nuntius from '../miscella/nuntius';
       if ([ location.href, location.href !== '404' ].all()) {
         Nuntius.timeo({
           nomen: '404.vue',
-          error: new Error(`CDIV loco ${location.href} effectu'st`)
+          error: new Error(`CDIV effectu'st loco ${location.href}`)
         })
       }
     }

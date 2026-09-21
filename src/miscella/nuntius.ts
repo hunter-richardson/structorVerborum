@@ -1,9 +1,9 @@
+import { type TransformableInfo } from 'logform';
 import { makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes';
 import Numerator from './numerator';
-import { type TransformableInfo } from 'logform';
 
 const scribatur = (parametra: TransformableInfo & {
   nomen?: string
@@ -13,9 +13,9 @@ const scribatur = (parametra: TransformableInfo & {
 }
 
 interface Parametra {
-  nomen?: string
+    error?: Error
+    nomen?: string
   nuntium?: string
-  error?: Error
 }
 
 export default class Nuntius implements Disposable {
@@ -25,55 +25,48 @@ export default class Nuntius implements Disposable {
   }
 
   static timeo(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       error: parametra.error
     })
   }
 
   static moneo(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'warn',
       nuntium: parametra.nuntium
     })
   }
 
   static noto(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'info',
       nuntium: parametra.nuntium
     })
   }
 
   static certioro(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'http',
       nuntium: parametra.nuntium
     })
   }
 
   static garrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'verbose',
       nuntium: parametra.nuntium
     })
   }
 
   static plusGarrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'debug',
       nuntium: parametra.nuntium
     })
   }
 
   static plurimumGarrio(parametra: Parametra): void {
-    using nuntius: Nuntius = new Nuntius(parametra.nomen)
-    nuntius.nuntio({
+    new Nuntius(parametra.nomen).nuntio({
       gradus: 'silly',
       nuntium: parametra.nuntium
     })
@@ -152,7 +145,8 @@ export default class Nuntius implements Disposable {
   private readonly _mundusEvolendum: boolean = true
 
   private constructor(private readonly _nomen?: string) {
-    let navigium, forma: any
+    let navigium: winston.transport
+    let forma: winston.Logform.Format
     if (this._mundusEvolendum) {
       forma = winston.format.combine(
         winston.format.align(),
@@ -167,9 +161,7 @@ export default class Nuntius implements Disposable {
         )
       )
 
-      navigium = new winston.transports.Console({
-        format: forma
-      })
+      navigium = new winston.transports.Console({ format: forma })
     } else {
       forma = winston.format.combine(
         winston.format.align(),
@@ -193,7 +185,7 @@ export default class Nuntius implements Disposable {
         zippedArchive: true
       })
 
-      makeDirectorySync(navigium.dirname)
+      makeDirectorySync((navigium as DailyRotateFile).dirname)
 
       // navigium.on('new', (hoc: string) => { })
       // navigium.on('rotate', (illud: string, hoc: string) => { })
@@ -210,15 +202,12 @@ export default class Nuntius implements Disposable {
   }
 
   nuntio(parametra: {
-    gradus?: string
+      error?: Error
+     gradus?: string
     nuntium?: string
-    error?: Error
   }): void {
-    if (parametra.error) {
-      this._nuntiator.error(parametra.error)
-    } else if (parametra.gradus) {
-      this._nuntiator.log(parametra.gradus, parametra.nuntium)
-    }
+    if (parametra.error) this._nuntiator.error(parametra.error)
+    else if (parametra.gradus) this._nuntiator.log(parametra.gradus, parametra.nuntium)
   }
 
   [Symbol.dispose](): void {

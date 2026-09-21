@@ -1,9 +1,9 @@
 import file from 'file-fetch';
-import { marked, type MarkedExtension, type Tokens } from 'marked';
 import path from 'path';
 import { crustula } from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
+import { marked, type MarkedExtension, type Tokens } from 'marked';
 
 @Nuntius.factum('Magister')
 class Magister {
@@ -38,7 +38,7 @@ class Magister {
     const data: string = await marked.use(Magister.optentur()).parse(await this.aperiatur(docendum));
     (data ? Nuntius.plusGarrio : Nuntius.timeo)({
       nomen: 'Magister',
-      nuntium: `${data ? 'Docendum relatust ' : 'Nihil docendust valore '}${docendum}`
+      nuntium: `${data ? 'Docendum relatust' : 'Nihil docendust valore'} ${docendum}`
     })
 
     return data

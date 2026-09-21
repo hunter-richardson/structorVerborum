@@ -44,8 +44,6 @@ if(import.meta.env.PROD) {
       if(obtrectatus.code) {
         console.log('Codex obtrectatust')
         fs.writeFileSync('../../dist/fascis.min.js', obtrectatus.code)
-      } else {
-        console.log(`Errores obtrectandi: ${obtrectatus.errors}`)
-      }
+      } else console.log(`Errores obtrectandi: ${obtrectatus.errors}`)
     })
 }

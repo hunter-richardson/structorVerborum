@@ -4,20 +4,20 @@ import { crustula } from '../miscella/crustula';
 import { anglicum } from '../miscella/enumerationes';
 
   const { onerans, pittacium } = defineProps<{
-    onerans: boolean, pittacium: string
+    onerans: boolean,
+    pittacium: string
   }>()
 
   const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
-  const scriptum: string = anglica ?
-    `Loading ${anglicum(pittacium).toUpperCase()}...` :
-    `${pittacium.toUpperCase()} onerantur...`
+  const scriptum: string = anglica ? `Loading ${anglicum(pittacium).toUpperCase()}...` :
+                                     `${pittacium.toUpperCase()} onerantur...`
 
-  export default defineComponent({ data: (): {
-      onerans: boolean,
-      scriptum: string
-    } => {
-      return { onerans, scriptum }
-    } })
+  export default defineComponent({
+    data: (): {
+        onerans: boolean,
+        scriptum: string
+      } => { return { onerans, scriptum } }
+    })
 </script>
 
 <template>

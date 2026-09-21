@@ -1,12 +1,12 @@
+import TabulaDefecta from './defecta';
 import {
   numeri,
   personae,
   tempora,
   voces
-} from '../../miscella/enumerationes';
-import { type Colamen } from '../../praebeunda/agenda';
+  } from '../../miscella/enumerationes';
 import { Actus } from '../../praebeunda/verba';
-import TabulaDefecta from './defecta';
+import { type Colamen } from '../../praebeunda/agenda';
 
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
   static apponatur(et: string): Colamen<Actus>[] {
@@ -31,7 +31,7 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
       }
     })
 
-    if (et === 'passivo') {
+    if (et === 'passivo')
       ['indicativus', 'subiunctivus'].forEach((modus) => {
         tempora.forEach((tempus) => {
           if (
@@ -60,13 +60,13 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
           }
         })
       })
-    } else {
+    else
       ['indicativus', 'subiunctivus'].forEach((modus) => {
         voces.forEach((vox) => {
           tempora.forEach((tempus) => {
             if (
               [
-                modus === 'infinitiuvs',
+                modus === 'infinitivus',
                 [
                   'praesens',
                   'infectum',
@@ -86,8 +86,6 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
           })
         })
       })
-    }
-
     return colamina
   }
 
@@ -95,13 +93,10 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
 
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
     if (this.et === 'semideponens') {
-      if (colamen.modus === 'particpalis') {
-        colamen.vox = ''
-      } else if (colamen.vox === 'passiva') {
-        return null
-      }
+      if (colamen.modus === 'particpalis') colamen.vox = ''
+      else if (colamen.vox === 'passiva') return null
     } else if (this.et === 'semideponensActiva') {
-      if (colamen.vox === 'passiva') {
+      if (colamen.vox === 'passiva')
         switch (true) {
           case [ colamen.modus === 'participium', colamen.tempus === 'futurum' ].any():
             colamen.vox = ''
@@ -109,13 +104,10 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
           default:
             return null
         }
-      }
     }
 
-    if ([this.et === 'passivo', colamen.vox === 'activa'].all()) {
-      return colamen
-    } else {
-      return [
+    if ([this.et === 'passivo', colamen.vox === 'activa'].all()) return colamen
+    else return [
         colamen.numerus === 'pluralis',
         colamen.persona === 'prima',
         colamen.persona === 'secunda'
@@ -124,6 +116,5 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
             numerus: '',
             persona: ''
           }
-    }
   }
 }

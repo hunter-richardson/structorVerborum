@@ -1,5 +1,5 @@
 {
-  "extends": "./tsconfig.debug",
+  "extends": "./tsconfig.debug.json",
   "compileOnSave": true,
   "compilerOptions": {
     "allowArbitraryExtensions": true,

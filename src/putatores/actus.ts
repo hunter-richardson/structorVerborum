@@ -14,9 +14,9 @@ import type { Putaturum, Radicator } from './putaturum';
 
 
 interface Percolamen {
-  modus?: modus
-  tempus?: tempus
-  vox?: vox
+    modus?: modus
+   tempus?: tempus
+      vox?: vox
   numerus?: numerus
   persona?: persona
 }
@@ -49,7 +49,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
             case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
               return actus.perfectum?.chop(4) ?? ''
             default:
-              return actus.infinitivum.chop(3)
+              return actus.infinitivum?.chop(3) ?? ''
           }
         }
       case 'tertia':
@@ -69,7 +69,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
             case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
               return actus.perfectum?.chop(4) ?? ''
             default:
-              return actus.infinitivum.chop(1)
+              return actus.infinitivum?.chop(1) ?? ''
           }
         }
       case 'prima/deponens':
@@ -107,7 +107,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
             ].all():
               return actus.supinum?.chop(2) ?? ''
             default:
-              return actus.infinitivum.chop(3)
+              return actus.infinitivum?.chop(3) ?? ''
           }
         }
       case 'prima/semideponensActiva':
@@ -116,8 +116,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
       case 'secunda//semideponensActiva':
       case 'tertia/semideponensActiva':
       case 'tertia//semideponensActiva':
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        return (actus: ActusAgendus,): string => actus.infinitivum.chop(3)
+        return (actus: ActusAgendus,): string => actus.infinitivum?.chop(3) ?? ''
       case 'prima/impersonalis/semideponensActiva':
       case 'prima//impersonalis/semideponensActiva':
       case 'secunda/impersonalis/semideponensActiva':
@@ -133,7 +132,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
             ].all():
               return actus.perfectum ?? ''
             default:
-              return actus.infinitivum.chop(3)
+              return actus.infinitivum?.chop(3) ?? ''
           }
         }
       default:
@@ -160,16 +159,13 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                        relata: this.putetur(agendus),
                        et: defectusSecundus
                      })
-        case 'perfectus':
-          return new Ignavum(TabulaPerfecta, {
-                       relata: this.putetur(agendus)
-                     })
+        case 'perfectus': return new Ignavum(TabulaPerfecta, { relata: this.putetur(agendus) })
         default:
           throw Errator({ versio: agendus.versio })
       }
     } else if (vices) {
       agendus.versio = fundamen
-      if (vices === 'cumImperativoBrevi') {
+      if (vices === 'cumImperativoBrevi')
         return new Ignavum(TabulaVicaria, {
                      prima: {
                        scapum: '/res/vices/actus',
@@ -181,9 +177,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                      positor: Actus.positor,
                      hoc: agendus
                    })
-      } else {
-        throw Errator({ versio: agendus.versio })
-      }
+      else throw Errator({ versio: agendus.versio })
     } else {
       if ([
         'prima', 'secunda', 'tertia', 'tertiaVaria', 'quarta'
@@ -196,9 +190,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                      via: agendus.versio,
                      hoc: agendus
         })
-      } else {
-        throw Errator({ versio: agendus.versio })
-      }
+      } else throw Errator({ versio: agendus.versio })
     }
   }
 }

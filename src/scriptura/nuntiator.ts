@@ -4,7 +4,5 @@ export default class Nuntiator<T> {
   public valor?: T
   public nuntium!: Gustulus
 
-  successum(): boolean {
-    return this.valor ? true : false
-  }
+  successum(): boolean { return !!this.valor }
 }

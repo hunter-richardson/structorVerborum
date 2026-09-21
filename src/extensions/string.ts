@@ -24,40 +24,28 @@ declare global {
   }
 }
 
-String.prototype.chop = function (length: number): string {
-  return this.slice(0, -1 * length)
-}
+String.prototype.chop = function (length: number): string { return this.slice(0, -1 * length) }
 
-String.prototype.empty = function (): boolean {
-  return this.length === 0
-}
+String.prototype.empty = function (): boolean { return this.length === 0 }
 
 String.prototype.startsWithConsonant = function (): boolean {
   const first: string | undefined = this.at(0)
   return !!first && 'bcdfgklmnpqrstxz'.includes(first.toLowerCase())
 }
 
-String.prototype.startsWithVowel = function (): boolean {
-  return !this.startsWithConsonant()
-}
+String.prototype.startsWithVowel = function (): boolean { return !this.startsWithConsonant() }
 
 String.prototype.removeMacra = function (): string {
   if ([...this].some((letter) => apices.has(letter))) {
     let copy: String = this
     apices.forEach((entry) => (copy = copy.replace(entry[0], entry[1])))
     return copy as string
-  } else {
-    return this as string
-  }
+  } else return this as string
 }
 
-String.prototype.capitalize = function (): string {
-  return this.empty() ? '' : `${(this[0]).toUpperCase()}${this.slice(1)}`
-}
+String.prototype.capitalize = function (): string { return this.empty() ? '' : `${(this[0]).toUpperCase()}${this.slice(1)}` }
 
-String.prototype.isCapitalized = function(): boolean {
-  return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0])
-}
+String.prototype.isCapitalized = function(): boolean { return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
 
 export { };
 

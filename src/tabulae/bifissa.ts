@@ -6,11 +6,13 @@ import Tabula from './tabula';
 @Nuntius.factum('TabulaBifissa')
 export default class TabulaBifissa extends Tabula<Nomen> {
   singularis!: NomenAgendum
-  pluralis!: NomenAgendum
+    pluralis!: NomenAgendum
 
-  @Nuntius.futurus('TabulaBifissa')
-  async plenetur(): Promise<void> {
-    [
+  #coniungantur(): {
+    numerus: string,
+    agendum: NomenAgendum
+  }[] {
+    return [
       {
         numerus: 'singularis',
         agendum: this.singularis
@@ -18,13 +20,16 @@ export default class TabulaBifissa extends Tabula<Nomen> {
         numerus: 'pluralis',
         agendum: this.pluralis
       }
-    ].forEach(async (res) => {
+    ]
+  }
+
+  @Nuntius.futurus('TabulaBifissa')
+  async plenetur(): Promise<void> {
+    this.#coniungantur().forEach(async (res) => {
       const tabula: Tabula<Nomen> | undefined = res.agendum.putetur()
-      if (tabula) {
-        (await tabula.tabulentur())
-          .filter((nomen) => nomen.numerus === res.numerus)
-          .forEach((nomen) => this.tabula.push(nomen))
-      }
+      if (tabula) (await tabula.tabulentur())
+                               .filter((nomen) => nomen.numerus === res.numerus)
+                               .forEach((nomen) => this.tabula.push(nomen))
     })
   }
 }

@@ -30,17 +30,11 @@ export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
   @Nuntius.futurus('TabulaCollata')
   async plenetur(): Promise<void> {
     this.relatae.forEach(async (relata) => {
-      if(this.#structorest(relata)) {
-        relata = relata.struatur().putetur()
-      }
-
-      if(this.#ignavust(relata)) {
+      if(this.#structorest(relata)) relata = relata.struatur().putetur()
+      if(this.#ignavust(relata))
         (await relata.hoc().tabulentur()).forEach((hoc: Hoc) => {
-          if (this.tabula.none((illud) => deepEqual(valedictor(hoc), valedictor(illud)))) {
-            this.tabula.push(hoc)
-          }
+          if (this.tabula.none((illud) => deepEqual(valedictor(hoc), valedictor(illud)))) this.tabula.push(hoc)
         })
-      }
     })
   }
 }

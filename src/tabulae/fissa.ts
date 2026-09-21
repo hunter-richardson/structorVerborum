@@ -1,10 +1,10 @@
 import deepEqual from 'deep-equal';
-import type Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { type Colamen } from '../praebeunda/agenda';
-import { Multiplex } from '../praebeunda/verba';
 import { valedictor } from './collata';
 import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type Ignavum from '../miscella/ignavum';
+import { type Colamen } from '../praebeunda/agenda';
 
 @Nuntius.factum('TabulaFissa')
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
@@ -16,9 +16,7 @@ export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
     const haec: Hoc[] = await this.relata.hoc().tabulentur()
     this.colamina.forEach(async (colamen) => {
       const hoc: Hoc = haec.first((hoc) => deepEqual(colamen, valedictor(hoc)))
-      if (hoc) {
-        this.tabula.push(hoc)
-      }
+      if (hoc) this.tabula.push(hoc)
     })
   }
 }

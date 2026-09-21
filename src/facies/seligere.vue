@@ -26,15 +26,9 @@ import { Multiplex } from '../praebeunda/verba';
     }, setup () {
       const selecta: Ref<string[]> = ref([])
 
-      async function selige (): Promise<void> {
-        if (selectum) {
-          await selectum(selecta.value)
-        }
-      }
+      async function selige (): Promise<void> { if (selectum) await selectum(selecta.value) }
 
-      return {
-        selecta, selige, anglicum
-      }
+      return { selecta, selige, anglicum }
     }
   })
 </script>

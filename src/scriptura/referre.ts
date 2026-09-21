@@ -14,14 +14,10 @@ export async function referatur(valor?: string): Promise<Gustulus> {
                    .ponatur((gustulus) => (gustulus.vita = 3000))
                    .ponatur((gustulus) => (gustulus.color = 'green'))
                    .struatur()
-    } else {
-      return new Structor(Gustulus)
-        .ponatur((gustulus) => (gustulus.nuntium = 'Modus referendum non fert'))
-        .ponatur((gustulus) => (gustulus.vita = 3000))
-        .ponatur((gustulus) => (gustulus.color = 'red'))
-        .struatur()
-    }
-  } else {
-    return new Gustulus
-  }
+    } else return new Structor(Gustulus)
+                        .ponatur((gustulus) => (gustulus.nuntium = 'Modus referendum non fert'))
+                        .ponatur((gustulus) => (gustulus.vita = 3000))
+                        .ponatur((gustulus) => (gustulus.color = 'red'))
+                        .struatur()
+  } else return new Gustulus
 }

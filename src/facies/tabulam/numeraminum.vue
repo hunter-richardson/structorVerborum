@@ -38,43 +38,31 @@ import specere from '../specere.vue';
       const onerans: Ref<boolean> = ref(true)
       const numeramina: Ref<Numeramen[]> = ref([])
 
-      async function oneratust (): Promise<void> {
-        onerans.value = false
-      }
+      async function oneratust (): Promise<void> { onerans.value = false }
 
       async function forsInflectat (): Promise<void> {
         onerans.value = true
-        referendum.value = await agendum.referatur(
-          numeramina.value.map(numeramen => numeramen.referendum).random()
-        ) ?? undefined
+        referendum.value = await agendum.referatur(numeramina.value.map(numeramen => numeramen.referendum).random()) ?? undefined
         return oneratust()
       }
 
       async function cole (selecta: string[]): Promise<void> {
         onerans.value = true
         const omnes: Numeramen[] = await omnia()
-        if (omnes) {
-          numeramina.value = omnes.filter(numeramen => selecta.every(selectum =>
-            numeramen.valores().includes(selectum)))
-        }
+        if (omnes)
+        { numeramina.value = omnes.filter(numeramen => selecta.every(selectum => numeramen.valores().includes(selectum))) }
         return oneratust()
       }
 
-      async function refer (res: string): Promise<void> {
-        referendum.value = await agendum.referatur(res) ?? undefined
-      }
+      async function refer (res: string): Promise<void> { referendum.value = await agendum.referatur(res) ?? undefined }
 
-      return {
-        referendum, numeramina, onerans, forsInflectat, cole, refer
-      }
+      return { referendum, numeramina, onerans, forsInflectat, cole, refer }
     }, async mounted (): Promise<void> {
       this.numeramina = await omnia()
       this.columnae = categoricum<Numeramen>({
         categoria: 'numeramen',
         haec: this.numeramina as Numeramen[]
-      })
-
-      this.onerans = false
+      }); this.onerans = false
     }
   })
 </script>

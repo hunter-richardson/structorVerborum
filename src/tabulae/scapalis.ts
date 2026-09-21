@@ -15,8 +15,6 @@ export default class TabulaScapalis<Hoc extends Multiplex> extends Tabula<Hoc> {
   async plenetur(): Promise<void> {
     const lector: Ignavum<Lector<Agendum<Hoc>[]>> = LectorAgendorum(this.scapum)
     const agenda: Agendum<Hoc>[] | undefined = await lector.hoc().legatur(this.via)
-    if (agenda) {
-      this.tabula = agenda.map((agendum) => this.positor(agendum))
-    }
+    if (agenda) this.tabula = agenda.map((agendum) => this.positor(agendum))
   }
 }
