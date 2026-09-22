@@ -1,5 +1,7 @@
 latina:
   suffices:
+    primum:
+      pluralis: "e"
     secundum:
       neutrum:
         singularis:  "um"
@@ -20,8 +22,12 @@ latina:
     adverbium_radix: "adverbi"
     adverbium_singularis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.singularis)"
     adverbium_pluralis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.pluralis)"
+    categoria_singularis: "categoria"
+    categoria_plurallis: "$(categoria.categoria_singularis)$(suffices.prima.pluralis)"
     coniunctio_singularis: "coniunctio"
     coniunctio_pluralis: "$(categoria.coniunctio)$(suffices.tertium.animalis.pluralis)"
+    lemma_singularis: "lemma"
+    lemma_pluralis: "$(categoria.lemma_singularis)$(suffices.prima.pluralis)"
     nomen_radix: "nom"
     nomen_singularis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.singularis)"
     nomen_pluralis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.pluralis)"
@@ -33,6 +39,7 @@ latina:
     pronomen_singularis: "pro$(categoria.nomen_singularis)"
     pronomen_pluralis: "pro$(categoria.nomen_pluralis)"
   annuli:
+    fors: "fors"
     appositus:
       quaerere: "Quaerere"
       numerare: "Numerare"
@@ -40,6 +47,14 @@ latina:
       assentire: "Assentio"
       negare: "Nego"
       colloqui: "Colloquamur"
+    quaerere:
+      aperire: "Aperi"
+      sarcire: "Sarci"
+      seligere: "$(annuli.fors, capitalize) Seligat"
+    inflectere:
+      aForte: "$(annuli.fors, capitalize) Inflectat"
+      aMemet: "Inflecte"
+      probare: "Probetur"
   errores:
     licuntur: "licuntur"
     numerare:
@@ -53,14 +68,14 @@ latina:
       titula: "Absens Pagina"
       nuntium: "Quaerenda res abest"
       actum: "Recipe"
-    appositus:
-      titula: "Structor Verborum"
-      rogatum: "Quid agere loquive velles"
     onerare:
       onerans:
         singularis: "$t({{pittacium}}_singularis, capitalize) oneratur$(scripta.ellipsis)"
         pluralis: "$t({{pittacium}}_pluralis, capitalize) onerantur$(scripta.ellipsis)"
-    deCrustulis: |
-      - Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.
-      -
-      - Noteris quod crustula plura mutabunt modum pariendo locutionum ergo infidum esset vertere huc illucque.
+    appositus:
+      titula: "Structor Verborum"
+      rogatum: "Quid agere loquive velles"
+      deCrustulis: |
+        - Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.
+        -
+        - Noteris quod crustula plura mutabunt modum pariendo locutionum ergo infidum esset vertere huc illucque.

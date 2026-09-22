@@ -8,8 +8,13 @@ anglica:
     adiectivum_pluralis: "$(categoria.adiectivum_singularis)$(suffixum.pluralis)"
     adverbium_singularis: "adverb"
     adverbium_pluralis: "$(categoria.adveribum_singularis)$(suffixum.pluralis)"
-    coniunctio_singularis: "coniunction"
+    categoria_radix: "categor"
+    categoria_singularis: "$(categoria.categoria_radix)y"
+    categoria_plurallis: "$(categoria.categoria_radix)ie$(suffixum.pluralis)"
+    coniunctio_singularis: "conjunction"
     coniunctio_pluralis: "$(categoria.coniunctio_singularis)$(suffixum.pluralis)"
+    lemma_singularis: "term"
+    lemma_pluralis: "$(categoria.lemma_singularis)$(suffixum.pluralis)"
     nomen_singularis: "noun"
     nomen_pluralis: "$(categoria.nomen_singularis)$(suffixum.pluralis)"
     numeramen_singularis: "numeral"
@@ -26,6 +31,14 @@ anglica:
       assentire: "Agree"
       negare: "Deny"
       colloqui: "Let's talk!"
+    quaerere:
+      aperire: "Open"
+      sarcire: "Search"
+      seligere: "I'm Feeling Lucky'"
+    inflectere:
+      aForte: "$(annuli.quaerere.seligere)"
+      aMemet: "Inflect"
+      probare: "Substantiate"
   errores:
     soli: "only"
     licuntur: "allowed!"
@@ -39,14 +52,15 @@ anglica:
       caput: "Oops, 404!"
       nuntium: "The requested resource is missing"
       actum: "Go Back"
-    appositus:
-      titula: "Phrase Factory"
     onerare:
       oneratur:  "loading..."
       onerans:
         singularis: "$({{pittacium}}_singularis, capitalize) $(scripta.onerare.oneratur)"
         pluralis: "$({{pittacium}}_singularis, capitalize) $(scripta.onerare.oneratur)"
-    deCrustulis: |
-      - Here cookies are used so that you may choose details for your own experience; or you can choose not to store cookies and use the site unchanged in this case, the only cookie stored would be your refusal of them.
-      -
-      - Note that most of these cookies will modify the method of generating phrases, so switching them back-and-forth between modes will be unreliable.
+    appositus:
+      titula: "Phrase Factory"
+      rogatum: "What would you like to do or say?"
+      deCrustulis: |
+        - Here cookies are used so that you may choose details for your own experience; or you can choose not to store cookies and use the site unchanged in this case, the only cookie stored would be your refusal of them.
+        -
+        - Note that most of these cookies will modify the method of generating phrases, so switching them back-and-forth between modes will be unreliable.
