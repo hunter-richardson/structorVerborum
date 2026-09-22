@@ -40,6 +40,6 @@ Array.prototype.intersection = function <T> (withThese: T[]): T[] { return this.
 
 Array.prototype.except = function <T> (these: T[]): T[] { return this.filter(value => !these.includes(value)) }
 
-// estlint-disable-next-line @typescript-estlint/no-useless-empty-export
+// eslint-disable-next-line @typescript-estlint/no-useless-empty-export
 export {}
 
