@@ -433,7 +433,7 @@ class Actus extends Anomala<Anomalon> {
     const prodesse: Ignavum<TabulaRescripta<Anomalon>> =
                 new Ignavum(TabulaRescripta<Anomalon>, {
                       relata: esse,
-                      rescriptor: (scriptum: string): string => `${scriptum.startsWith('e' ? 'prō' : 'prōd')}${scriptum}`
+                      rescriptor: (scriptum: string): string => `${scriptum.startsWith('e') ? 'prō' : 'prōd'}${scriptum}`
                     })
     const prodire: Ignavum<TabulaPraefixa<Anomalon>> =
                new Ignavum(TabulaPraefixa<Anomalon>, {

@@ -77,7 +77,6 @@ export default class Nuntius implements Disposable {
       return class extends constr {
         constructor(...parametra: any[]) {
           super(...parametra)
-
           Nuntius.plusGarrio({
             nomen: nomen,
             nuntium: 'Fit'
@@ -93,16 +92,11 @@ export default class Nuntius implements Disposable {
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Initu'st modus ${contextus.name.toString()}`
-        })
-
-        const illud = modus(parametra)
-
+        }); const illud = modus(parametra)
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        })
-
-        return illud
+        }); return illud
       }
     }
   }
@@ -156,7 +150,7 @@ export default class Nuntius implements Disposable {
         winston.format.printf((res: TransformableInfo) =>
           scribatur({
             ...res,
-            ...{ nomen: this._nomen }
+            nomen: this._nomen
           })
         )
       )
@@ -170,7 +164,7 @@ export default class Nuntius implements Disposable {
         winston.format.printf((res) =>
           scribatur({
             ...res,
-            ...{ nomen: this._nomen }
+            nomen: this._nomen
           })
         )
       )
@@ -234,6 +228,6 @@ class Temporis {
       nunc.getUTCSeconds(),
       nunc.getUTCMilliseconds()
     ].map((numerus) => Numerator.romanus(numerus))
-      .join(':')
+     .join(':')
   }
 }
