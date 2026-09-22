@@ -1,34 +1,11 @@
 <script lang='ts'>
-  import { computed, defineComponent, defineModel, type Ref, ref } from 'vue';
-import { crustula } from '../miscella/crustula';
-import Numerator from '../miscella/numerator';
-import { Numerus } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
-import gustulare from './gustulare.vue';
-import specere from './specere.vue';
-import { useRoute } from 'vuetify/lib/composables/router.mjs';
-import { monstrator, type Monstranda } from '../miscella/monstrator';
-
-  const via = useRoute();
-  const nomen: string = (computed(() => via.value) as unknown) as string;
-  const monstranda: Monstranda = await monstrator.hoc().monstrentur(nomen);
-
-  type Nuntium = {
-    deNumeris: string;
-  };
-
-  type Nuntia = {
-    anglicum: Nuntium,
-    latinum: Nuntium;
-  }
-
-  const nuntia: Nuntia = {
-    latinum: {
-      deNumeris: monstranda.first((monstrandum) => (monstrandum.unicum === 'latinum.deNumeris')).nuntium
-    }, anglicum: {
-      deNumeris: monstranda.first((monstrandum) => (monstrandum.unicum === 'anglicum.deNumeris')).nuntium
-    },
-  }
+  import { defineComponent, defineModel, type Ref, ref } from 'vue';
+  import Numerator from '../miscella/numerator';
+  import { Numerus } from '../praebeunda/verba';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
+  import specere from './specere.vue';
+  import i18next from 'i18next'
 
   type Arabicus = {
     integer: number,
@@ -36,12 +13,9 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
     denominator: number
   }
 
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
-
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string => {
-      const error: string = anglica ? nuntia.latinum.deNumeris : nuntia.latinum.deNumeris
-      return Number.isInteger(arabicus) || error
+      return Number.isInteger(arabicus) || i18next.t('errores.numerare.deNumeris')
     }
   ]
 
@@ -49,13 +23,11 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
     components: { gustulare, specere },
     data: (): {
       validator: ((arabicus: number) => boolean | string)[],
-      gustulus: Ref<Gustulus | undefined>,
-      anglica: boolean,
+      gustulus: Ref<Gustulus | undefined>
     } => {
       return {
         gustulus: ref(),
-        validator,
-        anglica: anglica
+        validator
       }
     }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>())
@@ -71,14 +43,10 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
       }
 
       function refer (): void {
-        if (arabicus.value.numerator === 0) {
-          numerus.value = Numerus.numerator(arabicus.value.integer)
-        }
+        if (arabicus.value.numerator === 0) numerus.value = Numerus.numerator(arabicus.value.integer)
       }
 
-      return {
-        numerus, romanus, arabicus, effiat, refer
-      }
+      return { numerus, romanus, arabicus, effiat, refer }
     }
   })
 </script>

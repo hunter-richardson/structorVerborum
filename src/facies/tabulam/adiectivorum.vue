@@ -14,6 +14,7 @@ import inflectere from '../inflectere.vue';
 import onerare from '../onerare.vue';
 import seligere from '../seligere.vue';
 import specere from '../specere.vue';
+import i18next from 'i18next'
 
   type Par = {
     title: string,
@@ -120,14 +121,14 @@ import specere from '../specere.vue';
     <seligere :multiplicia='adiectiva' :selectum='cole' />
     <template v-if='adiectiva.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+             :text="i18next.t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='adiectiva' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='adiectiva' />
       <template v-if='!onerans'>
         <v-btn v-show='!onerans' v-for='hoc in adiectiva' :key='hoc.unicum'
-               :text="anglica ? 'Inflect' : 'Inflecte'" append-icon='open_in_full'
+               :text="i18next.t('annuli.inflectere.aMemet')" append-icon='open_in_full'
                :id='`selige_${hoc.unicum.toString()}`' @click='adiectivum = hoc' />
       </template>
     </v-data-table>
@@ -135,13 +136,13 @@ import specere from '../specere.vue';
       <v-select density='compact' id='genus' :label="anglica ? 'Gender' : 'Genus'"
                 v-model='et.genus' :items='genera' chips flat open-on-clear />
       <template v-if='incomparabilium'>
-        <v-btn :text="anglica ? 'Substantiate' : 'Probetur'" id='probetur'
+        <v-btn :text="i18next.t('annuli.inflectere.probare')" id='probetur'
                append-icon='open_in_full' @click='referIncomparabile()' />
       </template>
       <template v-else-if='lectum'>
         <v-select density='compact' id='gradus' :label="anglica ? 'Grade' : 'Gradus'"
                   v-model='et.gradus' :items='gradua' chips flat open-on-clear />
-        <v-btn :text="anglica ? 'Substantiate' : 'Probetur'" id='probetur'
+        <v-btn :text="i18next.t('annuli.inflectere.probare')" id='probetur'
                append-icon='open_in_full' @click='referComparabile()' />
       </template>
     </template>

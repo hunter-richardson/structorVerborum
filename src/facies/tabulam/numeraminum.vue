@@ -1,37 +1,32 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../../miscella/crustula';
-import type Ignavum from '../../miscella/ignavum';
-import { NumeramenAgendum } from '../../praebeunda/agenda';
-import { type Referendum } from '../../praebeunda/interfecta';
-import { Numeramen } from '../../praebeunda/verba';
-import { categoricum, type Columnae } from '../../scriptura/columnae';
-import Gustulus from '../../scriptura/gustulus';
-import Tabula from '../../tabulae/tabula';
-import gustulare from '../gustulare.vue';
-import inflectere from '../inflectere.vue';
-import onerare from '../onerare.vue';
-import specere from '../specere.vue';
+  import type Ignavum from '../../miscella/ignavum';
+  import { NumeramenAgendum } from '../../praebeunda/agenda';
+  import { type Referendum } from '../../praebeunda/interfecta';
+  import { Numeramen } from '../../praebeunda/verba';
+  import { categoricum, type Columnae } from '../../scriptura/columnae';
+  import Gustulus from '../../scriptura/gustulus';
+  import Tabula from '../../tabulae/tabula';
+  import gustulare from '../gustulare.vue';
+  import inflectere from '../inflectere.vue';
+  import onerare from '../onerare.vue';
+  import specere from '../specere.vue';
+  import i18next from 'i18next'
 
   const agendum: NumeramenAgendum = defineProps<{ agendum: NumeramenAgendum }>().agendum
   const tabula: Ignavum<Tabula<Numeramen>> | undefined = agendum.putetur()
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
-  async function omnia (): Promise<Numeramen[]> {
-    return await tabula?.hoc().tabulentur() ?? []
-  }
+  async function omnia (): Promise<Numeramen[]> { return await tabula?.hoc().tabulentur() ?? [] }
 
   export default defineComponent({
     components: { inflectere, gustulare, onerare, specere },
     data: (): {
       gustulus: Ref<Gustulus | undefined>,
       columnae: Columnae,
-      anglica: boolean
     } => {
       return {
         gustulus: ref(),
-        columnae: [],
-        anglica: anglica,
+        columnae: []
       }
     }, setup () {
       const referendum: Ref<Referendum | undefined> = ref(defineModel<Referendum>())
@@ -76,13 +71,13 @@ import specere from '../specere.vue';
     <seligere :multiplicia='numeramina' :selectum='cole' />
     <template v-if='numeramina.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :loading='onerans' :disabled='onerans'
-             id='fortuna' :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+             id='fortuna' :text="i18next.t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='numeramina' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='numeramina' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in numeramina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+        <v-btn v-for='hoc in numeramina' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='refer(hoc.referendum)' />
       </template>

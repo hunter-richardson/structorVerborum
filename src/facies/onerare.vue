@@ -1,27 +1,30 @@
 <script lang='ts'>
-  import { defineComponent, defineProps } from 'vue';
-import { crustula } from '../miscella/crustula';
-import { anglicum } from '../miscella/enumerationes';
+  import { defineComponent, defineProps } from 'vue'
+  import { numerus } from '../miscella/enumerationes'
+  import i18next from 'i18next'
 
   const { onerans, pittacium } = defineProps<{
     onerans: boolean,
-    pittacium: string
+    pittacium: string,
+    numuers: numerus
   }>()
-
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
-  const scriptum: string = anglica ? `Loading ${anglicum(pittacium).toUpperCase()}...` :
-                                     `${pittacium.toUpperCase()} onerantur...`
 
   export default defineComponent({
     data: (): {
         onerans: boolean,
-        scriptum: string
-      } => { return { onerans, scriptum } }
+        pittacium: string,
+        numerus: numerus
+      } => { return {
+        onerans: onerans,
+        pittacium: pittacium,
+        numerus: numerus
+      } }
     })
 </script>
 
 <template>
   <template v-if='onerans'>
-    <v-skeleton-loader :loading-text='scriptum' :loading='onerans' type='table-tbody' />
+    <v-skeleton-loader :loading-text="i18next.t(`scripta.onerare.onerans${numerus}`, { pittacium: pittacium })"
+                       :loading='onerans' type='table-tbody' />
   </template>
 </template>

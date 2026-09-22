@@ -1,21 +1,20 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../../miscella/crustula';
-import type Ignavum from '../../miscella/ignavum';
-import { NomenActum } from '../../praebeunda/agenda';
-import { type Faciendum } from '../../praebeunda/interfecta';
-import { Actus, Nomen } from '../../praebeunda/verba';
-import { categoricum, type Columnae } from '../../scriptura/columnae';
-import Gustulus from '../../scriptura/gustulus';
-import Tabula from '../../tabulae/tabula';
-import gustulare from '../gustulare.vue';
-import inflectere from '../inflectere.vue';
-import onerare from '../onerare.vue';
-import seligere from '../seligere.vue';
-import specere from '../specere.vue';
+  import type Ignavum from '../../miscella/ignavum';
+  import { NomenActum } from '../../praebeunda/agenda';
+  import { type Faciendum } from '../../praebeunda/interfecta';
+  import { Actus, Nomen } from '../../praebeunda/verba';
+  import { categoricum, type Columnae } from '../../scriptura/columnae';
+  import Gustulus from '../../scriptura/gustulus';
+  import Tabula from '../../tabulae/tabula';
+  import gustulare from '../gustulare.vue';
+  import inflectere from '../inflectere.vue';
+  import onerare from '../onerare.vue';
+  import seligere from '../seligere.vue';
+  import specere from '../specere.vue';
+  import i18next from 'i18next'
 
   const agendum: Faciendum<Nomen> = defineProps<{ agendum: Faciendum<Nomen> }>().agendum
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
   const tabula: Ignavum<Tabula<Nomen>> | undefined = agendum.putetur()
   const actum: boolean = agendum instanceof NomenActum
 
@@ -27,14 +26,12 @@ import specere from '../specere.vue';
       gustulus: Ref<Gustulus | undefined>,
       agendum: Faciendum<Nomen>,
       columnae: Columnae,
-      anglica: boolean,
       actum: boolean
     } => {
       return {
         gustulus: ref(),
         columnae: [],
         agendum: agendum,
-        anglica: anglica,
         actum: actum
       }
     }, setup () {
@@ -79,18 +76,18 @@ import specere from '../specere.vue';
     <seligere :multiplicia='nomina' :selectum='cole' />
     <template v-if='nomina.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+             :text="i18next.t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='nomina' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='nomina' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+        <v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='nomen = hoc' />
       </template>
     </v-data-table>
-    <v-btn v-if='actum' :text="anglica ? 'Verb' : 'Actus'" append-icon='sprint' id='actus'
-           @click='refer()' />
+    <v-btn v-if='actum' :text="i18next.t('categoria.actus.singularis', 'capitalize')"
+           append-icon='sprint' id='actus' @click='refer()' />
   </template>
 </template>

@@ -1,0 +1,66 @@
+latina:
+  suffices:
+    secundum:
+      neutrum:
+        singularis:  "um"
+        pluralis: "a"
+    tertium:
+      animalis:
+        pluralis: "nes"
+      inanimalis:
+        singularis: "en"
+        pluralis: "ina"
+  categoriae:
+    actus: "actus"
+    actus_singularis: "$(categoria.actus)"
+    actus_pluralis: "$(categoria.actus)"
+    adiectivum_radix: "adiectiv"
+    adiectivum_singularis: "$(categoria.adiectivum_radix)$(suffices.secundum.neutrum.singularis)"
+    adiectivum_pluralis: "$(categoria.adiectivum_radix)$(suffices.secundum.neutrum.pluralis)"
+    adverbium_radix: "adverbi"
+    adverbium_singularis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.singularis)"
+    adverbium_pluralis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.pluralis)"
+    coniunctio_singularis: "coniunctio"
+    coniunctio_pluralis: "$(categoria.coniunctio)$(suffices.tertium.animalis.pluralis)"
+    nomen_radix: "nom"
+    nomen_singularis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.singularis)"
+    nomen_pluralis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.pluralis)"
+    numeramen_radix: "numeram"
+    numeramen_singularis: "$(categoria.numeramen_radix)$(suffices.tertium.inanimalis.singularis)"
+    numeramen_pluralis: "$(categoria.numeramen_radix)$(suffices.tertium.inanimalis.pluralis)"
+    praepositio_singularis: "praepositio"
+    praepositio_pluralis: "$(categoria.praepositio_singularis)$(suffices.tertium.animalis.pluralis)"
+    pronomen_singularis: "pro$(categoria.nomen_singularis)"
+    pronomen_pluralis: "pro$(categoria.nomen_pluralis)"
+  annuli:
+    appositus:
+      quaerere: "Quaerere"
+      numerare: "Numerare"
+      calculare: "Calculare"
+      assentire: "Assentio"
+      negare: "Nego"
+      colloqui: "Colloquamur"
+  errores:
+    licuntur: "licuntur"
+    numerare:
+      deNumeris: "Arabici numeri soli $t(errores.licuntur)"
+    quaerere:
+      deLitteris: "Latinae litterae solae $t(errores.licuntur)"
+  scripta:
+    ellipsis: "..."
+    404:
+      caput: "Vae CDIV"
+      titula: "Absens Pagina"
+      nuntium: "Quaerenda res abest"
+      actum: "Recipe"
+    appositus:
+      titula: "Structor Verborum"
+      rogatum: "Quid agere loquive velles"
+    onerare:
+      onerans:
+        singularis: "$t({{pittacium}}_singularis, capitalize) oneratur$(scripta.ellipsis)"
+        pluralis: "$t({{pittacium}}_pluralis, capitalize) onerantur$(scripta.ellipsis)"
+    deCrustulis: |
+      - Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.
+      -
+      - Noteris quod crustula plura mutabunt modum pariendo locutionum ergo infidum esset vertere huc illucque.

@@ -47,5 +47,5 @@ String.prototype.capitalize = function (): string { return this.empty() ? '' : `
 
 String.prototype.isCapitalized = function(): boolean { return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
 
-export { };
+export {}
 

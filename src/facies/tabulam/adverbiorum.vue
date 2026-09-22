@@ -8,13 +8,12 @@
   import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { AdverbiumAgendum } from '../../praebeunda/agenda'
   import { Adverbium } from '../../praebeunda/verba'
-  import { crustula } from '../../miscella/crustula'
   import Tabula from '../../tabulae/tabula'
-import type Ignavum from '../../miscella/ignavum'
+  import type Ignavum from '../../miscella/ignavum'
+  import i18next from 'i18next'
 
   const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum }>().agendum
   const tabula: Ignavum<Tabula<Adverbium>> | undefined = agendum.putetur()
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
 
   async function omnia (): Promise<Adverbium[]> { return await tabula?.hoc().tabulentur() ?? [] }
 
@@ -22,13 +21,11 @@ import type Ignavum from '../../miscella/ignavum'
     components: { gustulare, seligere, specere, onerare },
     data: (): {
       gustulus: Ref<Gustulus | undefined>,
-      columnae: Columnae,
-      anglica: boolean
+      columnae: Columnae
     } => {
     return {
       gustulus: ref(),
-      columnae: [],
-      anglica: anglica
+      columnae: []
     }
   }, setup() {
       const adverbium: Ref<Adverbium | undefined> = ref(defineModel<Adverbium>())
@@ -71,13 +68,13 @@ import type Ignavum from '../../miscella/ignavum'
     <seligere :multiplicia='adverbia' :selectum='cole' />
     <template v-if='adverbia.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="anglica ? 'I\'m feeling Lucky' : 'Fors Inflectat'" />
+             :text="i18next.t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='adverbia' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="anglica ? 'Inflect' : 'Inflecte'"
+        <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='adverbium = hoc' />
       </template>

@@ -38,8 +38,8 @@ import gustulare from './gustulare.vue';
 <template>
   <gustulare :gustulus='gustulus' />
   <v-chip-group id='locutio'>
-    <draggable v-model='locutor.hoc().verba' :ghost-class='pellucidum' @start='trahens = true'
-               @end='trahens = false'>
+    <draggable v-model='locutor.hoc().verba' :ghost-class='pellucidum'
+               @start='trahens = true' @end='trahens = false'>
       <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
         <template v-for='verbum in locutor.hoc().verba' :key='verbum.unicum'>
           <v-chip @click:close='locutor.hoc().removeatur(verbum.unicum)' close-icon='remove'

@@ -1,0 +1,52 @@
+anglica:
+  suffixum:
+    pluralis: "s"
+  categoriae:
+    actus_singularis: "verb"
+    actus_pluralis: "$(categoria.actus_singularis)$(suffixum.pluralis)"
+    adiectivum_singularis: "adiective"
+    adiectivum_pluralis: "$(categoria.adiectivum_singularis)$(suffixum.pluralis)"
+    adverbium_singularis: "adverb"
+    adverbium_pluralis: "$(categoria.adveribum_singularis)$(suffixum.pluralis)"
+    coniunctio_singularis: "coniunction"
+    coniunctio_pluralis: "$(categoria.coniunctio_singularis)$(suffixum.pluralis)"
+    nomen_singularis: "noun"
+    nomen_pluralis: "$(categoria.nomen_singularis)$(suffixum.pluralis)"
+    numeramen_singularis: "numeral"
+    numeramen_pluralis: "$(categoria.numeramen_singularis)$(suffixum.pluralis)"
+    praepositio_singularis: "preposition"
+    praepositio_pluralis: "$(categoria.praepositio_singularis)$(suffixum.pluralis)"
+    pronomen_singularis: "pro$(categoria.nomen_singularis)"
+    pronomen_pluralis: "$(categoria.pronomen_singularis)$(suffixum.pluralis)"
+  annuli:
+    appositus:
+      quaerere: "Search"
+      numerare: "Enumerate"
+      calculare: "Calculate"
+      assentire: "Agree"
+      negare: "Deny"
+      colloqui: "Let's talk!"
+  errores:
+    soli: "only"
+    licuntur: "allowed!"
+    numerare:
+      deNumeris: "$(soli, capitalize) Arabic numerals $(errores.licuntur)"
+    quaerere:
+      deLitteris: "$(soli, capitalize) Latin letters $(errores.licuntur)"
+  scripta:
+    404:
+      titula: "Absent Page"
+      caput: "Oops, 404!"
+      nuntium: "The requested resource is missing"
+      actum: "Go Back"
+    appositus:
+      titula: "Phrase Factory"
+    onerare:
+      oneratur:  "loading..."
+      onerans:
+        singularis: "$({{pittacium}}_singularis, capitalize) $(scripta.onerare.oneratur)"
+        pluralis: "$({{pittacium}}_singularis, capitalize) $(scripta.onerare.oneratur)"
+    deCrustulis: |
+      - Here cookies are used so that you may choose details for your own experience; or you can choose not to store cookies and use the site unchanged in this case, the only cookie stored would be your refusal of them.
+      -
+      - Note that most of these cookies will modify the method of generating phrases, so switching them back-and-forth between modes will be unreliable.

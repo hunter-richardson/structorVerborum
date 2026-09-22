@@ -1,8 +1,8 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../miscella/crustula';
-import { anglicum } from '../miscella/enumerationes';
-import { Multiplex } from '../praebeunda/verba';
+  import { crustula } from '../miscella/crustula';
+  import { anglicum } from '../miscella/enumerationes';
+  import { Multiplex } from '../praebeunda/verba';
 
   const multiplicia: Multiplex[] = defineProps<{ multiplicia: Multiplex[] }>().multiplicia
 

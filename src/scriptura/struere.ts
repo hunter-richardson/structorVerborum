@@ -5,7 +5,7 @@ if(import.meta.env.PROD) {
   const { tsify } = require('tsify')
   const { fs } = require('fs')
 
-  const obtrectandi = {
+  const deObtrectando = {
     compress: {
       keepNames: {
         function: true,
@@ -40,7 +40,7 @@ if(import.meta.env.PROD) {
       if(error) {
         console.error(`Error struendi: ${error}`)
         process.exit(1)
-      } const obtrectatus: MinifyResult = minifySync('../figura.ts', flumen.toString(), obtrectandi)
+      } const obtrectatus: MinifyResult = minifySync('../figura.ts', flumen.toString(), deObtrectando)
       if(obtrectatus.code) {
         console.log('Codex obtrectatust')
         fs.writeFileSync('../../dist/fascis.min.js', obtrectatus.code)

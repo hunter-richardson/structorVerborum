@@ -1,67 +1,34 @@
 <script lang='ts'>
-  import { computed, defineComponent, defineModel, type Ref, ref } from 'vue';
-import { crustula } from '../miscella/crustula';
-import { dictionarium, type Eventus, type Lemma, type Quaerenda } from '../miscella/dictionarium';
-import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
-import { type Verbum } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
-import gustulare from './gustulare.vue';
-import inflectere from './inflectere.vue';
-import loqui from './loqui.vue';
-import onerare from './onerare.vue';
-import specere from './specere.vue';
-import { useRoute } from 'vuetify/lib/composables/router.mjs';
-import { monstrator, type Monstranda } from '../miscella/monstrator';
-
-  const via = useRoute();
-  const nomen: string = (computed(() => via.value) as unknown) as string;
-  const monstranda: Monstranda = await monstrator.hoc().monstrentur(nomen)
-
-  type Nuntium = {
-    deLitteris: string
-  }
-
-  type Nuntia = {
-    anglicum: Nuntium,
-    latinum: Nuntium
-  }
-
-  const nuntia: Nuntia = {
-    latinum: {
-      deLitteris: monstranda.first((monstrandum) => monstrandum.unicum === 'anglicum.deLitteris').nuntium
-    }, anglicum: {
-      deLitteris: monstranda.first((monstrandum) => monstrandum.unicum === 'latinum.deLitteris').nuntium
-    }
-  }
+  import { defineComponent, defineModel, type Ref, ref } from 'vue';
+  import { dictionarium, type Eventus, type Lemma, type Quaerenda } from '../miscella/dictionarium';
+  import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
+  import { type Verbum } from '../praebeunda/verba';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare.vue';
+  import inflectere from './inflectere.vue';
+  import loqui from './loqui.vue';
+  import onerare from './onerare.vue';
+  import specere from './specere.vue';
+  import i18next from 'i18next'
 
   type Columnae = {
     title: string,
     key: string,
   }[]
 
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
-
   const Categoriae: {
     title: string,
     value: string
   }[] = categoriae.map(categoria => {
     return {
-      title: (anglica ? anglicum(categoria) : categoria).capitalize(),
+      title: i18next.tf(`categoria.${categoria}_singularis`, 'capitalize'),
       value: categoria
     }
   })
 
-  const columnae: Columnae = [
-    {
-      latinum: 'lemma',
-      anglicum: 'term'
-    }, {
-      latinum: 'categoriae',
-      anglicum: 'categories'
-    }
-  ].map(columna => {
+  const columnae: Columnae = [ 'lemma', 'categoriae' ].map(columna => {
     return {
-      title: (anglica ? columna.anglicum : columna.latinum).capitalize(),
+      title: i18next.tf(`categoria.${columa}_singularis`, 'capitalize'),
       key: columna.latinum
     }
   })
@@ -69,10 +36,7 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
   const validator: ((pars: string) => boolean | string)[] = [
     (pars: string): boolean | string => {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
-      const validum: boolean = licta.test(pars.toLowerCase())
-      const error: string = anglica ?
-        nuntia.anglicum.deLitteris : nuntia.latinum.deLitteris
-      return validum || error
+      return licta.test(pars.toLowerCase()) || i18next.t('errores.quaerere.deLitteris')
     }
   ]
 
@@ -82,7 +46,6 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
       validator: ((pars: string) => boolean | string)[],
       gustulus: Ref<Gustulus | undefined>,
       columnae: Columnae,
-      anglica: boolean,
       categoriae: {
         title: string,
         value: string
@@ -92,8 +55,7 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
         categoriae: Categoriae,
         gustulus: ref(),
         validator: validator,
-        columnae: columnae,
-        anglica: anglica
+        columnae: columnae
       }
     }, setup () {
       const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>('eventus'))
@@ -160,9 +122,9 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
-           :text="anglica ? 'Search' : 'Sarci'" />
+           :text="i18next.t('annuli.quaerere.sarcire')" />
     <v-btn append-icon='casino' @click='forsSeligat()' :disabled='onerans' id='fortuna'
-           :text="anglica ? 'I\'m feeling Lucky' : 'Fors Seligat'" />
+           :text="i18next.t('annuli.quaerere.seligere')" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans' density='compact'
                 id='tabula' :headers='columnae'>
@@ -201,7 +163,7 @@ import { monstrator, type Monstranda } from '../miscella/monstrator';
         </tr>
         <tr>
           <td>
-            <v-btn :text="anglica ? 'Open' : 'Refer'" :disabled='error' id='aperi'
+            <v-btn :text="i18next.t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
                    append-icon='open_in_full' @click='aperi(lemma)' />
           </td>
         </tr>
