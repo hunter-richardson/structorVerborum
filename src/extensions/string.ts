@@ -37,6 +37,7 @@ String.prototype.startsWithVowel = function (): boolean { return !this.startsWit
 
 String.prototype.removeMacra = function (): string {
   if ([...this].some((letter) => apices.has(letter))) {
+// estlint-disable-next-line @typescript-eslint/no-wrapper-object-types
     let copy: String = this
     apices.forEach((entry) => (copy = copy.replace(entry[0], entry[1])))
     return copy as string
@@ -47,5 +48,6 @@ String.prototype.capitalize = function (): string { return this.empty() ? '' : `
 
 String.prototype.isCapitalized = function(): boolean { return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
 
+// eslint-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}
 

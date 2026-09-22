@@ -11,4 +11,5 @@ i18next.tf = function(key: string, format?: string, options?: Record<string, unk
                 : this.t(key, options)
 }
 
+// estline-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}
