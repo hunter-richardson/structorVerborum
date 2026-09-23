@@ -1,6 +1,5 @@
 <script lang='ts'>
-  import i18next from 'i18next';
-import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
 import { crustula } from '../../miscella/crustula';
 import type Ignavum from '../../miscella/ignavum';
 import { ActusAgendus } from '../../praebeunda/agenda';
@@ -86,7 +85,7 @@ import specere from '../specere.vue';
     <seligere :multiplicia='actua' :selectum='cole' />
     <template v-if='actua.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="i18next.t('annuli.inflectere.aForte')" />
+             :text="$t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='actua' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
@@ -95,7 +94,7 @@ import specere from '../specere.vue';
                            :loading='onerans' type='table-tbody' />
       </template>
       <template v-else>
-        <v-btn v-for='hoc in actua' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
+        <v-btn v-for='hoc in actua' :key='hoc.unicum' :text="$t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='actus = hoc' />
       </template>

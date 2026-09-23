@@ -19,10 +19,10 @@
 <template>
   <v-app>
     <v-container>
-      <v-empty-state :text="i18next.t('scripta.404.nuntium')"
-                     :title="i18next.t('scripta.404.titula')"
-                     :headline="i18next.t('scripta.404.caput')"
-                     :actionText="i18next.t('scripta.404.actum')"
+      <v-empty-state :text="$t('scripta.404.nuntium')"
+                     :title="$t('scripta.404.titula')"
+                     :headline="$t('scripta.404.caput')"
+                     :actionText="$t('scripta.404.actum')"
                      @click:action='historia.back()' image='/res/picta/latina.png'
                      icon='arrow_back' />
     </v-container>

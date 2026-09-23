@@ -8,6 +8,7 @@ import path from 'path';
 import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
+import './extensions/i18next';
 import './extensions/string';
 import appositus from './facies/appositus.vue';
 
@@ -48,9 +49,15 @@ const deTransferendo = {
 await i18next.use(FsBackend).init(deTransferendo)
 
 export const appositus: App<Element> =
-    createApp(appositus as any)
+    createApp(App<Element>)
       .use(i18NextVue, { i18next })
-      .mount('#appositus')
+
+appositus.config.globalProperties.$tf =
+  function(key: string, format?: string, options?: Record<string, unknown>) {
+    return (i18next as any).tf(key, format, options)
+  }
+
+appositus.mount('#appositus')
 
 export default createVuetify({
   blueprint: md3,

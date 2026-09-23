@@ -68,13 +68,13 @@
     <seligere :multiplicia='adverbia' :selectum='cole' />
     <template v-if='adverbia.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="i18next.t('annuli.inflectere.aForte')" />
+             :text="$t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='adverbia' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='adverbia' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
+        <v-btn v-for='hoc in adverbia' :key='hoc.unicum' :text="$t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='adverbium = hoc' />
       </template>

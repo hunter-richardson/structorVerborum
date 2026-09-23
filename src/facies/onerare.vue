@@ -1,12 +1,12 @@
 <script lang='ts'>
   import { defineComponent, defineProps } from 'vue'
-  import { numerus } from '../miscella/enumerationes'
+  import { type numerus } from '../miscella/enumerationes'
   import i18next from 'i18next'
 
-  const { onerans, pittacium } = defineProps<{
+  const { onerans, pittacium, numerus } = defineProps<{
     onerans: boolean,
     pittacium: string,
-    numuers: numerus
+    numerus: numerus
   }>()
 
   export default defineComponent({
@@ -24,7 +24,7 @@
 
 <template>
   <template v-if='onerans'>
-    <v-skeleton-loader :loading-text="i18next.t(`scripta.onerare.onerans${numerus}`, { pittacium: pittacium })"
+    <v-skeleton-loader :loading-text="$t(`scripta.onerare.onerans${numerus}`, { pittacium: pittacium })"
                        :loading='onerans' type='table-tbody' />
   </template>
 </template>

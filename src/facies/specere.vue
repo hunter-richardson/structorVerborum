@@ -86,7 +86,7 @@ import inflectere from './inflectere.vue';
         !this.verbum?.scriptum.isCapitalized()
       ].all()
 
-      this.enclitica = Object.keys(Encliticum)
+      this.enclitica = Object.keys(encliticum)
                              .filter(encliticum => !this.verbum?.scriptum.endsWith(encliticum))
     }
   })

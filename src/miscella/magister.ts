@@ -22,7 +22,7 @@ class Magister {
   }
 
   private viator (via: string): string {
-    const lingua: string = crustula.hoc().lingua.edatur()
+    const lingua: string = crustula.hoc().lingua.massa
     return `${path.join('/res/docenda', lingua, via)}.md`
   }
 

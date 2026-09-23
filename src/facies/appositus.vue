@@ -25,7 +25,7 @@ import quaerere from './quaerere.vue';
       gustulus: Ref<Gustulus | undefined>,
       transduceret: boolean,
       trahens: Ref<boolean>,
-      // annulus: Ref<string>,
+      annulus: Ref<string>,
       locutionis: boolean,
       referret: boolean,
       annuli: Annuli,
@@ -35,7 +35,7 @@ import quaerere from './quaerere.vue';
         transduceret: transduceretne(),
         referret: referretne(),
         trahens: ref(false),
-        // annulus: ref(''),
+        annulus: ref(''),
         gustulus: ref(),
         annuli: [],
       }
@@ -50,13 +50,13 @@ import quaerere from './quaerere.vue';
       function interverteLinguam() {
         if(crustula.value && !crustula.value.hoc().assensus.concoctast('')) {
           crustula.value.hoc().lingua.interverteUtrum()
-          i18next.changeLanguage(crustula.value.hoc().lingua.edatur())
+          i18next.changeLanguage(crustula.value.hoc().lingua.massa)
           window.location.reload()
         }
       }
 
       function resepara (valor: string) {
-        crustula.value?.hoc().separator.coquatur(valor)
+        crustula.value?.hoc().separator.concoctast(valor)
         document.querySelectorAll('[^id=crustula.separator].text-primary')
           .forEach(element => element.classList.remove('text-primary'))
 
@@ -65,29 +65,29 @@ import quaerere from './quaerere.vue';
       }
 
       function negavit () {
-        crustula.value?.hoc().assensus.coquatur('negavit')
+        crustula.value?.hoc().assensus.concoctast('negavit')
         window.location.reload()
       }
 
       function coquantur () {
         if (crustula.value) {
-          crustula.value.hoc().assensus.coquatur('assensit')
-          crustula.value.hoc().separator.coquatur()
-          crustula.value.hoc().apices.coquatur()
-          crustula.value.hoc().utendaU.coquatur()
-          crustula.value.hoc().magnas.coquatur()
-          crustula.value.hoc().facies.coquatur()
+          crustula.value.hoc().assensus.concoctast('assensit')
+          crustula.value.hoc().separator.concoctast('ita')
+          crustula.value.hoc().apices.concoctast('ita')
+          crustula.value.hoc().utendaU.concoctast('ita')
+          crustula.value.hoc().magnas.concoctast('ita')
+          crustula.value.hoc().facies.concoctast('ita')
 
           useTheme().global.name.value = 'dark'
           const separatoris: Element | null = document.getElementById('#crustula.separator.inane')
           if (separatoris) separatoris.classList.add('text-primary')
 
-          if (!crustula.value.hoc().lingua.coctast()) crustula.value.hoc().lingua.coquatur()
+          if (!crustula.value.hoc().lingua.coctast()) crustula.value.hoc().lingua.concoctast('ita')
           window.location.reload()
         }
       }
 
-      return { crustula, interverteFaciem, resepara, negavit, coquantur }
+      return { crustula, interverteFaciem, interverteLinguam, resepara, negavit, coquantur }
     }, methods: {
       async refer (): Promise<void> { if (this.referret) await referatur(locutor.hoc().scribantur()) },
       transduc () { if (this.transduceret) transducatur(locutor.hoc().scribantur()) }
@@ -116,15 +116,15 @@ import quaerere from './quaerere.vue';
             <v-fab v-bind='activator' size='medium' icon='cake' />
           </template>
           <v-btn key='lingua' id='crustula.lingua' @click="interverteLinguam()" icon>
-            <v-img height='36px' width='36px' :src="`/res/picta/${crustula.hoc().lingua.edatur()}.png`" />
+            <v-img height='36px' width='36px' :src="`/res/picta/${crustula.hoc().lingua.massa}.png`" />
           </v-btn>
           <v-btn key='facies' id='crustula.facies' @click='interverteFaciem()'
                  :icon="`${crustula.hoc().facies.concoctast('fusca') ? 'dark' : 'light'}_mode`" />
-          <v-btn key='apices' id='crustula.apices' :text="crustula.hoc().apices.concoctast() ? 'ā' : 'a'"
+          <v-btn key='apices' id='crustula.apices' :text="crustula.hoc().apices.concoctast('ita') ? 'ā' : 'a'"
                  @click='crustula.hoc().apices.interverteUtrum()' />
-          <v-btn key='magnas' id='crustula.magnas' :text="crustula.hoc().magnas.concoctast() ? 'A' : 'a'"
+          <v-btn key='magnas' id='crustula.magnas' :text="crustula.hoc().magnas.concoctast('ita') ? 'A' : 'a'"
                  @click='crustula.hoc().magnas.interverteUtrum()' />
-          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.hoc().utendaU.concoctast() ? 'v' : 'u'"
+          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.hoc().utendaU.concoctast('ita') ? 'v' : 'u'"
                  @click='crustula.hoc().utendaU.interverteUtrum()' />
           <v-btn key='crustula.separator.inane' text=' _ ' @click="resepara('inane')"
                  id='crustula.separator.inane' />
@@ -137,7 +137,7 @@ import quaerere from './quaerere.vue';
     </template>
     <v-card>
       <v-app-bar density='compact' location='top' absolute flat tile>
-        <v-app-bar-title :text="i18next.t('scripta.appositus.titula')" />
+        <v-app-bar-title :text="$t('scripta.appositus.titula')" />
         <template v-if='locutionis'>
           <v-card location='right'>
             <v-btn-toggle density='compact'>
@@ -152,7 +152,7 @@ import quaerere from './quaerere.vue';
         </template>
         <template v-else>
           <div id='subiciendum' class='text-center'>
-            <v-card :text="i18next.t('scripta.appositus.rogatum')" />
+            <v-card :text="$t('scripta.appositus.rogatum')" />
           </div>
         </template>
         <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
@@ -161,7 +161,7 @@ import quaerere from './quaerere.vue';
               <a v-if='isHovering' target='_blank'
                  href='https://github.com/hunter-richardson/structorverborum/issues'>
                 <v-card v-bind='props'
-                        :text="i18next.t('scripta.appositus.colloqui')" />
+                        :text="$t('scripta.appositus.colloqui')" />
               </a>
             </template>
           </v-hover>
@@ -191,22 +191,22 @@ import quaerere from './quaerere.vue';
           <v-row no-gutters>
             <v-col>
               <v-sheet class='pa-1'>
-                <div id='titulus.latinus'>{{ i18next.t('scripta.appositus.deCrustulis', { lng: 'latina' }) }}</div>
+                <div id='titulus.latinus'>{{ $t('scripta.appositus.deCrustulis', { lng: 'latina' }) }}</div>
                 <v-btn-toggle>
-                  <v-btn :text="i18next.t('scripta.appositus.assentire', { lng: 'latina' })"
+                  <v-btn :text="$t('scripta.appositus.assentire', { lng: 'latina' })"
                          id='assentio' append-icon='handshake' @click='coquantur()' />
-                  <v-btn :text="i18next.t('scripta.appositus.negare', { lng: 'anglica' })"
+                  <v-btn :text="$t('scripta.appositus.negare', { lng: 'anglica' })"
                          id='nego' append-icon='block' @click='negavit()' />
                 </v-btn-toggle>
               </v-sheet>
             </v-col>
             <v-col>
               <v-sheet class='pa-1'>
-                <div id='titulus.anglicus'>{{ i18next.t('scripta.appositus.deCrustulis', { lng: 'anglica' }) }}</div>
+                <div id='titulus.anglicus'>{{ $t('scripta.appositus.deCrustulis', { lng: 'anglica' }) }}</div>
                 <v-btn-toggle>
-                  <v-btn :text="i18next.t('scripta.appositus.assentire', { lng: 'anglica' })" append-icon='handshake'
+                  <v-btn :text="$t('scripta.appositus.assentire', { lng: 'anglica' })" append-icon='handshake'
                          @click="interverteLinguam(); coquantur()" />
-                  <v-btn :text="i18next.t('scripta.appositus.negare')" append-icon='block' @click='negavit()' />
+                  <v-btn :text="$t('scripta.appositus.negare')" append-icon='block' @click='negavit()' />
                 </v-btn-toggle>
               </v-sheet>
             </v-col>

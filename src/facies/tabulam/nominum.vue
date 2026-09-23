@@ -76,18 +76,18 @@
     <seligere :multiplicia='nomina' :selectum='cole' />
     <template v-if='nomina.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :disabled='onerans' id='fortuna'
-             :text="i18next.t('annuli.inflectere.aForte')" />
+             :text="$t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='nomina' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='nomina' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
+        <v-btn v-for='hoc in nomina' :key='hoc.unicum' :text="$t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='nomen = hoc' />
       </template>
     </v-data-table>
-    <v-btn v-if='actum' :text="i18next.t('categoria.actus.singularis', 'capitalize')"
+    <v-btn v-if='actum' :text="$t('categoria.actus.singularis', 'capitalize')"
            append-icon='sprint' id='actus' @click='refer()' />
   </template>
 </template>

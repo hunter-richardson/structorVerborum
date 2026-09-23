@@ -10,6 +10,7 @@
   import onerare from './onerare.vue';
   import specere from './specere.vue';
   import i18next from 'i18next'
+  import '../extensions/i18next'
 
   type Columnae = {
     title: string,
@@ -28,8 +29,8 @@
 
   const columnae: Columnae = [ 'lemma', 'categoriae' ].map(columna => {
     return {
-      title: i18next.tf(`categoria.${columa}_singularis`, 'capitalize'),
-      key: columna.latinum
+      title: i18next.tf(`categoria.${columna}_singularis`, 'capitalize'),
+      key: columna
     }
   })
 
@@ -122,9 +123,9 @@
   </template>
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
-           :text="i18next.t('annuli.quaerere.sarcire')" />
+           :text="$t('annuli.quaerere.sarcire')" />
     <v-btn append-icon='casino' @click='forsSeligat()' :disabled='onerans' id='fortuna'
-           :text="i18next.t('annuli.quaerere.seligere')" />
+           :text="$t('annuli.quaerere.seligere')" />
   </div>
   <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans' density='compact'
                 id='tabula' :headers='columnae'>
@@ -163,7 +164,7 @@
         </tr>
         <tr>
           <td>
-            <v-btn :text="i18next.t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
+            <v-btn :text="$t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
                    append-icon='open_in_full' @click='aperi(lemma)' />
           </td>
         </tr>

@@ -68,13 +68,13 @@
     <seligere :multiplicia='pronomina' :selectum='cole' />
     <template v-if='pronomina.length > 1'>
       <v-btn append-icon='casino' @click='forsInflectat()' :loading='onerans' :disabled='onerans'
-             id='fortuna' :text="i18next.t('annuli.inflectere.aForte')" />
+             id='fortuna' :text="$t('annuli.inflectere.aForte')" />
     </template>
     <v-data-table :items='pronomina' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <onerare :onerans='onerans' pittacium='pronomina' />
       <template v-if='!onerans'>
-        <v-btn v-for='hoc in pronomina' :key='hoc.unicum' :text="i18next.t('annuli.inflectere.aMemet')"
+        <v-btn v-for='hoc in pronomina' :key='hoc.unicum' :text="$t('annuli.inflectere.aMemet')"
                append-icon='open_in_full' :id='`selige_${hoc.unicum.toString()}`'
                @click='pronomen = hoc' />
       </template>

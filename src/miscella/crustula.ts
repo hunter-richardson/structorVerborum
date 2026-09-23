@@ -4,7 +4,7 @@ import {
   getCookies,
   removeCookie,
   setCookie
-} from 'typescript-cookie';
+  } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
@@ -34,6 +34,8 @@ class Crustulum<Hoc extends Valor> {
     return new Promise<void>(() => setCookie(nomen, valor, Crustulum._optiones))
         .then(() => this.auceps(this.signator(valor)))
   }
+
+  signetur(): Valor { return this.signator(this.massa) }
 
   #inhaesa(): string { return this.valores[0] }
 
