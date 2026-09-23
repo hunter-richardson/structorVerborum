@@ -72,6 +72,36 @@ export default class Nuntius implements Disposable {
     })
   }
 
+  static positor (nomen?: string) {
+    return function (positor: any, contextus: ClassSetterDecoratorContext) {
+      return function (this: any, valor: any) {
+        Nuntius.plusGarrio({
+          nomen: nomen,
+          nuntium: `Initu'st positor ${contextus.name.toString()}`
+        }); positor.call(this, valor);
+        Nuntius.plusGarrio({
+          nomen: nomen,
+          nuntium: `Exitu'st positor ${contextus.name.toString()}`
+        });
+      };
+    };
+  }
+
+  static captor (nomen?: string) {
+    return function (captor: any, contextus: ClassGetterDecoratorContext) {
+      return function (this: any): any {
+        Nuntius.plusGarrio({
+          nomen: nomen,
+          nuntium: `Initu'st captor ${contextus.name.toString()}`
+        }); captor.call(this);
+        Nuntius.plusGarrio({
+          nomen: nomen,
+          nuntium: `Exitu'st captor ${contextus.name.toString()}`
+        });
+      };
+    };
+  }
+
   static factum(nomen: string): any {
     return function <Hoc extends { new (...parametra: any[]): object }>(constr: Hoc) {
       return class extends constr {

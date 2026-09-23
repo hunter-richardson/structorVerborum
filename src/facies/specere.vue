@@ -11,7 +11,7 @@ import docere from './docere.vue';
 import gustulare from './gustulare.vue';
 import inflectere from './inflectere.vue';
 
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
+  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
 
   export default defineComponent({
     components: { inflectere, gustulare, docere },

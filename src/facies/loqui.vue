@@ -7,7 +7,7 @@ import { locutor, type Locutor } from '../miscella/locutor';
 import Gustulus from '../scriptura/gustulus';
 import gustulare from './gustulare.vue';
 
-  const illustre: boolean = crustula.hoc().facies.est('illustre') ?? false
+  const illustre: boolean = crustula.hoc().facies.concoctast('illustre') ?? false
 
   const Please = require('pleasejs')
   const ClassifyX = require('classifyx')

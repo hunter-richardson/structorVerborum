@@ -5,24 +5,25 @@ import FsBackend from 'i18next-fs-backend';
 import i18NextVue from 'i18next-vue';
 import yaml from 'js-yaml';
 import path from 'path';
+import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
 import './extensions/string';
 import appositus from './facies/appositus.vue';
-import { createApp, type App } from 'vue';
 
 useFavicon('/res/picta/favicon.png')
 
 const deTransferendo = {
-  lng: 'latina',
+  lng: 'la',
   initAsync: false,
-  supportedLngs: [ 'anglica', 'latina' ],
+  supportedLngs: [ 'en', 'la' ],
   nonExplicitSupportedLangs: false,
   ns: [ 'translation' ],
   saveMissing: true,
   load: 'languageOnly',
   interpolation: {
-    format(valor, forma, lingua) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    format(valor: string, forma: string, lingua: string) {
       switch(forma) {
         case  'uppercase': return String(valor).toUpperCase()
         case  'lowercase': return String(valor).toLowerCase()

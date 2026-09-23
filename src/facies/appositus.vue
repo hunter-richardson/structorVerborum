@@ -1,18 +1,18 @@
 <script lang='ts'>
-  import { defineComponent, ref, type Ref } from 'vue';
-  import draggable from 'vuedraggable';
-  import { useTheme } from 'vuetify';
-  import { crustula, type Crustula } from '../miscella/crustula';
-  import type Ignavum from '../miscella/ignavum';
-  import { locutor } from '../miscella/locutor';
-  import Gustulus from '../scriptura/gustulus';
-  import { referatur, referretne } from '../scriptura/referre';
-  import { transducatur, transduceretne } from '../scriptura/transducere';
-  import calculare from './calculare.vue';
-  import gustulare from './gustulare.vue';
-  import numerare from './numerare.vue';
-  import quaerere from './quaerere.vue';
-  import i18next from 'i18next'
+  import i18next from 'i18next';
+import { defineComponent, ref, type Ref } from 'vue';
+import draggable from 'vuedraggable';
+import { useTheme } from 'vuetify';
+import { crustula, type Crustula } from '../miscella/crustula';
+import type Ignavum from '../miscella/ignavum';
+import { locutor } from '../miscella/locutor';
+import Gustulus from '../scriptura/gustulus';
+import { referatur, referretne } from '../scriptura/referre';
+import { transducatur, transduceretne } from '../scriptura/transducere';
+import calculare from './calculare.vue';
+import gustulare from './gustulare.vue';
+import numerare from './numerare.vue';
+import quaerere from './quaerere.vue';
 
   type Annuli = {
     titula: string,
@@ -44,11 +44,11 @@
 
       function interverteFaciem () {
         crustula.value?.hoc().facies.interverteUtrum()
-        useTheme().global.name.value = crustula.value?.hoc().facies.est('fusca') ? 'dark' : 'light'
+        useTheme().global.name.value = crustula.value?.hoc().facies.concoctast('fusca') ? 'dark' : 'light'
       }
 
       function interverteLinguam() {
-        if(crustula.value && !crustula.value.hoc().assensus.est('')) {
+        if(crustula.value && !crustula.value.hoc().assensus.concoctast('')) {
           crustula.value.hoc().lingua.interverteUtrum()
           i18next.changeLanguage(crustula.value.hoc().lingua.edatur())
           window.location.reload()
@@ -82,7 +82,7 @@
           const separatoris: Element | null = document.getElementById('#crustula.separator.inane')
           if (separatoris) separatoris.classList.add('text-primary')
 
-          if (!crustula.value.hoc().lingua.cocutust()) crustula.value.hoc().lingua.coquatur()
+          if (!crustula.value.hoc().lingua.coctast()) crustula.value.hoc().lingua.coquatur()
           window.location.reload()
         }
       }
@@ -108,7 +108,7 @@
 <template>
   <template v-if='crustula'>
     <gustulare :gustulus='gustulus' />
-    <template v-if="crustula.hoc().assensus.est('assensit')">
+    <template v-if="crustula.hoc().assensus.concoctast('assensit')">
       <draggable @start='trahens = true' @end='trahens = false'>
         <v-speed-dial id='crustula' location='bottom center' transition='fade-transition'
                       open-on-click>
@@ -119,12 +119,12 @@
             <v-img height='36px' width='36px' :src="`/res/picta/${crustula.hoc().lingua.edatur()}.png`" />
           </v-btn>
           <v-btn key='facies' id='crustula.facies' @click='interverteFaciem()'
-                 :icon="`${crustula.hoc().facies.est('fusca') ? 'dark' : 'light'}_mode`" />
-          <v-btn key='apices' id='crustula.apices' :text="crustula.hoc().apices.est() ? 'ā' : 'a'"
+                 :icon="`${crustula.hoc().facies.concoctast('fusca') ? 'dark' : 'light'}_mode`" />
+          <v-btn key='apices' id='crustula.apices' :text="crustula.hoc().apices.concoctast() ? 'ā' : 'a'"
                  @click='crustula.hoc().apices.interverteUtrum()' />
-          <v-btn key='magnas' id='crustula.magnas' :text="crustula.hoc().magnas.est() ? 'A' : 'a'"
+          <v-btn key='magnas' id='crustula.magnas' :text="crustula.hoc().magnas.concoctast() ? 'A' : 'a'"
                  @click='crustula.hoc().magnas.interverteUtrum()' />
-          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.hoc().utendaU.est() ? 'v' : 'u'"
+          <v-btn key='utendaU' id='crustula.utendaU' :text="crustula.hoc().utendaU.concoctast() ? 'v' : 'u'"
                  @click='crustula.hoc().utendaU.interverteUtrum()' />
           <v-btn key='crustula.separator.inane' text=' _ ' @click="resepara('inane')"
                  id='crustula.separator.inane' />

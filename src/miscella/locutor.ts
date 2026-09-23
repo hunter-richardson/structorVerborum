@@ -1,8 +1,7 @@
-import { capitalize } from 'vue';
+import { Verbum } from '../praebeunda/verba';
 import { crustula } from './crustula';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-import { Verbum } from '../praebeunda/verba';
 
 @Nuntius.factum('Locutor')
 export class Locutor {
@@ -18,9 +17,9 @@ export class Locutor {
   locutust(): boolean { return this._verba.length > 0 }
 
   private veliferum(): void {
-    this.apices = crustula.hoc().apices.est()
-    this.utendaU = crustula.hoc().utendaU.est()
-    this.magnas = crustula.hoc().magnas.est()
+    this.apices = crustula.hoc().apices.concoctast()
+    this.utendaU = crustula.hoc().utendaU.concoctast()
+    this.magnas = crustula.hoc().magnas.concoctast()
     this.separator = crustula.hoc().separator.littera()
   }
 

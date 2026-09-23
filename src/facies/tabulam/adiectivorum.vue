@@ -1,5 +1,6 @@
 <script lang='ts'>
-  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+  import i18next from 'i18next';
+import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
 import { crustula } from '../../miscella/crustula';
 import { anglicum, genera, gradua } from '../../miscella/enumerationes';
 import type Ignavum from '../../miscella/ignavum';
@@ -14,7 +15,6 @@ import inflectere from '../inflectere.vue';
 import onerare from '../onerare.vue';
 import seligere from '../seligere.vue';
 import specere from '../specere.vue';
-import i18next from 'i18next'
 
   type Par = {
     title: string,
@@ -27,7 +27,7 @@ import i18next from 'i18next'
   }
 
   const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum> }>().agendum
-  const anglica: boolean = crustula.hoc().lingua.est('anglica') ?? false
+  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
   const tabula: Ignavum<Tabula<Adiectivum>> | undefined = agendum.putetur()
   const lectum: boolean = agendum instanceof AdiectivumAgendum
   const incomparabilium: boolean = agendum instanceof Incomparabile

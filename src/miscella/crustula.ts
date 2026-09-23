@@ -1,97 +1,137 @@
-import { getCookie, setCookie } from 'typescript-cookie';
+import i18next from 'i18next';
+import {
+  getCookie,
+  getCookies,
+  removeCookie,
+  setCookie
+} from 'typescript-cookie';
+import { useTheme } from 'vuetify';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
 
+type Optiones = NonNullable<Parameters<typeof setCookie>[2]>
+
+type Valor = string | boolean | number
+
 @Nuntius.factum('Crustulum')
-class Crustulum {
-  private static readonly _optiones: {
+class Crustulum<Hoc extends Valor> {
+  private static readonly _optiones: Optiones = {
     domain: 'conans',
     expires: 30,
     sameSite: 'strict',
-    secure: true
+    secure: import.meta.env.PROD
   }
 
-  public      nomen!: string
-  public possibiles : string[] = ['ita', 'non']
-  public inhaesus(): string { return this.possibiles[0] }
+  nomen!: string
+  valores : string[] = ['ita', 'non']
+  signator!: (valor: string) => Hoc
+  auceps: (valor: Hoc) => void | Promise<void> =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async (valor) => window.location.reload()
+
+  @Nuntius.futurus('Crustulum')
+  async #coquatur (nomen: string, valor: string) {
+    return new Promise<void>(() => setCookie(nomen, valor, Crustulum._optiones))
+        .then(() => this.auceps(this.signator(valor)))
+  }
+
+  #inhaesa(): string { return this.valores[0] }
+
+  @Nuntius.captor('Crustulum')
+  get massa (): string { return getCookie(this.nomen) ?? this.#inhaesa() }
 
   @Nuntius.modus('Crustulum')
-  edatur (): string { return getCookie(this.nomen) ?? this.inhaesus() }
+  coctast(): boolean { return getCookie(this.nomen) !== undefined }
 
-  @Nuntius.modus('Crustulum')
-  cocutust (): boolean { return !!getCookie(this.nomen) }
-
-  @Nuntius.modus('Crustulum')
-  coquatur (valor?: string): void {
-    const inhaerendus: boolean = ![ valor && this.possibiles.includes(valor) ].all()
-    setCookie(this.nomen, inhaerendus ? this.inhaesus() : valor, Crustulum._optiones)
+  @Nuntius.positor('Crustulum')
+  set massa(valor: string) {
+    if(this.massa !== valor && this.valores.includes(valor))
+      this.#coquatur(this.nomen, valor)
   }
 
   @Nuntius.modus('Crustulum')
-  est (valor?: string): boolean | undefined {
-    if (valor) return valor === this.edatur()
-    else {
-      switch (this.edatur()) {
-        case 'ita':
-          return true
-        case 'non':
-          return false
-        default:
-          return undefined
-      }
-    }
-  }
+  concoctast (valor?: string): boolean | undefined { return this.massa == valor }
 
   @Nuntius.modus('Crustulum')
   interverteUtrum (): void {
-    const valor: string = this.edatur()
+    const valor: string = this.massa
     if ([
-      this.possibiles.length === 2,
-      this.possibiles.includes(valor)
+      this.valores.length === 2,
+      this.valores.includes(valor)
     ].all()) {
-      this.coquatur(this.possibiles[ +!this.possibiles.indexOf(valor) ])
+      this.massa = this.valores[ +!this.valores.indexOf(valor) ]
     }
   }
-}
 
-class Separator extends Crustulum {
-  private readonly _res: Map<string, string> = new Map([
-    { clavis: 'inane',        valor: ' ' },
-    { clavis: 'interpunctum', valor: '•' },
-    { clavis: 'nullum',       valor: ''  },
-  ].map(res => [ res.clavis, res.valor ]))
-
-  override nomen: string = 'separator'
-  override possibiles: string[] = [ 'inane', 'interpunctum', 'nullum' ]
-
-  littera (): string { return this._res.get(this.edatur()) ?? ' ' }
+  deleatur() { removeCookie(this.nomen) }
 }
 
 export class Crustula {
-  readonly apices: Crustulum = new Ignavum(Crustulum, { nomen: 'apices' }).hoc()
-  readonly utendaU: Crustulum = new Ignavum(Crustulum, { nomen: 'utendaU' }).hoc()
+  readonly apices: Crustulum<boolean> = new Ignavum(Crustulum<boolean>, {
+                                              nomen: 'apices',
+                                              signator: (valor: string): boolean => valor === 'ita'
+                                            }).hoc()
+  readonly utendaU: Crustulum<boolean> = new Ignavum(Crustulum<boolean>, {
+                                               nomen: 'utendaU',
+                                               signator: (valor: string): boolean => valor === 'ita'
+                                             }).hoc()
 
-  readonly magnas: Crustulum = new Ignavum(Crustulum, {
-                                     nomen: 'magnas',
-                                     possibiles: [ 'non', 'ita' ]
-                                   }).hoc()
+  readonly magnas: Crustulum<boolean> = new Ignavum(Crustulum<boolean>, {
+                                              nomen: 'magnas',
+                                              valores: [ 'non', 'ita' ],
+                                              signator: (valor: string): boolean => valor === 'ita'
+                                            }).hoc()
 
-  readonly assensus: Crustulum = new Ignavum(Crustulum, {
-                                       nomen: 'assensus',
-                                       possibiles: [ '', 'assensit', 'negavit' ]
-                                     }).hoc()
+  readonly assensus: Crustulum<string> = new Ignavum(Crustulum<string>, {
+                                               nomen: 'assensus',
+                                               valores: [ '', 'assensit', 'negavit' ],
+                                               signator: (valor: string): string => valor,
+                                               // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                                               auceps: async (valor)  => {}
+                                             }).hoc()
 
-  readonly facies: Crustulum = new Ignavum(Crustulum, {
-                                     nomen: 'facies',
-                                     possibiles: [ 'fusca', 'illustris' ]
-                                   }).hoc()
+  readonly facies: Crustulum<string> = new Ignavum(Crustulum<string>, {
+                                             nomen: 'facies',
+                                             valores: [ 'fusca', 'illustris' ],
+                                             signator: (valor: string): string => {
+                                               switch(valor) {
+                                                 case 'fusca': return 'dark'
+                                                 case 'illustris': return 'light'
+                                                 default: return ''
+                                               }
+                                             }, auceps: (valor: Valor) =>
+                                                    new Promise<void>(() => { useTheme().global.name.value = valor.toString() })
+                                                          .then(() => window.location.reload())
+                                           }).hoc()
 
-  readonly lingua: Crustulum = new Ignavum(Crustulum, {
-                                     nomen: 'lingua',
-                                     possibiles: [ 'latina', 'anglica' ]
-                                   }).hoc()
+  readonly lingua: Crustulum<string> = new Ignavum(Crustulum<string>, {
+                                             nomen: 'lingua',
+                                             valores: [ 'latina', 'anglica' ],
+                                             signator: (valor: string): string => {
+                                               switch(valor) {
+                                                 case 'latina': return 'la'
+                                                 case 'anglica': return 'en'
+                                                 default: return ''
+                                               }
+                                             }, auceps: (valor: Valor) =>
+                                                   i18next.changeLanguage(valor.toString())
+                                                          .then(() => window.location.reload())
+                                           }).hoc()
 
-  readonly separator: Separator = new Separator
+  readonly separator: Crustulum<string> = new Ignavum(Crustulum<string>, {
+                                                nomen: 'separator',
+                                                valores: [ 'inane', 'interpunctum', 'nullum' ],
+                                                signator: (valor: string): string => {
+                                                  switch(valor) {
+                                                    case 'inane': return ' '
+                                                    case 'interpunctum': return '·'
+                                                    case 'nullum': return ''
+                                                    default: return ''
+                                                  }
+                                                }
+                                              }).hoc()
+
+  nominaCocta(): string[] { return Object.keys(getCookies()) }
 }
 
 export const crustula = new Ignavum(Crustula)
