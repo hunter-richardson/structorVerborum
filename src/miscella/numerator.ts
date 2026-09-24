@@ -64,6 +64,7 @@ export default class Numerator {
     return colamen.test(romanus)
   }
 
+  // eslint disable complexity
   @Nuntius.modus('Numerator')
   static romanus(arabicus: number): string {
     if(this.arabicusConvertibilis(arabicus)) {
@@ -82,7 +83,9 @@ export default class Numerator {
       }
     } return ''
   }
+  // eslint enable complexity
 
+  // eslint disable complexity
   @Nuntius.modus('Numerator')
   static arabicus(romanus: string): number {
     if(!romanus) return -1
@@ -104,6 +107,7 @@ export default class Numerator {
       } else return new RomanNumeral(certamen.groups.minor).toInt()
     } return -1
   }
+  // eslint enable complexity
 }
 
 // N  ->  0
