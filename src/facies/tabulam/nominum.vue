@@ -7,12 +7,12 @@
   import { categoricum, type Columnae } from '../../scriptura/columnae';
   import Gustulus from '../../scriptura/gustulus';
   import Tabula from '../../tabulae/tabula';
-  import gustulare from '../gustulare.vue';
-  import inflectere from '../inflectere.vue';
-  import onerare from '../onerare.vue';
-  import seligere from '../seligere.vue';
-  import specere from '../specere.vue';
-  import i18next from 'i18next'
+  import gustulare from '../gustulare';
+  import inflectere from '../inflectere';
+  import onerare from '../onerare';
+  import seligere from '../seligere';
+  import specere from '../specere';
+  import '../extensions/array'
 
   const agendum: Faciendum<Nomen> = defineProps<{ agendum: Faciendum<Nomen> }>().agendum
   const tabula: Ignavum<Tabula<Nomen>> | undefined = agendum.putetur()

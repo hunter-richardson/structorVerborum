@@ -10,6 +10,7 @@ import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
 import { type Percolamen as Incomparabile } from './incomparabilis';
 import type { Putaturum, Radicator } from './putaturum';
+import '../extensions/string'
 
 interface Percolamen extends Incomparabile {
   gradus?: gradus

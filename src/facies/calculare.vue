@@ -1,27 +1,19 @@
 <script lang='ts'>
   import { defineComponent, defineModel, type Ref, ref } from 'vue';
-import Numerator from '../miscella/numerator';
-import { Numerus } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
-import gustulare from './gustulare.vue';
-import specere from './specere.vue';
+  import Numerator, { minimum, Par } from '../miscella/numerator';
+  import { Numerus } from '../praebeunda/verba';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare';
+  import specere from './specere';
 
-  type numeri = {
-    arabicus: number,
-    romanus: string
-  }
-
-  const nihil: numeri = {
-    arabicus: 0,
-    romanus: 'N'
-  }
+  const nihil: Par = minimum
 
   export default defineComponent({
     components: { gustulare, specere },
     data: (): {
       gustulus: Ref<Gustulus | undefined>,
       actus: string,
-      nihil: numeri
+      nihil: Par
     } => {
       return {
         gustulus: ref(),
@@ -31,8 +23,8 @@ import specere from './specere.vue';
     }, setup () {
       const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>())
       const operator: Ref<string> = ref('')
-      const praesentes: Ref<numeri> = ref(nihil)
-      const praevii: Ref<numeri> = ref(nihil)
+      const praesentes: Ref<Par> = ref(nihil)
+      const praevii: Ref<Par> = ref(nihil)
 
       function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus) }
 

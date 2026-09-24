@@ -15,6 +15,8 @@ import Tabula from '../tabulae/tabula';
 import * as Interfecta from './interfecta';
 import Structor from './structor';
 import * as Verba from './verba';
+import '../extensions/array'
+import '../extensions/string'
 
 export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, 'categoria' | 'enclicitum' | 'unicum'>
 export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>

@@ -3,12 +3,12 @@ import Nuntius from './nuntius';
 
 const source = (re: RegExp) => re.source
 
-interface Par {
+export interface Par {
   arabicus: number
   romanus: string
 }
 
-const minimum: Par = {
+export const minimum: Par = {
   arabicus: 0,
   romanus: 'N'
 } as const

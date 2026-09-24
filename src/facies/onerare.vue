@@ -1,7 +1,6 @@
 <script lang='ts'>
   import { defineComponent, defineProps } from 'vue'
   import { type numerus } from '../miscella/enumerationes'
-  import i18next from 'i18next'
 
   const { onerans, pittacium, numerus } = defineProps<{
     onerans: boolean,

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { computed, defineComponent } from 'vue';
   import Nuntius from '../miscella/nuntius';
-  import i18next from 'i18next'
 
   export default defineComponent({
     data: (): { historia: History } => { return { historia: history } },

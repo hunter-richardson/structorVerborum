@@ -8,9 +8,10 @@ import path from 'path';
 import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
+import appositus from './facies/appositus';
+import Crustula from './miscella/crustula';
 import './extensions/i18next';
 import './extensions/string';
-import appositus from './facies/appositus.vue';
 
 useFavicon('/res/picta/favicon.png')
 
@@ -51,11 +52,11 @@ await i18next.use(FsBackend).init(deTransferendo)
 export const appositus: App<Element> =
     createApp(App<Element>)
       .use(i18NextVue, { i18next })
+      .use(Crustula)
 
 appositus.config.globalProperties.$tf =
-  function(key: string, format?: string, options?: Record<string, unknown>) {
-    return (i18next as any).tf(key, format, options)
-  }
+  function(clavis: string, forma?: string, optanda?: Record<string, unknown>)
+  { return (i18next as any).tf(clavis, forma, optanda) }
 
 appositus.mount('#appositus')
 

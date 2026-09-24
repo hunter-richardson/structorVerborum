@@ -1,20 +1,19 @@
 <script lang='ts'>
-  import i18next from 'i18next';
-import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../../miscella/crustula';
-import { anglicum, genera, gradua } from '../../miscella/enumerationes';
-import type Ignavum from '../../miscella/ignavum';
-import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
-import { type Faciendum } from '../../praebeunda/interfecta';
-import { Adiectivum } from '../../praebeunda/verba';
-import { categoricum, type Columnae } from '../../scriptura/columnae';
-import Gustulus from '../../scriptura/gustulus';
-import Tabula from '../../tabulae/tabula';
-import gustulare from '../gustulare.vue';
-import inflectere from '../inflectere.vue';
-import onerare from '../onerare.vue';
-import seligere from '../seligere.vue';
-import specere from '../specere.vue';
+  import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
+  import { anglicum, genera, gradua } from '../../miscella/enumerationes';
+  import type Ignavum from '../../miscella/ignavum';
+  import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
+  import { type Faciendum } from '../../praebeunda/interfecta';
+  import { Adiectivum } from '../../praebeunda/verba';
+  import { categoricum, type Columnae } from '../../scriptura/columnae';
+  import Gustulus from '../../scriptura/gustulus';
+  import Tabula from '../../tabulae/tabula';
+  import gustulare from '../gustulare';
+  import inflectere from '../inflectere';
+  import onerare from '../onerare';
+  import seligere from '../seligere';
+  import specere from '../specere';
+  import '../extensions/array'
 
   type Par = {
     title: string,
@@ -27,7 +26,7 @@ import specere from '../specere.vue';
   }
 
   const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum> }>().agendum
-  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
+  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
   const tabula: Ignavum<Tabula<Adiectivum>> | undefined = agendum.putetur()
   const lectum: boolean = agendum instanceof AdiectivumAgendum
   const incomparabilium: boolean = agendum instanceof Incomparabile

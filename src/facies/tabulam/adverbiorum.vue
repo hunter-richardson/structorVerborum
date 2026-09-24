@@ -1,16 +1,16 @@
 <script lang='ts'>
   import { defineModel, defineProps, defineComponent, type Ref, ref } from 'vue'
-  import specere from '../specere.vue'
-  import seligere from '../seligere.vue'
-  import onerare from '../onerare.vue'
-  import gustulare from '../gustulare.vue'
+  import specere from '../specere'
+  import seligere from '../seligere'
+  import onerare from '../onerare'
+  import gustulare from '../gustulare'
   import Gustulus from '../../scriptura/gustulus'
   import { type Columnae, categoricum } from '../../scriptura/columnae'
   import { AdverbiumAgendum } from '../../praebeunda/agenda'
   import { Adverbium } from '../../praebeunda/verba'
   import Tabula from '../../tabulae/tabula'
   import type Ignavum from '../../miscella/ignavum'
-  import i18next from 'i18next'
+  import '../extensions/array'
 
   const agendum: AdverbiumAgendum = defineProps<{ agendum: AdverbiumAgendum }>().agendum
   const tabula: Ignavum<Tabula<Adverbium>> | undefined = agendum.putetur()

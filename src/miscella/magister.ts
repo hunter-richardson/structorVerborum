@@ -1,6 +1,6 @@
 import file from 'file-fetch';
 import path from 'path';
-import { crustula } from './crustula';
+import { dominus } from './dominus';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
 import { marked, type MarkedExtension, type Tokens } from 'marked';
@@ -22,8 +22,7 @@ class Magister {
   }
 
   private viator (via: string): string {
-    const lingua: string = crustula.hoc().lingua.massa
-    return `${path.join('/res/docenda', lingua, via)}.md`
+    return `${path.join('/res/docenda', dominus.hoc().lingua.massa, via)}.md`
   }
 
   private async aperiatur (via: string): Promise<string> {

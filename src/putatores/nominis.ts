@@ -9,6 +9,7 @@ import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
 import type { Putaturum, Radicator } from './putaturum';
+import '../extensions/string'
 
 export interface Percolamen {
   numerus?: numerus

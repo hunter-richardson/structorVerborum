@@ -39,8 +39,9 @@ import {
 } from '../miscella/enumerationes.ts';
 import Numerator from '../miscella/numerator';
 import Structor from './structor';
-
+import { dominus } from '../miscella/dominus'
 import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda';
+import '../extensions/string'
 
 export const Errator: (res: object) => Error =
   (res: object) => new Error(`Vetatur ${res}`)
@@ -72,6 +73,21 @@ export class Verbum {
   }
 
   paratumne(): boolean { return !!this.scriptum }
+
+  monstretur(): string {
+    let monstrandum: string = this.scriptum
+    if(dominus.hoc().utendaU.concocast('non'))
+      monstrandum = monstrandum.replace('U', 'V')
+                               .replace('u', 'v')
+                               .replace('ū', 'v')
+                               .replace('Ū', 'V')
+
+    if(dominus.hoc().apices.concoctast('ita'))
+      monstrandum = monstrandum.removeMacra()
+    if(dominus.hoc().magnas.concoctast('ita'))
+      monstrandum = monstrandum.toUpperCase()
+    return ''
+  }
 }
 
 export class Numerus extends Verbum {

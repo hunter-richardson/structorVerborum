@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { defineComponent, defineProps } from 'vue';
-import { magister } from '../miscella/magister';
+  import { magister } from '../miscella/magister';
 
   const docendum: string = defineProps<{ docendum: string; }>().docendum;
   const doctum: string = await magister.hoc().doceatur(docendum);

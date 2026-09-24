@@ -5,6 +5,7 @@ import Nuntius from '../miscella/nuntius';
 import { Multiplex } from '../praebeunda/verba';
 import type Ignavum from '../miscella/ignavum';
 import { type Colamen } from '../praebeunda/agenda';
+import '../extensions/array'
 
 @Nuntius.factum('TabulaFissa')
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {

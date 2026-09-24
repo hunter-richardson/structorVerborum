@@ -3,9 +3,8 @@
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
-  import specere from './specere.vue';
-  import i18next from 'i18next'
+  import gustulare from './gustulare';
+  import specere from './specere';
 
   type Arabicus = {
     integer: number,
@@ -14,9 +13,8 @@
   }
 
   const validator: ((arabicus: number) => boolean | string)[] = [
-    (arabicus: number): boolean | string => {
-      return Number.isInteger(arabicus) || i18next.t('errores.numerare.deNumeris')
-    }
+    (arabicus: number): boolean | string =>
+    { return Number.isInteger(arabicus) || this.$t('errores.numerare.deNumeris') }
   ]
 
   export default defineComponent({
@@ -43,7 +41,8 @@
       }
 
       function refer (): void {
-        if (arabicus.value.numerator === 0) numerus.value = Numerus.numerator(arabicus.value.integer)
+        if (arabicus.value.numerator === 0)
+          numerus.value = Numerus.numerator(arabicus.value.integer)
       }
 
       return { numerus, romanus, arabicus, effiat, refer }

@@ -1,17 +1,17 @@
 <script lang='ts'>
   import { defineComponent, defineModel, type Ref, ref, toRef } from 'vue';
-import { crustula } from '../miscella/crustula';
-import { type Eventus } from '../miscella/dictionarium';
-import { encliticum } from '../miscella/enumerationes';
-import { locutor } from '../miscella/locutor';
-import { type NumeramenAgendum } from '../praebeunda/agenda';
-import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
-import docere from './docere.vue';
-import gustulare from './gustulare.vue';
-import inflectere from './inflectere.vue';
+  import { type Eventus } from '../miscella/dictionarium';
+  import { encliticum } from '../miscella/enumerationes';
+  import { locutor } from '../miscella/locutor';
+  import { type NumeramenAgendum } from '../praebeunda/agenda';
+  import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
+  import Gustulus from '../scriptura/gustulus';
+  import docere from './docere';
+  import gustulare from './gustulare';
+  import inflectere from './inflectere';
+  import '../extensions/string'
 
-  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
+  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
 
   export default defineComponent({
     components: { inflectere, gustulare, docere },
@@ -105,8 +105,8 @@ import inflectere from './inflectere.vue';
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
         <v-select density='compact' id='enclitica' v-model='encliticum'
-                  :title="anglica ? 'Enclitics' : 'Enclitica'" :items='enclitica' chips flat
-                  open-on-clear />
+                  :title='$tf('categoriae.encliticum_pluralis', 'capitalize')'
+                  :items='enclitica' chips flat open-on-clear />
       </template>
       <docere :docendum='verbum.categoria' />
       <template v-if='multiplex'>
@@ -115,22 +115,22 @@ import inflectere from './inflectere.vue';
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'
-                 :text="anglica ? 'Add this to my phrase' : 'Adde hoc locutioni'" />
+                 :text='$t('annuli.specere.addere')' />
         </template>
         <template v-if='propriabile'>
           <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium()'
-                 :text="anglica ? 'Add this to my phrase as a proper name' : 'Adde hoc locutioni ut proprium'" />
+                 :text='$t('annuli.specere.addereProprium')' />
         </template>
         <template v-else-if="verbum?.categoria === 'numerus'">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text="anglica ? 'Open' : 'Refer'" />
+                 :text='$t('annuli.specere.aperire')' />
         </template>
         <template v-else-if="[
           verbum?.categoria === 'actus',
           valores.includes('participium')
         ].all()">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text="anglica ? 'Particple' : 'Participalis'" />
+                 :text='$('categoriae.participium_singularis', 'capitalize')' />
         </template>
       </v-btn-toggle>
     </v-card>

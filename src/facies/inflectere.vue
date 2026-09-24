@@ -1,13 +1,13 @@
 <script lang='ts'>
   import { defineComponent, defineProps } from 'vue';
-import { type Eventus } from '../miscella/dictionarium';
-import { type Referendum } from '../praebeunda/interfecta';
-import actuum from './tabulam/actuum.vue';
-import adiectivorum from './tabulam/adiectivorum.vue';
-import adverbiorum from './tabulam/adverbiorum.vue';
-import nominum from './tabulam/nominum.vue';
-import numeraminum from './tabulam/numeraminum.vue';
-import pronominum from './tabulam/pronominum.vue';
+  import { type Eventus } from '../miscella/dictionarium';
+  import { type Referendum } from '../praebeunda/interfecta';
+  import actuum from './tabulam/actuum';
+  import adiectivorum from './tabulam/adiectivorum';
+  import adverbiorum from './tabulam/adverbiorum';
+  import nominum from './tabulam/nominum';
+  import numeraminum from './tabulam/numeraminum';
+  import pronominum from './tabulam/pronominum';
 
   const eventus: Eventus = defineProps<{ eventus: Eventus }>().eventus
 

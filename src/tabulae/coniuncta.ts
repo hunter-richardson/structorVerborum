@@ -4,6 +4,7 @@ import Nuntius from '../miscella/nuntius';
 import { Multiplex } from '../praebeunda/verba';
 import { valedictor } from './collata';
 import Tabula from './tabula';
+import '../extensions/array'
 
 @Nuntius.factum('TabulaConiuncta')
 export default class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> {

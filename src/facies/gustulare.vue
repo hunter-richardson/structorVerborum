@@ -1,6 +1,6 @@
 <script lang="ts">
   import { defineComponent, defineProps, type Ref, ref } from 'vue';
-import Gustulus from '../scriptura/gustulus';
+  import Gustulus from '../scriptura/gustulus';
 
   const gustulus: Gustulus = defineProps<{ gustulus: Gustulus }>().gustulus
 

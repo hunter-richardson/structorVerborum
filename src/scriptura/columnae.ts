@@ -1,8 +1,9 @@
-import { crustula } from '../miscella/crustula';
+import { dominus } from '../miscella/dominus';
 import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
+import '../extensions/string'
 
-const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
+const anglica: boolean = dominus.hoc().lingua.concoctast('anglica') ?? false
 
 interface Generanda<Hoc extends Multiplex> {
   categoria: string

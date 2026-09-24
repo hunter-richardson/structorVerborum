@@ -16,6 +16,8 @@ import * as Agenda from '../praebeunda/agenda';
 import { type Referendum } from '../praebeunda/interfecta';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
+import '../extensions/array'
+import '../extensions/string'
 
 export interface Lemma {
   categoria: string

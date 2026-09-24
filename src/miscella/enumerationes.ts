@@ -63,7 +63,8 @@ export const enclitica: string[] = Object.keys(encliticum)
 type Valor = categoria | casus | modus | referendum | tempus | genus | gradus | persona | vox | factum
 type VALOR = CATEGORIA | CASUS | MODUS | REFERENDUM | TEMPUS | GENUS | GRADUS | PERSONA | VOX | FACTUM
 
-export function magnificeturPrima (valor: Valor): VALOR { return (valor as string).capitalize() as VALOR }
+export function magnificeturPrima (valor: Valor): VALOR
+{ return (valor as string).capitalize() as VALOR }
 
 export function minuatur (valor: VALOR): Valor { return (valor as string).toLowerCase() }
 
@@ -81,9 +82,11 @@ function anglicaCategoria(valor: categoria): string {
   }
 }
 
-function anglicusCasus(valor: casus): string { return valor === 'derectus' ? 'direct' : `${valor.chop(2)}e` }
+function anglicusCasus(valor: casus): string
+{ return valor === 'derectus' ? 'direct' : `${valor.chop(2)}e` }
 
-function anglicusModus(valor: modus): string { return valor === 'participium' ? 'participle' : `${valor.chop(2)}e` }
+function anglicusModus(valor: modus): string
+{ return valor === 'participium' ? 'participle' : `${valor.chop(2)}e` }
 
 function anglicumReferendum(valor: referendum): string {
   if(valor.endsWith('dinale')) return valor.chop(1)
@@ -104,7 +107,8 @@ function anglicumTempus(valor: tempus): string {
   }
 }
 
-function anglicumGenus(valor: genus): string { return valor === 'neutrum' ? 'neuter' : `${valor.chop(2)}e` }
+function anglicumGenus(valor: genus): string
+{ return valor === 'neutrum' ? 'neuter' : `${valor.chop(2)}e` }
 
 function anglicusGradus(valor: gradus): string { return `${valor.chop(2)}e` }
 
@@ -117,9 +121,11 @@ function anglicaPersona(valor: persona): string {
   }
 }
 
-function anglicusNumerus(valor: numerus): string { return valor === 'nullus' ? 'none' : `${valor.chop(2)}` }
+function anglicusNumerus(valor: numerus): string
+{ return valor === 'nullus' ? 'none' : `${valor.chop(2)}` }
 
-function anglicaVox(valor: vox): string { return valor === 'nulla' ? 'none' : `${valor.chop(1)}e` }
+function anglicaVox(valor: vox): string
+{ return valor === 'nulla' ? 'none' : `${valor.chop(1)}e` }
 
 export function anglicum(valor: string) {
   if(categoriae.includes(valor)) {

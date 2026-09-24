@@ -5,6 +5,6 @@ declare module '*.vue' {
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $tf(key: string, format?: string, options?: Record<string, unknown>): string
+    $tf(clavis: string, forma?: string, optanda?: Record<string, unknown>): string
   }
 }

@@ -1,20 +1,20 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../../miscella/crustula';
-import type Ignavum from '../../miscella/ignavum';
-import { ActusAgendus } from '../../praebeunda/agenda';
-import { type Faciendum } from '../../praebeunda/interfecta';
-import { Actus, Nomen } from '../../praebeunda/verba';
-import { categoricum, type Columnae } from '../../scriptura/columnae';
-import Gustulus from '../../scriptura/gustulus';
-import Tabula from '../../tabulae/tabula';
-import gustulare from '../gustulare.vue';
-import inflectere from '../inflectere.vue';
-import seligere from '../seligere.vue';
-import specere from '../specere.vue';
+  import type Ignavum from '../../miscella/ignavum';
+  import { ActusAgendus } from '../../praebeunda/agenda';
+  import { type Faciendum } from '../../praebeunda/interfecta';
+  import { Actus, Nomen } from '../../praebeunda/verba';
+  import { categoricum, type Columnae } from '../../scriptura/columnae';
+  import Gustulus from '../../scriptura/gustulus';
+  import Tabula from '../../tabulae/tabula';
+  import gustulare from '../gustulare';
+  import inflectere from '../inflectere';
+  import seligere from '../seligere';
+  import specere from '../specere';
+  import '../extensions/array'
 
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus> }>().agendum
-  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
+  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
   const tabula: Ignavum<Tabula<Actus>> | undefined = agendum.putetur()
   const lectum: boolean = agendum instanceof ActusAgendus
 

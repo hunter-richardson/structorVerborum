@@ -1,43 +1,49 @@
 la:
-  suffices:
+  suffixa:
     primum:
-      pluralis: "e"
+      plurale: "e"
     secundum:
       neutrum:
-        singularis:  "um"
-        pluralis: "a"
+        singulare:  "um"
+        plurale: "a"
     tertium:
       animalis:
-        pluralis: "nes"
+        plurale: "nes"
       inanimalis:
-        singularis: "en"
-        pluralis: "ina"
+        singulare: "en"
+        plurale: "ina"
   categoriae:
     actus: "actus"
-    actus_singularis: "$(categoria.actus)"
-    actus_pluralis: "$(categoria.actus)"
+    actus_singularis: "$(categoriae.actus)"
+    actus_pluralis: "$(categoriae.actus)"
     adiectivum_radix: "adiectiv"
-    adiectivum_singularis: "$(categoria.adiectivum_radix)$(suffices.secundum.neutrum.singularis)"
-    adiectivum_pluralis: "$(categoria.adiectivum_radix)$(suffices.secundum.neutrum.pluralis)"
+    adiectivum_singularis: "$(categoriae.adiectivum_radix)$(suffixa.secundum.neutrum.singulare)"
+    adiectivum_pluralis: "$(categoriae.adiectivum_radix)$(suffixa.secundum.neutrum.plurale)"
     adverbium_radix: "adverbi"
-    adverbium_singularis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.singularis)"
-    adverbium_pluralis: "$(categoria.adverbium_radix)$(suffices.secundum.neutrum.pluralis)"
+    adverbium_singularis: "$(categoriae.adverbium_radix)$(suffixa.secundum.neutrum.singulare)"
+    adverbium_pluralis: "$(categoriae.adverbium_radix)$(suffixa.secundum.neutrum.plurale)"
     categoria_singularis: "categoria"
-    categoria_plurallis: "$(categoria.categoria_singularis)$(suffices.prima.pluralis)"
+    categoria_plurallis: "$(categoriae.categoria_singularis)$(suffixa.prima.plurale)"
     coniunctio_singularis: "coniunctio"
-    coniunctio_pluralis: "$(categoria.coniunctio)$(suffices.tertium.animalis.pluralis)"
+    coniunctio_pluralis: "$(categoriae.coniunctio)$(suffixa.tertium.animalis.plurale)"
+    encliticum_radix: "enclitic"
+    encliticum_singularis: "$(categoriae.encliticum_radix)um"
+    encliticum_pluralis: "$(categoriae.encliticum_radix)a"
     lemma_singularis: "lemma"
-    lemma_pluralis: "$(categoria.lemma_singularis)$(suffices.prima.pluralis)"
+    lemma_pluralis: "$(categoriae.lemma_singularis)$(suffixa.prima.plurale)"
     nomen_radix: "nom"
-    nomen_singularis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.singularis)"
-    nomen_pluralis: "$(categoria.nomen_radix)$(suffices.tertium.inanimalis.pluralis)"
+    nomen_singularis: "$(categoriae.nomen_radix)$(suffixa.tertium.inanimalis.singulare)"
+    nomen_pluralis: "$(categoriae.nomen_radix)$(suffixa.tertium.inanimalis.plurale)"
     numeramen_radix: "numeram"
-    numeramen_singularis: "$(categoria.numeramen_radix)$(suffices.tertium.inanimalis.singularis)"
-    numeramen_pluralis: "$(categoria.numeramen_radix)$(suffices.tertium.inanimalis.pluralis)"
+    numeramen_singularis: "$(categoriae.numeramen_radix)$(suffixa.tertium.inanimalis.singulare)"
+    numeramen_pluralis: "$(categoriae.numeramen_radix)$(suffixa.tertium.inanimalis.plurale)"
+    participium_radix: "participi"
+    participium_singularis: "$(categoriae.paricipium_radix)um"
+    participium_pluralis: "$(categoriae.paricipium_radix)a"
     praepositio_singularis: "praepositio"
-    praepositio_pluralis: "$(categoria.praepositio_singularis)$(suffices.tertium.animalis.pluralis)"
-    pronomen_singularis: "pro$(categoria.nomen_singularis)"
-    pronomen_pluralis: "pro$(categoria.nomen_pluralis)"
+    praepositio_pluralis: "$(categoriae.praepositio_singularis)$(suffixa.tertium.animalis.plurale)"
+    pronomen_singularis: "pro$(categoriae.nomen_singularis)"
+    pronomen_pluralis: "pro$(categoriae.nomen_pluralis)"
   annuli:
     fors: "fors"
     appositus:
@@ -55,6 +61,10 @@ la:
       aForte: "$(annuli.fors, capitalize) Inflectat"
       aMemet: "Inflecte"
       probare: "Probetur"
+    specere:
+      addere: "Adde hoc locutioni"
+      addereProprium: "$(annuli.specere.addere) ut proprium"
+      aperire: "$(annuli.quaerere.aperire)"
   errores:
     licuntur: "licuntur"
     numerare:
@@ -70,8 +80,8 @@ la:
       actum: "Recipe"
     onerare:
       onerans:
-        singularis: "$t({{pittacium}}_singularis, capitalize) oneratur$(scripta.ellipsis)"
-        pluralis: "$t({{pittacium}}_pluralis, capitalize) onerantur$(scripta.ellipsis)"
+        singulare: "$t({{pittacium}}_singularis, capitalize) oneratur$(scripta.ellipsis)"
+        plurale: "$t({{pittacium}}_pluralis, capitalize) onerantur$(scripta.ellipsis)"
     appositus:
       titula: "Structor Verborum"
       rogatum: "Quid agere loquive velles"

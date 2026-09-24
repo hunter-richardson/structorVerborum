@@ -4,13 +4,12 @@
   import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
   import { type Verbum } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
-  import inflectere from './inflectere.vue';
-  import loqui from './loqui.vue';
-  import onerare from './onerare.vue';
-  import specere from './specere.vue';
-  import i18next from 'i18next'
-  import '../extensions/i18next'
+  import gustulare from './gustulare';
+  import inflectere from './inflectere';
+  import loqui from './loqui';
+  import onerare from './onerare';
+  import specere from './specere';
+  import '../extensions/string'
 
   type Columnae = {
     title: string,
@@ -22,14 +21,14 @@
     value: string
   }[] = categoriae.map(categoria => {
     return {
-      title: i18next.tf(`categoria.${categoria}_singularis`, 'capitalize'),
+      title: this.$tf(`categoriae.${categoria}_singularis`, 'capitalize'),
       value: categoria
     }
   })
 
   const columnae: Columnae = [ 'lemma', 'categoriae' ].map(columna => {
     return {
-      title: i18next.tf(`categoria.${columna}_singularis`, 'capitalize'),
+      title: this.$tf(`categoriae.${columna}_singularis`, 'capitalize'),
       key: columna
     }
   })
@@ -37,7 +36,7 @@
   const validator: ((pars: string) => boolean | string)[] = [
     (pars: string): boolean | string => {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
-      return licta.test(pars.toLowerCase()) || i18next.t('errores.quaerere.deLitteris')
+      return licta.test(pars.toLowerCase()) || this.$t('errores.quaerere.deLitteris')
     }
   ]
 
@@ -156,12 +155,8 @@
     <onerare :onerans='onerans' pittacium='lemmae' />
     <template v-if='!onerans'>
       <template v-for='lemma in lemmae' :key="`${lemma.scriptum}_${lemma.categoria}`">
-        <tr>
-          <td>{{ lemma.categoria }}</td>
-        </tr>
-        <tr>
-          <td>{{ lemma.scriptum }}</td>
-        </tr>
+        <tr><td>{{ lemma.categoria }}</td></tr>
+        <tr><td>{{ lemma.scriptum }}</td></tr>
         <tr>
           <td>
             <v-btn :text="$t('annuli.quaerere.aperire')" :disabled='error' id='aperi'

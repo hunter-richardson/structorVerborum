@@ -7,6 +7,7 @@ import TabulaProna from '../tabulae/defectae/prona';
 import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
 import { type Putaturum } from './putaturum';
+import '../extensions/string'
 
 interface Percolamen {
   factum?: factum

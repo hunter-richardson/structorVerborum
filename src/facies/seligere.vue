@@ -1,8 +1,7 @@
 <script lang='ts'>
   import { defineComponent, defineModel, defineProps, type Ref, ref } from 'vue';
-import { crustula } from '../miscella/crustula';
-import { anglicum } from '../miscella/enumerationes';
-import { Multiplex } from '../praebeunda/verba';
+  import { anglicum } from '../miscella/enumerationes';
+  import { Multiplex } from '../praebeunda/verba';
 
   const multiplicia: Multiplex[] = defineProps<{ multiplicia: Multiplex[] }>().multiplicia
 
@@ -11,7 +10,7 @@ import { Multiplex } from '../praebeunda/verba';
   ]
 
   const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value
-  const anglica: boolean = crustula.hoc().lingua.concoctast('anglica') ?? false
+  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
 
   export default defineComponent({
     components: {},

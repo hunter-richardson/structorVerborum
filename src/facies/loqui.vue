@@ -1,16 +1,12 @@
 <script lang='ts'>
   import { defineComponent, type Ref, ref } from 'vue';
-import draggable from 'vuedraggable';
-import { crustula } from '../miscella/crustula';
-import type Ignavum from '../miscella/ignavum';
-import { locutor, type Locutor } from '../miscella/locutor';
-import Gustulus from '../scriptura/gustulus';
-import gustulare from './gustulare.vue';
+  import draggable from 'vuedraggable';
+  import type Ignavum from '../miscella/ignavum';
+  import { locutor, type Locutor } from '../miscella/locutor';
+  import Gustulus from '../scriptura/gustulus';
+  import gustulare from './gustulare';
 
-  const illustre: boolean = crustula.hoc().facies.concoctast('illustre') ?? false
-
-  const Please = require('pleasejs')
-  const ClassifyX = require('classifyx')
+  const illustre: boolean = this.$dominus.hoc().facies.concoctast('illustre') ?? false
 
   export default defineComponent({
     component: { draggable, gustulare },
@@ -24,9 +20,9 @@ import gustulare from './gustulare.vue';
         locutor: locutor,
         trahens: ref(false),
         gustulus: ref(),
-        pellucidum: ClassifyX({
+        pellucidum: require('classifyx')({
           opacity: 0.5,
-          background: Please.make_color({
+          background: require('pleasejs').make_color({
             value: illustre ? 0.25 : 0.75
           })
         })
@@ -43,9 +39,14 @@ import gustulare from './gustulare.vue';
       <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
         <template v-for='verbum in locutor.hoc().verba' :key='verbum.unicum'>
           <v-chip @click:close='locutor.hoc().removeatur(verbum.unicum)' close-icon='remove'
-                  :text='verbum.scriptum' :id='verbum.unicum' selected-class='text-primary' />
+                  :text='verbum.monstretur()' :id='verbum.unicum' selected-class='text-primary' />
         </template>
       </span>
     </draggable>
   </v-chip-group>
 </template>
+
+<style>
+  .v-chip:not(:last-child)::after
+  { content: v-bind($dominus.hoc().separator.signetur()) }
+</style>

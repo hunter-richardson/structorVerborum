@@ -9,6 +9,7 @@ import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
 import { type Percolamen as Nominis } from './nominis';
 import type { Putaturum, Radicator } from './putaturum';
+import '../extensions/string'
 
 export interface Percolamen extends Nominis {
   genus?: genus

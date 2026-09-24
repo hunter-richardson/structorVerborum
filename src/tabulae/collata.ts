@@ -6,6 +6,7 @@ import { type Faciendum } from '../praebeunda/interfecta';
 import type Structor from '../praebeunda/structor';
 import { Multiplex } from '../praebeunda/verba';
 import Tabula from './tabula';
+import '../extensions/array'
 
 export function valedictor<Hoc extends Multiplex>(hoc: Hoc): Agendum<Hoc> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
