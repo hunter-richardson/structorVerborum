@@ -1,10 +1,10 @@
 <script lang='ts'>
   import { defineComponent, defineModel, type Ref, ref } from 'vue';
-  import Numerator, { minimum, Par } from '../miscella/numerator';
+  import Numerator, { minimum, type Par } from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare';
-  import specere from './specere';
+  import gustulare from './gustulare.vue';
+  import specere from './specere.vue';
 
   const nihil: Par = minimum
 

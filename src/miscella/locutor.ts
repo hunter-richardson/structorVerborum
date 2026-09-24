@@ -1,9 +1,9 @@
+import '../extensions/array';
+import '../extensions/string';
+import { Verbum } from '../praebeunda/verba';
 import { dominus } from './dominus';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-import { Verbum } from '../praebeunda/verba';
-import '../extensions/array'
-import '../extensions/string'
 
 @Nuntius.factum('Locutor')
 export class Locutor {
@@ -49,7 +49,7 @@ export class Locutor {
 
   scribantur(): string {
     const locutio: string = this.verba.map((verba) => verba.monstretur()).join(dominus.hoc().separator.signetur())
-    return locutio[this.magnas ? 'toUpperCase' : 'capitalize']()
+    return locutio[dominus.hoc().magnas.signetur() ? 'toUpperCase' : 'capitalize']()
   }
 }
 

@@ -26,7 +26,7 @@ export default class TabulaBifissa extends Tabula<Nomen> {
   @Nuntius.futurus('TabulaBifissa')
   async plenetur(): Promise<void> {
     this.#coniungantur().forEach(async (res) => {
-      const tabula: Tabula<Nomen> | undefined = res.agendum.putetur()
+      const tabula: Ignavum<Tabula<Nomen>> | undefined = res.agendum.putetur()
       if (tabula) (await tabula.tabulentur())
                                .filter((nomen) => nomen.numerus === res.numerus)
                                .forEach((nomen) => this.tabula.push(nomen))

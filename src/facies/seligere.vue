@@ -10,17 +10,17 @@
   ]
 
   const selectum: ((selecta: string[]) => Promise<void>) | undefined = defineModel<(selecta: string[]) => Promise<void>>().value
-  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
+  const latina: boolean = this.$dominus.hoc().lingua.inhaesast()
 
   export default defineComponent({
     components: {},
     data: (): {
       seligenda: string[],
-      anglica: boolean
+      latina: boolean
     } => {
       return {
         seligenda: seligenda,
-        anglica: anglica
+        latina: latina
       }
     }, setup () {
       const selecta: Ref<string[]> = ref([])
@@ -37,7 +37,7 @@
     <div id='colamina'>
         <v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
           <v-chip v-for='seligendum in seligenda' :key='seligendum' @change='selige()'
-                :id="`colamen_${seligendum}`" :text='anglica ? anglicum(seligendum) : seligendum' />
+                :id="`colamen_${seligendum}`" :text='latina ? seligendum : anglicum(seligendum)' />
         </v-chip-group>
     </div>
   </template>

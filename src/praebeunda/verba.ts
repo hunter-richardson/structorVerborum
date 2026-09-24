@@ -1,4 +1,8 @@
+import Structor from './structor';
+import '../extensions/string';
 import { numeraminum } from '../lectores/verbalis';
+import { dominus } from '../miscella/dominus';
+import Numerator from '../miscella/numerator';
 import type {
   casus,
   CASUS,
@@ -37,11 +41,7 @@ import {
   tempora,
   voces,
 } from '../miscella/enumerationes.ts';
-import Numerator from '../miscella/numerator';
-import Structor from './structor';
-import { dominus } from '../miscella/dominus'
 import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda';
-import '../extensions/string'
 
 export const Errator: (res: object) => Error =
   (res: object) => new Error(`Vetatur ${res}`)
@@ -76,15 +76,15 @@ export class Verbum {
 
   monstretur(): string {
     let monstrandum: string = this.scriptum
-    if(dominus.hoc().utendaU.concocast('non'))
+    if(dominus.hoc().utendaU.signetur())
       monstrandum = monstrandum.replace('U', 'V')
                                .replace('u', 'v')
                                .replace('ū', 'v')
                                .replace('Ū', 'V')
 
-    if(dominus.hoc().apices.concoctast('ita'))
+    if(dominus.hoc().apices.signetur())
       monstrandum = monstrandum.removeMacra()
-    if(dominus.hoc().magnas.concoctast('ita'))
+    if(dominus.hoc().magnas.signetur())
       monstrandum = monstrandum.toUpperCase()
     return ''
   }
@@ -100,7 +100,7 @@ export class Numerus extends Verbum {
   get anglicus(): number { return this._anglicus }
 
   set anglicus(valor: number) {
-    if (Numerator.convertibilis(valor)) this._anglicus = valor
+    if (Numerator.arabicusConvertibilis(valor)) this._anglicus = valor
     else throw Errator({ anclicus: valor })
   }
 

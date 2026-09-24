@@ -12,6 +12,8 @@ abstract class Crustulum<Hoc extends Valor> {
 
   #inhaesa(): string { return this.valores[0] }
 
+  inhaesast(): boolean { return this.massa === this.#inhaesa() }
+
   inhaereatur() { this.massa = this.#inhaesa() }
 
   @Nuntius.futurus('Crustulum')

@@ -4,11 +4,11 @@
   import { anglicum, categoriae, inflectenda } from '../miscella/enumerationes';
   import { type Verbum } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare';
-  import inflectere from './inflectere';
-  import loqui from './loqui';
-  import onerare from './onerare';
-  import specere from './specere';
+  import gustulare from './gustulare.vue';
+  import inflectere from './inflectere.vue';
+  import loqui from './loqui.vue';
+  import onerare from './onerare.vue';
+  import specere from './specere.vue';
   import '../extensions/string'
 
   type Columnae = {
@@ -19,14 +19,16 @@
   const Categoriae: {
     title: string,
     value: string
-  }[] = categoriae.map(categoria => {
+  }[] = categoriae.map(function(this: any, categoria: string) {
     return {
-      title: this.$tf(`categoriae.${categoria}_singularis`, 'capitalize'),
+      title: this.$tf(`cateogirae.${categoria}_singularis`, 'capitalize'),
       value: categoria
     }
   })
 
-  const columnae: Columnae = [ 'lemma', 'categoriae' ].map(columna => {
+  const columnae: Columnae = [
+    'lemma', 'categoriae'
+  ].map(function(this: any, columna: string) {
     return {
       title: this.$tf(`categoriae.${columna}_singularis`, 'capitalize'),
       key: columna
@@ -34,7 +36,7 @@
   })
 
   const validator: ((pars: string) => boolean | string)[] = [
-    (pars: string): boolean | string => {
+    function(this: any, pars: string): boolean | string {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
       return licta.test(pars.toLowerCase()) || this.$t('errores.quaerere.deLitteris')
     }

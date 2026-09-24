@@ -8,12 +8,12 @@
   import { categoricum, type Columnae } from '../../scriptura/columnae';
   import Gustulus from '../../scriptura/gustulus';
   import Tabula from '../../tabulae/tabula';
-  import gustulare from '../gustulare';
-  import inflectere from '../inflectere';
-  import onerare from '../onerare';
-  import seligere from '../seligere';
-  import specere from '../specere';
-  import '../extensions/array'
+  import gustulare from '../gustulare.vue';
+  import inflectere from '../inflectere.vue';
+  import onerare from '../onerare.vue';
+  import seligere from '../seligere.vue';
+  import specere from '../specere.vue';
+  import '../extensions/array,ts'
 
   type Par = {
     title: string,
@@ -26,7 +26,7 @@
   }
 
   const agendum: Faciendum<Adiectivum> = defineProps<{ agendum: Faciendum<Adiectivum> }>().agendum
-  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
+  const latina: boolean = this.$dominus.hoc().lingua.inhaesast()
   const tabula: Ignavum<Tabula<Adiectivum>> | undefined = agendum.putetur()
   const lectum: boolean = agendum instanceof AdiectivumAgendum
   const incomparabilium: boolean = agendum instanceof Incomparabile
@@ -34,7 +34,7 @@
   function paria(valores: string[]): Par[] {
     return valores.map(valor => {
       return {
-        title: (anglica ? anglicum(valor) : valor).toUpperCase(),
+        title: (latina ? valor : anglicum(valor)).toUpperCase(),
         value: valor
       }
     })
@@ -51,7 +51,7 @@
       agendum: Faciendum<Adiectivum>,
       incomparabilium: boolean,
       columnae: Columnae,
-      anglica: boolean,
+      latina: boolean,
       lectum: boolean,
       genera: Par[],
       gradua: Par[],
@@ -63,7 +63,7 @@
         gustulus: ref(),
         columnae: [],
         agendum: agendum,
-        anglica: anglica,
+        latina: latina,
         lectum: lectum,
       }
     }, setup () {
@@ -132,14 +132,14 @@
       </template>
     </v-data-table>
     <template v-if='lectum || incomparabilium'>
-      <v-select density='compact' id='genus' :label="anglica ? 'Gender' : 'Genus'"
+      <v-select density='compact' id='genus' :label="latina ? 'Genus' : 'Gender'"
                 v-model='et.genus' :items='genera' chips flat open-on-clear />
       <template v-if='incomparabilium'>
         <v-btn :text="$t('annuli.inflectere.probare')" id='probetur'
                append-icon='open_in_full' @click='referIncomparabile()' />
       </template>
       <template v-else-if='lectum'>
-        <v-select density='compact' id='gradus' :label="anglica ? 'Grade' : 'Gradus'"
+        <v-select density='compact' id='gradus' :label="latina ? 'Gradus' : 'Grade'"
                   v-model='et.gradus' :items='gradua' chips flat open-on-clear />
         <v-btn :text="$t('annuli.inflectere.probare')" id='probetur'
                append-icon='open_in_full' @click='referComparabile()' />

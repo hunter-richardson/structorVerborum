@@ -7,14 +7,14 @@
   import { categoricum, type Columnae } from '../../scriptura/columnae';
   import Gustulus from '../../scriptura/gustulus';
   import Tabula from '../../tabulae/tabula';
-  import gustulare from '../gustulare';
-  import inflectere from '../inflectere';
-  import seligere from '../seligere';
-  import specere from '../specere';
-  import '../extensions/array'
+  import gustulare from '../gustulare.vue';
+  import inflectere from '../inflectere.vue';
+  import seligere from '../seligere.vue';
+  import specere from '../specere.vue';
+  import '../extensions/array.ts'
 
   const agendum: Faciendum<Actus> = defineProps<{ agendum: Faciendum<Actus> }>().agendum
-  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
+  const latina: boolean = this.$dominus.hoc().lingua.inhaesast()
   const tabula: Ignavum<Tabula<Actus>> | undefined = agendum.putetur()
   const lectum: boolean = agendum instanceof ActusAgendus
 
@@ -28,13 +28,13 @@
       gustulus: Ref<Gustulus | undefined>,
       agendum: Faciendum<Actus>,
       columnae: Columnae,
-      anglica: boolean,
+      latina: boolean,
       lectum: boolean
     } => {
       return {
         gustulus: ref(),
         columnae: [],
-        anglica: anglica,
+        latina: latina,
         agendum: agendum,
         lectum: lectum
       }
@@ -90,7 +90,7 @@
     <v-data-table :items='actua' :headers='columnae' density='compact' :loading='onerans'
                   :disabled='onerans' id='tabula' items-per-page='10' item-selectable=false>
       <template v-if='onerans'>
-        <v-skeleton-loader :loading-text="anglica ? 'Loading verbs...' : 'Actus onerantur...'"
+        <v-skeleton-loader :loading-text="latina ? 'Actus onerantur...' : 'Loading verbs...'"
                            :loading='onerans' type='table-tbody' />
       </template>
       <template v-else>
@@ -100,11 +100,11 @@
       </template>
     </v-data-table>
     <v-btn-toggle v-if='lectum'>
-      <v-btn :text="anglica ? 'Gerund' : 'Nomen'" append-icon='subject' id='nomen'
+      <v-btn :text="latina ? 'Nomen' : 'Gerund'" append-icon='subject' id='nomen'
              @click='refer((agendum as ActusAgendus).nomen())' />
-      <v-btn :text="anglica ? 'Agent (masculine)' : 'Actor'" append-icon='man' id='actor'
+      <v-btn :text="latina ? 'Actor' : 'Agent (masculine)" append-icon='man' id='actor'
              @click="age((agendum as ActusAgendus).actor('masculinum'))" />
-      <v-btn :text="anglica ? 'Agent (feminine)' : 'Actrix'" append-icon='woman' id='actrix'
+      <v-btn :text="latina ? 'Actrix' : 'Agent (feminine)" append-icon='woman' id='actrix'
              @click="age((agendum as ActusAgendus).actor('feminine'))" />
     </v-btn-toggle>
   </template>

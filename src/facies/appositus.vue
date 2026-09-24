@@ -7,10 +7,10 @@
   import Gustulus from '../scriptura/gustulus';
   import { referatur, referretne } from '../scriptura/referre';
   import { transducatur, transduceretne } from '../scriptura/transducere';
-  import calculare from './calculare';
-  import gustulare from './gustulare';
-  import numerare from './numerare';
-  import quaerere from './quaerere';
+  import calculare from './calculare.vue';
+  import gustulare from './gustulare.vue';
+  import numerare from './numerare.vue';
+  import quaerere from './quaerere.vue';
   import '../extensions/array'
 
   type Annuli = {

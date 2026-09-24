@@ -6,26 +6,22 @@
   import { type NumeramenAgendum } from '../praebeunda/agenda';
   import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import docere from './docere';
-  import gustulare from './gustulare';
-  import inflectere from './inflectere';
+  import docere from './docere.vue';
+  import gustulare from './gustulare.vue';
+  import inflectere from './inflectere.vue';
   import '../extensions/string'
-
-  const anglica: boolean = this.$dominus.hoc().lingua.concoctast('anglica') ?? false
 
   export default defineComponent({
     components: { inflectere, gustulare, docere },
     data: (): {
       gustulus: Ref<Gustulus | undefined>,
       valores: string[],
-      enclitica: string[],
-      anglica: boolean
+      enclitica: string[]
     } => {
       return {
         gustulus: ref(),
         valores: [],
-        enclitica: [],
-        anglica: anglica
+        enclitica: []
       }
     }, setup () {
       const verbum: Ref<Verbum> = toRef(defineProps<{ verbum: Verbum }>(), 'verbum')
@@ -49,7 +45,7 @@
           }
           case 'numerus': {
             const numerus: Numerus = verbum.value as Numerus
-            const agendum: NumeramenAgendum | null = await numerus.numeramen()
+            const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
             if (agendum) {
               eventus.value = {
                 ...agendum,
@@ -105,7 +101,7 @@
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
         <v-select density='compact' id='enclitica' v-model='encliticum'
-                  :title='$tf('categoriae.encliticum_pluralis', 'capitalize')'
+                  :title="$tf('categoriae.encliticum_pluralis', 'capitalize')"
                   :items='enclitica' chips flat open-on-clear />
       </template>
       <docere :docendum='verbum.categoria' />
@@ -115,22 +111,22 @@
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'
-                 :text='$t('annuli.specere.addere')' />
+                 :text="$t('annuli.specere.addere')" />
         </template>
         <template v-if='propriabile'>
           <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium()'
-                 :text='$t('annuli.specere.addereProprium')' />
+                 :text="$t('annuli.specere.addereProprium')" />
         </template>
         <template v-else-if="verbum?.categoria === 'numerus'">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text='$t('annuli.specere.aperire')' />
+                 :text="$t('annuli.specere.aperire')" />
         </template>
         <template v-else-if="[
           verbum?.categoria === 'actus',
           valores.includes('participium')
         ].all()">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text='$('categoriae.participium_singularis', 'capitalize')' />
+                 :text="$tf('categoriae.participium_singularis', 'capitalize')" />
         </template>
       </v-btn-toggle>
     </v-card>

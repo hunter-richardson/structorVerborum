@@ -4,9 +4,9 @@
   import type Ignavum from '../miscella/ignavum';
   import { locutor, type Locutor } from '../miscella/locutor';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare';
+  import gustulare from './gustulare.vue';
 
-  const illustre: boolean = this.$dominus.hoc().facies.concoctast('illustre') ?? false
+  const fusca: boolean = this.$dominus.hoc().facies.inhaesast()
 
   export default defineComponent({
     component: { draggable, gustulare },
@@ -23,7 +23,7 @@
         pellucidum: require('classifyx')({
           opacity: 0.5,
           background: require('pleasejs').make_color({
-            value: illustre ? 0.25 : 0.75
+            value: fusca ? 0.75 : 0.25
           })
         })
       }

@@ -6,11 +6,11 @@
   import { categoricum, type Columnae } from '../../scriptura/columnae';
   import Gustulus from '../../scriptura/gustulus';
   import Tabula from '../../tabulae/tabula';
-  import gustulare from '../gustulare';
-  import onerare from '../onerare';
-  import seligere from '../seligere';
-  import specere from '../specere';
-  import '../extensions/array'
+  import gustulare from '../gustulare.vue';
+  import onerare from '../onerare.vue';
+  import seligere from '../seligere.vue';
+  import specere from '../specere.vue';
+  import '../extensions/array.ts'
 
   const agendum: Mantela<Pronomen> = defineProps<{ agendum: Mantela<Pronomen> }>().agendum
   const tabula: Ignavum<Tabula<Pronomen>> = agendum.putetur()

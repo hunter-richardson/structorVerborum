@@ -3,8 +3,8 @@
   import Numerator from '../miscella/numerator';
   import { Numerus } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare';
-  import specere from './specere';
+  import gustulare from './gustulare.vue';
+  import specere from './specere.vue';
 
   type Arabicus = {
     integer: number,

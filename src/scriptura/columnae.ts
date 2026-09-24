@@ -3,7 +3,7 @@ import { anglicum } from '../miscella/enumerationes';
 import { Multiplex } from '../praebeunda/verba';
 import '../extensions/string'
 
-const anglica: boolean = dominus.hoc().lingua.concoctast('anglica') ?? false
+const latina: boolean = dominus.hoc().lingua.inhaesast()
 
 interface Generanda<Hoc extends Multiplex> {
   categoria: string
@@ -22,7 +22,7 @@ export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): 
     .filter(clavis => generanda.haec.some(hoc => Object.keys(hoc).includes(clavis)))
     .map(clavis => {
       return {
-        title: (anglica ? anglicum(clavis) : clavis).capitalize(),
+        title: (latina ? clavis : anglicum(clavis)).capitalize(),
         key: clavis
       }
     })

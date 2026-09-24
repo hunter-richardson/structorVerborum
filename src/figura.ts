@@ -5,13 +5,13 @@ import FsBackend from 'i18next-fs-backend';
 import i18NextVue from 'i18next-vue';
 import yaml from 'js-yaml';
 import path from 'path';
-import { createApp, type App } from 'vue';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
-import appositus from './facies/appositus';
-import Crustula from './miscella/crustula';
 import './extensions/i18next';
 import './extensions/string';
+import appositus from './facies/appositus.vue';
+import Crustula from './miscella/crustula';
+import { createApp, type App } from 'vue';
 
 useFavicon('/res/picta/favicon.png')
 

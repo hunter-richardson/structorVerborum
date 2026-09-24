@@ -1,10 +1,10 @@
 import 'cypress';
 import 'cypress-map';
 import { mount } from 'cypress/vue';
+import '../../extensions/array.ts';
+import '../../extensions/string.ts';
 import quaerere from '../../facies/quaerere.vue';
 import { inflectenda } from '../../miscella/enumerationes';
-import '../extensions/array'
-import '../extensions/string'
 
 function ullum (res: {
   categoria: string,
