@@ -52,6 +52,7 @@ import inflectere from './inflectere.vue';
         } case 'numerus': {
           const numerus: Numerus = verbum as Numerus
           const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
+          // eslint-disable-next-line no-extra-boolean-cast
           if(!!agendum)
             eventus = {
               ...agendum,

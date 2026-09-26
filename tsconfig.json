@@ -8,20 +8,20 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
-    "baseUrl": "./src/facies",
     "composite": true,
     "declaration": true,
-    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": [ "dom" ],
+    "lib": [
+      "dom"
+    ],
     "module": "NodeNext",
     "moduleDetection": "auto",
     "moduleResolution": "NodeNext",
     "newLine": "lf",
-    "noEmit": true,
+    "noEmit": false,
     "noEmitOnError": true,
     "noErrorTruncation": true,
     "noImplicitAny": true,
@@ -30,13 +30,23 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
-    "outDir": "./wwwroot/js",
+    "outDir": "./dist/js",
     "removeComments": true,
+    "rewriteRelativeImportExtensions": true,
     "paths": {
-      "facies": [ "./src/facies/*.vue" ],
-      "figura": [ "./src/figura.ts" ],
-      "scriptura": [ "./src/scriptura/*.ts" ],
-      "productura": [ "./src/extensions/*.ts" ]
+      "facies": [
+        "./src/facies/*.vue",
+        "./src/facies/tabulam/*.vue"
+      ],
+      "figura": [
+        "./src/figura.ts"
+      ],
+      "scriptura": [
+        "./src/scriptura/*.ts"
+      ],
+      "productura": [
+        "./src/extensions/*.ts"
+      ]
     },
     "sourceMap": true,
     "target": "ES2022",
@@ -47,9 +57,14 @@
     ]
   },
   "files": [],
-  "references": [
-    { "path": "./tsconfig.node.json" },
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.vitest.json" }
+  "include": [
+    "./src/**/*.ts",
+    "./src/facies/*.vue",
+    "./src/views/tabulam/*.vue"
+  ],
+  "exclude": [
+    "./src/cypress/e2e/**",
+    "./src/cypress/fixtures/*.json",
+    "./src/cypress/support/*.ts"
   ]
 }

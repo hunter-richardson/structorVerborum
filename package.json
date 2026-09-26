@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "type-check": "tsc --noEmit",
+    "type-check": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
     "build.debug": "vite build --mode development",
     "build.release": "vite build --mode production"
   },
@@ -33,7 +33,7 @@
     "amphtml-validator": "^1.0.38",
     "browserify": "^17.0.1",
     "classifyx": "^2.0.6",
-    "codeql-agent": "^0.3.4",
+    "codeql-agent": "^0.1.3",
     "comma-separated-values": "^3.6.4",
     "cypress": "^16.1.0",
     "cypress-map": "^1.56.0",

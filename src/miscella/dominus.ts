@@ -21,7 +21,7 @@ abstract class Crustulum<Hoc extends Valor> {
   @Nuntius.futurus('Crustulum')
   protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
-    if(!!this.coctast()) this._finis.setDate(this._finis.getDate() + this.vita)
+    if(this.coctast()) this._finis.setDate(this._finis.getDate() + this.vita)
     else this._finis.setDate(Date.now() + this.vita)
     return dominus.hoc().ponam(this.nomen, valor, this._finis)
                   .then(() => { if(mutatast) this.respondeam() })

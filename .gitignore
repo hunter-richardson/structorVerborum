@@ -41,3 +41,5 @@ src/cypress/support/commands.ts
 src/cypress/support/e2e.ts
 
 res/loci/*.errata.yml
+
+src/**/*.d.ts
