@@ -1,16 +1,13 @@
-<script lang="ts">
-  import { computed, defineComponent } from 'vue';
-  import Nuntius from '../miscella/nuntius';
+<script setup lang="ts">
+  import { onMounted } from 'vue';
+import Nuntius from '../miscella/nuntius';
 
-  export default defineComponent({
-    data: (): { historia: History } => { return { historia: history } },
-    mounted (): void {
-      if ([ location.href, location.href !== '404' ].all()) {
-        Nuntius.timeo({
-          nomen: '404.vue',
-          error: new Error(`CDIV effectu'st loco ${location.href}`)
-        })
-      }
+  onMounted(() => {
+    if ([ location.href, location.href !== '404' ].all()) {
+      Nuntius.timeo({
+        nomen: '404.vue',
+        error: new Error(`CDIV effectu'st loco ${location.href}`)
+      });
     }
   })
 </script>
@@ -22,7 +19,7 @@
                      :title="$t('scripta.404.titula')"
                      :headline="$t('scripta.404.caput')"
                      :actionText="$t('scripta.404.actum')"
-                     @click:action='historia.back()' image='/res/picta/latina.png'
+                     @click:action='$router.back()' image='/res/picta/latina.png'
                      icon='arrow_back' />
     </v-container>
   </v-app>

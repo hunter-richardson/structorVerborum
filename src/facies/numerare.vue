@@ -1,10 +1,13 @@
-<script lang='ts'>
-  import { defineComponent, defineModel, type Ref, ref } from 'vue';
-  import Numerator from '../miscella/numerator';
-  import { Numerus } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
-  import specere from './specere.vue';
+<script setup lang='ts'>
+  import { useTranslation } from 'i18next-vue';
+import { defineProp, ref } from 'vue';
+import Numerator from '../miscella/numerator';
+import { Numerus } from '../praebeunda/verba';
+import Gustulus from '../scriptura/gustulus';
+import gustulare from './gustulare.vue';
+import specere from './specere.vue';
+
+  const gustulus: Gustulus | undefined = defineProp<Gustulus | undefined>()
 
   type Arabicus = {
     integer: number,
@@ -14,52 +17,33 @@
 
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string =>
-    { return Number.isInteger(arabicus) || this.$t('errores.numerare.deNumeris') }
+    { return Number.isInteger(arabicus) || useTranslation().t('errores.numerare.deNumeris') }
   ]
 
-  export default defineComponent({
-    components: { gustulare, specere },
-    data: (): {
-      validator: ((arabicus: number) => boolean | string)[],
-      gustulus: Ref<Gustulus | undefined>
-    } => {
-      return {
-        gustulus: ref(),
-        validator
-      }
-    }, setup () {
-      const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>())
-      const romanus: Ref<string> = ref('N')
-      const arabicus: Ref<Arabicus> = ref({
-        integer: 0,
-        numerator: 0,
-        denominator: 12
-      })
+  let numerus: Numerus | undefined = ref<Numerus | undefined>('numerus')
+  let romanus: string = 'N'
+  let arabicus: Arabicus = {
+    integer: 0,
+    numerator: 0,
+    denominator: 12
+  }
 
-      function effiat (): void {
-        romanus.value = Numerator.romanus(arabicus.value.integer + arabicus.value.numerator / arabicus.value.denominator)
-      }
+  function effiat (): void {
+    romanus = Numerator.romanus(arabicus.integer + arabicus.numerator / arabicus.denominator);
+  }
 
-      function refer (): void {
-        if (arabicus.value.numerator === 0)
-          numerus.value = Numerus.numerator(arabicus.value.integer)
-      }
-
-      return { numerus, romanus, arabicus, effiat, refer }
-    }
-  })
+  function refer (): void {
+    if (arabicus.numerator === 0)
+      numerus = Numerus.numerator(arabicus.integer);
+  }
 </script>
 
 <template>
-  <gustulare :gustulus='gustulus' />
-  <template v-if='numerus'>
-    <specere :verbum='numerus' @blur='numerus = undefined' />
-  </template>
+  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
-    <template v-if='arabicus.numerator === 0'>
-      <v-btn icon='equal' id='aequa' @click='refer()' />
-    </template>
+    <v-btn v-if='arabicus.numerator === 0' icon='equal' id='aequa' @click='refer()' />
   </div>
   <div class='text-center'>
     <v-number-input @change='effiat()' id='integer' :rules='validator' validateOn='input'

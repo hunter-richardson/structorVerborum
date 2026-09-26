@@ -1,20 +1,12 @@
-<script lang='ts'>
-  import { defineComponent, defineProps } from 'vue';
-  import { magister } from '../miscella/magister';
+<script setup lang='ts'>
+  import { defineProps } from 'vue';
+import { magister } from '../miscella/magister';
 
-  const docendum: string = defineProps<{ docendum: string; }>().docendum;
-  const doctum: string = await magister.hoc().doceatur(docendum);
-
-  export default defineComponent({
-      data: (): {
-        docendum: string,
-        doctum: string
-      } => { return { docendum, doctum } }
-    })
+  const docendum: string = defineProps<{ docendum: string; }>();
 </script>
 
 <template>
-  <template v-if='[ docendum, doctum ].all()'>
-    <div :id="`doctum.${docendum}`">{{ doctum }}</div>
+  <template v-if='!!docendum'>
+    <div :id="`doctum.${docendum}`">{{ await magister.hoc().doceatur(docendum) }}</div>
   </template>
 </template>

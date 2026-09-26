@@ -1,98 +1,90 @@
-<script lang='ts'>
-  import { defineComponent, defineModel, type Ref, ref, toRef } from 'vue';
-  import { type Eventus } from '../miscella/dictionarium';
-  import { encliticum } from '../miscella/enumerationes';
-  import { locutor } from '../miscella/locutor';
-  import { type NumeramenAgendum } from '../praebeunda/agenda';
-  import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
-  import docere from './docere.vue';
-  import gustulare from './gustulare.vue';
-  import inflectere from './inflectere.vue';
-  import '../extensions/string'
+<script setup lang='ts'>
+  import { defineProps, ref } from 'vue';
+import '../extensions/string';
+import { type Eventus } from '../miscella/dictionarium';
+import { encliticum } from '../miscella/enumerationes';
+import { locutor } from '../miscella/locutor';
+import { type NumeramenAgendum } from '../praebeunda/agenda';
+import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
+import Gustulus from '../scriptura/gustulus';
+import docere from './docere.vue';
+import gustulare from './gustulare.vue';
+import inflectere from './inflectere.vue';
 
-  export default defineComponent({
-    components: { inflectere, gustulare, docere },
-    data: (): {
-      gustulus: Ref<Gustulus | undefined>,
-      valores: string[],
-      enclitica: string[]
-    } => {
-      return {
-        gustulus: ref(),
-        valores: [],
-        enclitica: []
-      }
-    }, setup () {
-      const verbum: Ref<Verbum> = toRef(defineProps<{ verbum: Verbum }>(), 'verbum')
-      const eventus: Ref<Eventus | undefined> = ref(defineModel<Eventus>())
-      const propriabile: Ref<boolean> = ref(false)
-      const multiplex: Ref<boolean> = ref(false)
-      const encliticum: Ref<string> = ref('')
+  let valorEnclitici: string = encliticum.nullum
 
-      async function aperi (): Promise<void> {
-        switch (verbum.value?.categoria) {
-          case 'actus': {
-            const actus: Actus = verbum.value as Actus
-            if (actus.modus === 'participium') {
-              eventus.value = {
-                ...(await actus.participialis()),
-                categoria: 'adiectivum'
-              }
-            }
+  export interface Forma {
+    gustulus?: Gustulus,
+    verbum: Verbum
+  }
 
-            break
-          }
-          case 'numerus': {
-            const numerus: Numerus = verbum.value as Numerus
-            const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
-            if (agendum) {
-              eventus.value = {
-                ...agendum,
-                categoria: 'numeramen'
-              }
-            }
-            break
-          }
-        }
-      }
+  let multiplex: boolean = false
+  let propriabile: boolean = false
+  const valores: string[] = []
+  const enclitica: string[] = []
 
-      function adde (): void {
-        if (verbum.value) {
-          if ([ multiplex, encliticum ].every(res => !!res.value))
-          { (verbum.value as Multiplex).encliticum = encliticum.value }
-          locutor.hoc().addatur(verbum.value)
-        }
-      }
+  const { gustulus, verbum } = defineProps<Forma>();
+  let eventus: Eventus | undefined = ref<Eventus | undefined>('eventus')
 
-      function addeProprium (): void {
-        if (verbum.value && propriabile.value) verbum.value.scriptum = verbum.value.scriptum.capitalize()
-        adde()
-      }
-
-      return { eventus, verbum, encliticum, multiplex, propriabile, aperi, adde, addeProprium }
-    }, mounted (): void {
-      this.multiplex = this.verbum ? this.verbum instanceof Multiplex : false
-      if (this.multiplex) this.valores = (this.verbum as Multiplex)?.valores()
-
-      this.propriabile = [
-        [
-          'nomen', 'adiectivum'
-        ].includes(this.verbum?.categoria ?? ''),
-        !this.verbum?.scriptum.isCapitalized()
-      ].all()
-
-      this.enclitica = Object.keys(encliticum)
-                             .filter(encliticum => !this.verbum?.scriptum.endsWith(encliticum))
+  if(verbum) {
+    multiplex = verbum instanceof Multiplex
+    propriabile = ['nomen', 'adiectiva'].includes(verbum.categoria) &&
+                  verbum.scriptum.isCapitalized()
+    if(multiplex) {
+      (verbum as Multiplex).valores()
+          .forEach((valor) => valores.push(valor))
+      Object.keys(encliticum)
+            .filter((valor) => !verbum.scriptum.endsWith(valor))
+            .forEach((valor) => enclitica.push(valor))
     }
-  })
+  }
+
+  async function aperi() {
+    if(verbum) {
+      switch(verbum.categoria) {
+        case 'actus': {
+          const actus: Actus = verbum as Actus
+          if(actus.modus === 'participium')
+            eventus = {
+              ...(await actus.participialis()),
+              categoria: 'adiectivum'
+            }; break
+        } case 'numerus': {
+          const numerus: Numerus = verbum as Numerus
+          const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
+          if(!!agendum)
+            eventus = {
+              ...agendum,
+              categoria: 'numeramen'
+            }
+        }; break
+      }
+    }
+  }
+
+  function adde() {
+    if(verbum) {
+      if([multiplex, !!valorEnclitici].all())
+        (verbum as Multiplex).encliticum = valorEnclitici as encliticum
+      verbum.scriptum = verbum.scriptum.toLowerCase()
+      locutor.hoc().addatur(verbum)
+    }
+  }
+
+  function addeProprium() {
+    if (verbum) {
+      if ([ multiplex, !!valorEnclitici ].all())
+        (verbum as Multiplex).encliticum = valorEnclitici as encliticum;
+      if(propriabile)
+        verbum.scriptum = verbum.scriptum.capitalize()
+      locutor.hoc().addatur(verbum);
+    }
+  }
 </script>
 
 <template>
-  <gustulare :gustulus='gustulus' />
-  <template v-if='eventus'>
-    <inflectere :eventus='eventus' @blur='eventus = undefined' />
-  </template>
+  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
   <v-dialog v-else-if='verbum'>
     <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>
       <template v-if='multiplex'>
@@ -105,9 +97,7 @@
                   :items='enclitica' chips flat open-on-clear />
       </template>
       <docere :docendum='verbum.categoria' />
-      <template v-if='multiplex'>
-        <docere v-for='valor in valores' :key='valor' :docendum='valor' />
-      </template>
+      <docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'

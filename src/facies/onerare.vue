@@ -1,29 +1,17 @@
-<script lang='ts'>
-  import { defineComponent, defineProps } from 'vue'
-  import { type numerus } from '../miscella/enumerationes'
+<script setup lang='ts'>
+  import { defineProps } from 'vue';
 
-  const { onerans, pittacium, numerus } = defineProps<{
+  export interface Forma {
     onerans: boolean,
-    pittacium: string,
-    numerus: numerus
-  }>()
+    pittacium: string
+  }
 
-  export default defineComponent({
-    data: (): {
-        onerans: boolean,
-        pittacium: string,
-        numerus: numerus
-      } => { return {
-        onerans: onerans,
-        pittacium: pittacium,
-        numerus: numerus
-      } }
-    })
+  const { onerans, pittacium } = defineProps<Forma>()
 </script>
 
 <template>
   <template v-if='onerans'>
-    <v-skeleton-loader :loading-text="$t(`scripta.onerare.onerans${numerus}`, { pittacium: pittacium })"
+    <v-skeleton-loader :loading-text="$t('scripta.onerare.onerans', { pittacium: pittacium })"
                        :loading='onerans' type='table-tbody' />
   </template>
 </template>

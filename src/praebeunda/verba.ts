@@ -1,8 +1,6 @@
-import Structor from './structor';
 import '../extensions/string';
 import { numeraminum } from '../lectores/verbalis';
 import { dominus } from '../miscella/dominus';
-import Numerator from '../miscella/numerator';
 import type {
   casus,
   CASUS,
@@ -41,7 +39,9 @@ import {
   tempora,
   voces,
 } from '../miscella/enumerationes.ts';
+import Numerator from '../miscella/numerator';
 import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda';
+import Structor from './structor';
 
 export const Errator: (res: object) => Error =
   (res: object) => new Error(`Vetatur ${res}`)

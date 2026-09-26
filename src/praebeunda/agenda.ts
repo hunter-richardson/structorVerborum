@@ -1,5 +1,7 @@
 import { actus as actusAnomala } from '../anomala/actus';
 import { nomina } from '../anomala/nomina';
+import '../extensions/array';
+import '../extensions/string';
 import { actuum } from '../lectores/verbalis';
 import { dictionarium, type Lemma } from '../miscella/dictionarium';
 import Ignavum from '../miscella/ignavum';
@@ -15,8 +17,6 @@ import Tabula from '../tabulae/tabula';
 import * as Interfecta from './interfecta';
 import Structor from './structor';
 import * as Verba from './verba';
-import '../extensions/array'
-import '../extensions/string'
 
 export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, 'categoria' | 'enclicitum' | 'unicum'>
 export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>
@@ -65,12 +65,16 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
                       .ponatur((nomen) => (nomen.versio = 'tertiaAnimata'))
     switch (genus) {
       case 'masculinum':
-        structor.ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('um$', 'or') ?? ''))
-                .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('um$', 'ōris') ?? ''))
+        structor.ponatur((nomen) =>
+                    (nomen.nominativum = this.supinum?.replace('um$', 'or') ?? ''))
+                .ponatur((nomen) =>
+                    (nomen.genitivum = this.supinum?.replace('um$', 'ōris') ?? ''))
         break
       case 'femininum':
-        structor.ponatur((nomen) => (nomen.nominativum = this.supinum?.replace('t?um$', 'trīx') ?? ''))
-                .ponatur((nomen) => (nomen.genitivum = this.supinum?.replace('t?um$', 'trīcis') ?? ''))
+        structor.ponatur((nomen) =>
+                    (nomen.nominativum = this.supinum?.replace('t?um$', 'trīx') ?? ''))
+                .ponatur((nomen) =>
+                    (nomen.genitivum = this.supinum?.replace('t?um$', 'trīcis') ?? ''))
         break
       default:
         return null
@@ -84,7 +88,8 @@ export class AdverbiumAgendum implements Interfecta.Faciendum<Verba.Adverbium>, 
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adverbium>> | undefined { return new Ignavum(TabulaAdverbii, { agendum: this }) }
+  putetur(): Ignavum<Tabula<Verba.Adverbium>> | undefined
+  { return new Ignavum(TabulaAdverbii, { agendum: this }) }
 }
 
 export class NomenAgendum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
@@ -92,7 +97,8 @@ export class NomenAgendum implements Interfecta.Faciendum<Verba.Nomen>, Interfec
   nominativum!: string
     genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined { return nominis.hoc().putetur(this) }
+  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined
+  { return nominis.hoc().putetur(this) }
 }
 
 export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
@@ -101,7 +107,8 @@ export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta
     gerundium!: string
       supinum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined { return nominisFacti.hoc().putetur(this) }
+  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined
+  { return nominisFacti.hoc().putetur(this) }
 
   async actus(): Promise<Interfecta.Faciendum<Verba.Actus> | undefined> {
     return await ((await actuum.hoc().omnia()).includes(this.infinitivum) ?
@@ -115,7 +122,8 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined { return adiectivi.hoc().putetur(this) }
+  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined
+  { return adiectivi.hoc().putetur(this) }
 
   async probetur(colamen: {
     gradus: string
@@ -230,7 +238,8 @@ export class Incomparabile implements Interfecta.Faciendum<Verba.Adiectivum>, In
   nominativum!: string
     genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined { return incomparabilis.hoc().putetur(this) }
+  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined
+  { return incomparabilis.hoc().putetur(this) }
 
   probetur(genus: string): NomenAgendum | null {
     let versioNova: string
@@ -303,7 +312,8 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
          ordinale?: string;
           numerus!: string;
 
-  putetur(): Ignavum<Tabula<Verba.Numeramen>> | undefined { return new Ignavum(TabulaNumeraminis, { agendum: this}) }
+  putetur(): Ignavum<Tabula<Verba.Numeramen>> | undefined
+  { return new Ignavum(TabulaNumeraminis, { agendum: this}) }
 
   async referatur(referendum: string): Promise<Interfecta.Referendum | undefined> {
     let lemma: Lemma = { categoria: '', scriptum: '' }

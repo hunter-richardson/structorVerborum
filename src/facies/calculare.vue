@@ -1,84 +1,61 @@
-<script lang='ts'>
-  import { defineComponent, defineModel, type Ref, ref } from 'vue';
-  import Numerator, { minimum, type Par } from '../miscella/numerator';
-  import { Numerus } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
-  import gustulare from './gustulare.vue';
-  import specere from './specere.vue';
+<script setup lang='ts'>
+  import { defineProps } from 'vue';
+import Numerator, { minimum as nihil, type Par } from '../miscella/numerator';
+import { Numerus } from '../praebeunda/verba';
+import Gustulus from '../scriptura/gustulus';
+import gustulare from './gustulare.vue';
+import specere from './specere.vue';
 
-  const nihil: Par = minimum
+  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
-  export default defineComponent({
-    components: { gustulare, specere },
-    data: (): {
-      gustulus: Ref<Gustulus | undefined>,
-      actus: string,
-      nihil: Par
-    } => {
-      return {
-        gustulus: ref(),
-        nihil: nihil,
-        actus: 'IC·+ VD:- XM∴• L|×÷ =NS%'
-      }
-    }, setup () {
-      const numerus: Ref<Numerus | undefined> = ref(defineModel<Numerus>())
-      const operator: Ref<string> = ref('')
-      const praesentes: Ref<Par> = ref(nihil)
-      const praevii: Ref<Par> = ref(nihil)
+  let numerus: Numerus | undefined = undefined
 
-      function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus) }
+  const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%'
+  let operator: string = ''
+  let praesentes: Par = nihil
+  let praevii: Par = nihil
 
-      function licta (actus: string): boolean { return operat(actus) || !!praesentes.value.arabicus }
+  function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus); }
 
-      function ponatur (actus: string): void {
-        if (actus === 'N') {
-          praevii.value = praesentes.value = nihil
-        } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
-          if (praesentes.value.arabicus) praesentes.value.romanus += actus
-          else praesentes.value.romanus = actus
-          try { praesentes.value.arabicus = Numerator.arabicus(praesentes.value.romanus) }
-          catch { praesentes.value = nihil }
-        } else if (operat(actus)) {
-          if (praevii.value.arabicus === 0) praevii.value = praesentes.value
-          else {
-            switch ((operator.value ?? '').trim()) {
-              case '+': praevii.value.arabicus += praesentes.value.arabicus; break
-              case '-': praevii.value.arabicus -= praesentes.value.arabicus; break
-              case '•': praevii.value.arabicus *= praesentes.value.arabicus; break
-              case '÷': praevii.value.arabicus /= praesentes.value.arabicus; break
-              case '%': praevii.value.arabicus %= praesentes.value.arabicus; break
-              default: praevii.value.arabicus = praesentes.value.arabicus; break
-            } praevii.value.romanus = Numerator.romanus(praevii.value.arabicus)
-          } operator.value = actus === '=' ? '' : ` ${actus} `
-          praesentes.value = nihil
-        }
-      }
+  function licta (actus: string): boolean { return operat(actus) || !!praesentes.arabicus; }
 
-      function aequa (): void { numerus.value = Numerus.numerator(praevii.value.arabicus) }
-
-      return { numerus, operator, praesentes, praevii, licta, aequa, ponatur }
+  function ponatur (actus: string): void {
+    if (actus === 'N') {
+      praevii = praesentes = nihil;
+    } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
+      if (praesentes.arabicus) praesentes.romanus += actus;
+      else praesentes.romanus = actus;
+      try { praesentes.arabicus = Numerator.arabicus(praesentes.romanus); }
+      catch { praesentes = nihil; }
+    } else if (operat(actus)) {
+      if (praevii.arabicus === 0) praevii = praesentes;
+      else {
+        switch ((operator ?? '').trim()) {
+          case '+': praevii.arabicus += praesentes.arabicus; break;
+          case '-': praevii.arabicus -= praesentes.arabicus; break;
+          case '•': praevii.arabicus *= praesentes.arabicus; break;
+          case '÷': praevii.arabicus /= praesentes.arabicus; break;
+          case '%': praevii.arabicus %= praesentes.arabicus; break;
+          default: praevii.arabicus = praesentes.arabicus; break;
+        } praevii.romanus = Numerator.romanus(praevii.arabicus);
+      } operator = actus === '=' ? '' : ` ${actus} `;
+      praesentes = nihil;
     }
-  })
+  }
+
+  function aequa (): void { numerus = Numerus.numerator(praevii.arabicus); }
 </script>
 
 <template>
-  <gustulare :gustulus='gustulus' />
-  <template v-if='numerus'>
-    <specere :verbum='numerus' @blur='numerus = undefined' />
-  </template>
-  <template v-if='praevii.arabicus'>
-    <div class='text-center'>
-      <template v-if='Number.isInteger(praevii.arabicus)'>
-        <v-btn id='refer' icon='aequa' @click='aequa()' />
-      </template>
-      <v-card :text='praevii.romanus' />
-      <template v-if='operator'>
-        <v-card id='operator' :text='operator' />
-      </template>
-    </div>
-  </template>
+  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
+  <div class='text-center'>
+    <v-btn v-if='Number.isInteger(praevii.arabicus)' id='refer' icon='aequa' @click='aequa()' />
+    <v-card :text='praevii.romanus' />
+    <v-card v-if='!!operator' id='operator' :text='operator' />
+  </div>
   <v-card :text='praesentes.romanus' />
-  <div class='text-center' v-for="linea in actus.split(' ')" :key='linea'>
+  <div class='text-center' v-for="linea in (actus.split(' ') as string[])" :key='linea'>
     <span class='text-center' v-for="littera in Array.from(linea)" :key='littera'>
       <v-card :text="` ${littera} `" :id='`actus_${littera}`' :disabled='licta(littera)'
               density='comfortable' @click='ponatur(littera)' position='absolute' border hover />

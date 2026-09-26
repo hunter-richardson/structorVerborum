@@ -1,3 +1,4 @@
+import '../extensions/string';
 import type { modus, numerus, persona, tempus, vox } from '../miscella/enumerationes';
 import Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
@@ -11,7 +12,6 @@ import TabulaRecta from '../tabulae/recta';
 import Tabula from '../tabulae/tabula';
 import TabulaVicaria from '../tabulae/vicaria';
 import type { Putaturum, Radicator } from './putaturum';
-import '../extensions/string'
 
 
 interface Percolamen {

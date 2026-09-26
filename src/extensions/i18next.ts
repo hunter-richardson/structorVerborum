@@ -1,16 +1,14 @@
-import i18next, { type i18n } from 'i18next';
+import { useTranslation } from 'i18next-vue';
 
-declare module 'i18next' {
-  interface i18n {
-    tf(key: string, format?: string, options?: Record<string, unknown>): string
-  }
+export default function translation() {
+  const { t, i18next } = useTranslation()
+  const tf: (key: string, format?: string, options?: Record<string, unknown>) => string =
+      (key: string, format?: string, options?: Record<string, unknown>): string => {
+        if(!!format && i18next.services.formatter)
+          return i18next.services.formatter?.format(
+                     i18next.t(key, options), format, i18next.language)
+         else return i18next.t(key, options)
+      }
+
+  return { t, tf, i18next }
 }
-
-(i18next as any).prototype.tf = function(key: string, format?: string, options?: Record<string, unknown>): string {
-  return format ? this.services.formatter.format(this.t(key, options), format, this.language)
-                : this.t(key, options)
-}
-
-// eslint-disable-next-line @typescript-eslint/no-useless-empty-export
-export {}
-

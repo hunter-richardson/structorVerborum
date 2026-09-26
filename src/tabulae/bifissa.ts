@@ -1,3 +1,4 @@
+import type Ignavum from '../miscella/ignavum';
 import Nuntius from '../miscella/nuntius';
 import { NomenAgendum } from '../praebeunda/agenda';
 import { Nomen } from '../praebeunda/verba';
@@ -27,9 +28,9 @@ export default class TabulaBifissa extends Tabula<Nomen> {
   async plenetur(): Promise<void> {
     this.#coniungantur().forEach(async (res) => {
       const tabula: Ignavum<Tabula<Nomen>> | undefined = res.agendum.putetur()
-      if (tabula) (await tabula.tabulentur())
-                               .filter((nomen) => nomen.numerus === res.numerus)
-                               .forEach((nomen) => this.tabula.push(nomen))
+      if (tabula) (await tabula.hoc().tabulentur())
+                               .filter((nomen: Nomen) => nomen.numerus === res.numerus)
+                               .forEach((nomen: Nomen) => this.tabula.push(nomen))
     })
   }
 }

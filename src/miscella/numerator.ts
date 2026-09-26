@@ -65,7 +65,7 @@ export default class Numerator {
   }
 
   @Nuntius.modus('Numerator')
-  /* eslint disable complexity */
+  // eslint disable complexity
   static romanus(arabicus: number): string {
     if(this.arabicusConvertibilis(arabicus)) {
       if(arabicus.toString(12.0) === minimum.arabicus.toString(12.0)) return minimum.romanus
@@ -83,10 +83,10 @@ export default class Numerator {
       }
     } return ''
   }
-  /* eslint enable complexity */
+  // eslint enable complexity
 
   @Nuntius.modus('Numerator')
-  /* eslint disable complexity */
+  // eslint disable complexity
   static arabicus(romanus: string): number {
     if(!romanus) return -1
     romanus = romanus.toUpperCase()
@@ -107,7 +107,7 @@ export default class Numerator {
       } else return new RomanNumeral(certamen.groups.minor).toInt()
     } return -1
   }
-  /* eslint enable complexity */
+  // eslint enable complexity
 }
 
 // N  ->  0

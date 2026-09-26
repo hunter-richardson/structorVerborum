@@ -1,19 +1,12 @@
-<script lang="ts">
-  import { defineComponent, defineProps, type Ref, ref } from 'vue';
-  import Gustulus from '../scriptura/gustulus';
+<script setup lang="ts">
+  import { defineProps } from 'vue';
+import Gustulus from '../scriptura/gustulus';
 
-  const gustulus: Gustulus = defineProps<{ gustulus: Gustulus }>().gustulus
-
-  export default defineComponent({
-    data: (): {
-      gustulus: Ref<Gustulus>
-    } => {
-      return { gustulus: ref(gustulus) }
-    } })
+  const gustulus: Gustulus | undefined = defineProps<{ gustulus: Gustulus | undefined }>()
 </script>
 
 <template>
-  <template v-if="gustulus">
+  <template v-if="!!gustulus">
     <v-snackbar
       v-model="gustulus.visibile"
       :color="gustulus.color"

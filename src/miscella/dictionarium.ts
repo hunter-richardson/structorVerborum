@@ -3,6 +3,8 @@ import { actus } from '../anomala/actus';
 import { adiectiva } from '../anomala/adiectiva';
 import { nomina } from '../anomala/nomina';
 import { pronomina } from '../anomala/pronomina';
+import '../extensions/array';
+import '../extensions/string';
 import {
   actuum,
   adiectivorum,
@@ -16,8 +18,6 @@ import * as Agenda from '../praebeunda/agenda';
 import { type Referendum } from '../praebeunda/interfecta';
 import Ignavum from './ignavum';
 import Nuntius from './nuntius';
-import '../extensions/array'
-import '../extensions/string'
 
 export interface Lemma {
   categoria: string

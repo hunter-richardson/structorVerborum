@@ -1,6 +1,6 @@
 import 'cypress';
+import '../../extensions/array.ts';
 import { enclitica } from '../../miscella/enumerationes';
-import '../extensions/array.ts';
 
 export interface  Verbum {
   categoria: string
