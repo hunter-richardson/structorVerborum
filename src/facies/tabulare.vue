@@ -52,6 +52,7 @@ import specere from './specere.vue';
 
   async function cole(selecta: string[]) {
     await reoneratur()
+    haec.length = 0;
     (await omnia())?.filter((illud: Hoc) =>
         selecta.every((selectum) => illud.valores().includes(selectum)))
                .forEach((illud: Hoc) => haec.push(illud))

@@ -1,6 +1,3 @@
-# Logs
-logs
-*.log
 npm-debug.log*
 
 node_modules
@@ -32,8 +29,6 @@ codeql-agent-results
 
 /.vscode
 
-*.js
-
 src/cypress/e2e/example.cy.ts
 src/cypress/e2e/tsconfig.json
 src/cypress/fixtures/example.json
@@ -43,3 +38,6 @@ src/cypress/support/e2e.ts
 res/loci/*.errata.yml
 
 src/**/*.d.ts
+src/**/*.js
+
+*.config.js
