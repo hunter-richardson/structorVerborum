@@ -9,7 +9,6 @@
     "alwaysStrict": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
     "declaration": true,
-    "emitDecoratorMetadata": true,
     "extendedDiagnostics": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
