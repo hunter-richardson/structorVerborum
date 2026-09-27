@@ -73,93 +73,98 @@ export default class Nuntius implements Disposable {
   }
 
   static positor (nomen?: string) {
-    return function (positor: any, contextus: ClassSetterDecoratorContext) {
-      return function (this: any, valor: any) {
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Initu'st positor ${contextus.name.toString()}`
-        }); positor.call(this, valor);
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Exitu'st positor ${contextus.name.toString()}`
-        });
-      };
-    };
+    return function<Hoc, Parametra extends any[]> (
+      positor: (this: Hoc, ...parametra: Parametra) => void,
+      contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => void> {
+          return function (this: Hoc, ...parametra: Parametra) {
+            Nuntius.plusGarrio({
+              nomen: nomen,
+              nuntium: `Initu'st positor ${contextus.name.toString()}`
+            }); positor.call(this, valor)
+            Nuntius.plusGarrio({
+              nomen: nomen,
+              nuntium: `Exitu'st positor ${contextus.name.toString()}`
+            })
+          }
+        }
   }
 
   static captor (nomen?: string) {
-    return function (captor: any, contextus: ClassGetterDecoratorContext) {
-      return function (this: any): any {
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Initu'st captor ${contextus.name.toString()}`
-        }); captor.call(this);
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Exitu'st captor ${contextus.name.toString()}`
-        });
-      };
-    };
+    return function<Hoc, Illud> (
+        captor: (this: Hoc) => Illud),
+        contextus: ClassGetterDecoratorContext<Hoc, this: (Hoc) => Illud> {
+            return function (this: Hoc): Illud {
+              Nuntius.plusGarrio({
+                nomen: nomen,
+                nuntium: `Initu'st captor ${contextus.name.toString()}`
+              }); const valor = captor.call(this);
+              Nuntius.plusGarrio({
+                nomen: nomen,
+                nuntium: `Exitu'st captor ${contextus.name.toString()}`
+              }); return valor
+            }
+          }
   }
 
   static factum(nomen: string): any {
-    return function <Hoc extends { new (...parametra: any[]): object }>(constr: Hoc) {
-      return class extends constr {
-        constructor(...parametra: any[]) {
-          super(...parametra)
-          Nuntius.plusGarrio({
-            nomen: nomen,
-            nuntium: 'Fit'
-          })
+    return function <Parametra extends any[], Hoc extends new (...parametra: Parametra) => any> (
+        constr: Hoc, contextus: ClassDecoratorContext
+      ) {
+        return class extends constr {
+          constructor(...parametra: Parametra) {
+            super(...parametra)
+            Nuntius.plusGarrio({
+              nomen: nomen,
+              nuntium: 'Fit'
+            })
+          }
         }
       }
-    }
   }
 
   static modus(nomen?: string) {
-    return function (modus: any, contextus: ClassMethodDecoratorContext) {
-      return function (...parametra: any[]) {
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Initu'st modus ${contextus.name.toString()}`
-        }); const illud = modus(parametra)
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        }); return illud
-      }
-    }
+    return function<Hoc, Parametra extends any[], Illud> (
+        modus: (this: Hoc, ...parametra: Parametra) => Illud,
+        contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => Illud>) {
+          return function (this: Hoc, ...parametra: Parametra): Illud {
+            return function (...parametra: any[]) {
+              Nuntius.plusGarrio({
+                nomen: nomen,
+                nuntium: `Initu'st modus ${contextus.name.toString()}`
+              }); const illud = modus(...parametra)
+              Nuntius.plusGarrio({
+                nomen: nomen,
+                nuntium: `Exitu'st modus ${contextus.name.toString()}`
+              }); return illud
+            }
+          }
+        }
   }
 
   static futurus(nomen?: string) {
-    return function (modus: any, contextus: ClassMethodDecoratorContext) {
-      return async function (...parametra: any[]) {
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Initu'st modus ${contextus.name.toString()}`
-        })
-
-        const illud = await modus(parametra)
-
-        Nuntius.plusGarrio({
-          nomen: nomen,
-          nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        })
-
-        return illud
-      }
-    }
+    return function<Hoc, Parametra extends any[], Illud> (
+      modus: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
+      contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => Promise<Illud>>) {
+          return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
+            Nuntius.plusGarrio({
+              nomen: nomen,
+              nuntium: `Initu'st modus ${contextus.name.toString()}`
+            }) const illud = await modus(...parametra)
+            Nuntius.plusGarrio({
+              nomen: nomen,
+              nuntium: `Exitu'st modus ${contextus.name.toString()}`
+            }) return illud
+          }
+        }
   }
 
-  static finitus(nomen?: string) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return function (modus: any, contextus: ClassMethodDecoratorContext) {
-      return function (...parametra: any[]) {
-        modus(parametra)
-
+  static exutor(nomen?: string) {
+    return function (exutor: () => void, contextus: ClassMethodDecoratorContext) {
+      return function (this: any): void {
+        exutor()
         Nuntius.plusGarrio({
           nomen: nomen,
-          nuntium: "Finitu'st"
+          nuntium: `Exutu'st ${contextus.name.toString()}`
         })
       }
     }

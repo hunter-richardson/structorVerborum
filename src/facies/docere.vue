@@ -31,6 +31,7 @@
     if(!!parma && parma.endsWith('.md')) {
       docendum = parma.split('/').last().split('.').first()
       return doceatur()
+      //  eslint-disable-next-line no-extra-boolean-cast
     } else if(!!parma)
       return new Promise<void>(() =>
           window.open(parma, '_blank', 'noopener,nooreferrer'))

@@ -2,46 +2,35 @@ import Structor from './structor.ts';
 import '../extensions/string.ts';
 import { numeraminum } from '../lectores/verbalis.ts';
 import { dominus } from '../miscella/dominus.ts';
-import Numerator from '../miscella/numerator';
-import type {
-  casus,
-  CASUS,
-  categoria,
-  CATEGORIA,
-  factum,
-  FACTUM,
-  genus,
-  GENUS,
-  gradus,
-  GRADUS,
-  modus,
-  MODUS,
-  numerus,
-  NUMERUS,
-  persona,
-  PERSONA,
-  referendum,
-  REFERENDUM,
-  tempus,
-  TEMPUS,
-  vox,
-  VOX
-} from '../miscella/enumerationes.ts';
 import {
   casua,
   categoriae,
   encliticum,
   facta,
-  genera, gradua,
-  magnificeturPrima,
+  genera,
+  gradua,
   modi,
   numeri,
   personae,
   referenda,
   tempora,
-  voces,
+  voces
+  } from '../miscella/enumerationes.ts';
+import Numerator from '../miscella/numerator.ts';
+import type {
+  casus,
+  categoria,
+  factum,
+  genus,
+  gradus,
+  modus,
+  numerus,
+  persona,
+  referendum,
+  tempus,
+  vox
 } from '../miscella/enumerationes.ts';
-import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda';
+import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda.ts';
 
 export const Errator: (res: object) => Error =
   (res: object) => new Error(`Vetatur ${res}`)
@@ -56,8 +45,6 @@ export class Verbum {
   #categoriast (valor: string): valor is categoria { return valor in categoriae }
 
   get categoria (): categoria { return this.__categoria }
-
-  categoriaMagna (): CATEGORIA { return magnificeturPrima(this.__categoria) }
 
   protected get _categoria (): categoria { return this.__categoria }
 
@@ -169,16 +156,6 @@ export class Actus extends Multiplex {
 
   get persona(): persona { return this._persona }
 
-  modusMagnus(): MODUS { return magnificeturPrima(this._modus) }
-
-  tempusMagnum(): TEMPUS { return magnificeturPrima(this._tempus) }
-
-  voxMagna(): VOX { return magnificeturPrima(this._vox) }
-
-  numerusMagnus(): NUMERUS { return magnificeturPrima(this._numerus) }
-
-  personaMagna(): PERSONA { return magnificeturPrima(this._persona) }
-
   #modust(valor: string): valor is modus { return valor in modi }
 
   #tempust(valor: string): valor is tempus { return valor in tempora }
@@ -268,8 +245,6 @@ export class Adverbium extends Multiplex {
 
   get gradus(): gradus { return this._gradus }
 
-  gradusMagnus(): GRADUS { return magnificeturPrima(this._gradus) }
-
   #gradust(valor: string): valor is gradus { return valor in gradua }
 
   set gradus(valor: string) {
@@ -299,12 +274,6 @@ export class Nomen extends Multiplex {
   get numerus(): numerus { return this._numerus }
 
   get casus(): casus { return this._casus }
-
-  factumMagnum(): FACTUM { return magnificeturPrima(this._factum) }
-
-  numerusMagnus(): NUMERUS { return magnificeturPrima(this._numerus) }
-
-  casusMagnus(): CASUS { return magnificeturPrima(this._casus) }
 
   #factust(valor: string): valor is factum { return valor in facta }
 
@@ -353,12 +322,6 @@ export class Pronomen extends Multiplex {
   get numerus(): numerus { return this._numerus }
 
   get casus(): casus { return this._casus }
-
-  genusMagnum(): GENUS { return magnificeturPrima(this._genus) }
-
-  numerusMagnus(): NUMERUS { return magnificeturPrima(this._numerus) }
-
-  casusMagnus(): CASUS { return magnificeturPrima(this._casus) }
 
   #genust(valor: string): valor is genus { return valor in genera }
 
@@ -413,14 +376,6 @@ export class Adiectivum extends Multiplex {
 
   get casus(): casus { return this._casus }
 
-  gradusMagnus(): GRADUS { return magnificeturPrima(this._gradus) }
-
-  genusMagnum(): GENUS { return magnificeturPrima(this._genus) }
-
-  numerusMagnus(): NUMERUS { return magnificeturPrima(this._numerus) }
-
-  casusMagnus(): CASUS { return magnificeturPrima(this._casus) }
-
   #gradust(valor: string): valor is gradus { return valor in gradua }
 
   #genust(valor: string): valor is genus { return valor in genera }
@@ -471,8 +426,6 @@ export class Numeramen extends Multiplex {
   constructor() { super(); this._categoria = 'numeramen' }
 
   get referendum(): referendum { return this._referendum }
-
-  referendumMagnum(): REFERENDUM { return magnificeturPrima(this._referendum) }
 
   #referendust(valor: string): valor is referendum { return valor in referenda }
 
