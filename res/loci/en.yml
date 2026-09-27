@@ -137,13 +137,16 @@ an:
     quaerere:
       deLitteris: "$t(soli, capitalize) Latin letters $t(errores.licuntur)"
   scripta:
+    onerans: "loading..."
     404:
       titula: "Absent Page"
       caput: "Oops, 404!"
       nuntium: "The requested resource is missing"
       actum: "Go Back"
+    docere:
+      onerans: "Topic $t(scripta.onerans)"
     onerare:
-      onerans: "$t({{pittacium}}_singulare, capitalize) loading..."
+      onerans: "$t({{pittacium}}_singulare, capitalize) $t(scripta.onerans)"
     appositus:
       titula: "Phrase Factory"
       rogatum: "What would you like to do or say?"

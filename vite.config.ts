@@ -9,15 +9,21 @@ import { fileURLToPath, URL } from 'node:url';
 /** @type {import ('vite').UserConfig} */
 
 export default defineConfig(({ mode }) => {
-  const production: boolean = mode === 'production'
+  const operandi: boolean = mode === 'production'
   return {
     build: {
-      minify: false,
+      minify: operandi ? 'oxc' : false,
       publicDir: './res',
-      sourcemap: !production
+      sourcemap: !operandi,
+      rolldownOptions: {
+        output: {
+          codeSplitting: false,
+          entryFilenames: 'fascis.min.js'
+        }
+      }
     }, plugins: [
       checker( { typescript: true }),
-      vue(), vueJsx(), production ? [] : VueDevTools()
+      vue(), vueJsx(), operandi ? [] : VueDevTools()
     ], resolve: {
       alias: { '@' : fileURLToPath(new URL('./src/', import.meta.url)) }
     }, test: {
@@ -25,9 +31,9 @@ export default defineConfig(({ mode }) => {
       exclude: [ ...configDefaults.exclude, 'e2e/**' ],
       root: fileURLToPath(new URL('/', import.meta.url))
     }, css: {
-      logLevel: production ? 'error' : 'info',  //  development:warn after consistent builds
-      devSourcemap: !production,
-      devTools: !production,
+      logLevel: operandi ? 'error' : 'info',  //  development:warn after consistent builds
+      devSourcemap: !operandi,
+      devTools: !operandi,
       appType: 'mpa',
       server: {
         open: true

@@ -166,6 +166,8 @@ la:
       titula: "Absens Pagina"
       nuntium: "Quaerenda res abest"
       actum: "Recipe"
+    docere:
+      onerans: "Res oneratur..."
     onerare:
       onerans: "$tt({{pittacium}}_plurale, capitalize) onerantur..."
     inflectere:
