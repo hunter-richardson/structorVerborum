@@ -1,9 +1,9 @@
+import { type TransformableInfo } from 'logform';
 import { makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes.ts';
 import Numerator from './numerator.ts';
-import { type TransformableInfo } from 'logform';
 
 const scribatur = (parametra: TransformableInfo & {
   nomen?: string
@@ -67,21 +67,26 @@ export default class Nuntius implements Disposable {
 
   static plurimumGarrio(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
-      gradus: 'silly',
+      gradus: 'absurdum',
       nuntium: parametra.nuntium
     })
   }
 
   static positor (nomen?: string) {
-    return function<Hoc, Parametra extends any[]> (
-      positor: (this: Hoc, ...parametra: Parametra) => void,
-      contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => void> {
-          return function (this: Hoc, ...parametra: Parametra) {
+    return function<Hoc, Valor extends any> (
+      positor: (this: Hoc, valor: Valor) => void,
+      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, valor: Valor) => void>) {
+      return function (this: Hoc, valor: Valor) {
             Nuntius.plusGarrio({
               nomen: nomen,
               nuntium: `Initu'st positor ${contextus.name.toString()}`
-            }); positor.call(this, valor)
-            Nuntius.plusGarrio({
+            }); try { positor.call(this, valor) }
+            catch(error) {
+              Nuntius.timeo({
+                nomen: nomen,
+                nuntium: `Defectu'st positor ${contextus.name.toString()}`
+              }); throw error
+            } Nuntius.plusGarrio({
               nomen: nomen,
               nuntium: `Exitu'st positor ${contextus.name.toString()}`
             })
@@ -91,27 +96,32 @@ export default class Nuntius implements Disposable {
 
   static captor (nomen?: string) {
     return function<Hoc, Illud> (
-        captor: (this: Hoc) => Illud),
-        contextus: ClassGetterDecoratorContext<Hoc, this: (Hoc) => Illud> {
+        captor: (this: Hoc) => Illud,
+        contextus: ClassGetterDecoratorContext<Hoc, (this: Hoc) => Illud>) {
             return function (this: Hoc): Illud {
               Nuntius.plusGarrio({
                 nomen: nomen,
                 nuntium: `Initu'st captor ${contextus.name.toString()}`
-              }); const valor = captor.call(this);
-              Nuntius.plusGarrio({
+              }); let illud: Illud | undefined = undefined
+              try {
+                illud = captor.call(this)
+              } catch(error) {
+                Nuntius.timeo({
+                  nomen: nomen,
+                  nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
+                }); throw error
+              } Nuntius.plusGarrio({
                 nomen: nomen,
                 nuntium: `Exitu'st captor ${contextus.name.toString()}`
-              }); return valor
+              }); return illud
             }
           }
   }
 
-  static factum(nomen: string): any {
-    return function <Parametra extends any[], Hoc extends new (...parametra: Parametra) => any> (
-        constr: Hoc, contextus: ClassDecoratorContext
-      ) {
+  static factum(nomen: string) {
+    return function <Hoc extends new (...parametra: any[]) => any> (constr: Hoc,) {
         return class extends constr {
-          constructor(...parametra: Parametra) {
+          constructor(...parametra: any[]) {
             super(...parametra)
             Nuntius.plusGarrio({
               nomen: nomen,
@@ -125,35 +135,47 @@ export default class Nuntius implements Disposable {
   static modus(nomen?: string) {
     return function<Hoc, Parametra extends any[], Illud> (
         modus: (this: Hoc, ...parametra: Parametra) => Illud,
-        contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => Illud>) {
+        contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
           return function (this: Hoc, ...parametra: Parametra): Illud {
-            return function (...parametra: any[]) {
               Nuntius.plusGarrio({
                 nomen: nomen,
                 nuntium: `Initu'st modus ${contextus.name.toString()}`
-              }); const illud = modus(...parametra)
-              Nuntius.plusGarrio({
-                nomen: nomen,
-                nuntium: `Exitu'st modus ${contextus.name.toString()}`
-              }); return illud
-            }
+              }); let illud: Illud | undefined = undefined
+              try {
+                illud = modus.call(this, ...parametra)
+              } catch (error) {
+                Nuntius.timeo({
+                  nomen: nomen,
+                  nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
+                }); throw error;
+              } Nuntius.plusGarrio({
+                  nomen: nomen,
+                  nuntium: `Exitu'st modus ${contextus.name.toString()}`
+                }); return illud
           }
         }
   }
 
-  static futurus(nomen?: string) {
+  static promittum(nomen?: string) {
     return function<Hoc, Parametra extends any[], Illud> (
-      modus: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
-      contextus: ClassMethodDecoratorContext<Hoc, this: (Hoc, ...parametra: Parametra) => Promise<Illud>>) {
+      promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
+      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
           return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
             Nuntius.plusGarrio({
               nomen: nomen,
-              nuntium: `Initu'st modus ${contextus.name.toString()}`
-            }) const illud = await modus(...parametra)
-            Nuntius.plusGarrio({
+              nuntium: `Initu'st promittum ${contextus.name.toString()}`
+            }); let illud: Promise<Illud> | undefined = undefined
+            try {
+              illud = promittum.apply(this, parametra)
+            } catch (error) {
+              Nuntius.timeo({
+                nomen: nomen,
+                nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
+              }); throw error;
+            } Nuntius.plusGarrio({
               nomen: nomen,
-              nuntium: `Exitu'st modus ${contextus.name.toString()}`
-            }) return illud
+              nuntium: `Exitu'st promittum ${contextus.name.toString()}`
+            }); return illud
           }
         }
   }
@@ -161,7 +183,7 @@ export default class Nuntius implements Disposable {
   static exutor(nomen?: string) {
     return function (exutor: () => void, contextus: ClassMethodDecoratorContext) {
       return function (this: any): void {
-        exutor()
+        exutor.call(this)
         Nuntius.plusGarrio({
           nomen: nomen,
           nuntium: `Exutu'st ${contextus.name.toString()}`
