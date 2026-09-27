@@ -2,11 +2,14 @@
   import { onMounted, ref } from 'vue';
 import translation from '../extensions/i18next.ts';
 import '../extensions/string.ts';
-import { dictionarium, type Eventus, type Lemma, type Quaerenda } from '../miscella/dictionarium';
-import { categoriae, inflectenda } from '../miscella/enumerationes';
-import { type Verbum } from '../praebeunda/verba';
-import type { Columnae } from '../scriptura/columnae';
-import Gustulus from '../scriptura/gustulus';
+import {
+  dictionarium, type Eventus,
+  type Lemma, type Quaerenda
+} from '../miscella/dictionarium.ts';
+import { categoriae, inflectenda } from '../miscella/enumerationes.ts';
+import { type Verbum } from '../praebeunda/verba.ts';
+import type { Columnae } from '../scriptura/columnae.ts';
+import Gustulus from '../scriptura/gustulus.ts';
 import gustulare from './gustulare.vue';
 import inflectere from './inflectere.vue';
 import loqui from './loqui.vue';

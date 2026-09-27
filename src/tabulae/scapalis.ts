@@ -1,9 +1,9 @@
-import Lector, { LectorAgendorum } from '../lectores/lector';
-import type Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import type { Agendum, Positor } from '../praebeunda/agenda';
-import { Multiplex } from '../praebeunda/verba';
-import Tabula from './tabula';
+import Tabula from './tabula.ts';
+import Lector, { LectorAgendorum } from '../lectores/lector.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import type Ignavum from '../miscella/ignavum.ts';
+import type { Agendum, Positor } from '../praebeunda/agenda.ts';
 
 @Nuntius.factum('TabulaScapalis')
 export default class TabulaScapalis<Hoc extends Multiplex> extends Tabula<Hoc> {

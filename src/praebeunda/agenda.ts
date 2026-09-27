@@ -1,22 +1,22 @@
-import { actus as actusAnomala } from '../anomala/actus';
-import { nomina } from '../anomala/nomina';
-import '../extensions/array';
-import '../extensions/string';
-import { actuum } from '../lectores/verbalis';
-import { dictionarium, type Lemma } from '../miscella/dictionarium';
-import Ignavum from '../miscella/ignavum';
-import Numerator from '../miscella/numerator';
-import { actus } from '../putatores/actus';
-import { adiectivi } from '../putatores/adiectivi';
-import { incomparabilis } from '../putatores/incomparabilis';
-import { nominis } from '../putatores/nominis';
-import { nominisFacti } from '../putatores/nominisFacti';
-import TabulaAdverbii from '../tabulae/adverbii';
-import TabulaNumeraminis from '../tabulae/numeraminis';
-import Tabula from '../tabulae/tabula';
-import * as Interfecta from './interfecta';
-import Structor from './structor';
-import * as Verba from './verba';
+import * as Interfecta from './interfecta.ts';
+import Structor from './structor.ts';
+import * as Verba from './verba.ts';
+import { actus as actusAnomala } from '../anomala/actus.ts';
+import { nomina } from '../anomala/nomina.ts';
+import '../extensions/array.ts';
+import '../extensions/string.ts';
+import { actuum } from '../lectores/verbalis.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Numerator from '../miscella/numerator.ts';
+import { actus } from '../putatores/actus.ts';
+import { adiectivi } from '../putatores/adiectivi.ts';
+import { incomparabilis } from '../putatores/incomparabilis.ts';
+import { nominis } from '../putatores/nominis.ts';
+import { nominisFacti } from '../putatores/nominisFacti.ts';
+import TabulaAdverbii from '../tabulae/adverbii.ts';
+import TabulaNumeraminis from '../tabulae/numeraminis.ts';
+import Tabula from '../tabulae/tabula.ts';
+import { dictionarium, type Lemma } from '../miscella/dictionarium.ts';
 
 export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, 'categoria' | 'enclicitum' | 'unicum'>
 export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>

@@ -1,12 +1,12 @@
-import { LectorVerbalis } from './verbalis';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { type Verbum } from '../praebeunda/verba';
+import { LectorVerbalis } from './verbalis.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { type Verbum } from '../praebeunda/verba.ts';
 
 @Nuntius.factum('LectorVerbi')
 class LectorVerbi extends LectorVerbalis<Verbum> {
   @Nuntius.futurus('LectorVerbi')
-  override async omnia(): Promise<string[]> {
+  async omnia(): Promise<string[]> {
     const ordo: string[] = [];
     (await super.omnia()).forEach(async (lemma) => {
       const verbum: Verbum | undefined = await super.legatur(lemma)

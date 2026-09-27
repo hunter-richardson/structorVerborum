@@ -1,10 +1,10 @@
 <script lang='ts'>
   import { defineProps, ref } from 'vue';
 import '../../extensions/array.ts';
-import { NomenActum } from '../../praebeunda/agenda';
-import { type Faciendum } from '../../praebeunda/interfecta';
-import { Actus, Nomen } from '../../praebeunda/verba';
-import Gustulus from '../../scriptura/gustulus';
+import { NomenActum } from '../../praebeunda/agenda.ts';
+import { type Faciendum } from '../../praebeunda/interfecta.ts';
+import { Actus, Nomen } from '../../praebeunda/verba.ts';
+import Gustulus from '../../scriptura/gustulus.ts';
 import gustulare from '../gustulare.vue';
 import inflectere from '../inflectere.vue';
 import tabulare from '../tabulare.vue';

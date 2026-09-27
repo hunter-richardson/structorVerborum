@@ -1,11 +1,11 @@
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { type Positor } from '../praebeunda/agenda';
-import { type Faciendum } from '../praebeunda/interfecta';
-import { Multiplex } from '../praebeunda/verba';
-import { type Radicator } from '../putatores/putaturum';
-import TabulaRecta from './recta';
-import Tabula from './tabula';
+import TabulaRecta from './recta.ts';
+import Tabula from './tabula.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import { type Positor } from '../praebeunda/agenda.ts';
+import { type Faciendum } from '../praebeunda/interfecta.ts';
+import { type Radicator } from '../putatores/putaturum.ts';
 
 interface Vicaria {
   scapum?: string

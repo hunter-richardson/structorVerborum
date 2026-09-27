@@ -1,7 +1,7 @@
-import { casua, genera, gradua } from '../../../miscella/enumerationes';
-import { Adiectivum } from '../../../praebeunda/verba';
-import TabulaDefecta from '../defecta';
-import { type Colamen } from '../../../praebeunda/agenda';
+import { casua, genera, gradua } from '../../../miscella/enumerationes.ts';
+import { Adiectivum } from '../../../praebeunda/verba.ts';
+import TabulaDefecta from '../defecta.ts';
+import { type Colamen } from '../../../praebeunda/agenda.ts';
 
 export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
   static apponatur(): Colamen<Adiectivum>[] {

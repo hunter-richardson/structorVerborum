@@ -1,14 +1,14 @@
-import { encliticum } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { Pronomen } from '../praebeunda/verba';
-import TabulaCollata from '../tabulae/collata';
-import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
-import TabulaScapalis from '../tabulae/scapalis';
-import Anomala, { Mantela } from './anomala';
+import Anomala, { Mantela } from './anomala.ts';
+import { encliticum } from '../miscella/enumerationes.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Pronomen } from '../praebeunda/verba.ts';
+import TabulaCollata from '../tabulae/collata.ts';
+import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa.ts';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa.ts';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta.ts';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa.ts';
+import TabulaScapalis from '../tabulae/scapalis.ts';
 
 @Nuntius.factum('Pronomina')
 class Pronomina extends Anomala<Pronomen> {

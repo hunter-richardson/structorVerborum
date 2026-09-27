@@ -1,10 +1,10 @@
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import type { Colamen, Positor } from '../praebeunda/agenda';
-import { type Faciendum } from '../praebeunda/interfecta';
-import { Multiplex } from '../praebeunda/verba';
-import TabulaScapalis from './scapalis';
-import Tabula from './tabula';
+import TabulaScapalis from './scapalis.ts';
+import Tabula from './tabula.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import type { Colamen, Positor } from '../praebeunda/agenda.ts';
+import { type Faciendum } from '../praebeunda/interfecta.ts';
 
 type Radicator<Hoc, Illud> = (hoc: Hoc, colamen: Colamen<Illud>) => string
 

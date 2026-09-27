@@ -4,7 +4,7 @@ import { mount } from 'cypress/vue';
 import '../../extensions/array.ts';
 import '../../extensions/string.ts';
 import quaerere from '../../facies/quaerere.vue';
-import { inflectenda } from '../../miscella/enumerationes';
+import { inflectenda } from '../../miscella/enumerationes.ts';
 
 function ullum (res: {
   categoria: string,

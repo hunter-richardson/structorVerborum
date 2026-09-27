@@ -1,12 +1,12 @@
-import Ignavum from '../miscella/ignavum';
-import { NomenActum, NomenAgendum } from '../praebeunda/agenda';
-import Structor from '../praebeunda/structor';
-import { Nomen } from '../praebeunda/verba';
-import TabulaBifissa from '../tabulae/bifissa';
-import TabulaCollata from '../tabulae/collata';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
-import TabulaScapalis from '../tabulae/scapalis';
-import Anomala, { Mantela } from './anomala';
+import Anomala, { Mantela } from './anomala.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import { NomenActum, NomenAgendum } from '../praebeunda/agenda.ts';
+import Structor from '../praebeunda/structor.ts';
+import { Nomen } from '../praebeunda/verba.ts';
+import TabulaBifissa from '../tabulae/bifissa.ts';
+import TabulaCollata from '../tabulae/collata.ts';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa.ts';
+import TabulaScapalis from '../tabulae/scapalis.ts';
 
 class Nomina extends Anomala<Nomen> {
   protected override async numeretur(): Promise<void> {

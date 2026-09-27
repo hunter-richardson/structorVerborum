@@ -1,5 +1,5 @@
-import { Multiplex } from '../../praebeunda/verba';
-import TabulaRescripta from './rescripta';
+import TabulaRescripta from './rescripta.ts';
+import { Multiplex } from '../../praebeunda/verba.ts';
 
 export default class TabulaPraefixa<Hoc extends Multiplex> extends TabulaRescripta<Hoc> {
   praefixum!: string

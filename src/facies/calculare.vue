@@ -1,8 +1,8 @@
 <script setup lang='ts'>
   import { defineProps } from 'vue';
-import Numerator, { minimum as nihil, type Par } from '../miscella/numerator';
-import { Numerus } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
+import Numerator, { minimum as nihil, type Par } from '../miscella/numerator.ts';
+import { Numerus } from '../praebeunda/verba.ts';
+import Gustulus from '../scriptura/gustulus.ts';
 import gustulare from './gustulare.vue';
 import specere from './specere.vue';
 

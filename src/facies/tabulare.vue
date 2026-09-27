@@ -1,13 +1,13 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
   import { onMounted, ref } from 'vue';
 import '../extensions/array.ts';
-import { type categoria } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import { type Faciendum } from '../praebeunda/interfecta';
-import { Multiplex } from '../praebeunda/verba';
-import { categoricum } from '../scriptura/columnae';
-import Gustulus from '../scriptura/gustulus';
-import Tabula from '../tabulae/tabula';
+import { type categoria } from '../miscella/enumerationes.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import { type Faciendum } from '../praebeunda/interfecta.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import { categoricum } from '../scriptura/columnae.ts';
+import Gustulus from '../scriptura/gustulus.ts';
+import Tabula from '../tabulae/tabula.ts';
 import gustulare from './gustulare.vue';
 import onerare from './onerare.vue';
 import specere from './specere.vue';

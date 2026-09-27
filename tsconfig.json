@@ -8,12 +8,13 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
-    "composite": true,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "extendedDiagnostics": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
+    "incremental": true,
     "lib": [
       "dom"
     ],
@@ -28,11 +29,12 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
+    // "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "outDir": "./dist/js",
     "removeComments": true,
     "rewriteRelativeImportExtensions": true,
+    "rootDir": "./src",
     "paths": {
       "facies": [
         "./src/facies/*.vue",
@@ -47,7 +49,7 @@
       "productura": [
         "./src/extensions/*.ts"
       ]
-    },
+    }, "pretty": true,
     "sourceMap": true,
     "target": "ES2022",
     "types": [

@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "extendedDiagnostics": false,
+    "noUncheckedIndexedAccess": true,
     "removeComments": true
   }
 }

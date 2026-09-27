@@ -1,12 +1,12 @@
-import TabulaDefecta from './defecta';
+import TabulaDefecta from './defecta.ts';
 import {
   numeri,
   personae,
   tempora,
   voces
-  } from '../../miscella/enumerationes';
-import { Actus } from '../../praebeunda/verba';
-import { type Colamen } from '../../praebeunda/agenda';
+  } from '../../miscella/enumerationes.ts';
+import { Actus } from '../../praebeunda/verba.ts';
+import { type Colamen } from '../../praebeunda/agenda.ts';
 
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
   static apponatur(et: string): Colamen<Actus>[] {

@@ -2,11 +2,11 @@
   import { defineProps, ref } from 'vue';
 import '../../extensions/array.ts';
 import translation from '../../extensions/i18next.ts';
-import { genera, gradua } from '../../miscella/enumerationes';
-import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
-import { type Faciendum } from '../../praebeunda/interfecta';
-import { Adiectivum } from '../../praebeunda/verba';
-import Gustulus from '../../scriptura/gustulus';
+import { genera, gradua } from '../../miscella/enumerationes.ts';
+import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda.ts';
+import { type Faciendum } from '../../praebeunda/interfecta.ts';
+import { Adiectivum } from '../../praebeunda/verba.ts';
+import Gustulus from '../../scriptura/gustulus.ts';
 import gustulare from '../gustulare.vue';
 import inflectere from '../inflectere.vue';
 import tabulare from '../tabulare.vue';

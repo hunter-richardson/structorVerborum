@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { defineProps } from 'vue';
-import Gustulus from '../scriptura/gustulus';
+import Gustulus from '../scriptura/gustulus.ts';
 
   const gustulus: Gustulus | undefined = defineProps<{ gustulus: Gustulus | undefined }>()
 </script>

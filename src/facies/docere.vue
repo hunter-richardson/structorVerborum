@@ -1,6 +1,6 @@
 <script setup lang='ts'>
   import { defineProps } from 'vue';
-import { magister } from '../miscella/magister';
+import { magister } from '../miscella/magister.ts';
 
   const docendum: string = defineProps<{ docendum: string; }>();
 </script>

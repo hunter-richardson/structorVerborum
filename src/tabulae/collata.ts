@@ -1,12 +1,12 @@
 import deepEqual from 'deep-equal';
-import type Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { type Agendum } from '../praebeunda/agenda';
-import { type Faciendum } from '../praebeunda/interfecta';
-import type Structor from '../praebeunda/structor';
-import { Multiplex } from '../praebeunda/verba';
 import Tabula from './tabula';
-import '../extensions/array'
+import '../extensions/array';
+import Nuntius from '../miscella/nuntius.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import type Ignavum from '../miscella/ignavum.ts';
+import { type Agendum } from '../praebeunda/agenda.ts';
+import { type Faciendum } from '../praebeunda/interfecta.ts';
+import type Structor from '../praebeunda/structor.ts';
 
 export function valedictor<Hoc extends Multiplex>(hoc: Hoc): Agendum<Hoc> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

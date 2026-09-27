@@ -1,13 +1,13 @@
-import type { casus, factum } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { NomenActum } from '../praebeunda/agenda';
-import { Errator, Nomen } from '../praebeunda/verba';
-import TabulaProna from '../tabulae/defectae/prona';
-import TabulaRecta from '../tabulae/recta';
-import Tabula from '../tabulae/tabula';
-import { type Putaturum } from './putaturum';
-import '../extensions/string'
+import '../extensions/string.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { NomenActum } from '../praebeunda/agenda.ts';
+import { Errator, Nomen } from '../praebeunda/verba.ts';
+import TabulaProna from '../tabulae/defectae/prona.ts';
+import TabulaRecta from '../tabulae/recta.ts';
+import Tabula from '../tabulae/tabula.ts';
+import type { casus, factum } from '../miscella/enumerationes.ts';
+import { type Putaturum } from './putaturum.ts';
 
 interface Percolamen {
   factum?: factum

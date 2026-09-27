@@ -1,16 +1,16 @@
-import Ignavum from '../miscella/ignavum';
-import { ActusAgendus } from '../praebeunda/agenda';
-import Structor from '../praebeunda/structor';
-import { Actus as Anomalon } from '../praebeunda/verba';
-import TabulaCollata from '../tabulae/collata';
-import TabulaImpersonalis from '../tabulae/defectae/impersonalis';
-import TabulaPerfecta from '../tabulae/defectae/perfecta';
-import TabulaFissa from '../tabulae/fissa';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta';
-import TabulaScapalis from '../tabulae/scapalis';
-import type Tabula from '../tabulae/tabula';
-import Anomala, { Mantela } from './anomala';
+import Anomala, { Mantela } from './anomala.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import { ActusAgendus } from '../praebeunda/agenda.ts';
+import Structor from '../praebeunda/structor.ts';
+import { Actus as Anomalon } from '../praebeunda/verba.ts';
+import TabulaCollata from '../tabulae/collata.ts';
+import TabulaImpersonalis from '../tabulae/defectae/impersonalis.ts';
+import TabulaPerfecta from '../tabulae/defectae/perfecta.ts';
+import TabulaFissa from '../tabulae/fissa.ts';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa.ts';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta.ts';
+import TabulaScapalis from '../tabulae/scapalis.ts';
+import type Tabula from '../tabulae/tabula.ts';
 
 class Actus extends Anomala<Anomalon> {
   protected override async numeretur(): Promise<void> {

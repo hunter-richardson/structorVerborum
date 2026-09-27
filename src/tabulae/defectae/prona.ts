@@ -1,6 +1,6 @@
-import { type Colamen } from '../../praebeunda/agenda';
-import { Nomen } from '../../praebeunda/verba';
-import TabulaDefecta from './defecta';
+import TabulaDefecta from './defecta.ts';
+import { Nomen } from '../../praebeunda/verba.ts';
+import { type Colamen } from '../../praebeunda/agenda.ts';
 
 export default class TabulaProna extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {

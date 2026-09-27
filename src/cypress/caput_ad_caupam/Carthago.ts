@@ -1,5 +1,5 @@
 import 'cypress';
-import { loquatur } from './locutio';
+import { loquatur } from './locutio.ts';
 
 describe('Carthago delendast', () => {
   it('Carthaginem delerendi loqueretur', () => {

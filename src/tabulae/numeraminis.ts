@@ -1,8 +1,8 @@
-import Tabula from './tabula';
-import { referenda } from '../miscella/enumerationes';
-import Nuntius from '../miscella/nuntius';
-import { NumeramenAgendum } from '../praebeunda/agenda';
-import { Numeramen } from '../praebeunda/verba';
+import Tabula from './tabula.ts';
+import { referenda } from '../miscella/enumerationes.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { NumeramenAgendum } from '../praebeunda/agenda.ts';
+import { Numeramen } from '../praebeunda/verba.ts';
 
 @Nuntius.factum('TabulaNumeraminis')
 export default class TabulaNumeraminis extends Tabula<Numeramen> {

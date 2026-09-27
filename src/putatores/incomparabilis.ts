@@ -1,15 +1,15 @@
-import { type genus } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { Incomparabile } from '../praebeunda/agenda';
-import { Adiectivum, Errator } from '../praebeunda/verba';
-import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi';
-import TabulaRecta from '../tabulae/recta';
-import Tabula from '../tabulae/tabula';
-import TabulaVicaria from '../tabulae/vicaria';
-import { type Percolamen as Nominis } from './nominis';
-import type { Putaturum, Radicator } from './putaturum';
-import '../extensions/string'
+import '../extensions/string.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Incomparabile } from '../praebeunda/agenda.ts';
+import { Adiectivum, Errator } from '../praebeunda/verba.ts';
+import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi.ts';
+import TabulaRecta from '../tabulae/recta.ts';
+import Tabula from '../tabulae/tabula.ts';
+import TabulaVicaria from '../tabulae/vicaria.ts';
+import { type genus } from '../miscella/enumerationes.ts';
+import { type Percolamen as Nominis } from './nominis.ts';
+import type { Putaturum, Radicator } from './putaturum.ts';
 
 export interface Percolamen extends Nominis {
   genus?: genus

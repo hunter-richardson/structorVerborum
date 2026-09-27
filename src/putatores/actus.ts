@@ -1,17 +1,16 @@
-import '../extensions/string';
-import type { modus, numerus, persona, tempus, vox } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { ActusAgendus } from '../praebeunda/agenda';
-import { Actus } from '../praebeunda/verba';
-import { Errator } from '../praebeunda/verba.ts';
-import TabulaDeponens from '../tabulae/defectae/deponens';
-import TabulaImpersonalis from '../tabulae/defectae/impersonalis';
-import TabulaPerfecta from '../tabulae/defectae/perfecta';
-import TabulaRecta from '../tabulae/recta';
-import Tabula from '../tabulae/tabula';
-import TabulaVicaria from '../tabulae/vicaria';
-import type { Putaturum, Radicator } from './putaturum';
+import '../extensions/string.ts';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { ActusAgendus } from '../praebeunda/agenda.ts';
+import { Actus, Errator } from '../praebeunda/verba.ts';
+import TabulaDeponens from '../tabulae/defectae/deponens.ts';
+import TabulaImpersonalis from '../tabulae/defectae/impersonalis.ts';
+import TabulaPerfecta from '../tabulae/defectae/perfecta.ts';
+import TabulaRecta from '../tabulae/recta.ts';
+import Tabula from '../tabulae/tabula.ts';
+import TabulaVicaria from '../tabulae/vicaria.ts';
+import type { modus, numerus, persona, tempus, vox } from '../miscella/enumerationes.ts';
+import type { Putaturum, Radicator } from './putaturum.ts';
 
 
 interface Percolamen {

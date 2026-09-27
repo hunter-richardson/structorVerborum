@@ -1,15 +1,15 @@
-import type { casus, numerus } from '../miscella/enumerationes';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { NomenAgendum } from '../praebeunda/agenda';
-import { Errator, Nomen } from '../praebeunda/verba';
-import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis';
-import TabulaInflexibilis from '../tabulae/inflexibilis';
-import TabulaRecta from '../tabulae/recta';
-import Tabula from '../tabulae/tabula';
-import TabulaVicaria from '../tabulae/vicaria';
-import type { Putaturum, Radicator } from './putaturum';
-import '../extensions/string'
+import '../extensions/string';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { NomenAgendum } from '../praebeunda/agenda.ts';
+import { Errator, Nomen } from '../praebeunda/verba.ts';
+import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis.ts';
+import TabulaInflexibilis from '../tabulae/inflexibilis.ts';
+import TabulaRecta from '../tabulae/recta.ts';
+import Tabula from '../tabulae/tabula.ts';
+import TabulaVicaria from '../tabulae/vicaria.ts';
+import type { casus, numerus } from '../miscella/enumerationes.ts';
+import type { Putaturum, Radicator } from './putaturum.ts';
 
 export interface Percolamen {
   numerus?: numerus

@@ -1,8 +1,8 @@
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { type Faciendum } from '../praebeunda/interfecta';
-import { Multiplex } from '../praebeunda/verba';
-import type Tabula from '../tabulae/tabula';
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
+import { type Faciendum } from '../praebeunda/interfecta.ts';
+import type Tabula from '../tabulae/tabula.ts';
 
 export class Mantela<Hoc extends Multiplex> implements Faciendum<Hoc> {
   constructor(private readonly _tabula: Ignavum<Tabula<Hoc>>) {}

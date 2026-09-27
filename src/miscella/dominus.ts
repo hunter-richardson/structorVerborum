@@ -1,8 +1,8 @@
 import i18next from 'i18next';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
-import Ignavum from './ignavum';
-import Nuntius from './nuntius';
+import Ignavum from './ignavum.ts';
+import Nuntius from './nuntius.ts';
 
 type Valor = string | boolean | number | undefined
 

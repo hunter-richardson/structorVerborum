@@ -44,7 +44,7 @@ String.prototype.removeMacra = function (): string {
   } else return this as string
 }
 
-String.prototype.capitalize = function (): string { return this.empty() ? '' : `${(this[0]).toUpperCase()}${this.slice(1)}` }
+String.prototype.capitalize = function (): string { return this.empty() ? '' : `${this[0].toUpperCase()}${this.slice(1)}` }
 
 String.prototype.isCapitalized = function(): boolean { return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
 

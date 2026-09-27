@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { onMounted } from 'vue';
-import Nuntius from '../miscella/nuntius';
+import Nuntius from '../miscella/nuntius.ts';
 
   onMounted(() => {
     if ([ location.href, location.href !== '404' ].all()) {

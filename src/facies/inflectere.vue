@@ -1,15 +1,15 @@
 <script setup lang='ts'>
   import { defineModel } from 'vue';
-import type { Mantela } from '../anomala/anomala';
-import { type Eventus } from '../miscella/dictionarium';
-import type { categoria } from '../miscella/enumerationes';
+import type { Mantela } from '../anomala/anomala.ts';
+import { type Eventus } from '../miscella/dictionarium.ts';
+import type { categoria } from '../miscella/enumerationes.ts';
 import type {
   ActusAgendus, AdiectivumAgendum, AdverbiumAgendum,
   Incomparabile, NomenAgendum, NumeramenAgendum
-} from '../praebeunda/agenda';
-import { type Referendum } from '../praebeunda/interfecta';
-import type { Pronomen } from '../praebeunda/verba';
-import actuum from './tabulam/actuum.vue';
+} from '../praebeunda/agenda.ts';
+import { type Referendum } from '../praebeunda/interfecta.ts';
+import type { Pronomen } from '../praebeunda/verba.ts';
+import actuum from './tabulam/actuum.vue.ts';
 import adiectivorum from './tabulam/adiectivorum.vue';
 import nominum from './tabulam/nominum.vue';
 import numeraminum from './tabulam/numeraminum.vue';

@@ -1,9 +1,9 @@
 <script setup lang='ts'>
   import { onMounted } from 'vue';
 import draggable from 'vuedraggable';
-import { dominus } from '../miscella/dominus';
-import { locutor } from '../miscella/locutor';
-import Gustulus from '../scriptura/gustulus';
+import { dominus } from '../miscella/dominus.ts';
+import { locutor } from '../miscella/locutor.ts';
+import Gustulus from '../scriptura/gustulus.ts';
 import gustulare from './gustulare.vue';
 
   const pellucium: string[] = require('classifyx')({

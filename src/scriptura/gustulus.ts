@@ -1,9 +1,3 @@
-interface Optanda {
-  nuntium?: string,
-    color?: string,
-     vita?: number
-}
-
 const Please = require('pleasejs');
 
 export default class Gustulus {

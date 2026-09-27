@@ -1,8 +1,8 @@
 import file from 'file-fetch';
 import path from 'path';
-import { dominus } from './dominus';
-import Ignavum from './ignavum';
-import Nuntius from './nuntius';
+import { dominus } from './dominus.ts';
+import Ignavum from './ignavum.ts';
+import Nuntius from './nuntius.ts';
 import { marked, type MarkedExtension, type Tokens } from 'marked';
 
 @Nuntius.factum('Magister')

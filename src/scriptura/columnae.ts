@@ -1,7 +1,7 @@
-import { dominus } from '../miscella/dominus';
-import { anglicum } from '../miscella/enumerationes';
-import { Multiplex } from '../praebeunda/verba';
-import '../extensions/string'
+import '../extensions/string.ts';
+import { dominus } from '../miscella/dominus.ts';
+import { anglicum } from '../miscella/enumerationes.ts';
+import { Multiplex } from '../praebeunda/verba.ts';
 
 const latina: boolean = dominus.hoc().lingua.inhaesast()
 

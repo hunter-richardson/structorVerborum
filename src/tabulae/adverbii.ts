@@ -1,8 +1,8 @@
-import Tabula from './tabula';
-import { gradua } from '../miscella/enumerationes';
-import Nuntius from '../miscella/nuntius';
-import { AdverbiumAgendum } from '../praebeunda/agenda';
-import { Adverbium } from '../praebeunda/verba';
+import Tabula from './tabula.ts';
+import { gradua } from '../miscella/enumerationes.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { AdverbiumAgendum } from '../praebeunda/agenda.ts';
+import { Adverbium } from '../praebeunda/verba.ts';
 
 @Nuntius.factum('TabulaAdverbii')
 export default class TabulaAdverbii extends Tabula<Adverbium> {

@@ -1,9 +1,9 @@
-import { type TransformableInfo } from 'logform';
 import { makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
-import { Mensa } from './enumerationes';
-import Numerator from './numerator';
+import { Mensa } from './enumerationes.ts';
+import Numerator from './numerator.ts';
+import { type TransformableInfo } from 'logform';
 
 const scribatur = (parametra: TransformableInfo & {
   nomen?: string

@@ -1,9 +1,9 @@
 import file from 'file-fetch';
 import path from 'path';
-import Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import * as Verba from '../praebeunda/verba';
-import { type Agendum } from '../praebeunda/agenda'
+import Ignavum from '../miscella/ignavum.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import * as Verba from '../praebeunda/verba.ts';
+import { type Agendum } from '../praebeunda/agenda.ts'
 
 export function LectorAgendorum<Illud extends Verba.Multiplex>(
   scapum: string

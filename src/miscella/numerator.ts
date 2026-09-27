@@ -1,5 +1,5 @@
 import RomanNumeral from 'js-roman-numerals';
-import Nuntius from './nuntius';
+import Nuntius from './nuntius.ts';
 
 const source = (re: RegExp) => re.source
 

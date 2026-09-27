@@ -1,8 +1,8 @@
-import type Ignavum from '../miscella/ignavum';
-import Nuntius from '../miscella/nuntius';
-import { NomenAgendum } from '../praebeunda/agenda';
-import { Nomen } from '../praebeunda/verba';
-import Tabula from './tabula';
+import Tabula from './tabula.ts';
+import Nuntius from '../miscella/nuntius.ts';
+import { NomenAgendum } from '../praebeunda/agenda.ts';
+import { Nomen } from '../praebeunda/verba.ts';
+import type Ignavum from '../miscella/ignavum.ts';
 
 @Nuntius.factum('TabulaBifissa')
 export default class TabulaBifissa extends Tabula<Nomen> {

@@ -1,7 +1,7 @@
-import { casua } from '../../../miscella/enumerationes';
-import { Nomen } from '../../../praebeunda/verba';
-import TabulaDefecta from '../defecta';
-import { type Colamen } from '../../../praebeunda/agenda'
+import { casua } from '../../../miscella/enumerationes.ts';
+import { Nomen } from '../../../praebeunda/verba.ts';
+import TabulaDefecta from '../defecta.ts';
+import { type Colamen } from '../../../praebeunda/agenda.ts'
 
 export default class TabulaNominisNumerata extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {

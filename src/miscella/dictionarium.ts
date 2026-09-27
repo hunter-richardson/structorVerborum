@@ -1,10 +1,12 @@
 import deepEqual from 'deep-equal';
-import { actus } from '../anomala/actus';
-import { adiectiva } from '../anomala/adiectiva';
-import { nomina } from '../anomala/nomina';
-import { pronomina } from '../anomala/pronomina';
-import '../extensions/array';
-import '../extensions/string';
+import Ignavum from './ignavum.ts';
+import Nuntius from './nuntius.ts';
+import { actus } from '../anomala/actus.ts';
+import { adiectiva } from '../anomala/adiectiva.ts';
+import { nomina } from '../anomala/nomina.ts';
+import { pronomina } from '../anomala/pronomina.ts';
+import '../extensions/array.ts';
+import '../extensions/string.ts';
 import {
   actuum,
   adiectivorum,
@@ -12,12 +14,10 @@ import {
   incomparabilium,
   nominum,
   numeraminum
-} from '../lectores/verbalis';
-import { verborum } from '../lectores/verbi';
-import * as Agenda from '../praebeunda/agenda';
-import { type Referendum } from '../praebeunda/interfecta';
-import Ignavum from './ignavum';
-import Nuntius from './nuntius';
+  } from '../lectores/verbalis.ts';
+import { verborum } from '../lectores/verbi.ts';
+import * as Agenda from '../praebeunda/agenda.ts';
+import { type Referendum } from '../praebeunda/interfecta.ts';
 
 export interface Lemma {
   categoria: string

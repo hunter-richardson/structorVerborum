@@ -1,9 +1,9 @@
-import '../extensions/array';
-import '../extensions/string';
-import { Verbum } from '../praebeunda/verba';
-import { dominus } from './dominus';
-import Ignavum from './ignavum';
-import Nuntius from './nuntius';
+import { dominus } from './dominus.ts';
+import Ignavum from './ignavum.ts';
+import Nuntius from './nuntius.ts';
+import '../extensions/array.ts';
+import '../extensions/string.ts';
+import { Verbum } from '../praebeunda/verba.ts';
 
 @Nuntius.factum('Locutor')
 export class Locutor {

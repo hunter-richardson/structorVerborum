@@ -1,4 +1,4 @@
-import { Multiplex } from '../praebeunda/verba';
+import { Multiplex } from '../praebeunda/verba.ts';
 
 export default abstract class Tabula<Hoc extends Multiplex> {
   private _vacua: boolean = true

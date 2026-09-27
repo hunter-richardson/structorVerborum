@@ -1,10 +1,10 @@
 <script setup lang='ts'>
   import { onMounted } from 'vue';
   import draggable from 'vuedraggable';
-  import { dominus } from '../miscella/dominus';
+  import { dominus } from '../miscella/dominus.ts';
   import { useTranslation } from 'i18next-vue';
-  import { referatur, referretne } from '../scriptura/referre';
-  import { transducatur, transduceretne } from '../scriptura/transducere';
+  import { referatur, referretne } from '../scriptura/referre.ts';
+  import { transducatur, transduceretne } from '../scriptura/transducere.ts';
   import calculare from './calculare.vue';
   import gustulare from './gustulare.vue';
   import numerare from './numerare.vue';

@@ -1,12 +1,12 @@
 <script setup lang='ts'>
   import { defineProps, ref } from 'vue';
-import '../extensions/string';
-import { type Eventus } from '../miscella/dictionarium';
-import { encliticum } from '../miscella/enumerationes';
-import { locutor } from '../miscella/locutor';
-import { type NumeramenAgendum } from '../praebeunda/agenda';
-import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
+import '../extensions/string.ts';
+import { type Eventus } from '../miscella/dictionarium.ts';
+import { encliticum } from '../miscella/enumerationes.ts';
+import { locutor } from '../miscella/locutor.ts';
+import { type NumeramenAgendum } from '../praebeunda/agenda.ts';
+import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba.ts';
+import Gustulus from '../scriptura/gustulus.ts';
 import docere from './docere.vue';
 import gustulare from './gustulare.vue';
 import inflectere from './inflectere.vue';

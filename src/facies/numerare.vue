@@ -1,9 +1,9 @@
 <script setup lang='ts'>
   import { useTranslation } from 'i18next-vue';
 import { defineProp, ref } from 'vue';
-import Numerator from '../miscella/numerator';
-import { Numerus } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
+import Numerator from '../miscella/numerator.ts';
+import { Numerus } from '../praebeunda/verba.ts';
+import Gustulus from '../scriptura/gustulus.ts';
 import gustulare from './gustulare.vue';
 import specere from './specere.vue';
 

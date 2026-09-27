@@ -1,10 +1,10 @@
 <script setup lang='ts'>
   import { defineProps, ref } from 'vue';
 import '../../extensions/array.ts';
-import { ActusAgendus } from '../../praebeunda/agenda';
-import type { Faciendum, Referendum } from '../../praebeunda/interfecta';
-import { Actus } from '../../praebeunda/verba';
-import Gustulus from '../../scriptura/gustulus';
+import { ActusAgendus } from '../../praebeunda/agenda.ts';
+import type { Faciendum, Referendum } from '../../praebeunda/interfecta.ts';
+import { Actus } from '../../praebeunda/verba.ts';
+import Gustulus from '../../scriptura/gustulus.ts';
 import inflectere from '../inflectere.vue';
 import tabulare from '../tabulare.vue';
 
