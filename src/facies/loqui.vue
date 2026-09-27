@@ -1,10 +1,10 @@
 <script setup lang='ts'>
-  import { onMounted } from 'vue';
-import draggable from 'vuedraggable';
-import { dominus } from '../miscella/dominus.ts';
-import { locutor } from '../miscella/locutor.ts';
-import Gustulus from '../scriptura/gustulus.ts';
-import gustulare from './gustulare.vue';
+  import { onMounted } from 'vue'
+  import draggable from 'vuedraggable'
+  import { dominus } from '../miscella/dominus.ts'
+  import { locutor } from '../miscella/locutor.ts'
+  import Gustulus from '../scriptura/gustulus.ts'
+  import gustulare from './gustulare.vue'
 
   const pellucium: string[] = require('classifyx')({
     opacity: 0.5,
@@ -19,6 +19,7 @@ import gustulare from './gustulare.vue';
 </script>
 
 <template>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <v-chip-group id='locutio'>
     <draggable v-model='locutor.hoc().verba' :ghost-class='pellucidum'

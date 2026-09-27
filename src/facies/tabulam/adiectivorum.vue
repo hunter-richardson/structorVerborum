@@ -1,15 +1,15 @@
 <script setup lang='ts'>
-  import { defineProps, ref } from 'vue';
-import '../../extensions/array.ts';
-import translation from '../../extensions/i18next.ts';
-import { genera, gradua } from '../../miscella/enumerationes.ts';
-import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda.ts';
-import { type Faciendum } from '../../praebeunda/interfecta.ts';
-import { Adiectivum } from '../../praebeunda/verba.ts';
-import Gustulus from '../../scriptura/gustulus.ts';
-import gustulare from '../gustulare.vue';
-import inflectere from '../inflectere.vue';
-import tabulare from '../tabulare.vue';
+  import { defineProps, ref } from 'vue'
+  import '../../extensions/array.ts'
+  import translation from '../../extensions/i18next.ts'
+  import { genera, gradua } from '../../miscella/enumerationes.ts'
+  import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda.ts'
+  import { type Faciendum } from '../../praebeunda/interfecta.ts'
+  import { Adiectivum } from '../../praebeunda/verba.ts'
+  import Gustulus from '../../scriptura/gustulus.ts'
+  import gustulare from '../gustulare.vue'
+  import inflectere from '../inflectere.vue'
+  import tabulare from '../tabulare.vue'
 
   type Par = {
     title: string,
@@ -59,7 +59,9 @@ import tabulare from '../tabulare.vue';
 </script>
 
 <template>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <inflectere v-else-if='!!nomen' :agendum='nomen' @blur='nomen = undefined' />
   <tabulare v-else :agendum='agendum' categoria='adiectivum' />
   <template v-if='lectum || incomparabilium'>

@@ -1,12 +1,12 @@
 <script setup lang='ts'>
-  import { defineProps, ref } from 'vue';
-import '../../extensions/array.ts';
-import { ActusAgendus } from '../../praebeunda/agenda.ts';
-import type { Faciendum, Referendum } from '../../praebeunda/interfecta.ts';
-import { Actus } from '../../praebeunda/verba.ts';
-import Gustulus from '../../scriptura/gustulus.ts';
-import inflectere from '../inflectere.vue';
-import tabulare from '../tabulare.vue';
+  import { defineProps, ref } from 'vue'
+  import '../../extensions/array.ts'
+  import { ActusAgendus } from '../../praebeunda/agenda.ts'
+  import type { Faciendum, Referendum } from '../../praebeunda/interfecta.ts'
+  import { Actus } from '../../praebeunda/verba.ts'
+  import Gustulus from '../../scriptura/gustulus.ts'
+  import inflectere from '../inflectere.vue'
+  import tabulare from '../tabulare.vue'
 
   export interface Forma {
     gustulus: Gustulus,
@@ -19,8 +19,10 @@ import tabulare from '../tabulare.vue';
 </script>
 
 <template>
-  <inflectere if='referendum' :agendum='referendum' @blur='referendum = undefined' />
-  <tabulare v-else :agendum='agendum' categoria='actus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <inflectere v-if='!!referendum' :agendum='referendum' @blur='referendum = undefined' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <tabulare v-else-if='!!actus' :agendum='agendum' categoria='actus' />
   <template if='actua.length > 1'>
     <v-btn-toggle v-if='lectum'>
       <v-btn :text="$tf('partes.gerundium_singularis', 'capitalize')" id='nomen'

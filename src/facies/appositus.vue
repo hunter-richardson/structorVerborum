@@ -10,9 +10,9 @@
   import numerare from './numerare.vue';
   import quaerere from './quaerere.vue';
   import '../extensions/array.ts'
-import Quaerere from './quaerere.vue';
-import Numerare from './numerare.vue';
-import Calculare from './calculare.vue';
+  import Quaerere from './quaerere.vue'
+  import Numerare from './numerare.vue'
+  import Calculare from './calculare.vue'
 
   const separatores: string[] = Object.keys(dominus.hoc().separatores)
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]
@@ -37,7 +37,6 @@ import Calculare from './calculare.vue';
 </script>
 
 <template>
-  <!-- <gustulare :gustulus='gustulus' /> -->
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title :text="$t('scripta.appositus.titula')" />
@@ -93,8 +92,8 @@ import Calculare from './calculare.vue';
                @click="`$dominus.hoc()[${vexillum}].interverteUtrum()`"
                :text="`$dominus.hoc()[${vexillum}].scribatur()`" />
         <v-btn v-for='separator in separatores' :key='separator' :id="`crustula.separator.${separator}`"
-               :text="`$dominus.hoc().separatores[${separator}]`"
-               @click="`$dominus.hoc().separator.massa = ${separator}`" />
+               @click="`$dominus.hoc().separator.massa = ${separator}`"
+               :text="`$dominus.hoc().separatores[${separator}]`" />
       </v-speed-dial>
     </draggable>
   </template>

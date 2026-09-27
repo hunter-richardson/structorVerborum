@@ -1,20 +1,20 @@
 <script setup lang='ts'>
-  import { onMounted, ref } from 'vue';
-import translation from '../extensions/i18next.ts';
-import '../extensions/string.ts';
-import {
-  dictionarium, type Eventus,
-  type Lemma, type Quaerenda
-} from '../miscella/dictionarium.ts';
-import { categoriae, inflectenda } from '../miscella/enumerationes.ts';
-import { type Verbum } from '../praebeunda/verba.ts';
-import type { Columnae } from '../scriptura/columnae.ts';
-import Gustulus from '../scriptura/gustulus.ts';
-import gustulare from './gustulare.vue';
-import inflectere from './inflectere.vue';
-import loqui from './loqui.vue';
-import onerare from './onerare.vue';
-import specere from './specere.vue';
+  import { onMounted, ref } from 'vue'
+  import translation from '../extensions/i18next.ts'
+  import '../extensions/string.ts'
+  import {
+    dictionarium, type Eventus,
+    type Lemma, type Quaerenda
+  } from '../miscella/dictionarium.ts'
+  import { categoriae, inflectenda } from '../miscella/enumerationes.ts'
+  import { type Verbum } from '../praebeunda/verba.ts'
+  import type { Columnae } from '../scriptura/columnae.ts'
+  import Gustulus from '../scriptura/gustulus.ts'
+  import gustulare from './gustulare.vue'
+  import inflectere from './inflectere.vue'
+  import loqui from './loqui.vue'
+  import onerare from './onerare.vue'
+  import specere from './specere.vue'
 
   const { t, tf } = translation()
 
@@ -101,10 +101,13 @@ import specere from './specere.vue';
 </script>
 
 <template>
-  <gustulare v-if='gustulus' :gustulus='gustulus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <loqui />
-  <specere v-if='verbum' :verbum='verbum' @blur='verbum = undefined' />
-  <inflectere v-else-if='eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <specere v-if='!!verbum' :verbum='verbum' @blur='verbum = undefined' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <inflectere v-else-if='!!eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
            :text="$t('annuli.quaerere.sarcire')" />

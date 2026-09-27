@@ -1,15 +1,15 @@
 <script setup lang='ts'>
-  import { defineProps, ref } from 'vue';
-import '../extensions/string.ts';
-import { type Eventus } from '../miscella/dictionarium.ts';
-import { encliticum } from '../miscella/enumerationes.ts';
-import { locutor } from '../miscella/locutor.ts';
-import { type NumeramenAgendum } from '../praebeunda/agenda.ts';
-import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba.ts';
-import Gustulus from '../scriptura/gustulus.ts';
-import docere from './docere.vue';
-import gustulare from './gustulare.vue';
-import inflectere from './inflectere.vue';
+  import { defineProps, ref } from 'vue'
+  import '../extensions/string.ts'
+  import { type Eventus } from '../miscella/dictionarium.ts'
+  import { encliticum } from '../miscella/enumerationes.ts'
+  import { locutor } from '../miscella/locutor.ts'
+  import { type NumeramenAgendum } from '../praebeunda/agenda.ts'
+  import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba.ts'
+  import Gustulus from '../scriptura/gustulus.ts'
+  import docere from './docere.vue'
+  import gustulare from './gustulare.vue'
+  import inflectere from './inflectere.vue'
 
   let valorEnclitici: string = encliticum.nullum
 
@@ -84,7 +84,9 @@ import inflectere from './inflectere.vue';
 </script>
 
 <template>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
   <v-dialog v-else-if='verbum'>
     <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>

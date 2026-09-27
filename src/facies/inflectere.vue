@@ -1,18 +1,18 @@
 <script setup lang='ts'>
-  import { defineModel } from 'vue';
-import type { Mantela } from '../anomala/anomala.ts';
-import { type Eventus } from '../miscella/dictionarium.ts';
-import type { categoria } from '../miscella/enumerationes.ts';
-import type {
-  ActusAgendus, AdiectivumAgendum, AdverbiumAgendum,
-  Incomparabile, NomenAgendum, NumeramenAgendum
-} from '../praebeunda/agenda.ts';
-import { type Referendum } from '../praebeunda/interfecta.ts';
-import type { Pronomen } from '../praebeunda/verba.ts';
-import actuum from './tabulam/actuum.vue.ts';
-import adiectivorum from './tabulam/adiectivorum.vue';
-import nominum from './tabulam/nominum.vue';
-import numeraminum from './tabulam/numeraminum.vue';
+  import { defineModel } from 'vue'
+  import type { Mantela } from '../anomala/anomala.ts'
+  import { type Eventus } from '../miscella/dictionarium.ts'
+  import type { categoria } from '../miscella/enumerationes.ts'
+  import type {
+    ActusAgendus, AdiectivumAgendum, AdverbiumAgendum,
+    Incomparabile, NomenAgendum, NumeramenAgendum
+  } from '../praebeunda/agenda.ts'
+  import { type Referendum } from '../praebeunda/interfecta.ts'
+  import type { Pronomen } from '../praebeunda/verba.ts'
+  import actuum from './tabulam/actuum.vue.ts'
+  import adiectivorum from './tabulam/adiectivorum.vue'
+  import nominum from './tabulam/nominum.vue'
+  import numeraminum from './tabulam/numeraminum.vue'
 
   const eventus: Eventus = defineModel<Eventus | undefined>('eventus')
 
@@ -21,7 +21,8 @@ import numeraminum from './tabulam/numeraminum.vue';
 </script>
 
 <template>
-  <template v-if='referendum'>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <template v-if='!!referendum'>
     <v-dialog @blur='referendum = undefined; eventus = undefined'>
       <actuum v-if="categoria === 'actus'"
               :agendum='referendum as ActusAgendus' />

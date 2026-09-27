@@ -1,10 +1,10 @@
 <script setup lang='ts'>
-  import { defineProps } from 'vue';
-import Numerator, { minimum as nihil, type Par } from '../miscella/numerator.ts';
-import { Numerus } from '../praebeunda/verba.ts';
-import Gustulus from '../scriptura/gustulus.ts';
-import gustulare from './gustulare.vue';
-import specere from './specere.vue';
+  import { defineProps } from 'vue'
+  import Numerator, { minimum as nihil, type Par } from '../miscella/numerator.ts'
+  import { Numerus } from '../praebeunda/verba.ts'
+  import Gustulus from '../scriptura/gustulus.ts'
+  import gustulare from './gustulare.vue'
+  import specere from './specere.vue'
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
@@ -47,11 +47,14 @@ import specere from './specere.vue';
 </script>
 
 <template>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
   <div class='text-center'>
     <v-btn v-if='Number.isInteger(praevii.arabicus)' id='refer' icon='aequa' @click='aequa()' />
     <v-card :text='praevii.romanus' />
+    <!-- eslint-disable-next-line no-extra-boolean-cast -->
     <v-card v-if='!!operator' id='operator' :text='operator' />
   </div>
   <v-card :text='praesentes.romanus' />

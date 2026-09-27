@@ -1,16 +1,16 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
-  import { onMounted, ref } from 'vue';
-import '../extensions/array.ts';
-import { type categoria } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import { type Faciendum } from '../praebeunda/interfecta.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
-import { categoricum } from '../scriptura/columnae.ts';
-import Gustulus from '../scriptura/gustulus.ts';
-import Tabula from '../tabulae/tabula.ts';
-import gustulare from './gustulare.vue';
-import onerare from './onerare.vue';
-import specere from './specere.vue';
+  import { onMounted, ref } from 'vue'
+  import '../extensions/array.ts'
+  import { type categoria } from '../miscella/enumerationes.ts'
+  import Ignavum from '../miscella/ignavum.ts'
+  import { type Faciendum } from '../praebeunda/interfecta.ts'
+  import { Multiplex } from '../praebeunda/verba.ts'
+  import { categoricum } from '../scriptura/columnae.ts'
+  import Gustulus from '../scriptura/gustulus.ts'
+  import Tabula from '../tabulae/tabula.ts'
+  import gustulare from './gustulare.vue'
+  import onerare from './onerare.vue'
+  import specere from './specere.vue'
 
   export interface Forma {
     gustulus?: Gustulus,
@@ -63,8 +63,10 @@ import specere from './specere.vue';
 </script>
 
 <template>
-  <gustulare v-if='gustulus' :gustulus='gustulus' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <specere v-else-if='!!hoc' :verbum='hoc' @blur='hoc = undefined' />
   <specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec = []' />
   <template v-else-if='haec.length > 1'>
