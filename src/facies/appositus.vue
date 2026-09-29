@@ -5,9 +5,9 @@
   import { useTranslation } from 'i18next-vue';
   import { referatur, referretne } from '../scriptura/referre.ts';
   import { transducatur, transduceretne } from '../scriptura/transducere.ts';
-  import calculare from './calculare.vue';
-  import numerare from './numerare.vue';
-  import quaerere from './quaerere.vue';
+  import Calculare from './calculare.vue';
+  import Numerare from './numerare.vue';
+  import Quaerere from './quaerere.vue';
   import '../extensions/array.ts'
   import { locutor } from '../miscella/locutor.ts';
 
@@ -76,9 +76,9 @@
     </v-tabs>
     <v-tabs-window v-model='annulus'>
       <v-tabs-window-item v-for='valor in annuli' :value='valor'>
-        <template v-if="valor === 'quaerere'"><quaerere /></template>
-        <template v-else-if="valor === 'numerare'"><numerare /></template>
-        <template v-else-if="valor === 'calculare'"><calculare /></template>
+        <template v-if="valor === 'quaerere'"><Quaerere /></template>
+        <template v-else-if="valor === 'numerare'"><Numerare /></template>
+        <template v-else-if="valor === 'calculare'"><Calculare /></template>
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>

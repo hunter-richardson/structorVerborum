@@ -4,8 +4,8 @@ import { defineProps, ref, type Ref } from 'vue';
 import Numerator from '../miscella/numerator.ts';
 import { Numerale } from '../praebeunda/verba.ts';
 import Gustulus from '../scriptura/gustulus.ts';
-import gustulare from './gustulare.vue';
-import specere from './specere.vue';
+import Gustulare from './gustulare.vue';
+import Specere from './specere.vue';
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
@@ -41,9 +41,9 @@ import specere from './specere.vue';
 
 <template>
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-if='!!numerale' :verbum='numerale' @blur='numerale = undefined' />
+  <Specere v-if='!!numerale' :verbum='numerale' @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
     <v-btn v-if='arabicus.numerator === 0' icon='equal' id='aequa' @click='refer()' />

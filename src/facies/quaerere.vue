@@ -9,10 +9,10 @@
   import { categoriae, inflectenda } from '../miscella/enumerationes.ts';
   import { type Verbum } from '../praebeunda/verba.ts';
   import type { Columnae } from '../scriptura/columnae.ts';
-  import inflectere from './inflectere.vue';
-  import loqui from './loqui.vue';
-  import onerare from './onerare.vue';
-  import specere from './specere.vue';
+  import Inflectere from './inflectere.vue';
+  import Loqui from './loqui.vue';
+  import Onerare from './onerare.vue';
+  import Specere from './specere.vue';
   import type { Referendum } from '../praebeunda/interfecta';
 
   const { t, tf } = translation()
@@ -90,11 +90,11 @@
 </script>
 
 <template>
-  <loqui />
+  <Loqui />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-if='!!verbum' :verbum='verbum as Verbum' @blur='verbum = undefined' />
+  <Specere v-if='!!verbum' :verbum='verbum as Verbum' @blur='verbum = undefined' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <inflectere v-else-if='!!eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
+  <Inflectere v-else-if='!!eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
            :text="$t('annuli.quaerere.sarcire')" />
@@ -118,7 +118,7 @@
         </td>
       </tr>
     </template>
-    <onerare :onerans='onerans' pittacium='lemmae' />
+    <Onerare :onerans='onerans' pittacium='lemmae' />
     <template v-if='!onerans' v-for='lemma in lemmae' :key="`${lemma.categoria}_${lemma.scriptum}`">
       <tr><td>{{ lemma.categoria }}</td></tr>
       <tr><td>{{ lemma.scriptum }}</td></tr>

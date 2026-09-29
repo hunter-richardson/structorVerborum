@@ -3,7 +3,7 @@
   import Numerator, { minimum as nihil, type Par } from '../miscella/numerator.ts';
   import { Numerale } from '../praebeunda/verba.ts';
   import Gustulus from '../scriptura/gustulus.ts';
-  import gustulare from './gustulare.vue';
+  import Gustulare from './gustulare.vue';
   import specere from './specere.vue';
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
@@ -48,7 +48,7 @@
 
 <template>
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
   <div class='text-center'>

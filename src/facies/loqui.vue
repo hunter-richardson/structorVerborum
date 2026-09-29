@@ -4,7 +4,7 @@
   import { dominus } from '../miscella/dominus.ts'
   import { locutor } from '../miscella/locutor.ts'
   import Gustulus from '../scriptura/gustulus.ts'
-  import gustulare from './gustulare.vue'
+  import Gustulare from './gustulare.vue'
 
   const pellucidum: string[] = require('classifyx')({
     opacity: 0.5,
@@ -19,7 +19,7 @@
 
 <template>
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <v-chip-group id='locutio'>
     <draggable v-model='locutor.hoc().verba' :ghost-class='pellucidum'
                @start='trahens = true' @end='trahens = false'>

@@ -7,9 +7,9 @@
   import { type NumeramenAgendum } from '../praebeunda/agenda.ts';
   import { Actus, Multiplex, Numerale, Verbum } from '../praebeunda/verba.ts';
   import Gustulus from '../scriptura/gustulus.ts';
-  import docere from './docere.vue';
-  import gustulare from './gustulare.vue';
-  import inflectere from './inflectere.vue';
+  import Docere from './docere.vue';
+  import Gustulare from './gustulare.vue';
+  import Inflectere from './inflectere.vue';
 
   let valorEnclitici: string = Encliticum.nullum
 
@@ -82,9 +82,9 @@
 
 <template>
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
+  <Inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <v-dialog v-else-if='!!verbum && !!verbum.categoria.valor'>
     <v-card :title='verbum.monstretur()'
@@ -98,8 +98,8 @@
                   :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
                   :items='valoresEnclitici' chips flat open-on-clear />
       </template>
-      <docere :docendum='verbum.categoria' />
-      <docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
+      <Docere :docendum='verbum.categoria.valor' />
+      <Docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
       <v-btn-toggle>
         <template v-if='verbum?.paratumne()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'

@@ -8,9 +8,9 @@
   import { categoricum } from '../scriptura/columnae.ts'
   import Gustulus from '../scriptura/gustulus.ts'
   import Tabula from '../tabulae/tabula.ts'
-  import gustulare from './gustulare.vue'
-  import onerare from './onerare.vue'
-  import specere from './specere.vue'
+  import Gustulare from './gustulare.vue'
+  import Onerare from './onerare.vue'
+  import Specere from './specere.vue'
 
   const onerans: Ref<boolean> = ref<boolean>(true)
 
@@ -64,11 +64,11 @@
 
 <template>
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
-  <onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
+  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-else-if='!!hoc' :verbum='hoc' @blur='hoc = undefined' />
-  <specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec = []' />
+  <Specere v-else-if='!!hoc' :verbum='hoc' @blur='hoc = undefined' />
+  <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec = []' />
   <template v-else-if='haec.length > 1'>
     <div v-if='seligenda.length > 0' id='colamina'>
       <v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
