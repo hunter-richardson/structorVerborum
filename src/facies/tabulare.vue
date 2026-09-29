@@ -46,7 +46,7 @@
 
   async function forsInflectat() {
     await reoneratur()
-    hoc = haec.random()
+    hoc.value = haec.random()
     return await exoneratur()
   }
 
