@@ -60,7 +60,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
     }
   }
 
-  actor(genus: string): NomenAgendum | null {
+  actor(genus: string): NomenAgendum | undefined {
     const structor: Structor<NomenAgendum> = new Structor(NomenAgendum)
                       .ponatur((nomen) => (nomen.versio = 'tertiaAnimata'))
     switch (genus) {
@@ -77,7 +77,7 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
                     (nomen.genitivum = this.supinum?.replace('t?um$', 'trīcis') ?? ''))
         break
       default:
-        return null
+        return undefined
     } return structor.struatur()
   }
 }
@@ -208,19 +208,19 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
 
       const nominativus: string | undefined = adiectiva.first((adiectivum) =>
         [
-          (adiectivum.gradus = colamen.gradus),
-          (adiectivum.genus = colamen.genus),
-          (adiectivum.numerus = 'singularis'),
-          (adiectivum.casus = 'nominativus')
+          (adiectivum.gradus .valor = colamen.gradus),
+          (adiectivum.genus  .valor = colamen.genus),
+          (adiectivum.numerus.valor = 'singularis'),
+          (adiectivum.casus  .valor = 'nominativus')
         ].all()
       ).scriptum
 
       const genitivus: string | undefined = adiectiva.first((adiectivum) =>
         [
-          (adiectivum.gradus = colamen.gradus),
-          (adiectivum.genus = colamen.genus),
-          (adiectivum.numerus = 'singularis'),
-          (adiectivum.casus = 'genitivus')
+          (adiectivum.gradus .valor = colamen.gradus),
+          (adiectivum.genus  .valor = colamen.genus),
+          (adiectivum.numerus.valor = 'singularis'),
+          (adiectivum.casus  .valor = 'genitivus')
         ].all()
       ).scriptum
 
@@ -321,7 +321,7 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
     switch (referendum) {
       case 'numerus': {
         const anglicus: number = Numerator.arabicus(this.numerus)
-        return Verba.Numerus.numerator(anglicus)
+        return Verba.Numerale.numerator(anglicus)
       }
       case 'adverbium':
         lemma = {

@@ -1,19 +1,19 @@
 import '../extensions/string.ts';
+import { errator, type Gradus } from '../miscella/enumerationes.ts';
 import Ignavum from '../miscella/ignavum.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { AdiectivumAgendum } from '../praebeunda/agenda.ts';
-import { Adiectivum, Errator } from '../praebeunda/verba.ts';
+import { Adiectivum } from '../praebeunda/verba.ts';
 import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi.ts';
 import TabulaInflexibilis from '../tabulae/inflexibilis.ts';
 import TabulaRecta from '../tabulae/recta.ts';
 import Tabula from '../tabulae/tabula.ts';
 import TabulaVicaria from '../tabulae/vicaria.ts';
-import { type gradus } from '../miscella/enumerationes.ts';
 import { type Percolamen as Incomparabile } from './incomparabilis.ts';
 import type { Putaturum, Radicator } from './putaturum.ts';
 
 interface Percolamen extends Incomparabile {
-  gradus?: gradus
+  gradus?: Gradus
 }
 
 @Nuntius.factum('PutatorAdiectivi')
@@ -22,7 +22,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
     switch (versio) {
       case 'positivaAutPrimaAutSecunda':
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
-          switch (colamen.gradus) {
+          switch (colamen.gradus?.valor) {
             case 'positivus':
               return adiectivum.positivum.chop(2)
             case 'comparativus':
@@ -38,12 +38,12 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => adiectivum.positivum
       case 'positivaAutPrimaAutSecunda/cumLitteraR':
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
-          switch (colamen.gradus) {
+          switch (colamen.gradus?.valor) {
             case 'positivus':
               return adiectivum.positivum.chop([
-                colamen.genus === 'masculinum',
-                colamen.numerus === 'singularis',
-                [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+                colamen.genus?.aequatur('masculinum'),
+                colamen.numerus?.aequatur('singularis'),
+                [ 'nominativus', 'vocativus' ].includes(colamen.casus?.valor ?? '')
               ].all() ? 0 : 1)
             case 'comparativus':
               return adiectivum.comparativum.chop(3)
@@ -63,12 +63,12 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
       case 'positivaTertia/cumTruncoVario':
       case 'positivaTertia/cumTruncoVario/pluralis':
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
-          switch (colamen.gradus) {
+          switch (colamen.gradus?.valor) {
             case 'positivus':
               return [
-                colamen.genus === 'neutrum',
-                colamen.numerus === 'singularis',
-                colamen.casus === 'accusativus'
+                colamen.genus?.aequatur('neutrum'),
+                colamen.numerus?.aequatur('singularis'),
+                colamen.casus?.aequatur('accusativus')
               ].all() ? adiectivum.positivum : adiectivum.comparativum.chop(3)
             case 'comparativus':
               return adiectivum.comparativum.chop(3)
@@ -84,18 +84,18 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
       case 'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario':
       case 'positivaTertia/nominativusUnigenerCumTruncoVario':
         return (adiectivum: AdiectivumAgendum, colamen: Percolamen): string => {
-          switch (colamen.gradus) {
+          switch (colamen.gradus?.valor) {
             case 'positivus':
               switch (true) {
                 case [
-                  colamen.genus === 'neutrum',
-                  colamen.numerus === 'singularis',
-                  colamen.casus === 'accusativus'
+                  colamen.genus?.aequatur('neutrum'),
+                  colamen.numerus?.aequatur('singularis'),
+                  colamen.casus?.aequatur('accusativus')
                 ].all():
                   return adiectivum.positivum
                 case [
-                  colamen.numerus === 'singularis',
-                  ['nominativus', 'vocativus'].includes(colamen.casus ?? '')
+                  colamen.numerus?.aequatur('singularis'),
+                  ['nominativus', 'vocativus'].includes(colamen.casus?.valor ?? '')
                 ].all():
                   return adiectivum.positivum
                 default:
@@ -109,7 +109,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
               return ''
           }
         }
-      default: throw Errator({ versio: versio })
+      default: throw errator({ versio: versio })
     }
   }
 
@@ -163,7 +163,7 @@ class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
                    positor: Adiectivum.positor,
                    hoc: agendum
                  })
-    else throw Errator({ versio: agendum.versio })
+    else throw errator({ versio: agendum.versio })
   }
 }
 

@@ -1,19 +1,19 @@
-import '../extensions/string';
+import '../extensions/string.ts';
+import { errator, type Casus, type Numerus } from '../miscella/enumerationes.ts';
 import Ignavum from '../miscella/ignavum.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { NomenAgendum } from '../praebeunda/agenda.ts';
-import { Errator, Nomen } from '../praebeunda/verba.ts';
+import { Nomen } from '../praebeunda/verba.ts';
 import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis.ts';
 import TabulaInflexibilis from '../tabulae/inflexibilis.ts';
 import TabulaRecta from '../tabulae/recta.ts';
 import Tabula from '../tabulae/tabula.ts';
 import TabulaVicaria from '../tabulae/vicaria.ts';
-import type { casus, numerus } from '../miscella/enumerationes.ts';
 import type { Putaturum, Radicator } from './putaturum.ts';
 
 export interface Percolamen {
-  numerus?: numerus
-    casus?: casus
+  numerus?: Numerus
+    casus?: Casus
 }
 
 @Nuntius.factum('PutatorNominis')
@@ -36,8 +36,8 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'secundaMasculina/cumLitteraR':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           return [
-            colamen.numerus === 'singularis',
-            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+            colamen.numerus?.aequatur('singularis'),
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus?.valor ?? '')
           ].all() ? nomen.nominativum : nomen.genitivum.chop(1)
         }
       case 'tertiaAnimata':
@@ -46,8 +46,8 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'tertiaAnimata/cumGenitivoAblativoqueVario':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           return [
-            colamen.numerus === 'singularis',
-            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+            colamen.numerus?.aequatur('singularis'),
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus?.valor ?? '')
           ].all() ? nomen.nominativum : nomen.genitivum.chop(2)
         }
       case 'tertiaNeutra':
@@ -57,11 +57,11 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
       case 'tertiaNeutra/cumTruncoVario':
         return (nomen: NomenAgendum, colamen: Percolamen): string => {
           return [
-            colamen.numerus === 'singularis',
-            [ 'nominativus', 'accusativus', 'vocativus' ].includes(colamen.casus ?? '')
+            colamen.numerus?.aequatur('singularis'),
+            [ 'nominativus', 'accusativus', 'vocativus' ].includes(colamen.casus?.valor ?? '')
           ].all() ? nomen.nominativum : nomen.genitivum.chop(2)
         }
-      default: throw Errator({ versio: versio })
+      default: throw errator({ versio: versio })
     }
   }
 
@@ -126,7 +126,7 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
                    positor: Nomen.positor,
                    hoc: agendum
                  })
-    else throw Errator({ versio: agendum.versio })
+    else throw errator({ versio: agendum.versio })
   }
 }
 

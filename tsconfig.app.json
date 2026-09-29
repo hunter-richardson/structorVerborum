@@ -5,7 +5,7 @@
     "./src/**/*.ts",
     "./src/facies/*.vue",
     "./src/facies/tabulam/*.vue",
-    "./types/vue-shim.d.ts",
+    "./src/vue-shim.d.ts",
     "./src/figura.ts"
   ],
   "exclude": [

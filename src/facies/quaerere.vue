@@ -1,32 +1,21 @@
 <script setup lang='ts'>
-  import { onMounted, ref } from 'vue'
-  import translation from '../extensions/i18next.ts'
-  import '../extensions/string.ts'
+  import { onMounted, ref, type Ref } from 'vue';
+  import translation from '../extensions/i18next.ts';
+  import '../extensions/string.ts';
   import {
-    dictionarium, type Eventus,
-    type Lemma, type Quaerenda
-  } from '../miscella/dictionarium.ts'
-  import { categoriae, inflectenda } from '../miscella/enumerationes.ts'
-  import { type Verbum } from '../praebeunda/verba.ts'
-  import type { Columnae } from '../scriptura/columnae.ts'
-  import Gustulus from '../scriptura/gustulus.ts'
-  import gustulare from './gustulare.vue'
-  import inflectere from './inflectere.vue'
-  import loqui from './loqui.vue'
-  import onerare from './onerare.vue'
-  import specere from './specere.vue'
+      dictionarium, type Eventus,
+      type Lemma, type Quaerenda
+  } from '../miscella/dictionarium.ts';
+  import { categoriae, inflectenda } from '../miscella/enumerationes.ts';
+  import { type Verbum } from '../praebeunda/verba.ts';
+  import type { Columnae } from '../scriptura/columnae.ts';
+  import inflectere from './inflectere.vue';
+  import loqui from './loqui.vue';
+  import onerare from './onerare.vue';
+  import specere from './specere.vue';
+  import type { Referendum } from '../praebeunda/interfecta';
 
   const { t, tf } = translation()
-
-  const Categoriae: {
-    title: string,
-    value: string
-  }[] = categoriae.map(function(this: any, categoria: string) {
-    return {
-      title: tf(`partes.${categoria}_singularis`, 'capitalize'),
-      value: categoria
-    }
-  })
 
   const columnae: Columnae = [
     'lemma', 'categoriae'
@@ -40,72 +29,70 @@
   const validator: ((pars: string) => boolean | string)[] = [
     function(this: any, pars: string): boolean | string {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
-      return licta.test(pars.toLowerCase()) || this.$t('errores.quaerere.deLitteris')
+      return licta.test(pars.toLowerCase()) || t('errores.quaerere.deLitteris')
     }
   ]
 
-  let onerans: boolean = false
-  let error: boolean = false
-  let verbum: Verbum | undefined = undefined
-  let lemmae: Lemma[] = []
-  let quaerenda: Quaerenda = {
+  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
+  const verbum: Ref<Referendum | undefined> = ref<Referendum | undefined>()
+
+  const onerans: Ref<boolean> = ref<boolean>(false)
+  const error: Ref<boolean> = ref<boolean>(false)
+  const lemmae: Ref<Lemma[]> = ref<Lemma[]>([])
+  const quaerenda: Ref<Quaerenda> = ref<Quaerenda>({
     categoriae: [],
     pars: ''
-  }
+  })
 
-  const gustulus = defineProps<Gustulus | undefined>()
+  function reoneratur() { onerans.value = true }
 
-  let eventus: Eventus | undefined = ref<Eventus | undefined>()
-
-  function reoneratur() { onerans = true }
-
-  async function exoneratur (): Promise<void> { onerans = false }
+  async function exoneratur (): Promise<void> { onerans.value = false }
 
   async function sarci (): Promise<void> {
     reoneratur()
-    lemmae = await dictionarium.hoc().quaeratur(quaerenda)
+    lemmae.value = await dictionarium.hoc().quaeratur(quaerenda.value)
     return exoneratur()
   }
 
   async function forsSeligat (): Promise<void> {
     reoneratur()
-    const res: Eventus = await dictionarium.hoc().forsReferatur(quaerenda)
-    if (inflectenda(res.categoria)) eventus = res
-    else verbum = res as Verbum ?? undefined
+    const res: Eventus = await dictionarium.hoc().forsReferatur(quaerenda.value)
+    if (inflectenda(res.categoria)) eventus.value = res
+    else verbum.value = res as Referendum ?? undefined
     return exoneratur()
   }
 
   async function omnia (): Promise<void> {
     reoneratur()
-    quaerenda.categoriae = []
-    quaerenda.pars = ''
+    quaerenda.value.categoriae = []
+    quaerenda.value.pars = ''
     sarci()
   }
 
   async function aperi (lemma: Lemma) {
     const res: Eventus | null = await dictionarium.hoc().referatur(lemma)
     if (res) {
-      if (inflectenda(res.categoria)) eventus = res
-      else verbum = res as Verbum
+      if (inflectenda(res.categoria)) eventus.value = res
+      else verbum.value = res as Referendum
     }
   }
 
   function removeApices (): void {
-    if (validator[ 0 ](quaerenda.pars)) {
-      quaerenda.pars = quaerenda.pars.toLowerCase().removeMacra()
-      error = false
-    } else error = true
+    if (validator[ 0 ](quaerenda.value.pars)) {
+      quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra()
+      error.value = false
+    } else error.value = true
   }
 
-  onMounted(async () => { await omnia().then((() => exoneratur())) })
+  onMounted(async () => {
+    await omnia().then((() => exoneratur()))
+  })
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <loqui />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-if='!!verbum' :verbum='verbum' @blur='verbum = undefined' />
+  <specere v-if='!!verbum' :verbum='verbum as Verbum' @blur='verbum = undefined' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <inflectere v-else-if='!!eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
   <div class='text-center'>

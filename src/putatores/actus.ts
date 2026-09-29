@@ -1,24 +1,25 @@
 import '../extensions/string.ts';
+import type { Modus, Numerus, Persona, Tempus, Vox } from '../miscella/enumerationes.ts';
+import { errator } from '../miscella/enumerationes.ts';
 import Ignavum from '../miscella/ignavum.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { ActusAgendus } from '../praebeunda/agenda.ts';
-import { Actus, Errator } from '../praebeunda/verba.ts';
+import { Actus } from '../praebeunda/verba.ts';
 import TabulaDeponens from '../tabulae/defectae/deponens.ts';
 import TabulaImpersonalis from '../tabulae/defectae/impersonalis.ts';
 import TabulaPerfecta from '../tabulae/defectae/perfecta.ts';
 import TabulaRecta from '../tabulae/recta.ts';
 import Tabula from '../tabulae/tabula.ts';
 import TabulaVicaria from '../tabulae/vicaria.ts';
-import type { modus, numerus, persona, tempus, vox } from '../miscella/enumerationes.ts';
 import type { Putaturum, Radicator } from './putaturum.ts';
 
 
 interface Percolamen {
-    modus?: modus
-   tempus?: tempus
-      vox?: vox
-  numerus?: numerus
-  persona?: persona
+    modus?: Modus
+   tempus?: Tempus
+      vox?: Vox
+  numerus?: Numerus
+  persona?: Persona
 }
 
 @Nuntius.factum('PutatorActus')
@@ -41,12 +42,12 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participium',
-              colamen.vox === 'passiva',
-              colamen.tempus === 'futurum'
+              colamen.modus?.aequatur('participium'),
+              colamen.vox?.aequatur('passiva'),
+              colamen.tempus?.aequatur('futurum')
             ].all():
               return actus.supinum?.chop(2) ?? ''
-            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
+            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus?.valor ?? ''):
               return actus.perfectum?.chop(4) ?? ''
             default:
               return actus.infinitivum?.chop(3) ?? ''
@@ -61,12 +62,12 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participium',
-              colamen.vox === 'passiva',
-              colamen.tempus === 'futurum'
+              colamen.modus?.aequatur('participium'),
+              colamen.vox?.aequatur('passiva'),
+              colamen.tempus?.aequatur('futurum')
             ].all():
               return actus.supinum?.chop(2) ?? ''
-            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus ?? ''):
+            case ['perfectum', 'plusquamperfectum', 'exigendum'].includes(colamen.tempus?.valor ?? ''):
               return actus.perfectum?.chop(4) ?? ''
             default:
               return actus.infinitivum?.chop(1) ?? ''
@@ -95,15 +96,15 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'participium',
-              colamen.tempus === 'futurum',
-              colamen.vox === 'activa'
+              colamen.modus?.aequatur('participium'),
+              colamen.tempus?.aequatur('futurum'),
+              colamen.vox?.aequatur('activa')
             ].all():
               return actus.supinum?.chop(2) ?? ''
             case [
-              colamen.modus === 'participium',
-              colamen.tempus === 'perfectum',
-              colamen.vox === 'passiva'
+              colamen.modus?.aequatur('participium'),
+              colamen.tempus?.aequatur('perfectum'),
+              colamen.vox?.aequatur('passiva')
             ].all():
               return actus.supinum?.chop(2) ?? ''
             default:
@@ -126,9 +127,9 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
         return (actus: ActusAgendus, colamen: Percolamen): string => {
           switch (true) {
             case [
-              colamen.modus === 'infintivus',
-              colamen.tempus === 'perfectum',
-              colamen.vox === 'passiva'
+              colamen.modus?.aequatur('infintivus'),
+              colamen.tempus?.aequatur('perfectum'),
+              colamen.vox?.aequatur('passiva')
             ].all():
               return actus.perfectum ?? ''
             default:
@@ -161,7 +162,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                      })
         case 'perfectus': return new Ignavum(TabulaPerfecta, { relata: this.putetur(agendus) })
         default:
-          throw Errator({ versio: agendus.versio })
+          throw errator({ versio: agendus.versio })
       }
     } else if (vices) {
       agendus.versio = fundamen
@@ -177,7 +178,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                      positor: Actus.positor,
                      hoc: agendus
                    })
-      else throw Errator({ versio: agendus.versio })
+      else throw errator({ versio: agendus.versio })
     } else {
       if ([
         'prima', 'secunda', 'tertia', 'tertiaVaria', 'quarta'
@@ -190,7 +191,7 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
                      via: agendus.versio,
                      hoc: agendus
         })
-      } else throw Errator({ versio: agendus.versio })
+      } else throw errator({ versio: agendus.versio })
     }
   }
 }

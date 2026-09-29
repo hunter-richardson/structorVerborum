@@ -1,5 +1,5 @@
 import Tabula from './tabula.ts';
-import { referenda } from '../miscella/enumerationes.ts';
+import { referenda, Referendum } from '../miscella/enumerationes.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { NumeramenAgendum } from '../praebeunda/agenda.ts';
 import { Numeramen } from '../praebeunda/verba.ts';
@@ -16,18 +16,18 @@ export default class TabulaNumeraminis extends Tabula<Numeramen> {
       case       'cardinale': return this.agendum.cardinale
       case       'adverbium': return this.agendum.adverbium
       case        'ordinale': return this.agendum.ordinale
-      case         'numerus': return this.agendum.numerus
+                     default: return this.agendum.numerus
     }
   }
 
-  @Nuntius.futurus('TabulaNumeraminis')
+  @Nuntius.promittum('TabulaNumeraminis')
   async plenetur(): Promise<void> {
     referenda.forEach((referendum) => {
       let scriptum: string | undefined = this.#referatur(referendum)
       if (scriptum) {
         this.tabula.push(
           Object.assign({}, {
-            referendum: referendum,
+            referendum: Referendum.referendum(referendum),
             scriptum: scriptum
           } as Numeramen))
       }

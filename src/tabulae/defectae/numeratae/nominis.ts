@@ -1,13 +1,15 @@
-import { casua } from '../../../miscella/enumerationes.ts';
+import { Casus, casus, Numerus } from '../../../miscella/enumerationes.ts';
+import Nuntius from '../../../miscella/nuntius.ts';
 import { Nomen } from '../../../praebeunda/verba.ts';
 import TabulaDefecta from '../defecta.ts';
-import { type Colamen } from '../../../praebeunda/agenda.ts'
+import { type Colamen } from '../../../praebeunda/agenda.ts';
 
+@Nuntius.factum('TabulaNominisNumerata')
 export default class TabulaNominisNumerata extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {
-    return casua.map((casus) => {
+    return casus.map((casus) => {
       return {
-        casus: casus
+        casus: Casus.casus(casus)
       } as Colamen<Nomen>
     })
   }
@@ -15,9 +17,9 @@ export default class TabulaNominisNumerata extends TabulaDefecta<Nomen> {
   public numerus!: string
 
   protected referatur(colamen: Colamen<Nomen>): Colamen<Nomen> | null {
-    return colamen.numerus === this.numerus ? {
+    return colamen.numerus.aequatur(this.numerus) ? {
           ...colamen,
-          numerus: ''
+          numerus: new Numerus
         } : null
   }
 }

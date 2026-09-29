@@ -31,7 +31,7 @@ export default class Lector<Hoc> {
     return (corpus as Response).ok ? (await corpus.text()).trim() : ''
   }
 
-  @Nuntius.futurus('Lector')
+  @Nuntius.promittum('Lector')
   async legatur(lemma: string): Promise<Hoc | undefined> {
     const data: string = await this.aperiatur(lemma)
     if (data) {
@@ -39,7 +39,7 @@ export default class Lector<Hoc> {
       try {
         const hoc: Hoc | undefined = parse(data, { header: true })
         if (hoc) {
-          Nuntius.plusGarrio({
+          Nuntius.noto({
             nomen: 'Lector',
             nuntium: `Lemma invenita'st ${lemma}`
           }); return hoc
@@ -50,7 +50,7 @@ export default class Lector<Hoc> {
           error: error as Error
         })
       }
-    }; Nuntius.plusGarrio({
+    }; Nuntius.noto({
       nomen: 'Lector',
       nuntium: `Lemma nulla'st ${lemma}`
     }); return undefined

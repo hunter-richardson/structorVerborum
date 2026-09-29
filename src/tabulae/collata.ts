@@ -1,6 +1,6 @@
 import deepEqual from 'deep-equal';
-import Tabula from './tabula';
-import '../extensions/array';
+import Tabula from './tabula.ts';
+import '../extensions/array.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { Multiplex } from '../praebeunda/verba.ts';
 import type Ignavum from '../miscella/ignavum.ts';
@@ -28,7 +28,7 @@ export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
     return typeof (relata as any).hoc === 'function'
   }
 
-  @Nuntius.futurus('TabulaCollata')
+  @Nuntius.promittum('TabulaCollata')
   async plenetur(): Promise<void> {
     this.relatae.forEach(async (relata) => {
       if(this.#structorest(relata)) relata = relata.struatur().putetur()

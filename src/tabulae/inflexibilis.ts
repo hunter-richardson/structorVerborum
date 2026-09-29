@@ -9,7 +9,7 @@ export default class TabulaInflexibilis<Hoc extends Faciendum<Illud>, Illud exte
   positor!: Positor<Illud>
   hoc!: Hoc
 
-  @Nuntius.futurus('TabulaInflexibilis')
+  @Nuntius.promittum('TabulaInflexibilis')
   async plenetur(): Promise<void>
   { this.tabula.push(this.positor(this.hoc)) }
 }

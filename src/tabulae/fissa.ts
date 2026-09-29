@@ -12,7 +12,7 @@ export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
   relata!: Ignavum<Tabula<Hoc>>
   colamina!: Colamen<Hoc>[]
 
-  @Nuntius.futurus('TabulaFissa')
+  @Nuntius.promittum('TabulaFissa')
   async plenetur(): Promise<void> {
     const haec: Hoc[] = await this.relata.hoc().tabulentur()
     this.colamina.forEach(async (colamen) => {

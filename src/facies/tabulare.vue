@@ -1,7 +1,7 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, type Ref } from 'vue'
   import '../extensions/array.ts'
-  import { type categoria } from '../miscella/enumerationes.ts'
+  import { Columnae } from '../scriptura/columnae.ts'
   import Ignavum from '../miscella/ignavum.ts'
   import { type Faciendum } from '../praebeunda/interfecta.ts'
   import { Multiplex } from '../praebeunda/verba.ts'
@@ -12,13 +12,13 @@
   import onerare from './onerare.vue'
   import specere from './specere.vue'
 
+  const onerans: Ref<boolean> = ref<boolean>(true)
+
   export interface Forma {
     gustulus?: Gustulus,
     agendum: Faciendum<Hoc>,
-    categoria: categoria
+    categoria: string
   }
-
-  let onerans: boolean = true
 
   const { gustulus, agendum, categoria } = defineProps<Forma>()
   const tabula: Ignavum<Tabula<Hoc>> | undefined = agendum.putetur()
@@ -32,7 +32,7 @@
     haec: haec
   })
 
-  let hoc: Hoc | undefined = ref<Hoc | undefined>()
+  const hoc: Ref<Hoc | undefined> = ref<Hoc | undefined>(undefined)
 
   const seligenda: string[] = [
     ...new Set<string>(haec?.map((multiplex: Multiplex) => multiplex.valores()).flat())
@@ -40,9 +40,9 @@
 
   const selecta: string[] = [];
 
-  function reoneretur() { onerans = true }
+  function reoneretur() { onerans.value = true }
 
-  async function exoneretur() { onerans = false; }
+  async function exoneretur() { onerans.value = false; }
 
   async function forsInflectat() {
     await reoneratur()

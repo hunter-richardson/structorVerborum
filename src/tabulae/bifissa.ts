@@ -24,12 +24,12 @@ export default class TabulaBifissa extends Tabula<Nomen> {
     ]
   }
 
-  @Nuntius.futurus('TabulaBifissa')
+  @Nuntius.promittum('TabulaBifissa')
   async plenetur(): Promise<void> {
     this.#coniungantur().forEach(async (res) => {
       const tabula: Ignavum<Tabula<Nomen>> | undefined = res.agendum.putetur()
       if (tabula) (await tabula.hoc().tabulentur())
-                               .filter((nomen: Nomen) => nomen.numerus === res.numerus)
+                               .filter((nomen: Nomen) => nomen.numerus.aequatur(res.numerus))
                                .forEach((nomen: Nomen) => this.tabula.push(nomen))
     })
   }

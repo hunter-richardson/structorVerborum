@@ -11,7 +11,7 @@ export default class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> 
     prima!: Ignavum<Tabula<Hoc>>
   secunda!: Ignavum<Tabula<Hoc>>
 
-  @Nuntius.futurus('TabulaConiuncta')
+  @Nuntius.promittum('TabulaConiuncta')
   async plenetur(): Promise<void> {
     const aequantur: (prima: Set<any>, secunda: Set<any>) => boolean = (await import('@neoncitylights/sets')).areSetsEqual
 

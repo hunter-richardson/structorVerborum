@@ -1,33 +1,34 @@
 declare global {
   interface Array<T> {
-    first(predicate?: (param: any) => boolean): T
-    last(predicate?: (param: any) => boolean): T
+    first(predicate?: (param: T) => boolean): T
+    last(predicate?: (param: T) => boolean): T
     random(): T
-    none(predicate?: (param: any) => boolean): boolean
+    none(predicate?: (param: T) => boolean): boolean
     all(): boolean
     any(): boolean
     intersection (withThese: T[]): T[]
     except (these: T[]): T[]
+    excludes(these?: T): boolean
   }
 }
 
-Array.prototype.first = function <T>(predicate?: (param: any) => boolean): T {
+Array.prototype.first = function <T>(predicate?: (param: T) => boolean): T {
   if (predicate) {
     const copy: T[] = this.filter(predicate)
     return copy[0]
   } else return this[0]
 }
 
-Array.prototype.last = function <T>(predicate?: (param: any) => boolean): T {
+Array.prototype.last = function <T>(predicate?: (param: T) => boolean): T {
   if (predicate) {
     const copy: T[] = this.filter(predicate)
     return copy[-1] ?? copy[this.length - 1]
   } else return this[-1] ?? this[this.length - 1]
 }
 
-Array.prototype.random = function (): any { return this[Math.floor(Math.random() * this.length)] }
+Array.prototype.random = function<T> (): T { return this[Math.floor(Math.random() * this.length)] }
 
-Array.prototype.none = function (predicate?: (param: any) => boolean): boolean {
+Array.prototype.none = function<T> (predicate?: (param: T) => boolean): boolean {
   if (predicate) return !this.some(predicate)
   else return !this.some((status) => !!status)
 }
@@ -40,6 +41,8 @@ Array.prototype.intersection = function <T> (withThese: T[]): T[] { return this.
 
 Array.prototype.except = function <T> (these: T[]): T[] { return this.filter(value => !these.includes(value)) }
 
+Array.prototype.excludes = function<T>(these?: T): boolean { return !this.includes(these ?? []) }
+
 // eslint-disable-next-line @typescript-estlint/no-useless-empty-export
-export {}
+export { };
 

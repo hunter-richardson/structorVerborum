@@ -92,19 +92,19 @@ export default class Numerator {
     romanus = romanus.toUpperCase()
     const certamen: RegExpExecArray | undefined = colamen.exec(romanus) ?? undefined
     if(certamen && certamen.groups) {
-      if(certamen.groups.nihil) return 0
-      if(certamen.groups.maior)
-        return (1000.0 * this.arabicus(certamen.groups.maior)) +
-                         this.arabicus(certamen.groups.minor ?? 'N')
+      if(certamen.groups['nihil']) return 0
+      if(certamen.groups['maior'])
+        return (1000.0 * this.arabicus(certamen.groups['maior'])) +
+                         this.arabicus(certamen.groups['minor'] ?? 'N')
       const certamenMixtum: RegExpExecArray | undefined = colamenMixtum.exec(romanus) ?? undefined
       if(certamenMixtum && certamenMixtum.groups) {
-        const fractus: string | undefined = certamenMixtum.groups.fractus ?? undefined
-        const integer: string = certamenMixtum.groups.integer ?? 'N'
+        const fractus: string | undefined = certamenMixtum.groups['fractus'] ?? undefined
+        const integer: string = certamenMixtum.groups['integer'] ?? 'N'
         if(fractus) {
           const numerator: string = claves.first((clavis: Fractus) => (fracti[clavis] === fractus)) as string ?? '0'
           return (parseInt(numerator.toLowerCase(), 12.0) / 12.0) + this.arabicus(integer)
         } else return new RomanNumeral(integer).toInt()
-      } else return new RomanNumeral(certamen.groups.minor).toInt()
+      } else return new RomanNumeral(certamen.groups['minor']).toInt()
     } return -1
   }
   // eslint enable complexity

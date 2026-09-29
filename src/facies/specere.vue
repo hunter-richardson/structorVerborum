@@ -1,60 +1,57 @@
 <script setup lang='ts'>
-  import { defineProps, ref } from 'vue'
-  import '../extensions/string.ts'
-  import { type Eventus } from '../miscella/dictionarium.ts'
-  import { encliticum } from '../miscella/enumerationes.ts'
-  import { locutor } from '../miscella/locutor.ts'
-  import { type NumeramenAgendum } from '../praebeunda/agenda.ts'
-  import { Actus, Multiplex, Numerus, Verbum } from '../praebeunda/verba.ts'
-  import Gustulus from '../scriptura/gustulus.ts'
-  import docere from './docere.vue'
-  import gustulare from './gustulare.vue'
-  import inflectere from './inflectere.vue'
+  import { defineProps, ref, type Ref } from 'vue';
+  import '../extensions/string.ts';
+  import { type Eventus } from '../miscella/dictionarium.ts';
+  import { Encliticum, enclitica } from '../miscella/enumerationes.ts';
+  import { locutor } from '../miscella/locutor.ts';
+  import { type NumeramenAgendum } from '../praebeunda/agenda.ts';
+  import { Actus, Multiplex, Numerale, Verbum } from '../praebeunda/verba.ts';
+  import Gustulus from '../scriptura/gustulus.ts';
+  import docere from './docere.vue';
+  import gustulare from './gustulare.vue';
+  import inflectere from './inflectere.vue';
 
-  let valorEnclitici: string = encliticum.nullum
+  let valorEnclitici: string = Encliticum.nullum
 
   export interface Forma {
     gustulus?: Gustulus,
     verbum: Verbum
   }
 
-  let multiplex: boolean = false
-  let propriabile: boolean = false
   const valores: string[] = []
-  const enclitica: string[] = []
+  const valoresEnclitici: string[] = []
 
   const { gustulus, verbum } = defineProps<Forma>();
-  let eventus: Eventus | undefined = ref<Eventus | undefined>('eventus')
+  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
+  const multiplex: boolean = verbum instanceof Multiplex
+  const propriabile: boolean = [
+      [ 'nomen', 'adiectiva' ].includes(verbum.categoria.valor ?? ''),
+      verbum.scriptum.isCapitalized()
+    ].all()
 
-  if(verbum) {
-    multiplex = verbum instanceof Multiplex
-    propriabile = ['nomen', 'adiectiva'].includes(verbum.categoria) &&
-                  verbum.scriptum.isCapitalized()
-    if(multiplex) {
-      (verbum as Multiplex).valores()
-          .forEach((valor) => valores.push(valor))
-      Object.keys(encliticum)
-            .filter((valor) => !verbum.scriptum.endsWith(valor))
-            .forEach((valor) => enclitica.push(valor))
-    }
+  if(multiplex) {
+    (verbum as Multiplex).valores()
+        .forEach((valor) => valores.push(valor))
+    enclitica.filter((valor) => !verbum.scriptum.endsWith(valor))
+             .forEach((valor) => valoresEnclitici.push(valor))
   }
 
   async function aperi() {
     if(verbum) {
-      switch(verbum.categoria) {
+      switch(verbum.categoria.valor) {
         case 'actus': {
           const actus: Actus = verbum as Actus
-          if(actus.modus === 'participium')
-            eventus = {
+          if(actus.modus.aequatur('participium'))
+            eventus.value = {
               ...(await actus.participialis()),
               categoria: 'adiectivum'
             }; break
         } case 'numerus': {
-          const numerus: Numerus = verbum as Numerus
+          const numerus: Numerale = verbum as Numerale
           const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
           // eslint-disable-next-line no-extra-boolean-cast
           if(!!agendum)
-            eventus = {
+            eventus.value = {
               ...agendum,
               categoria: 'numeramen'
             }
@@ -66,7 +63,7 @@
   function adde() {
     if(verbum) {
       if([multiplex, !!valorEnclitici].all())
-        (verbum as Multiplex).encliticum = valorEnclitici as encliticum
+        (verbum as Multiplex).encliticum = valorEnclitici as Encliticum
       verbum.scriptum = verbum.scriptum.toLowerCase()
       locutor.hoc().addatur(verbum)
     }
@@ -75,7 +72,7 @@
   function addeProprium() {
     if (verbum) {
       if ([ multiplex, !!valorEnclitici ].all())
-        (verbum as Multiplex).encliticum = valorEnclitici as encliticum;
+        (verbum as Multiplex).encliticum = valorEnclitici as Encliticum;
       if(propriabile)
         verbum.scriptum = verbum.scriptum.capitalize()
       locutor.hoc().addatur(verbum);
@@ -88,16 +85,18 @@
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
-  <v-dialog v-else-if='verbum'>
-    <v-card :title='verbum.scriptum' :subtitle='verbum.categoria.capitalize()'>
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
+  <v-dialog v-else-if='!!verbum && !!verbum.categoria.valor'>
+    <v-card :title='verbum.monstretur()'
+            :subtitle="$t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
       <template v-if='multiplex'>
         <v-chip-group>
           <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
-        <v-select density='compact' id='enclitica' v-model='encliticum'
-                  :title="$tf('categoriae.encliticum_pluralis', 'capitalize')"
-                  :items='enclitica' chips flat open-on-clear />
+        <v-select density='compact' id='enclitica' v-model='valorEnclitici'
+                  :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
+                  :items='valoresEnclitici' chips flat open-on-clear />
       </template>
       <docere :docendum='verbum.categoria' />
       <docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
@@ -110,16 +109,16 @@
           <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium()'
                  :text="$t('annuli.specere.addereProprium')" />
         </template>
-        <template v-else-if="verbum?.categoria === 'numerus'">
+        <template v-else-if="verbum?.categoria.aequatur('numerus')">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
                  :text="$t('annuli.specere.aperire')" />
         </template>
         <template v-else-if="[
-          verbum?.categoria === 'actus',
+          verbum?.categoria.aequatur('actus'),
           valores.includes('participium')
         ].all()">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text="$tf('categoriae.participium_singularis', 'capitalize')" />
+                 :text="$tf('categoriae.participium_singulare', 'capitalize')" />
         </template>
       </v-btn-toggle>
     </v-card>

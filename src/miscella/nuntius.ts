@@ -1,9 +1,9 @@
-import { type TransformableInfo } from 'logform';
 import { makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import { Mensa } from './enumerationes.ts';
 import Numerator from './numerator.ts';
+import { type TransformableInfo } from 'logform';
 
 const scribatur = (parametra: TransformableInfo & {
   nomen?: string
@@ -67,124 +67,124 @@ export default class Nuntius implements Disposable {
 
   static plurimumGarrio(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
-      gradus: 'absurdum',
+      gradus: 'silly',
       nuntium: parametra.nuntium
     })
   }
 
   static positor (nomen?: string) {
     return function<Hoc, Valor extends any> (
-      positor: (this: Hoc, valor: Valor) => void,
-      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, valor: Valor) => void>) {
+        positor: (this: Hoc, valor: Valor) => void,
+        contextus: ClassSetterDecoratorContext<Hoc, Valor>) {
       return function (this: Hoc, valor: Valor) {
-            Nuntius.plusGarrio({
-              nomen: nomen,
-              nuntium: `Initu'st positor ${contextus.name.toString()}`
-            }); try { positor.call(this, valor) }
-            catch(error) {
-              Nuntius.timeo({
-                nomen: nomen,
-                nuntium: `Defectu'st positor ${contextus.name.toString()}`
-              }); throw error
-            } Nuntius.plusGarrio({
-              nomen: nomen,
-              nuntium: `Exitu'st positor ${contextus.name.toString()}`
-            })
-          }
-        }
+        Nuntius.noto({
+          nomen: nomen,
+          nuntium: `Initu'st positor ${contextus.name.toString()}`
+        }); try { positor.call(this, valor) }
+        catch(error) {
+          Nuntius.timeo({
+            nomen: nomen,
+            nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
+          }); throw error
+        } Nuntius.noto({
+          nomen: nomen,
+          nuntium: `Exitu'st positor ${contextus.name.toString()}`
+        })
+      }
+    }
   }
 
   static captor (nomen?: string) {
     return function<Hoc, Illud> (
         captor: (this: Hoc) => Illud,
-        contextus: ClassGetterDecoratorContext<Hoc, (this: Hoc) => Illud>) {
-            return function (this: Hoc): Illud {
-              Nuntius.plusGarrio({
-                nomen: nomen,
-                nuntium: `Initu'st captor ${contextus.name.toString()}`
-              }); let illud: Illud | undefined = undefined
-              try {
-                illud = captor.call(this)
-              } catch(error) {
-                Nuntius.timeo({
-                  nomen: nomen,
-                  nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
-                }); throw error
-              } Nuntius.plusGarrio({
-                nomen: nomen,
-                nuntium: `Exitu'st captor ${contextus.name.toString()}`
-              }); return illud
-            }
-          }
+        contextus: ClassGetterDecoratorContext<Hoc, Illud>) {
+      return function (this: Hoc): Illud {
+        Nuntius.noto({
+          nomen: nomen,
+          nuntium: `Initu'st captor ${contextus.name.toString()}`
+        }); try {
+          const illud: Illud = captor.call(this)
+          Nuntius.noto({
+            nomen: nomen,
+            nuntium: `Exitu'st captor ${contextus.name.toString()}`
+          }); return illud
+        } catch(error) {
+          Nuntius.timeo({
+            nomen: nomen,
+            nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
+          }); throw error
+        }
+      }
+    }
   }
 
   static factum(nomen: string) {
     return function <Hoc extends new (...parametra: any[]) => any> (constr: Hoc,) {
-        return class extends constr {
-          constructor(...parametra: any[]) {
-            super(...parametra)
-            Nuntius.plusGarrio({
-              nomen: nomen,
-              nuntium: 'Fit'
-            })
-          }
+      return class extends constr {
+        constructor(...parametra: any[]) {
+          super(...parametra)
+          Nuntius.noto({
+            nomen: nomen,
+            nuntium: 'Fit'
+          })
         }
       }
+    }
   }
 
   static modus(nomen?: string) {
     return function<Hoc, Parametra extends any[], Illud> (
         modus: (this: Hoc, ...parametra: Parametra) => Illud,
         contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
-          return function (this: Hoc, ...parametra: Parametra): Illud {
-              Nuntius.plusGarrio({
-                nomen: nomen,
-                nuntium: `Initu'st modus ${contextus.name.toString()}`
-              }); let illud: Illud | undefined = undefined
-              try {
-                illud = modus.call(this, ...parametra)
-              } catch (error) {
-                Nuntius.timeo({
-                  nomen: nomen,
-                  nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
-                }); throw error;
-              } Nuntius.plusGarrio({
-                  nomen: nomen,
-                  nuntium: `Exitu'st modus ${contextus.name.toString()}`
-                }); return illud
-          }
+      return function (this: Hoc, ...parametra: Parametra): Illud {
+        Nuntius.noto({
+          nomen: nomen,
+          nuntium: `Initu'st modus ${contextus.name.toString()}`
+        }); try {
+          const illud: Illud = modus.call(this, ...parametra)
+          Nuntius.noto({
+            nomen: nomen,
+            nuntium: `Exitu'st modus ${contextus.name.toString()}`
+          }); return illud
+        } catch (error) {
+          Nuntius.timeo({
+            nomen: nomen,
+            nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
+          }); throw error;
         }
+      }
+    }
   }
 
   static promittum(nomen?: string) {
     return function<Hoc, Parametra extends any[], Illud> (
-      promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
-      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
-          return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
-            Nuntius.plusGarrio({
-              nomen: nomen,
-              nuntium: `Initu'st promittum ${contextus.name.toString()}`
-            }); let illud: Promise<Illud> | undefined = undefined
-            try {
-              illud = promittum.apply(this, parametra)
-            } catch (error) {
-              Nuntius.timeo({
-                nomen: nomen,
-                nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
-              }); throw error;
-            } Nuntius.plusGarrio({
-              nomen: nomen,
-              nuntium: `Exitu'st promittum ${contextus.name.toString()}`
-            }); return illud
-          }
+        promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
+        contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
+      return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
+        Nuntius.noto({
+          nomen: nomen,
+          nuntium: `Initu'st promittum ${contextus.name.toString()}`
+        }); try {
+          const illud: Promise<Illud> = promittum.apply(this, parametra)
+          Nuntius.noto({
+            nomen: nomen,
+            nuntium: `Exitu'st promittum ${contextus.name.toString()}`
+          }); return illud
+        } catch (error) {
+          Nuntius.timeo({
+            nomen: nomen,
+            nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
+          }); throw error;
         }
+      }
+    }
   }
 
   static exutor(nomen?: string) {
     return function (exutor: () => void, contextus: ClassMethodDecoratorContext) {
       return function (this: any): void {
         exutor.call(this)
-        Nuntius.plusGarrio({
+        Nuntius.noto({
           nomen: nomen,
           nuntium: `Exutu'st ${contextus.name.toString()}`
         })

@@ -1,14 +1,14 @@
 <script setup lang='ts'>
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, type Ref } from 'vue'
   import { dominus } from '../miscella/dominus.ts'
   import '../extensions/array.ts'
-  import fs from 'fs'
-  import { Markdown } from 'vue3-markdown-it'
+  import file from 'file-fetch'
+  import markdown from '@f3ve/vue-markdown-it'
   import path from 'path';
 
   let onerans: boolean = true
 
-  let docendum: string = ref<string>('docendum');
+  const docendum: Ref<string> = ref<string>('docendum');
   let doctum: string | undefined = undefined
 
   async function exoneratur() { onerans = false }
@@ -17,9 +17,9 @@
 
   async function doceatur() {
     reoneratur()
-    const optanda = { encoding: 'utf-8' }
-    const via: string = `${path.join('/res/docenda', dominus.hoc().lingua.signetur(), docendum)}.md`
-    doctum = await fs.readFile(via, optanda);
+    const via: string = `${path.join('/res/docenda', dominus.hoc().lingua.signetur(), docendum.value)}.md`;
+    const corpus: Body = await file(new URL(via));
+    doctum = (corpus as Response).ok ? (await corpus.text()).trim() : ''
   }
 
   async function adliumDoceatur(eventus: MouseEvent) {
@@ -29,7 +29,7 @@
         (eventus.currentTarget as HTMLElement)?.closest('a')?.getAttribute('href') ?? undefined
     //  eslint-disable-next-line no-extra-boolean-cast
     if(!!parma && parma.endsWith('.md')) {
-      docendum = parma.split('/').last().split('.').first()
+      docendum.value = parma.split('/').last().split('.').first()
       return doceatur()
       //  eslint-disable-next-line no-extra-boolean-cast
     } else if(!!parma)
@@ -38,12 +38,18 @@
   }
 
   async function iungantur() {
-    const optanda = { once: true, capture: true, passive: false }
-    document.getElementsByClassName('markdown').getElementsByTagName('a')
-      .forEach((res) => res.addEventListener('click'), adliumDoceatur, optanda)
+    const collecta =
+        (document.getElementsByClassName('markdown').item(0))?.getElementsByTagName('a')
+    if(collecta)
+        [...collecta].forEach((res) =>
+            res.addEventListener('click', adliumDoceatur,
+                                { once: true, capture: true, passive: false }))
   }
 
-  onMounted(async () => { await doceatur().then(() => iungantur()).then(() => exoneratur()) })
+  onMounted(async () => {
+    await doceatur().then(() => iungantur())
+                    .then(() => exoneratur())
+  })
 </script>
 
 <template>
@@ -51,6 +57,6 @@
   <<v-skeleton-loader v-if='onerans' :loading='onerans' type='paragraph'
                       :loading-text="$t('scripta.docere.onerans')" />
   <div v-else-if='!!doctum' class='markdown' :id="`doctum.${docendum}`">
-    <Markdown @click='aliumDoceatur()' breaks='true' :source='doctum' />
+    <markdown breaks='true' :source='doctum' />
   </div>
 </template>

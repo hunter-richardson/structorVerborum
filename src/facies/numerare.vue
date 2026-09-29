@@ -1,13 +1,13 @@
 <script setup lang='ts'>
-  import { useTranslation } from 'i18next-vue'
-  import { defineProp, ref } from 'vue'
-  import Numerator from '../miscella/numerator.ts'
-  import { Numerus } from '../praebeunda/verba.ts'
-  import Gustulus from '../scriptura/gustulus.ts'
-  import gustulare from './gustulare.vue'
-  import specere from './specere.vue'
+  import { useTranslation } from 'i18next-vue';
+import { defineProps, ref, type Ref } from 'vue';
+import Numerator from '../miscella/numerator.ts';
+import { Numerale } from '../praebeunda/verba.ts';
+import Gustulus from '../scriptura/gustulus.ts';
+import gustulare from './gustulare.vue';
+import specere from './specere.vue';
 
-  const gustulus: Gustulus | undefined = defineProp<Gustulus | undefined>()
+  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
   type Arabicus = {
     integer: number,
@@ -17,24 +17,25 @@
 
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string =>
-    { return Number.isInteger(arabicus) || useTranslation().t('errores.numerare.deNumeris') }
+      { return Number.isInteger(arabicus) || useTranslation().t('errores.numerare.deNumeris') }
   ]
 
-  let numerus: Numerus | undefined = ref<Numerus | undefined>('numerus')
-  let romanus: string = 'N'
-  let arabicus: Arabicus = {
+  const numerale: Ref<Numerale | undefined> = ref<Numerale | undefined>(undefined)
+  const romanus: Ref<string> = ref<string>('N')
+
+  const arabicus: Ref<Arabicus> = ref<Arabicus>({
     integer: 0,
     numerator: 0,
     denominator: 12
-  }
+  })
 
   function effiat (): void {
-    romanus = Numerator.romanus(arabicus.integer + arabicus.numerator / arabicus.denominator);
+    romanus.value = Numerator.romanus(arabicus.value.integer + (arabicus.value.numerator / arabicus.value.denominator))
   }
 
   function refer (): void {
-    if (arabicus.numerator === 0)
-      numerus = Numerus.numerator(arabicus.integer);
+    if (arabicus.value.numerator === 0)
+      numerale.value = Numerale.numerator(arabicus.value.integer)
   }
 </script>
 
@@ -42,7 +43,7 @@
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <gustulare v-if='!!gustulus' :gustulus='gustulus' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
+  <specere v-if='!!numerale' :verbum='numerale' @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
     <v-btn v-if='arabicus.numerator === 0' icon='equal' id='aequa' @click='refer()' />

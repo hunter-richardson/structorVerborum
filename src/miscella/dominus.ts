@@ -3,6 +3,7 @@ import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
 import Ignavum from './ignavum.ts';
 import Nuntius from './nuntius.ts';
+import '../extensions/env.ts';
 
 type Valor = string | boolean | number | undefined
 
@@ -18,7 +19,7 @@ abstract class Crustulum<Hoc extends Valor> {
 
   inhaereatur() { this.massa = this.#inhaesa() }
 
-  @Nuntius.futurus('Crustulum')
+  @Nuntius.promittum('Crustulum')
   protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
     if(this.coctast()) this._finis.setDate(this._finis.getDate() + this.vita)
@@ -47,6 +48,14 @@ abstract class Crustulum<Hoc extends Valor> {
     if(this.massa !== valor && this.valores.includes(valor))
          this.coquatur(valor)
     else this.coquatur(this.#inhaesa())
+  }
+
+  @Nuntius.modus('Crustulum')
+  interverteUtrum() {
+    const valor: string = this.massa
+    if(this.valores.length == 2) {
+      this.massa = this.valores[ +!this.valores.indexOf(valor) ]
+    }
   }
 
   async proferatur ()
@@ -152,7 +161,7 @@ class Dominus {
   private static readonly _optanda: Optanda = {
     domain: 'conans',
     sameSite: 'strict',
-    secure: import.meta.env.PROD
+    secure: process.env['NODE_ENV'] === 'production'  //  process.env.NODE_ENV
   }
 
   readonly separatores = {

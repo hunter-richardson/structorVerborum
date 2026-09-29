@@ -1,32 +1,39 @@
 import TabulaDefecta from './defecta.ts';
 import {
+  Modus,
   numeri,
+  Numerus,
+  Persona,
   personae,
   tempora,
-  voces
+  Tempus,
+  voces,
+  Vox
   } from '../../miscella/enumerationes.ts';
+import Nuntius from '../../miscella/nuntius.ts';
 import { Actus } from '../../praebeunda/verba.ts';
 import { type Colamen } from '../../praebeunda/agenda.ts';
 
+@Nuntius.factum('TabulaImpersonalis')
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
   static apponatur(et: string): Colamen<Actus>[] {
     const colamina: Colamen<Actus>[] = ['praesens', 'perfectum'].map((tempus) => {
       return {
-        modus: 'infinitivus',
-        tempus: tempus
+        modus: Modus.modus('infinitivus'),
+        tempus: Tempus.tempus(tempus)
       } as Colamen<Actus>
     });
 
     ['praesens', 'futurum', 'perfectum'].forEach((tempus) => {
       colamina.push({
-        modus: 'participium',
-        tempus: tempus
+        modus: Modus.modus('participium'),
+        tempus: Tempus.tempus(tempus)
       } as Colamen<Actus>)
 
       if (tempus !== 'perfectum') {
         colamina.push({
-          modus: 'imperativus',
-          tempus: tempus
+          modus: Modus.modus('imperativus'),
+          tempus: Tempus.tempus(tempus)
         } as Colamen<Actus>)
       }
     })
@@ -43,19 +50,19 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
             numeri.forEach((numerus) => {
               personae.forEach((persona) => {
                 colamina.push({
-                  modus: modus,
-                  vox: 'activa',
-                  tempus: tempus,
-                  numerus: numerus,
-                  persona: persona
+                  modus: Modus.modus(modus),
+                  vox: Vox.vox('activa'),
+                  tempus: Tempus.tempus(tempus),
+                  numerus: Numerus.numerus(numerus),
+                  persona: Persona.persona(persona)
                 } as Colamen<Actus>)
               })
             })
 
             colamina.push({
-              modus: modus,
-              vox: 'passiva',
-              tempus: tempus
+              modus: Modus.modus(modus),
+              vox: Vox.vox('passiva'),
+              tempus: Tempus.tempus(tempus)
             } as Colamen<Actus>)
           }
         })
@@ -78,9 +85,9 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
               ].all()
             ) {
               colamina.push({
-                modus: modus,
-                vox: vox,
-                tempus: tempus
+                modus: Modus.modus(modus),
+                vox: Vox.vox(vox),
+                tempus: Tempus.tempus(tempus)
               } as Colamen<Actus>)
             }
           })
@@ -93,28 +100,28 @@ export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
 
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
     if (this.et === 'semideponens') {
-      if (colamen.modus === 'particpalis') colamen.vox = ''
-      else if (colamen.vox === 'passiva') return null
+      if (colamen.modus.aequatur('participalis')) colamen.vox.inhaesust()
+      else if (colamen.vox.aequatur('passiva')) return null
     } else if (this.et === 'semideponensActiva') {
-      if (colamen.vox === 'passiva')
+      if (colamen.vox.aequatur('passiva'))
         switch (true) {
-          case [ colamen.modus === 'participium', colamen.tempus === 'futurum' ].any():
-            colamen.vox = ''
+          case [ colamen.modus.aequatur('participium'), colamen.tempus.aequatur('futurum') ].any():
+            colamen.vox.valor = ''
             break
           default:
             return null
         }
     }
 
-    if ([this.et === 'passivo', colamen.vox === 'activa'].all()) return colamen
+    if ([this.et === 'passivo', colamen.vox.aequatur('activa')].all()) return colamen
     else return [
-        colamen.numerus === 'pluralis',
-        colamen.persona === 'prima',
-        colamen.persona === 'secunda'
+        colamen.numerus.aequatur('pluralis'),
+        colamen.persona.aequatur('prima'),
+        colamen.persona.aequatur('secunda')
       ].any() ? null : {
             ...colamen,
-            numerus: '',
-            persona: ''
+            numerus: new Numerus,
+            persona: new Persona
           }
   }
 }

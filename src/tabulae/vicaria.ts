@@ -20,7 +20,7 @@ export default class TabulaVicaria<Hoc extends Faciendum<Illud>, Illud extends M
   radicator!: Radicator<Hoc, Illud>
   positor!: Positor<Illud>
 
-  @Nuntius.futurus('TabulaVicaria')
+  @Nuntius.promittum('TabulaVicaria')
   async plenetur(): Promise<void> {
     const tabulaPrima: Ignavum<TabulaRecta<Hoc, Illud>> =
                    new Ignavum(TabulaRecta, {

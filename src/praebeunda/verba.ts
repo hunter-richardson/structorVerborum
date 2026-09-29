@@ -1,62 +1,35 @@
-import Structor from './structor.ts';
 import '../extensions/string.ts';
 import { numeraminum } from '../lectores/verbalis.ts';
 import { dominus } from '../miscella/dominus.ts';
 import {
-  casua,
-  categoriae,
-  encliticum,
-  facta,
-  genera,
-  gradua,
-  modi,
-  numeri,
-  personae,
-  referenda,
-  tempora,
-  voces
-  } from '../miscella/enumerationes.ts';
-import Numerator from '../miscella/numerator.ts';
-import type {
-  casus,
-  categoria,
-  factum,
-  genus,
-  gradus,
-  modus,
-  numerus,
-  persona,
-  referendum,
-  tempus,
-  vox
+  Casus,
+  Categoria,
+  Encliticum,
+  errator,
+  Factum,
+  Genus,
+  Gradus,
+  Modus,
+  Numerus,
+  Persona,
+  Referendum,
+  Tempus,
+  Vox
 } from '../miscella/enumerationes.ts';
+import Numerator from '../miscella/numerator.ts';
 import { AdiectivumAgendum, NumeramenAgendum, type Agendum, type Positor } from './agenda.ts';
-
-export const Errator: (res: object) => Error =
-  (res: object) => new Error(`Vetatur ${res}`)
+import Structor from './structor.ts';
 
 export class Verbum {
   readonly unicum: symbol = Symbol()
-  private __categoria!: categoria
+  categoria: Categoria = new Categoria
   protected _scriptum!: string
 
   get scriptum(): string { return this._scriptum }
 
-  #categoriast (valor: string): valor is categoria { return valor in categoriae }
-
-  get categoria (): categoria { return this.__categoria }
-
-  protected get _categoria (): categoria { return this.__categoria }
-
-  protected set _categoria (valor: string) {
-    valor = valor.toLowerCase().trim()
-    if (this.#categoriast(valor)) this.__categoria = valor
-    else throw Errator({ categoria: valor })
-  }
-
   set scriptum(valor: string) {
     if (valor = valor.trim()) this._scriptum = valor
-    else throw Errator({ scriptum: valor })
+    else throw errator({ scriptum: valor })
   }
 
   paratumne(): boolean { return !!this.scriptum }
@@ -77,10 +50,10 @@ export class Verbum {
   }
 }
 
-export class Numerus extends Verbum {
+export class Numerale extends Verbum {
   private _anglicus: number = -1
 
-  constructor() { super(); this._categoria = 'numerus' }
+  constructor() { super(); this.categoria.valor = 'numerale' }
 
   override get scriptum(): string { return Numerator.romanus(this._anglicus) }
 
@@ -88,11 +61,11 @@ export class Numerus extends Verbum {
 
   set anglicus(valor: number) {
     if (Numerator.arabicusConvertibilis(valor)) this._anglicus = valor
-    else throw Errator({ anclicus: valor })
+    else throw errator({ anglicus: valor.toString() })
   }
 
-  static readonly numerator: (anglicus: number) => Numerus = (anglicus: number): Numerus => {
-    return new Structor<Numerus>(Numerus)
+  static readonly numerator: (anglicus: number) => Numerale = (anglicus: number): Numerale => {
+    return new Structor<Numerale>(Numerale)
                  .ponatur((numerus) => (numerus.anglicus = anglicus))
                  .struatur()
   }
@@ -122,83 +95,35 @@ export abstract class Multiplex extends Verbum {
     }
   }
 
-  private _encliticum: encliticum = encliticum.nullum
+  private _encliticum: Encliticum = Encliticum.nullum
 
   abstract valores(): string[]
 
-  get encliticum(): encliticum { return this._encliticum }
+  get encliticum(): Encliticum { return this._encliticum }
 
-  set encliticum (valor: encliticum) {
-    if(this._encliticum != encliticum.nullum)
+  set encliticum (valor: Encliticum) {
+    if(this._encliticum != Encliticum.nullum)
       this.scriptum = this.scriptum.slice(0, -this._encliticum.length)
     this._encliticum = valor
-    if(this._encliticum != encliticum.nullum)
+    if(this._encliticum != Encliticum.nullum)
       this.scriptum += this._encliticum
   }
 }
 
 export class Actus extends Multiplex {
-  private _modus  :   modus =     modi[0]
-  private _vox    :     vox =    voces[0]
-  private _tempus :  tempus =  tempora[0]
-  private _numerus: numerus =   numeri[0]
-  private _persona: persona = personae[0]
+  modus  :   Modus = new   Modus
+  vox    :     Vox = new     Vox
+  tempus :  Tempus = new  Tempus
+  numerus: Numerus = new Numerus
+  persona: Persona = new Persona
 
-  constructor() { super(); this._categoria = 'actus' }
+  constructor() { super(); this.categoria.valor = 'actus' }
 
-  get modus(): modus { return this._modus }
-
-  get vox(): vox { return this._vox }
-
-  get tempus(): tempus { return this._tempus }
-
-  get numerus(): numerus { return this._numerus }
-
-  get persona(): persona { return this._persona }
-
-  #modust(valor: string): valor is modus { return valor in modi }
-
-  #tempust(valor: string): valor is tempus { return valor in tempora }
-
-  #vocest(valor: string): valor is vox { return valor in voces }
-
-  #numerust(valor: string): valor is numerus { return valor in numeri }
-
-  #personast(valor: string): valor is persona { return valor in personae }
-
-  set modus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#modust(valor)) this._modus = valor
-    else throw Errator({ modus: valor })
+  valores (): string[] {
+    return [ this.modus.valor, this.vox.valor, this.tempus.valor, this.numerus.valor, this.persona.valor ]
   }
 
-  set vox(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#vocest(valor)) this._vox = valor
-    else throw Errator({ vox: valor })
-  }
-
-  set tempus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#tempust(valor)) this._tempus = valor
-    else throw Errator({ tempus: valor })
-  }
-
-  set numerus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#numerust(valor)) this._numerus = valor
-    else throw Errator({ numerus: valor })
-  }
-
-  set persona(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#personast(valor)) this._persona = valor
-    else throw Errator({ persona: valor })
-  }
-
-  valores(): string[] { return [ this.modus, this.vox, this.tempus, this.numerus, this.persona ] }
-
-  override paratumne(): boolean { return this.modus !== 'participium' && super.paratumne() }
+  override paratumne(): boolean { return !this.modus.aequatur('participium') && super.paratumne() }
 
   static readonly positor: Positor<Actus> = (istud: Agendum<Actus>): Actus => {
     return new Structor<Actus>(Actus)
@@ -212,8 +137,8 @@ export class Actus extends Multiplex {
   }
 
   async participialis(): Promise<AdiectivumAgendum> {
-    if (this.modus === 'participium') {
-      if (this.tempus === 'praesens') {
+    if (this.modus.aequatur('participium')) {
+      if (this.tempus.aequatur('praesens')) {
         const structor: Structor<AdiectivumAgendum> = new Structor(AdiectivumAgendum)
           .ponatur((adiectivum) => (adiectivum.versio = 'positivusTertia/cumTruncoVario'))
           .ponatur((adiectivum) => (adiectivum.positivum = this.scriptum))
@@ -234,26 +159,16 @@ export class Actus extends Multiplex {
                           .ponatur((adiectivum) => (adiectivum.comparativum = this.scriptum.replace('um$', 'ius')))
                           .ponatur((adiectivum) => (adiectivum.comparativum = this.scriptum.replace('um$', 'issimum')))
                           .struatur()
-    } else throw Errator({ modus: this.modus })
+    } else throw errator({ modus: this.modus.valor })
   }
 }
 
 export class Adverbium extends Multiplex {
-  private _gradus: gradus = gradua[0]
+  gradus: Gradus = new Gradus
 
-  constructor() { super(); this._categoria = 'adverbium' }
+  constructor() { super(); this.categoria.valor = 'adverbium' }
 
-  get gradus(): gradus { return this._gradus }
-
-  #gradust(valor: string): valor is gradus { return valor in gradua }
-
-  set gradus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#gradust(valor)) this._gradus = valor
-    else throw Errator({ gradus: valor })
-  }
-
-  valores(): string[] { return [ this.gradus ] }
+  valores(): string[] { return [ this.gradus.valor ] }
 
   static readonly positor: Positor<Adverbium> = (istud: Agendum<Adverbium>): Adverbium =>
     new Structor<Adverbium>(Adverbium)
@@ -263,44 +178,13 @@ export class Adverbium extends Multiplex {
 }
 
 export class Nomen extends Multiplex {
-  private _factum :  factum = facta[0]
-  private _numerus: numerus = numeri[0]
-  private _casus  :   casus = casua[0]
+  factum :  Factum = new Factum
+  numerus: Numerus = new Numerus
+  casus  :   Casus = new Casus
 
-  constructor() { super(); this._categoria = 'nomen' }
+  constructor() { super(); this.categoria.valor = 'nomen' }
 
-  get factum(): factum { return this._factum }
-
-  get numerus(): numerus { return this._numerus }
-
-  get casus(): casus { return this._casus }
-
-  #factust(valor: string): valor is factum { return valor in facta }
-
-  #numerust(valor: string): valor is numerus { return valor in numeri }
-
-  #casust(valor: string): valor is casus { return valor in casua }
-
-  set actum(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#factust(valor)) this._factum = valor
-    else throw Errator({ factum: valor })
-  }
-
-  set numerus(valor: string) {
-    valor = valor.toLowerCase()
-    if ([this.#numerust(valor)].any())
-      this._numerus = valor
-    else throw Errator({ numerus: valor })
-  }
-
-  set casus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#casust(valor)) this._casus = valor
-    else throw Errator({ casus: valor })
-  }
-
-  valores(): string[] { return [ this.actum, this.numerus, this.casus ] }
+  valores (): string[] { return [ this.factum.valor, this.numerus.valor, this.casus.valor ] }
 
   static readonly positor: Positor<Nomen> = (istud: Agendum<Nomen>): Nomen =>
     new Structor<Nomen>(Nomen)
@@ -311,46 +195,16 @@ export class Nomen extends Multiplex {
 }
 
 export class Pronomen extends Multiplex {
-  private _genus  :   genus = genera[0]
-  private _numerus: numerus = numeri[0]
-  private _casus  :   casus =  casua[0]
+  genus  :   Genus = new Genus
+  numerus: Numerus = new Numerus
+  casus  :   Casus = new Casus
 
-  constructor() { super(); this._categoria = 'pronomen' }
+  constructor() { super(); this.categoria.valor = 'pronomen' }
 
-  get genus(): genus { return this._genus }
-
-  get numerus(): numerus { return this._numerus }
-
-  get casus(): casus { return this._casus }
-
-  #genust(valor: string): valor is genus { return valor in genera }
-
-  #numerust(valor: string): valor is numerus { return valor in numeri }
-
-  #casust(valor: string): valor is casus { return valor in casua }
-
-  set genus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#genust(valor)) this._genus = valor
-    else throw Errator({ genus: valor })
-  }
-
-  set numerus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#numerust(valor)) this._numerus = valor
-    else throw Errator({ numerus: valor })
-  }
-
-  set casus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#casust(valor)) this._casus = valor
-    else throw Errator({ casus: valor })
-  }
-
-  valores(): string[] { return [ this.genus, this.numerus, this.casus ] }
+  valores (): string[] { return [ this.genus.valor, this.numerus.valor, this.casus.valor ] }
 
   static readonly positor: Positor<Pronomen> = (istud: Agendum<Pronomen>): Pronomen => {
-    if (!istud.casus || istud.casus === 'Derectus') throw Errator({ casus: istud.casus })
+    if (!istud.casus || istud.casus.aequatur('derectus')) throw errator({ casus: istud.casus.valor })
     else return new Structor<Pronomen>(Pronomen)
                       .ponatur((pronomen) => (pronomen.casus = istud.casus))
                       .ponatur((pronomen) => (pronomen.genus = istud.genus ?? ''))
@@ -361,54 +215,16 @@ export class Pronomen extends Multiplex {
 }
 
 export class Adiectivum extends Multiplex {
-  private _gradus :  gradus = gradua[0]
-  private _genus  :   genus = genera[0]
-  private _numerus: numerus = numeri[0]
-  private _casus  :   casus = casua [0]
+  gradus :  Gradus = new Gradus
+  genus  :   Genus = new Genus
+  numerus: Numerus = new Numerus
+  casus  :   Casus = new Casus
 
-  constructor() { super(); this._categoria = 'adiectivum' }
+  constructor() { super(); this.categoria.valor = 'adiectivum' }
 
-  get gradus(): gradus { return this._gradus }
-
-  get genus(): genus { return this._genus }
-
-  get numerus(): numerus { return this._numerus }
-
-  get casus(): casus { return this._casus }
-
-  #gradust(valor: string): valor is gradus { return valor in gradua }
-
-  #genust(valor: string): valor is genus { return valor in genera }
-
-  #numerust(valor: string): valor is numerus { return valor in numeri }
-
-  #casust(valor: string): valor is casus { return valor in casua }
-
-  set gradus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#gradust(valor)) this._gradus = valor
-    else throw Errator({ gradus: valor })
+  valores (): string[] {
+    return [ this.gradus.valor, this.genus.valor, this.numerus.valor, this.casus.valor ]
   }
-
-  set genus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#genust(valor)) this._genus = valor
-    else throw Errator({ genus: valor })
-  }
-
-  set numerus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#numerust(valor)) this._numerus = valor
-    else throw Errator({ numerus: valor })
-  }
-
-  set casus(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#casust(valor)) this._casus = valor
-    else throw Errator({ casus: valor })
-  }
-
-  valores(): string[] { return [ this.gradus, this.genus, this.numerus, this.casus ] }
 
   static readonly positor: Positor<Adiectivum> = (istud: Agendum<Adiectivum>): Adiectivum =>
     new Structor<Adiectivum>(Adiectivum)
@@ -421,21 +237,11 @@ export class Adiectivum extends Multiplex {
 }
 
 export class Numeramen extends Multiplex {
-  private _referendum: referendum = referenda[0]
+  referendum: Referendum = new Referendum
 
-  constructor() { super(); this._categoria = 'numeramen' }
+  constructor() { super(); this.categoria.valor = 'numeramen' }
 
-  get referendum(): referendum { return this._referendum }
-
-  #referendust(valor: string): valor is referendum { return valor in referenda }
-
-  set referendum(valor: string) {
-    valor = valor.toLowerCase()
-    if (this.#referendust(valor)) this.referendum = valor
-    else throw Errator({ referendum: valor })
-  }
-
-  valores(): string[] { return [ this.referendum ] }
+  valores(): string[] { return [ this.referendum.valor ] }
 
   override paratumne(): boolean { return false }
 

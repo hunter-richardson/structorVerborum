@@ -5,8 +5,8 @@ import { type Verbum } from '../praebeunda/verba.ts';
 
 @Nuntius.factum('LectorVerbi')
 class LectorVerbi extends LectorVerbalis<Verbum> {
-  @Nuntius.futurus('LectorVerbi')
-  async omnia(): Promise<string[]> {
+  @Nuntius.promittum('LectorVerbi')
+  override async omnia(): Promise<string[]> {
     const ordo: string[] = [];
     (await super.omnia()).forEach(async (lemma) => {
       const verbum: Verbum | undefined = await super.legatur(lemma)

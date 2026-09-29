@@ -8,7 +8,7 @@ import { type Lectum } from '../praebeunda/interfecta.ts';
 
 @Nuntius.factum('LectorVerbalis')
 export class LectorVerbalis<Hoc extends Lectum> extends Lector<Hoc> {
-  @Nuntius.futurus('LectorVerbalis')
+  @Nuntius.promittum('LectorVerbalis')
   async omnia(): Promise<string[]> {
     return (await listFiles.listFiles(this.seratur(), 'csv'))
                            .map((res) => path.parse(res).name)

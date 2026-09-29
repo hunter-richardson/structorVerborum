@@ -1,21 +1,20 @@
 <script setup lang='ts'>
-  import { onMounted } from 'vue'
+  import { ref, type Ref } from 'vue'
   import draggable from 'vuedraggable'
   import { dominus } from '../miscella/dominus.ts'
   import { locutor } from '../miscella/locutor.ts'
   import Gustulus from '../scriptura/gustulus.ts'
   import gustulare from './gustulare.vue'
 
-  const pellucium: string[] = require('classifyx')({
+  const pellucidum: string[] = require('classifyx')({
     opacity: 0.5,
     background: require('pleasejs').make_color(
       { value: dominus.hoc().facies.inhaereatur() }
     )
   })
 
-  const gustulus = defineProps<Gustulus | undefined>()
-
-  onMounted(() => { let trahens: boolean = false })
+  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
+  const trahens: Ref<boolean> = ref<boolean>(false)
 </script>
 
 <template>
@@ -28,7 +27,7 @@
         <template v-for='verbum in locutor.hoc().verba' :key='verbum.unicum'>
           <v-chip @click:close='locutor.hoc().removeatur(verbum.unicum)' close-icon='remove'
                   :text='verbum.monstretur()' :id='verbum.unicum' selected-class='text-primary'
-                  :data-separator="$dominus.hoc().separator.signetur()" />
+                  :data-separator="dominus.hoc().separator.signetur()" />
         </template>
       </span>
     </draggable>

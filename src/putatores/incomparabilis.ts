@@ -1,18 +1,18 @@
 import '../extensions/string.ts';
+import { errator, type Genus } from '../miscella/enumerationes.ts';
 import Ignavum from '../miscella/ignavum.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { Incomparabile } from '../praebeunda/agenda.ts';
-import { Adiectivum, Errator } from '../praebeunda/verba.ts';
+import { Adiectivum } from '../praebeunda/verba.ts';
 import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi.ts';
 import TabulaRecta from '../tabulae/recta.ts';
 import Tabula from '../tabulae/tabula.ts';
 import TabulaVicaria from '../tabulae/vicaria.ts';
-import { type genus } from '../miscella/enumerationes.ts';
 import { type Percolamen as Nominis } from './nominis.ts';
 import type { Putaturum, Radicator } from './putaturum.ts';
 
 export interface Percolamen extends Nominis {
-  genus?: genus
+  genus?: Genus
 }
 
 @Nuntius.factum('PutatorIncomparabilis')
@@ -29,9 +29,9 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
       case 'pronominalis/cumLitteraR':
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
           return [
-            colamen.genus === 'masculinum',
-            colamen.numerus === 'singularis',
-            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? '')
+            colamen.genus?.aequatur('masculinum'),
+            colamen.numerus?.aequatur('singularis'),
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus?.valor ?? '')
           ].all() ? adiectivum.nominativum : adiectivum.genitivum.chop(1)
         }
       case 'tertia':
@@ -41,9 +41,9 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
       case 'tertia/cumTruncoVario':
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
           return [
-            [ 'masculinum', 'femininum' ].includes(colamen.genus ?? ''),
-            [ 'nominativus', 'vocativus' ].includes(colamen.casus ?? ''),
-            colamen.numerus === 'singularis'
+            [ 'masculinum', 'femininum' ].includes(colamen.genus?.valor ?? ''),
+            [ 'nominativus', 'vocativus' ].includes(colamen.casus?.valor ?? ''),
+            colamen.numerus?.aequatur('singularis')
           ].all() ? adiectivum.nominativum : adiectivum.genitivum.chop(2)
         }
       case 'tertia/nominativusUnigener':
@@ -54,21 +54,21 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
         return (adiectivum: Incomparabile, colamen: Percolamen): string => {
           switch (true) {
             case [
-              ['nominativus', 'vocativus'].includes(colamen.casus ?? ''),
-              colamen.numerus === 'singularis'
+              ['nominativus', 'vocativus'].includes(colamen.casus?.valor ?? ''),
+              colamen.numerus?.aequatur('singularis')
             ].all():
               return adiectivum.nominativum
             case [
-              colamen.genus === 'neutrum',
-              colamen.casus === 'accusativus',
-              colamen.numerus === 'singularis'
+              colamen.genus?.aequatur('neutrum'),
+              colamen.casus?.aequatur('accusativus'),
+              colamen.numerus?.aequatur('singularis')
             ].all():
               return adiectivum.nominativum
             default:
               return adiectivum.genitivum.chop(2)
           }
         }
-      default: throw Errator({ versio: versio })
+      default: throw errator({ versio: versio })
     }
   }
 
@@ -117,7 +117,7 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
                    positor: Adiectivum.positor,
                    radicator: this.radicetur(agendum.versio)
                  })
-    else throw Errator({ versio: agendum.versio })
+    else throw errator({ versio: agendum.versio })
   }
 }
 

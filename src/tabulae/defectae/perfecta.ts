@@ -1,12 +1,22 @@
 import TabulaDefecta from './defecta.ts';
-import { numeri, personae, tempora } from '../../miscella/enumerationes.ts';
+import {
+  Modus,
+  numeri,
+  Numerus,
+  Persona,
+  personae,
+  tempora,
+  Tempus
+  } from '../../miscella/enumerationes.ts';
+import Nuntius from '../../miscella/nuntius.ts';
 import { Actus } from '../../praebeunda/verba.ts';
 import { type Colamen } from '../../praebeunda/agenda.ts';
 
+@Nuntius.factum('TabulaPerfecta')
 export default class TabulaPerfecta extends TabulaDefecta<Actus> {
   static apponatur(): Colamen<Actus>[] {
     const colamina: Colamen<Actus>[] = [{
-      modus: 'infinitivus'
+      modus: Modus.modus('infinitivus')
     } as Colamen<Actus>];
 
     ['indicativus', 'subiunctivus'].forEach((modus) => {
@@ -15,10 +25,10 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
           numeri.forEach((numerus) => {
             personae.forEach((persona) => {
               colamina.push({
-                modus: modus,
-                tempus: tempus,
-                numerus: numerus,
-                persona: persona
+                modus: Modus.modus(modus),
+                tempus: Tempus.tempus(tempus),
+                numerus: Numerus.numerus(numerus),
+                persona: Persona.persona(persona)
               } as Colamen<Actus>)
             })
           })
@@ -30,26 +40,26 @@ export default class TabulaPerfecta extends TabulaDefecta<Actus> {
   }
 
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
-    switch (colamen.modus) {
+    switch (colamen.modus.valor) {
       case 'infinitivus':
-        if ([colamen.vox === 'activa', colamen.tempus === 'perfectum'].all()) {
-          colamen.vox = ''
-          colamen.tempus = ''
+        if ([colamen.vox.aequatur('activa'), colamen.tempus.aequatur('perfectum')].all()) {
+          colamen.vox.valor = ''
+          colamen.tempus.valor = ''
         } else {
           return null
         }
         break
       case 'indicativus':
       case 'subiunctivus':
-        switch (colamen.tempus) {
+        switch (colamen.tempus.valor) {
           case 'perfectum':
-            colamen.tempus = 'praesens'
+            colamen.tempus.valor = 'praesens'
             break
           case 'plusquamperfectum':
-            colamen.tempus = 'infectum'
+            colamen.tempus.valor = 'infectum'
             break
           case 'exigendum':
-            colamen.tempus = 'futurum'
+            colamen.tempus.valor = 'futurum'
             break
           default:
             return null

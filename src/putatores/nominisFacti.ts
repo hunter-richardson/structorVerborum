@@ -1,17 +1,16 @@
 import '../extensions/string.ts';
+import { errator, type Factum } from '../miscella/enumerationes.ts';
 import Ignavum from '../miscella/ignavum.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { NomenActum } from '../praebeunda/agenda.ts';
-import { Errator, Nomen } from '../praebeunda/verba.ts';
+import { Nomen } from '../praebeunda/verba.ts';
 import TabulaProna from '../tabulae/defectae/prona.ts';
 import TabulaRecta from '../tabulae/recta.ts';
 import Tabula from '../tabulae/tabula.ts';
-import type { casus, factum } from '../miscella/enumerationes.ts';
 import { type Putaturum } from './putaturum.ts';
 
 interface Percolamen {
-  factum?: factum
-   casus?: casus
+  factum?: Factum
 }
 
 @Nuntius.factum('PutatorNominisFacti')
@@ -29,7 +28,7 @@ class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
                    positor: Nomen.positor,
                    scapum: '/res/tabula/nomina/acta',
                    radicator: (nomen: NomenActum, colamen: Percolamen) => {
-                     switch (colamen.factum) {
+                     switch (colamen.factum?.valor) {
                        case 'supinum': return nomen.supinum.chop(2)
                        case 'gerundium': return nomen.gerundium.chop(2)
                        case 'infinitivum': return nomen.infinitivum.chop(3)
@@ -37,7 +36,7 @@ class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
                      }
                    }
                  })
-    } else throw Errator({ versio: agendum.versio })
+    } else throw errator({ versio: agendum.versio })
   }
 }
 

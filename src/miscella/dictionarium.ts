@@ -49,7 +49,7 @@ class Dictionarium {
     })
   }
 
-  @Nuntius.futurus('Dictionarium')
+  @Nuntius.promittum('Dictionarium')
   async perscribantur(): Promise<void> {
     if (!this._relata.length) {
       (await actuum.hoc().omnia()).forEach((res: string) => {
@@ -169,11 +169,11 @@ class Dictionarium {
     } else return await nomina.feratur(lemma)
   }
 
-  @Nuntius.futurus('Dictionarium')
+  @Nuntius.promittum('Dictionarium')
   async referatur(lemma: Lemma): Promise<Eventus | null> {
     var referendum: Referendum | undefined = undefined
     const lecta: boolean =
-      (await this.relata).first((relatum) => deepEqual(lemma, relatum.lemma))?.lecta ?? false
+      (await this.relata).first((relatum) => deepEqual(lemma, relatum as Lemma))?.lecta ?? false
     switch (lemma.categoria.toLowerCase()) {
       case      'actus': referendum = await this._referaturActus(lemma.scriptum, lecta); break
       case 'adiectivum': referendum = await this._referaturAdiectivum(lemma.scriptum, lecta); break
@@ -185,7 +185,7 @@ class Dictionarium {
     } return referendum ? { ...referendum, categoria: lemma.categoria.toLowerCase() } : null
   }
 
-  @Nuntius.futurus('Dictionarium')
+  @Nuntius.promittum('Dictionarium')
   async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
       case [!!quaerenda.categoriae, !!quaerenda.pars].all():
@@ -211,7 +211,7 @@ class Dictionarium {
     }
   }
 
-  @Nuntius.futurus('Dictionarium')
+  @Nuntius.promittum('Dictionarium')
   async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
     let eventus: Eventus | null = null
     do {

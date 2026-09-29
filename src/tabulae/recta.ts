@@ -16,7 +16,7 @@ export default class TabulaRecta<Hoc extends Faciendum<Illud>, Illud extends Mul
   via!: string
   hoc!: Hoc
 
-  @Nuntius.futurus('TabulaRecta')
+  @Nuntius.promittum('TabulaRecta')
   async plenetur(): Promise<void> {
     const scapalis: Ignavum<TabulaScapalis<Illud>> =
                 new Ignavum(TabulaScapalis, {

@@ -1,5 +1,5 @@
 import Tabula from './tabula.ts';
-import { gradua } from '../miscella/enumerationes.ts';
+import { Gradus, gradus } from '../miscella/enumerationes.ts';
 import Nuntius from '../miscella/nuntius.ts';
 import { AdverbiumAgendum } from '../praebeunda/agenda.ts';
 import { Adverbium } from '../praebeunda/verba.ts';
@@ -17,14 +17,14 @@ export default class TabulaAdverbii extends Tabula<Adverbium> {
     }
   }
 
-  @Nuntius.futurus('TabulaAdverbii')
+  @Nuntius.promittum('TabulaAdverbii')
   async plenetur(): Promise<void> {
-    gradua.forEach((gradus) => {
+    gradus.forEach((gradus) => {
       let scriptum: string = this.#gradatur(gradus)
       if (scriptum) {
         this.tabula.push(
           Object.assign({}, {
-              gradus: gradus,
+              gradus: Gradus.gradus(gradus),
               scriptum: scriptum
             }) as Adverbium)
       }

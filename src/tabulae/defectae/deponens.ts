@@ -1,32 +1,43 @@
 import TabulaDefecta from './defecta.ts';
-import { numeri, personae, tempora } from '../../miscella/enumerationes.ts';
+import {
+  Modus,
+  numeri,
+  Numerus,
+  Persona,
+  personae,
+  tempora,
+  Tempus,
+  Vox
+  } from '../../miscella/enumerationes.ts';
+import Nuntius from '../../miscella/nuntius.ts';
 import { Actus } from '../../praebeunda/verba.ts';
 import { type Colamen } from '../../praebeunda/agenda.ts';
 
+@Nuntius.factum('TabulaDeponens')
 export default class TabulaDeponens extends TabulaDefecta<Actus> {
   static apponatur(ut: string): Colamen<Actus>[] {
-    const colamina: Colamen<Actus>[] = [{ modus: 'infinitivus' } as Colamen<Actus>]
+    const colamina: Colamen<Actus>[] = [{ modus: Modus.modus('infinitivus') } as Colamen<Actus>]
 
     switch (ut) {
       case 'semideponens':
         ['praesens', 'futurum', 'perfectum'].map((tempus) => {
           colamina.push({
-            modus: 'participium',
-            tempus: tempus
+            modus: Modus.modus('participium'),
+            tempus: Tempus.tempus(tempus)
           } as Colamen<Actus>)
         })
         break
       case 'semideponensActiva':
         colamina.push({
-          modus: 'participium',
-          tempus: 'futurum'
+          modus: Modus.modus('participium'),
+          tempus: Tempus.tempus('futurum')
         } as Colamen<Actus>)
         break
       default:
         ['futurum', 'perfectum'].map((tempus) => {
           colamina.push({
-            modus: 'participium',
-            tempus: tempus
+            modus: Modus.modus('participium'),
+            tempus: Tempus.tempus(tempus)
           } as Colamen<Actus>)
         })
         break
@@ -35,9 +46,9 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
     ['praesens', 'futurum'].forEach((tempus) => {
       numeri.forEach((numerus) => {
         colamina.push({
-          modus: 'imperativus',
-          tempus: tempus,
-          numerus: numerus
+          modus: Modus.modus('imperativus'),
+          tempus: Tempus.tempus(tempus),
+          numerus: Numerus.numerus(numerus)
         } as Colamen<Actus>)
       })
     });
@@ -47,10 +58,10 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
           numeri.forEach((numerus) => {
             personae.forEach((persona) => {
               colamina.push({
-                modus: modus,
-                tempus: tempus,
-                numerus: numerus,
-                persona: persona
+                modus: Modus.modus(modus),
+                tempus: Tempus.tempus(tempus),
+                numerus: Numerus.numerus(numerus),
+                persona: Persona.persona(persona)
               } as Colamen<Actus>)
             })
           })
@@ -66,25 +77,25 @@ export default class TabulaDeponens extends TabulaDefecta<Actus> {
   protected referatur(colamen: Colamen<Actus>): Colamen<Actus> | null {
     switch (this.ut) {
       case 'semideponens':
-        if (colamen.modus === 'particpalis') colamen.vox = ''
-        else if (colamen.vox === 'passiva') return null
+        if (colamen.modus.aequatur('particpalis')) colamen.vox = new Vox
+        else if (colamen.vox.aequatur('passiva')) return null
         break
       case 'semideponensActiva':
         if (
           [
-            colamen.modus === 'participium',
-            colamen.tempus === 'futurum',
-            colamen.vox === 'passiva'
+            colamen.modus.aequatur('participium'),
+            colamen.tempus.aequatur('futurum'),
+            colamen.vox.aequatur('passiva')
           ].any()
         ) {
-          colamen.vox = ''
-        } else if (colamen.vox === 'passiva') return null
+          colamen.vox = new Vox
+        } else if (colamen.vox.aequatur('passiva')) return null
         break
       default:
         if ([
-              colamen.modus === 'participium',
-              colamen.vox === 'passiva'
-            ].any()) colamen.vox = ''
+              colamen.modus.aequatur('participium'),
+              colamen.vox.aequatur('passiva')
+            ].any()) colamen.vox = new Vox
         else return null
         break
     }

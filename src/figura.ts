@@ -7,6 +7,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
+import { useRouter } from 'vuetify/lib/composables/router.mjs';
 import translation from './extensions/i18next.ts';
 import './extensions/string.ts';
 import appositus from './facies/appositus.vue';
@@ -52,9 +53,9 @@ await i18next.use(FsBackend).init(deTransferendo)
 export const appositus: App<Element> =
     createApp(App<Element>)
       .use(i18NextVue, { i18next })
-      .use(Crustula)
+      .use(Crustula).use(useRouter())
 
-appositus.config.globalProperties.$tf = translation().tf
+appositus.config.globalProperties['$tf'] = translation().tf
 
 appositus.mount('#appositus')
 

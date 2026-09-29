@@ -53,7 +53,8 @@
     "types": [
       "@types/node",
       "cypress",
-      "cypress-map"
+      "cypress-map",
+      // "node"
     ]
   },
   "files": [],

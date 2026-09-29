@@ -17,7 +17,7 @@ export class Locutor {
   @Nuntius.modus('Locutor')
   addatur(verbum: Verbum): void {
     const praevium: Verbum = this._verba.last()
-    if (praevium.categoria === 'praepositio') {
+    if (praevium.categoria.valor === 'praepositio') {
       if(verbum.scriptum.startsWithVowel()){
         const adaequatur: boolean = /^(ab|ex)$/iu.test(praevium.scriptum)
         if(adaequatur) {
