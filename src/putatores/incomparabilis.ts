@@ -1,21 +1,21 @@
-import '../extensions/string.ts';
-import { errator, type Genus } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Incomparabile } from '../praebeunda/agenda.ts';
-import { Adiectivum } from '../praebeunda/verba.ts';
-import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi.ts';
-import TabulaRecta from '../tabulae/recta.ts';
-import Tabula from '../tabulae/tabula.ts';
-import TabulaVicaria from '../tabulae/vicaria.ts';
-import { type Percolamen as Nominis } from './nominis.ts';
-import type { Putaturum, Radicator } from './putaturum.ts';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { Incomparabile } from '../praebeunda/agenda';
+import { Adiectivum } from '../praebeunda/verba';
+import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import TabulaVicaria from '../tabulae/vicaria';
+import { errator, type Genus } from '../praebeunda/valores';
+import { type Percolamen as Nominis } from './nominis';
+import type { Putaturum, Radicator } from './putaturum';
 
 export interface Percolamen extends Nominis {
   genus?: Genus
 }
 
-@Nuntius.factum('PutatorIncomparabilis')
+@Nuntius.factum
 class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
   radicetur(versio: string): Radicator<Incomparabile, Adiectivum> {
     switch (versio) {
@@ -72,7 +72,7 @@ class PutatorIncomparabilis implements Putaturum<Incomparabile, Adiectivum> {
     }
   }
 
-  @Nuntius.modus('PutatorIncomparabilis')
+  @Nuntius.modus
   putetur(agendum: Incomparabile): Ignavum<Tabula<Adiectivum>> {
     // eslint-disable-next-line prefer-const
     let [fundamen, vices, defectus] = agendum.versio.split('/')

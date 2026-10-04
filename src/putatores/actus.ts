@@ -1,17 +1,17 @@
-import '../extensions/string.ts';
-import type { Modus, Numerus, Persona, Tempus, Vox } from '../miscella/enumerationes.ts';
-import { errator } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { ActusAgendus } from '../praebeunda/agenda.ts';
-import { Actus } from '../praebeunda/verba.ts';
-import TabulaDeponens from '../tabulae/defectae/deponens.ts';
-import TabulaImpersonalis from '../tabulae/defectae/impersonalis.ts';
-import TabulaPerfecta from '../tabulae/defectae/perfecta.ts';
-import TabulaRecta from '../tabulae/recta.ts';
-import Tabula from '../tabulae/tabula.ts';
-import TabulaVicaria from '../tabulae/vicaria.ts';
-import type { Putaturum, Radicator } from './putaturum.ts';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { ActusAgendus } from '../praebeunda/agenda';
+import { errator } from '../praebeunda/valores';
+import { Actus } from '../praebeunda/verba';
+import TabulaDeponens from '../tabulae/defectae/deponens';
+import TabulaImpersonalis from '../tabulae/defectae/impersonalis';
+import TabulaPerfecta from '../tabulae/defectae/perfecta';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import TabulaVicaria from '../tabulae/vicaria';
+import type { Modus, Numerus, Persona, Tempus, Vox } from '../praebeunda/valores';
+import type { Putaturum, Radicator } from './putaturum';
 
 
 interface Percolamen {
@@ -22,7 +22,7 @@ interface Percolamen {
   persona?: Persona
 }
 
-@Nuntius.factum('PutatorActus')
+@Nuntius.factum
 class PutatorActus implements Putaturum<ActusAgendus, Actus> {
   private radicetur(versio: string): Radicator<ActusAgendus, Actus> {
     switch (versio) {
@@ -137,11 +137,11 @@ class PutatorActus implements Putaturum<ActusAgendus, Actus> {
           }
         }
       default:
-        throw Errator({ versio: versio })
+        throw errator({ versio: versio })
     }
   }
 
-  @Nuntius.modus('PutatorActus')
+  @Nuntius.modus
   putetur(agendus: ActusAgendus): Ignavum<Tabula<Actus>> {
     // eslint-disable-next-line prefer-const
     const [fundamen, vices, defectus, defectusSecundus] = agendus.versio.split('/')

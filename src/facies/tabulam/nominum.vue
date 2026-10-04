@@ -1,9 +1,9 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue'
-  import '../../extensions/array.ts'
-  import { NomenActum } from '../../praebeunda/agenda.ts'
-  import { type Faciendum } from '../../praebeunda/interfecta.ts'
-  import { Actus, Nomen } from '../../praebeunda/verba.ts'
+  import '../../extensions/array'
+  import { NomenActum } from '../../praebeunda/agenda'
+  import { type Faciendum } from '../../praebeunda/interfecta'
+  import { Actus, Nomen } from '../../praebeunda/verba'
   import inflectere from '../inflectere.vue'
   import tabulare from '../tabulare.vue'
 

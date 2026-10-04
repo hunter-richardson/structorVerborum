@@ -1,8 +1,8 @@
-import { Multiplex } from '../praebeunda/verba.ts';
-import Tabula from '../tabulae/tabula.ts';
-import type Ignavum from '../miscella/ignavum.ts';
-import { type Colamen } from '../praebeunda/agenda.ts';
-import { type Faciendum } from '../praebeunda/interfecta.ts';
+import { Multiplex } from '../praebeunda/verba';
+import Tabula from '../tabulae/tabula';
+import type Ignavum from '../miscella/usus';
+import { type Colamen } from '../praebeunda/agenda';
+import { type Faciendum } from '../praebeunda/interfecta';
 
 export type Radicator<Hoc, Illud> = (hoc: Hoc, percolamen: Colamen<Illud>) => string
 

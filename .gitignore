@@ -41,3 +41,5 @@ src/**/*.d.ts
 src/**/*.js
 
 *.config.js
+!eslint.config.js
+eslint.config.ts

@@ -1,16 +1,19 @@
-import Anomala, { Mantela } from './anomala.ts';
-import { encliticum } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda.ts';
-import Structor from '../praebeunda/structor.ts';
-import { Adiectivum } from '../praebeunda/verba.ts';
-import TabulaCollata from '../tabulae/collata.ts';
-import TabulaConiuncta from '../tabulae/coniuncta.ts';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta.ts';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa.ts';
-import TabulaScapalis from '../tabulae/scapalis.ts';
+import Anomala, { Mantela } from './anomala';
+import Nuntius from '../miscella/nuntius';
+import { Ignavum, Ultimum } from '../miscella/usus';
+import { AdiectivumAgendum, Incomparabile } from '../praebeunda/agenda';
+import Structor from '../praebeunda/structor';
+import { Encliticus } from '../praebeunda/valores';
+import { Adiectivum } from '../praebeunda/verba';
+import TabulaCollata from '../tabulae/collata';
+import TabulaConiuncta from '../tabulae/coniuncta';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import TabulaScapalis from '../tabulae/scapalis';
 
+@Ultimum @Ignavum @Nuntius.factum
 class Adiectiva extends Anomala<Adiectivum> {
+  @Nuntius.promittum
   protected override async numeretur(): Promise<void> {
     const frugi: Ignavum<TabulaScapalis<Adiectivum>> =
              new Ignavum(TabulaScapalis<Adiectivum>, {
@@ -158,12 +161,12 @@ class Adiectiva extends Anomala<Adiectivum> {
     const utrumque: Ignavum<TabulaSuffixa<Adiectivum>> =
                 new Ignavum(TabulaSuffixa<Adiectivum>, {
                       relata: utrum,
-                      suffixum: encliticum.coniugans
+                      suffixum: Encliticus.coniugans
                     })
     const utrumcumque: Ignavum<TabulaSuffixa<Adiectivum>> =
                    new Ignavum(TabulaSuffixa<Adiectivum>, {
                       relata: utrum,
-                      suffixum: `cum${encliticum.coniugans}`
+                      suffixum: `cum${Encliticus.coniugans}`
                     })
     const utrumvis: Ignavum<TabulaSuffixa<Adiectivum>> =
                 new Ignavum(TabulaSuffixa<Adiectivum>, {
@@ -193,4 +196,4 @@ class Adiectiva extends Anomala<Adiectivum> {
   }
 }
 
-export const adiectiva = new Adiectiva()
+export const adiectiva: Adiectiva = new Adiectiva()

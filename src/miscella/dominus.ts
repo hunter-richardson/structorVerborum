@@ -1,14 +1,13 @@
 import i18next from 'i18next';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
-import Ignavum from './ignavum.ts';
-import Nuntius from './nuntius.ts';
-import '../extensions/env.ts';
+import Nuntius from './nuntius';
+import { Ignavum, Ultimum } from './usus';
+import '../extensions/env';
 
 type Valor = string | boolean | number | undefined
 
 abstract class Crustulum<Hoc extends Valor> {
-  protected nomen!: string
   protected valores!: string[]
   protected vita: number = 365
   private _finis: Date = new Date
@@ -19,38 +18,40 @@ abstract class Crustulum<Hoc extends Valor> {
 
   inhaereatur() { this.massa = this.#inhaesa() }
 
-  @Nuntius.promittum('Crustulum')
+  @Nuntius.promittum
   protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
     if(this.coctast()) this._finis.setDate(this._finis.getDate() + this.vita)
     else this._finis.setDate(Date.now() + this.vita)
-    return dominus.hoc().ponam(this.nomen, valor, this._finis)
+    return dominus.ponam(this.nomen, valor, this._finis)
                   .then(() => { if(mutatast) this.respondeam() })
                   .then(() => { if(mutatast) window.location.reload() })
   }
 
-  @Nuntius.modus('Crustulum')
-  coctast(): boolean { return dominus.hoc().quaeram(this.nomen) }
+  @Nuntius.modus
+  coctast(): boolean { return dominus.quaeram(this.nomen) }
 
-  @Nuntius.modus('Crustulum')
+  @Nuntius.modus
   concoctast (valor: string): boolean { return this.massa === valor }
 
-  @Nuntius.captor('Crustulum')
+  private get nomen(): string { return this.constructor.name.toLowerCase() }
+
+  @Nuntius.captor
   get massa(): string {
     if(!!this._finis && this._finis.getTime() >= Date.now()) {
       this.deleatur()
       return this.#inhaesa()
-    } else return dominus.hoc().inveniam(this.nomen) ?? this.#inhaesa()
+    } else return dominus.inveniam(this.nomen) ?? this.#inhaesa()
   }
 
-  @Nuntius.positor('Crustulum')
+  @Nuntius.positor
   set massa(valor: string) {
     if(this.massa !== valor && this.valores.includes(valor))
          this.coquatur(valor)
     else this.coquatur(this.#inhaesa())
   }
 
-  @Nuntius.modus('Crustulum')
+  @Nuntius.modus
   interverteUtrum() {
     const valor: string = this.massa
     if(this.valores.length == 2) {
@@ -76,55 +77,56 @@ abstract class Vexillum extends Crustulum<boolean> {
   }
 }
 
+@Ultimum @Ignavum
 class Apices extends Vexillum {
-  override nomen = 'apices'
   scribatur (): string { return this.signetur() ? 'ā' : 'a' }
   constructor() { super(true) }
   async respondeam () { /*noop*/ }
 }
 
+@Ultimum @Ignavum
 class UtendaU extends Vexillum {
-  override nomen = 'utendaU'
   scribatur (): string { return this.signetur() ? 'u' : 'v' }
   constructor () { super(true) }
   async respondeam () { /*noop*/ }
 }
 
+@Ultimum @Ignavum
 class Magnas extends Vexillum {
-  override nomen = 'magnas'
   scribatur (): string { return this.signetur() ? 'A' : 'a' }
   constructor () { super(false) }
   async respondeam () { /*noop*/ }
 }
 
-class Sessio extends Crustulum<undefined> {
-  override nomen = 'sessio'
+@Ultimum @Ignavum
+class Sessio extends Crustulum<boolean> {
   override valores = [ '' ]
   override vita = 30
   override set massa(valor: string) { this.coquatur(valor) }
-  signetur() { return undefined }
+  signetur(): boolean { return this.coctast() }
   scribatur() { return '' }
   async respondeam() {
-    if(this.coctast()) dominus.hoc().inhaereantur()
-    else dominus.hoc().deleantur()
+    if(this.coctast()) dominus.inhaereantur()
+    else dominus.deleantur()
   }
 }
 
-class Asssensus extends Crustulum<undefined> {
-  override nomen = 'assensus'
+@Ultimum @Ignavum
+class Assensus extends Crustulum<boolean | undefined> {
   override valores = [ '', 'assensit', 'negavit' ]
 
-  signetur (): undefined { return undefined }
-  scribatur (): string { return '' }
+  scribatur (): string { return ''; }
+  signetur (): boolean | undefined
+  { return this.coctast() ? this.concoctast('assensit') : undefined }
   async respondeam () {
-    if(this.massa === 'assensit')
-         dominus.hoc().inhaereantur()
-    else dominus.hoc().deleantur()
+    if(this.signetur())
+         dominus.inhaereantur()
+    else dominus.deleantur()
   }
 }
 
+@Ultimum @Ignavum
 class Lingua extends Crustulum<string> {
-  override nomen = 'lingua'
   override valores = [ 'latina', 'anglica' ]
   signetur (): string { return this.massa === 'anglica' ? 'en' : 'la' }
   scribatur (): string { return `/res/picta/${this.massa}.png` }
@@ -132,8 +134,8 @@ class Lingua extends Crustulum<string> {
   { i18next.changeLanguage(this.signetur()) }
 }
 
+@Ultimum @Ignavum
 class Facies extends Crustulum<string> {
-  override nomen = 'facies'
   override valores = [ 'fusca', 'illustris' ]
   signetur (): string { return this.massa === 'illustris' ? 'light' : 'dark' }
   scribatur (): string { return `${this.signetur()}_mode` }
@@ -141,8 +143,8 @@ class Facies extends Crustulum<string> {
   { useTheme().global.name.value = this.signetur() }
 }
 
+@Ultimum @Ignavum
 class Separator extends Crustulum<string> {
-  override nomen = 'separator'
   override valores = [ 'inane', 'interpunctum', 'nullum' ]
   scribatur (): string { return '' }
   signetur (): string {
@@ -156,14 +158,8 @@ class Separator extends Crustulum<string> {
   async respondeam () {}
 }
 
-type Optanda = NonNullable<Parameters<typeof setCookie>[ 2 ]>
+@Ultimum @Ignavum @Nuntius.factum
 class Dominus {
-  private static readonly _optanda: Optanda = {
-    domain: 'conans',
-    sameSite: 'strict',
-    secure: process.env['NODE_ENV'] === 'production'  //  process.env.NODE_ENV
-  }
-
   readonly separatores = {
     interpunctum: ' • ',
     inane: ' _ ',
@@ -174,7 +170,7 @@ class Dominus {
   readonly apices: Apices = new Apices
   readonly utendaU: UtendaU = new UtendaU
   readonly magnas: Magnas = new Magnas
-  readonly assensus: Asssensus = new Asssensus
+  readonly assensus: Assensus = new Assensus
   readonly facies: Facies = new Facies
   readonly lingua: Lingua = new Lingua
   readonly separator: Separator = new Separator
@@ -189,7 +185,9 @@ class Dominus {
 
   async ponam(nomen: string, valor: string, finis: Date) {
     setCookie(nomen, valor, {
-      ...Dominus._optanda,
+      secure: process.env[ 'NODE_ENV' ] === 'production',  //  process.env.NODE_ENV
+      domain: 'conans',
+      sameSite: 'strict',
       expires: finis
     })
   }
@@ -209,11 +207,11 @@ class Dominus {
       { if(crustulum.coctast()) crustulum.proferatur() })
   }
 
-  sedit(): boolean { return this._sessio.coctast() }
+  sedit(): boolean { return this._sessio.signetur() }
 
   sedeat() { this._sessio.massa = crypto.randomUUID() }
 
   stet() { this._sessio.deleatur() }
 }
 
-export const dominus: Ignavum<Dominus> = new Ignavum(Dominus)
+export const dominus: Dominus = new Dominus

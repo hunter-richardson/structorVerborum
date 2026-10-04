@@ -1,12 +1,12 @@
 import deepEqual from 'deep-equal';
-import Ignavum from './ignavum.ts';
-import Nuntius from './nuntius.ts';
-import { actus } from '../anomala/actus.ts';
-import { adiectiva } from '../anomala/adiectiva.ts';
-import { nomina } from '../anomala/nomina.ts';
-import { pronomina } from '../anomala/pronomina.ts';
-import '../extensions/array.ts';
-import '../extensions/string.ts';
+import Nuntius from './nuntius';
+import { Ignavum, Ultimum } from './usus';
+import { actus } from '../anomala/actus';
+import { adiectiva } from '../anomala/adiectiva';
+import { nomina } from '../anomala/nomina';
+import { pronomina } from '../anomala/pronomina';
+import '../extensions/array';
+import '../extensions/string';
 import {
   actuum,
   adiectivorum,
@@ -14,10 +14,10 @@ import {
   incomparabilium,
   nominum,
   numeraminum
-  } from '../lectores/verbalis.ts';
-import { verborum } from '../lectores/verbi.ts';
-import * as Agenda from '../praebeunda/agenda.ts';
-import { type Referendum } from '../praebeunda/interfecta.ts';
+  } from '../lectores/verbalis';
+import { verborum } from '../lectores/verbi';
+import * as Agenda from '../praebeunda/agenda';
+import { type Referendum } from '../praebeunda/interfecta';
 
 export interface Lemma {
   categoria: string
@@ -37,7 +37,7 @@ export interface Eventus extends Referendum {
   categoria: string
 }
 
-@Nuntius.factum('Dictionarium')
+@Ultimum @Ignavum @Nuntius.factum
 class Dictionarium {
   private readonly _relata: Relatum[] = []
 
@@ -49,10 +49,10 @@ class Dictionarium {
     })
   }
 
-  @Nuntius.promittum('Dictionarium')
+  @Nuntius.promittum
   async perscribantur(): Promise<void> {
     if (!this._relata.length) {
-      (await actuum.hoc().omnia()).forEach((res: string) => {
+      (await actuum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Actus',
           scriptum: res,
@@ -66,7 +66,7 @@ class Dictionarium {
         })
       });
 
-      (await adverbiorum.hoc().omnia()).forEach((res: string) => {
+      (await adverbiorum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adverbium',
           scriptum: res,
@@ -74,7 +74,7 @@ class Dictionarium {
         })
       });
 
-      (await adiectivorum.hoc().omnia()).forEach((res: string) => {
+      (await adiectivorum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adiectivum',
           scriptum: res,
@@ -82,7 +82,7 @@ class Dictionarium {
         })
       });
 
-      (await incomparabilium.hoc().omnia()).forEach((res: string) => {
+      (await incomparabilium.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adiectivum',
           scriptum: res,
@@ -90,7 +90,7 @@ class Dictionarium {
         })
       });
 
-      (await nominum.hoc().omnia()).forEach((res: string) => {
+      (await nominum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Nomen',
           scriptum: res,
@@ -98,7 +98,7 @@ class Dictionarium {
         })
       });
 
-      (await numeraminum.hoc().omnia()).forEach((res: string) => {
+      (await numeraminum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Numeramen',
           scriptum: res,
@@ -114,7 +114,7 @@ class Dictionarium {
         })
       });
 
-      (await actuum.hoc().omnia()).forEach((res: string) => {
+      (await actuum.omnia()).forEach((res: string) => {
         this._relata.push({
           categoria: 'Actus',
           scriptum: res,
@@ -138,7 +138,7 @@ class Dictionarium {
         })
       });
 
-      (await verborum.hoc().omnia()).forEach((res: string) => {
+      (await verborum.omnia()).forEach((res: string) => {
         const [categoria, scriptum] = res.split('/')
         this._relata.push({
           categoria: categoria.capitalize(),
@@ -150,26 +150,26 @@ class Dictionarium {
   }
 
   async _referaturActus(lemma: string, lecta: boolean): Promise<Referendum | undefined>
-  { return await (lecta ? actuum.hoc().legatur : actus.hoc().feratur)(lemma) }
+  { return await (lecta ? actuum.legatur : actus.feratur)(lemma) }
 
   async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
     if(lecta) {
-      const incomparabile: boolean = !(await adiectivorum.hoc().omnia()).includes(lemma)
-      return await (incomparabile ? incomparabilium : adiectivorum).hoc().legatur(lemma)
+      const incomparabile: boolean = !(await adiectivorum.omnia()).includes(lemma)
+      return await (incomparabile ? incomparabilium : adiectivorum).legatur(lemma)
     } else return await adiectiva.feratur(lemma)
   }
 
   async _referaturNomen(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
     if(lecta) {
-      const factum: boolean = (await actuum.hoc().omnia()).includes(lemma)
+      const factum: boolean = (await actuum.omnia()).includes(lemma)
       if(factum) {
-        const actus: Agenda.ActusAgendus = await actuum.hoc().legatur(lemma) as Agenda.ActusAgendus
+        const actus: Agenda.ActusAgendus = (await actuum.legatur(lemma)).first()
         return await actus.nomen()
-      } else return await nominum.hoc().legatur(lemma)
+      } else return await nominum.legatur(lemma)
     } else return await nomina.feratur(lemma)
   }
 
-  @Nuntius.promittum('Dictionarium')
+  @Nuntius.promittum
   async referatur(lemma: Lemma): Promise<Eventus | null> {
     var referendum: Referendum | undefined = undefined
     const lecta: boolean =
@@ -178,14 +178,14 @@ class Dictionarium {
       case      'actus': referendum = await this._referaturActus(lemma.scriptum, lecta); break
       case 'adiectivum': referendum = await this._referaturAdiectivum(lemma.scriptum, lecta); break
       case      'nomen': referendum = await this._referaturNomen(lemma.scriptum, lecta); break
-      case  'adverbium': referendum = await adverbiorum.hoc().legatur(lemma.scriptum); break
-      case  'numeramen': referendum = await numeraminum.hoc().legatur(lemma.scriptum); break
+      case  'adverbium': referendum = await adverbiorum.legatur(lemma.scriptum); break
+      case  'numeramen': referendum = await numeraminum.legatur(lemma.scriptum); break
       case   'promomen': referendum = await pronomina.feratur(lemma.scriptum); break
-                default: referendum = await verborum.hoc().legatur(lemma.scriptum); break
+                default: referendum = await verborum.legatur(lemma.scriptum); break
     } return referendum ? { ...referendum, categoria: lemma.categoria.toLowerCase() } : null
   }
 
-  @Nuntius.promittum('Dictionarium')
+  @Nuntius.promittum
   async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
       case [!!quaerenda.categoriae, !!quaerenda.pars].all():
@@ -211,7 +211,7 @@ class Dictionarium {
     }
   }
 
-  @Nuntius.promittum('Dictionarium')
+  @Nuntius.promittum
   async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
     let eventus: Eventus | null = null
     do {
@@ -223,4 +223,4 @@ class Dictionarium {
   }
 }
 
-export const dictionarium = new Ignavum(Dictionarium)
+export const dictionarium: Dictionarium = new Dictionarium

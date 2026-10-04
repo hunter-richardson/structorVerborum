@@ -1,13 +1,12 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
   import { onMounted, ref, type Ref } from 'vue'
-  import '../extensions/array.ts'
-  import { Columnae } from '../scriptura/columnae.ts'
-  import Ignavum from '../miscella/ignavum.ts'
-  import { type Faciendum } from '../praebeunda/interfecta.ts'
-  import { Multiplex } from '../praebeunda/verba.ts'
-  import { categoricum } from '../scriptura/columnae.ts'
-  import Gustulus from '../scriptura/gustulus.ts'
-  import Tabula from '../tabulae/tabula.ts'
+  import '../extensions/array'
+  import { Columnae } from '../scriptura/columnae'
+  import { type Faciendum } from '../praebeunda/interfecta'
+  import { Multiplex } from '../praebeunda/verba'
+  import { categoricum } from '../scriptura/columnae'
+  import Gustulus from '../scriptura/gustulus'
+  import Tabula from '../tabulae/tabula'
   import Gustulare from './gustulare.vue'
   import Onerare from './onerare.vue'
   import Specere from './specere.vue'
@@ -21,9 +20,9 @@
   }
 
   const { gustulus, agendum, categoria } = defineProps<Forma>()
-  const tabula: Ignavum<Tabula<Hoc>> | undefined = agendum.putetur()
+  const tabula: Tabula<Hoc> | undefined = agendum.putetur()
 
-  async function omnia(): Promise<Hoc[]> { return await tabula?.hoc().tabulentur() ?? [] }
+  async function omnia(): Promise<Hoc[]> { return await tabula?.tabulentur() ?? [] }
 
   const haec: Hoc[] = await omnia()
 
@@ -46,7 +45,7 @@
 
   async function forsInflectat() {
     await reoneratur()
-    hoc.value = haec.random()
+    value = haec.random()
     return await exoneratur()
   }
 
@@ -68,7 +67,7 @@
   <Onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <Specere v-else-if='!!hoc' :verbum='hoc' @blur='hoc = undefined' />
-  <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec = []' />
+  <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec.clear()' />
   <template v-else-if='haec.length > 1'>
     <div v-if='seligenda.length > 0' id='colamina'>
       <v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>

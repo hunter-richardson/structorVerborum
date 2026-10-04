@@ -1,31 +1,28 @@
-import TabulaRecta from './recta.ts';
-import Tabula from './tabula.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
-import { type Positor } from '../praebeunda/agenda.ts';
-import { type Faciendum } from '../praebeunda/interfecta.ts';
-import { type Radicator } from '../putatores/putaturum.ts';
+import TabulaRecta from './recta';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { Multiplex } from '../praebeunda/verba';
+import { type Faciendum } from '../praebeunda/interfecta';
+import { type Radicator } from '../putatores/putaturum';
 
 interface Vicaria {
   scapum?: string
   via: string
 }
 
-@Nuntius.factum('TabulaVicaria')
+@Nuntius.factum
 export default class TabulaVicaria<Hoc extends Faciendum<Illud>, Illud extends Multiplex> extends Tabula<Illud> {
   prima!: Vicaria
   secunda!: Vicaria
   hoc!: Hoc
   radicator!: Radicator<Hoc, Illud>
-  positor!: Positor<Illud>
 
-  @Nuntius.promittum('TabulaVicaria')
+  @Nuntius.promittum
   async plenetur(): Promise<void> {
     const tabulaPrima: Ignavum<TabulaRecta<Hoc, Illud>> =
                    new Ignavum(TabulaRecta, {
                          radicator: this.radicator,
-                         positor: this.positor as Positor<Multiplex>,
                          scapum: this.prima.scapum,
                          via: this.prima.via,
                          hoc: this.hoc
@@ -34,7 +31,6 @@ export default class TabulaVicaria<Hoc extends Faciendum<Illud>, Illud extends M
     const tabulaSecunda: Ignavum<TabulaRecta<Hoc, Illud>> =
                      new Ignavum(TabulaRecta, {
                            radicator: this.radicator,
-                           positor: this.positor as Positor<Multiplex>,
                            scapum: this.secunda.scapum,
                            via: this.secunda.via,
                            hoc: this.hoc
@@ -42,8 +38,8 @@ export default class TabulaVicaria<Hoc extends Faciendum<Illud>, Illud extends M
 
     this.tabula = [
       ...new Set([
-        ...(await tabulaPrima.hoc().tabulentur()),
-        ...(await tabulaSecunda.hoc().tabulentur())
+        ...(await tabulaPrima.hoc.tabulentur()),
+        ...(await tabulaSecunda.hoc.tabulentur())
       ])
     ]
   }

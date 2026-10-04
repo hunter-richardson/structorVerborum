@@ -1,36 +1,38 @@
-import * as Interfecta from './interfecta.ts';
-import Structor from './structor.ts';
-import * as Verba from './verba.ts';
-import { actus as actusAnomala } from '../anomala/actus.ts';
-import { nomina } from '../anomala/nomina.ts';
-import '../extensions/array.ts';
-import '../extensions/string.ts';
-import { actuum } from '../lectores/verbalis.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Numerator from '../miscella/numerator.ts';
-import { actus } from '../putatores/actus.ts';
-import { adiectivi } from '../putatores/adiectivi.ts';
-import { incomparabilis } from '../putatores/incomparabilis.ts';
-import { nominis } from '../putatores/nominis.ts';
-import { nominisFacti } from '../putatores/nominisFacti.ts';
-import TabulaAdverbii from '../tabulae/adverbii.ts';
-import TabulaNumeraminis from '../tabulae/numeraminis.ts';
-import Tabula from '../tabulae/tabula.ts';
-import { dictionarium, type Lemma } from '../miscella/dictionarium.ts';
+import Structor from './structor';
+import {
+  Actus,
+  Adiectivum,
+  Adverbium,
+  Nomen,
+  Numerale,
+  Numeramen
+  } from './verba';
+import { actus as actusAnomali } from '../anomala/actus';
+import { nomina } from '../anomala/nomina';
+import '../extensions/array';
+import '../extensions/string';
+import { actuum } from '../lectores/verbalis';
+import Numerator from '../miscella/numerator';
+import { actus } from '../putatores/actus';
+import { adiectivi } from '../putatores/adiectivi';
+import { incomparabilis } from '../putatores/incomparabilis';
+import { nominis } from '../putatores/nominis';
+import { nominisFacti } from '../putatores/nominisFacti';
+import TabulaAdverbii from '../tabulae/adverbii';
+import TabulaNumeraminis from '../tabulae/numeraminis';
+import Tabula from '../tabulae/tabula';
+import type { Faciendum, Lectum, Referendum } from './interfecta';
+import { dictionarium, type Lemma } from '../miscella/dictionarium';
 
-export type Agendum<Hoc extends Verba.Multiplex> = Omit<Hoc, 'categoria' | 'enclicitum' | 'unicum'>
-export type Colamen<Hoc> = Omit<Hoc, 'categoria' | 'scriptum' | 'encliticum'>
-export type Positor<Hoc extends Verba.Multiplex> = (agendum: Agendum<Hoc>) => Hoc
-
-export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfecta.Lectum {
-       versio!: string
+export class ActusAgendus implements Faciendum<Actus>, Lectum {
+  versio!: string
   infinitivum?: string
-    perfectum?: string
-      supinum?: string
+  perfectum?: string
+  supinum?: string
 
-  putetur(): Ignavum<Tabula<Verba.Actus>> { return actus.hoc().putetur(this) }
+  putetur(): Tabula<Actus> { return actus.putetur(this) }
 
-  async nomen(): Promise<Interfecta.Faciendum<Verba.Nomen> | undefined> {
+  async nomen(): Promise<Faciendum<Nomen> | undefined> {
     if ((await nomina.omnia()).includes(this.infinitivum ?? '')) {
       return (await nomina.feratur(this.infinitivum ?? ''))
     } else {
@@ -82,48 +84,48 @@ export class ActusAgendus implements Interfecta.Faciendum<Verba.Actus>, Interfec
   }
 }
 
-export class AdverbiumAgendum implements Interfecta.Faciendum<Verba.Adverbium>, Interfecta.Lectum {
-        versio!: string
-     positivum!: string
+export class AdverbiumAgendum implements Faciendum<Adverbium>, Lectum {
+  versio!: string
+  positivum!: string
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adverbium>> | undefined
-  { return new Ignavum(TabulaAdverbii, { agendum: this }) }
+  putetur(): Tabula<Adverbium> | undefined
+  { return new TabulaAdverbii(this) }
 }
 
-export class NomenAgendum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
-       versio!: string
+export class NomenAgendum implements Faciendum<Nomen>, Lectum {
+  versio!: string
   nominativum!: string
-    genitivum!: string
+  genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined
-  { return nominis.hoc().putetur(this) }
+  putetur(): Tabula<Nomen> | undefined
+  { return nominis.putetur(this) }
 }
 
-export class NomenActum implements Interfecta.Faciendum<Verba.Nomen>, Interfecta.Lectum {
-       versio!: string
+export class NomenActum implements Faciendum<Nomen>, Lectum {
+  versio!: string
   infinitivum!: string
-    gerundium!: string
-      supinum!: string
+  gerundium!: string
+  supinum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Nomen>> | undefined
-  { return nominisFacti.hoc().putetur(this) }
+  putetur(): Tabula<Nomen> | undefined
+  { return nominisFacti.putetur(this) }
 
-  async actus(): Promise<Interfecta.Faciendum<Verba.Actus> | undefined> {
-    return await ((await actuum.hoc().omnia()).includes(this.infinitivum) ?
-                         actuum.hoc().legatur : actusAnomala.hoc().feratur)(this.infinitivum)
+  async actus(): Promise<Faciendum<Actus> | undefined> {
+    return await ((await actuum.omnia()).includes(this.infinitivum) ?
+                         actuum.legatur : actusAnomali.feratur)(this.infinitivum)
   }
 }
 
-export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>, Interfecta.Lectum {
-        versio!: string
-     positivum!: string
+export class AdiectivumAgendum implements Faciendum<Adiectivum>, Lectum {
+  versio!: string
+  positivum!: string
   comparativum!: string
   superlativum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined
-  { return adiectivi.hoc().putetur(this) }
+  putetur(): Tabula<Adiectivum> | undefined
+  { return adiectivi.putetur(this) }
 
   async probetur(colamen: {
     gradus: string
@@ -202,9 +204,9 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
         return null
     }
 
-    const tabula: Ignavum<Tabula<Verba.Adiectivum>> | undefined = this.putetur()
+    const tabula: Tabula<Adiectivum> | undefined = this.putetur()
     if (tabula) {
-      const adiectiva: Verba.Adiectivum[] = await tabula.hoc().tabulentur()
+      const adiectiva: Adiectivum[] = await tabula.tabulentur()
 
       const nominativus: string | undefined = adiectiva.first((adiectivum) =>
         [
@@ -233,13 +235,13 @@ export class AdiectivumAgendum implements Interfecta.Faciendum<Verba.Adiectivum>
   }
 }
 
-export class Incomparabile implements Interfecta.Faciendum<Verba.Adiectivum>, Interfecta.Lectum {
-       versio!: string
+export class Incomparabile implements Faciendum<Adiectivum>, Lectum {
+  versio!: string
   nominativum!: string
-    genitivum!: string
+  genitivum!: string
 
-  putetur(): Ignavum<Tabula<Verba.Adiectivum>> | undefined
-  { return incomparabilis.hoc().putetur(this) }
+  putetur(): Tabula<Adiectivum> | undefined
+  { return incomparabilis.putetur(this) }
 
   probetur(genus: string): NomenAgendum | null {
     let versioNova: string
@@ -303,25 +305,25 @@ export class Incomparabile implements Interfecta.Faciendum<Verba.Adiectivum>, In
   }
 }
 
-export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, Interfecta.Lectum {
+export class NumeramenAgendum implements Faciendum<Numeramen>, Lectum {
   multiplicativum?: string
-    distributivum?: string
-      fractionale?: string
-        cardinale?: string;
-        adverbium?: string
-         ordinale?: string;
-          numerus!: string;
+  distributivum?: string
+  fractionale?: string
+  cardinale?: string
+  adverbium?: string
+  ordinale?: string
+  numerus!: string
 
-  putetur(): Ignavum<Tabula<Verba.Numeramen>> | undefined
-  { return new Ignavum(TabulaNumeraminis, { agendum: this}) }
+  putetur(): Tabula<Numeramen> | undefined
+  { return new TabulaNumeraminis(this) }
 
-  async referatur(referendum: string): Promise<Interfecta.Referendum | undefined> {
+  async referatur(referendum: string): Promise<Referendum | undefined> {
     let lemma: Lemma = { categoria: '', scriptum: '' }
 
     switch (referendum) {
-      case 'numerus': {
+      case 'numerale': {
         const anglicus: number = Numerator.arabicus(this.numerus)
-        return Verba.Numerale.numerator(anglicus)
+        return Numerale.numerator(anglicus)
       }
       case 'adverbium':
         lemma = {
@@ -362,6 +364,6 @@ export class NumeramenAgendum implements Interfecta.Faciendum<Verba.Numeramen>, 
       default: return undefined
     }
 
-    return await dictionarium.hoc().referatur(lemma) ?? undefined
+    return await dictionarium.referatur(lemma) ?? undefined
   }
 }

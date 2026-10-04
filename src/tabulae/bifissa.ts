@@ -1,13 +1,13 @@
-import Tabula from './tabula.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { NomenAgendum } from '../praebeunda/agenda.ts';
-import { Nomen } from '../praebeunda/verba.ts';
-import type Ignavum from '../miscella/ignavum.ts';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { NomenAgendum } from '../praebeunda/agenda';
+import { Nomen } from '../praebeunda/verba';
+import type Ignavum from '../miscella/usus';
 
-@Nuntius.factum('TabulaBifissa')
+@Nuntius.factum
 export default class TabulaBifissa extends Tabula<Nomen> {
   singularis!: NomenAgendum
-    pluralis!: NomenAgendum
+  pluralis!: NomenAgendum
 
   #coniungantur(): {
     numerus: string,
@@ -24,11 +24,11 @@ export default class TabulaBifissa extends Tabula<Nomen> {
     ]
   }
 
-  @Nuntius.promittum('TabulaBifissa')
+  @Nuntius.promittum
   async plenetur(): Promise<void> {
     this.#coniungantur().forEach(async (res) => {
       const tabula: Ignavum<Tabula<Nomen>> | undefined = res.agendum.putetur()
-      if (tabula) (await tabula.hoc().tabulentur())
+      if (tabula) (await tabula.hoc.tabulentur())
                                .filter((nomen: Nomen) => nomen.numerus.aequatur(res.numerus))
                                .forEach((nomen: Nomen) => this.tabula.push(nomen))
     })

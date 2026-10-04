@@ -1,22 +1,22 @@
-import '../extensions/string.ts';
-import { errator, type Casus, type Numerus } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { NomenAgendum } from '../praebeunda/agenda.ts';
-import { Nomen } from '../praebeunda/verba.ts';
-import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis.ts';
-import TabulaInflexibilis from '../tabulae/inflexibilis.ts';
-import TabulaRecta from '../tabulae/recta.ts';
-import Tabula from '../tabulae/tabula.ts';
-import TabulaVicaria from '../tabulae/vicaria.ts';
-import type { Putaturum, Radicator } from './putaturum.ts';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { NomenAgendum } from '../praebeunda/agenda';
+import { Nomen } from '../praebeunda/verba';
+import TabulaNominisNumerata from '../tabulae/defectae/numeratae/nominis';
+import TabulaInflexibilis from '../tabulae/inflexibilis';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import TabulaVicaria from '../tabulae/vicaria';
+import { errator, type Casus, type Numerus } from '../praebeunda/valores';
+import type { Putaturum, Radicator } from './putaturum';
 
 export interface Percolamen {
   numerus?: Numerus
     casus?: Casus
 }
 
-@Nuntius.factum('PutatorNominis')
+@Nuntius.factum
 class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
   radicetur(versio: string): Radicator<NomenAgendum, Nomen> {
     switch (versio) {
@@ -65,7 +65,7 @@ class PutatorNominis implements Putaturum<NomenAgendum, Nomen> {
     }
   }
 
-  @Nuntius.modus('PutatorNominis')
+  @Nuntius.modus
   putetur(agendum: NomenAgendum): Ignavum<Tabula<Nomen>> {
     // eslint-disable-next-line prefer-const
     let [fundamen, vices, defectus] = agendum.versio.split('/')

@@ -1,10 +1,10 @@
 import 'cypress';
 import { mount } from 'cypress/vue';
-import numerare from '../../../facies/numerare.vue';
+import Numerare from '../../../facies/numerare.vue';
 
 describe('Romano Anglicum numerum convertere', () => {
   it('converteret', () => {
-    const cy: Cypress.Chainable = mount(numerare as any)
+    const cy: Cypress.Chainable = mount(Numerare as any)
     //    cy.wait(1000)
 
     cy.get('#effectus')

@@ -1,12 +1,12 @@
 import deepEqual from 'deep-equal';
-import Tabula from './tabula.ts';
-import '../extensions/array.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
-import type Ignavum from '../miscella/ignavum.ts';
-import { type Agendum } from '../praebeunda/agenda.ts';
-import { type Faciendum } from '../praebeunda/interfecta.ts';
-import type Structor from '../praebeunda/structor.ts';
+import Tabula from './tabula';
+import '../extensions/array';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type Ignavum from '../miscella/usus';
+import { type Agendum } from '../praebeunda/verba';
+import { type Faciendum } from '../praebeunda/interfecta';
+import type Structor from '../praebeunda/structor';
 
 export function valedictor<Hoc extends Multiplex>(hoc: Hoc): Agendum<Hoc> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,7 +16,7 @@ export function valedictor<Hoc extends Multiplex>(hoc: Hoc): Agendum<Hoc> {
 
 type Relata<Hoc extends Multiplex> = Ignavum<Tabula<Hoc>> | Structor<Faciendum<Hoc>> | undefined
 
-@Nuntius.factum('TabulaCollata')
+@Nuntius.factum
 export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
   public relatae!: (Relata<Hoc>)[]
 
@@ -28,12 +28,12 @@ export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
     return typeof (relata as any).hoc === 'function'
   }
 
-  @Nuntius.promittum('TabulaCollata')
+  @Nuntius.promittum
   async plenetur(): Promise<void> {
     this.relatae.forEach(async (relata) => {
       if(this.#structorest(relata)) relata = relata.struatur().putetur()
       if(this.#ignavust(relata))
-        (await relata.hoc().tabulentur()).forEach((hoc: Hoc) => {
+        (await relata.hoc.tabulentur()).forEach((hoc: Hoc) => {
           if (this.tabula.none((illud) => deepEqual(valedictor(hoc), valedictor(illud)))) this.tabula.push(hoc)
         })
     })

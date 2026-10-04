@@ -1,14 +1,20 @@
+import type { Comparator, SortResult } from './utils';
+
 declare global {
   interface Array<T> {
     first(predicate?: (param: T) => boolean): T
     last(predicate?: (param: T) => boolean): T
+    none (predicate?: (param: T) => boolean): boolean
+    count(predicate?: (param: T) => boolean): number
     random(): T
-    none(predicate?: (param: T) => boolean): boolean
     all(): boolean
     any(): boolean
+    union(these: T[]): T[]
     intersection (withThese: T[]): T[]
     except (these: T[]): T[]
     excludes(these?: T): boolean
+    sortRecursive(...comparators: Comparator<T>[]): T[]
+    clear(): void
   }
 }
 
@@ -37,12 +43,33 @@ Array.prototype.all = function (): boolean { return this.every((status) => !!sta
 
 Array.prototype.any = function (): boolean { return this.some((status) => !!status) }
 
-Array.prototype.intersection = function <T> (withThese: T[]): T[] { return this.filter(value => withThese.includes(value)) }
+Array.prototype.intersection = function <T> (withThese: T[]): T[]
+{ return this.filter(value => withThese.includes(value)) }
 
-Array.prototype.except = function <T> (these: T[]): T[] { return this.filter(value => !these.includes(value)) }
+Array.prototype.union = function<T> (these: T[]): T[]
+{ return [...new Set([...this, ...these])] }
+
+Array.prototype.except = function <T> (these: T[]): T[]
+{ return this.filter(value => !these.includes(value)) }
 
 Array.prototype.excludes = function<T>(these?: T): boolean { return !this.includes(these ?? []) }
 
+Array.prototype.count = function<T>(predicate?: (param: T) => boolean): number {
+  return predicate ? this.reduce((count: number, item: T): number =>
+        count + (predicate(item) ? 1 : 0), 0) : this.length
+}
+
+Array.prototype.sortRecursive = function<T>(...comparators: Comparator<T>[]): T[] {
+  const compare = (first: T, second: T): SortResult => {
+    for(const comparator of comparators) {
+      const result: SortResult = comparator(first, second)
+      if(result !== 0) return result
+    }; return 0
+  }; return this.sort(compare)
+}
+
+Array.prototype.clear = function() { this.length = 0 }
+
 // eslint-disable-next-line @typescript-estlint/no-useless-empty-export
-export { };
+export {};
 

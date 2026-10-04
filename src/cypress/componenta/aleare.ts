@@ -1,10 +1,10 @@
 import 'cypress';
 import 'cypress-map';
 import { mount } from 'cypress/vue';
-import '../../extensions/array.ts';
-import '../../extensions/string.ts';
-import quaerere from '../../facies/quaerere.vue';
-import { inflectenda } from '../../miscella/enumerationes.ts';
+import '../../extensions/array';
+import '../../extensions/string';
+import Quaerere from '../../facies/quaerere.vue';
+import { inflectenda } from '../../praebeunda/enumerationes.js';
 
 function ullum (res: {
   categoria: string,
@@ -12,7 +12,7 @@ function ullum (res: {
 }): void {
   describe(`${res.accusativa} invenire`, () => {
     it('inveniret', () => {
-      const cy: Cypress.Chainable = mount(quaerere as any)
+      const cy: Cypress.Chainable = mount(Quaerere as any)
       // cy.wait(1000)
 
       cy.get('#quaerenda.categoriae')
@@ -85,7 +85,7 @@ describe('omnia invenire', () => {
   })
 
   it('numeramen inveniret', () => {
-    const cy: Cypress.Chainable = mount(quaerere as any)
+    const cy: Cypress.Chainable = mount(Quaerere as any)
     // cy.wait(1000)
 
     cy.get('#quaerenda.categoriae')

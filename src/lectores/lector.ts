@@ -1,20 +1,18 @@
 import file from 'file-fetch';
 import path from 'path';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import * as Verba from '../praebeunda/verba.ts';
-import { type Agendum } from '../praebeunda/agenda.ts'
+import Nuntius from '../miscella/nuntius';
+import { Ignavum } from '../miscella/usus';
+import { Multiplex } from '../praebeunda/verba';
+import { type Agendum } from '../praebeunda/verba'
 
-export function LectorAgendorum<Illud extends Verba.Multiplex>(
+export function agendorum<Illud extends Multiplex>(
   scapum: string
-): Ignavum<Lector<Agendum<Illud>[]>> {
-  return new Ignavum(Lector<Agendum<Illud>[]>, { scapum: scapum })
+): Lector<Agendum<Illud>> {
+  return new Lector<Agendum<Illud>>(scapum)
 }
 
-@Nuntius.factum('Lector')
+@Ignavum @Nuntius.factum
 export default class Lector<Hoc> {
-  public scapum!: string
-
   protected seratur(): string {
     if(!this.scapum.startsWith('/res'))
     { this.scapum = path.join('/res', this.scapum) }
@@ -31,18 +29,18 @@ export default class Lector<Hoc> {
     return (corpus as Response).ok ? (await corpus.text()).trim() : ''
   }
 
-  @Nuntius.promittum('Lector')
-  async legatur(lemma: string): Promise<Hoc | undefined> {
+  @Nuntius.promittum
+  async legatur(lemma: string): Promise<Hoc[]> {
     const data: string = await this.aperiatur(lemma)
     if (data) {
       const { parse } = require('comma-separated-values')
       try {
-        const hoc: Hoc | undefined = parse(data, { header: true })
-        if (hoc) {
+        const haec: Hoc[] = parse(data, { header: true })
+        if(haec.length > 0) {
           Nuntius.noto({
             nomen: 'Lector',
             nuntium: `Lemma invenita'st ${lemma}`
-          }); return hoc
+          }); return haec
         }
       } catch (error) {
         Nuntius.timeo({
@@ -53,6 +51,8 @@ export default class Lector<Hoc> {
     }; Nuntius.noto({
       nomen: 'Lector',
       nuntium: `Lemma nulla'st ${lemma}`
-    }); return undefined
+    }); return []
   }
+
+  constructor(protected  scapum: string) {}
 }

@@ -1,21 +1,21 @@
-import '../extensions/string.ts';
-import { errator, type Factum } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { NomenActum } from '../praebeunda/agenda.ts';
-import { Nomen } from '../praebeunda/verba.ts';
-import TabulaProna from '../tabulae/defectae/prona.ts';
-import TabulaRecta from '../tabulae/recta.ts';
-import Tabula from '../tabulae/tabula.ts';
-import { type Putaturum } from './putaturum.ts';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { NomenActum } from '../praebeunda/agenda';
+import { Nomen } from '../praebeunda/verba';
+import TabulaProna from '../tabulae/defectae/prona';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import { errator, type Factus } from '../praebeunda/valores';
+import { type Putaturum } from './putaturum';
 
 interface Percolamen {
-  factum?: Factum
+  factum?: Factus
 }
 
-@Nuntius.factum('PutatorNominisFacti')
+@Nuntius.factum
 class PutatorNominisFacti implements Putaturum<NomenActum, Nomen> {
-  @Nuntius.modus('PutatorNominisFacti')
+  @Nuntius.modus
   putetur(agendum: NomenActum): Ignavum<Tabula<Nomen>> {
     const [versio, pronus] = agendum.versio.split('/')
     if (pronus === 'prona') {

@@ -1,15 +1,14 @@
-import Tabula from './tabula.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
-import { type Positor } from '../praebeunda/agenda.ts';
-import { type Faciendum } from '../praebeunda/interfecta.ts';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import { type Faciendum } from '../praebeunda/interfecta';
 
-@Nuntius.factum('TabulaInflexibilis')
+@Nuntius.factum
 export default class TabulaInflexibilis<Hoc extends Faciendum<Illud>, Illud extends Multiplex> extends Tabula<Illud> {
   positor!: Positor<Illud>
   hoc!: Hoc
 
-  @Nuntius.promittum('TabulaInflexibilis')
+  @Nuntius.promittum
   async plenetur(): Promise<void>
   { this.tabula.push(this.positor(this.hoc)) }
 }

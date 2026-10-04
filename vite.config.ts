@@ -10,15 +10,31 @@ import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig(({ mode }) => {
   const operandi: boolean = mode === 'production'
+  const minifaciendi: {
+    vexillum: operandi ? 'oxc' : false,
+    sistenda: operandi ? {
+      mangle: {
+        reserved: [
+          'Sessio', 'Apices', 'UtendaU', 'Magnas', 'Assensus', 'Facies', 'Lingua', 'Separator',
+          'Categoria', 'Casus', 'Factus', 'Genus', 'Gradus', 'Modus',
+          'Numerus', 'Persona', 'Referendus', 'Tempus', 'Vox'
+        ]
+      }
+    } : {}
+  }
+
   return {
     build: {
-      minify: operandi ? 'oxc' : false,
+      cssMinify: operandi ? 'lightningcss' : false,
+      minify: minifaciendi.vexillum,
+      minifyOptions: minifaciendi.sistenda,
       publicDir: './res',
       sourcemap: !operandi,
       rolldownOptions: {
         output: {
           codeSplitting: false,
-          entryFilenames: 'fascis.min.js'
+          entryFilenames: 'fascis.min.js',
+          minify: minifaciendi.sistenda
         }
       }
     }, plugins: [

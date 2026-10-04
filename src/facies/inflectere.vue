@@ -1,8 +1,8 @@
 <script setup lang='ts'>
   import { ref, type Ref } from 'vue'
-  import { type Eventus } from '../miscella/dictionarium.ts'
-  import { type Faciendum, type Referendum } from '../praebeunda/interfecta.ts'
-  import type { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen } from '../praebeunda/verba.ts'
+  import { type Eventus } from '../miscella/dictionarium'
+  import { type Faciendum, type Referendum } from '../praebeunda/interfecta'
+  import type { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen } from '../praebeunda/verba'
   import Actuum from './tabulam/actuum.vue'
   import Adiectivorum from './tabulam/adiectivorum.vue'
   import Nominum from './tabulam/nominum.vue'

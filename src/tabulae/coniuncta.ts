@@ -1,22 +1,22 @@
 import deepEqual from 'deep-equal';
-import { valedictor } from './collata.ts';
-import Tabula from './tabula.ts';
-import '../extensions/array.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
-import type Ignavum from '../miscella/ignavum.ts';
+import { valedictor } from './collata';
+import Tabula from './tabula';
+import '../extensions/array';
+import Nuntius from '../miscella/nuntius';
+import { Multiplex } from '../praebeunda/verba';
+import type Ignavum from '../miscella/usus';
 
-@Nuntius.factum('TabulaConiuncta')
+@Nuntius.factum
 export default class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> {
     prima!: Ignavum<Tabula<Hoc>>
   secunda!: Ignavum<Tabula<Hoc>>
 
-  @Nuntius.promittum('TabulaConiuncta')
+  @Nuntius.promittum
   async plenetur(): Promise<void> {
     const aequantur: (prima: Set<any>, secunda: Set<any>) => boolean = (await import('@neoncitylights/sets')).areSetsEqual
 
-    const tabulaPrima  : Hoc[] = await this.  prima.hoc().tabulentur()
-    const tabulaSecunda: Hoc[] = await this.secunda.hoc().tabulentur()
+    const tabulaPrima  : Hoc[] = await this.  prima.hoc.tabulentur()
+    const tabulaSecunda: Hoc[] = await this.secunda.hoc.tabulentur()
 
     if (aequantur(new Set(tabulaPrima.map(valedictor)), new Set(tabulaSecunda.map(valedictor)))) {
       tabulaPrima.forEach(async (primum) => {

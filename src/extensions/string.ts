@@ -1,16 +1,22 @@
-const apices: Map<string, string> = new Map
-apices.set('Ā', 'A')
-apices.set('Ē', 'E')
-apices.set('Ī', 'I')
-apices.set('Ō', 'O')
-apices.set('Ū', 'U')
-apices.set('Ȳ', 'Y')
-apices.set('ā', 'a')
-apices.set('ē', 'e')
-apices.set('ī', 'i')
-apices.set('ō', 'o')
-apices.set('ū', 'u')
-apices.set('ȳ', 'y')
+import './array';
+import type { SortResult } from './utils';
+
+const macra = {
+  A: 'Ā',
+  E: 'Ē',
+  I: 'Ī',
+  O: 'Ō',
+  U: 'Ū',
+  V: 'V̄',
+  Y: 'Ȳ',
+  a: 'ā',
+  e: 'ē',
+  i: 'ī',
+  o: 'ō',
+  u: 'ū',
+  v: 'v̄',
+  y: 'ȳ'
+} as const
 
 declare global {
   interface String {
@@ -21,6 +27,7 @@ declare global {
     removeMacra(): string
     capitalize(): string
     isCapitalized(): boolean
+    compare(other: string): SortResult
   }
 }
 
@@ -36,17 +43,23 @@ String.prototype.startsWithConsonant = function (): boolean {
 String.prototype.startsWithVowel = function (): boolean { return !this.startsWithConsonant() }
 
 String.prototype.removeMacra = function (): string {
-  if ([...this].some((letter) => apices.has(letter))) {
+  if ([ ...this ].intersection(Object.values(macra)).any()) {
 // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
-    let copy: String = this
-    apices.forEach((entry) => (copy = copy.replace(entry[0], entry[1])))
+    let copy: String = this;
+    (Object.entries(macra))
+        .forEach(([key, value]: [string, string]) => { copy.replace(value, key) });
     return copy as string
   } else return this as string
 }
 
-String.prototype.capitalize = function (): string { return this.empty() ? '' : `${this[0].toUpperCase()}${this.slice(1)}` }
+String.prototype.capitalize = function (): string
+{ return this.empty() ? '' : `${this[0].toUpperCase()}${this.slice(1)}` }
 
-String.prototype.isCapitalized = function(): boolean { return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
+String.prototype.isCapitalized = function(): boolean
+{ return !this.empty() && /[A-ZĀĒĪŌȲ]/.test(this[0]) }
+
+String.prototype.compare = function(other: string): SortResult
+{ return Math.sign(new Intl.Collator().compare(`${this}`, other)) as SortResult }
 
 // eslint-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}

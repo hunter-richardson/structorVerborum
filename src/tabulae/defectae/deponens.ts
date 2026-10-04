@@ -1,4 +1,5 @@
-import TabulaDefecta from './defecta.ts';
+import TabulaDefecta from './defecta';
+import Nuntius from '../../miscella/nuntius';
 import {
   Modus,
   numeri,
@@ -8,12 +9,11 @@ import {
   tempora,
   Tempus,
   Vox
-  } from '../../miscella/enumerationes.ts';
-import Nuntius from '../../miscella/nuntius.ts';
-import { Actus } from '../../praebeunda/verba.ts';
-import { type Colamen } from '../../praebeunda/agenda.ts';
+  } from '../../praebeunda/valores';
+import { Actus } from '../../praebeunda/verba';
+import { type Colamen } from '../../praebeunda/agenda';
 
-@Nuntius.factum('TabulaDeponens')
+@Nuntius.factum
 export default class TabulaDeponens extends TabulaDefecta<Actus> {
   static apponatur(ut: string): Colamen<Actus>[] {
     const colamina: Colamen<Actus>[] = [{ modus: Modus.modus('infinitivus') } as Colamen<Actus>]

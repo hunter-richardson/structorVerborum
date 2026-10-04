@@ -1,10 +1,10 @@
-import { Casus, casus, Numerus } from '../../../miscella/enumerationes.ts';
-import Nuntius from '../../../miscella/nuntius.ts';
-import { Nomen } from '../../../praebeunda/verba.ts';
-import TabulaDefecta from '../defecta.ts';
-import { type Colamen } from '../../../praebeunda/agenda.ts';
+import Nuntius from '../../../miscella/nuntius';
+import { Casus, casus, Numerus } from '../../../praebeunda/valores';
+import { Nomen } from '../../../praebeunda/verba';
+import TabulaDefecta from '../defecta';
+import { type Colamen } from '../../../praebeunda/agenda';
 
-@Nuntius.factum('TabulaNominisNumerata')
+@Nuntius.factum
 export default class TabulaNominisNumerata extends TabulaDefecta<Nomen> {
   static apponatur(): Colamen<Nomen>[] {
     return casus.map((casus) => {

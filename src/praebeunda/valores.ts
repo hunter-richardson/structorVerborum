@@ -1,15 +1,16 @@
-import Nuntius from './nuntius.ts';
-import '../extensions/array.ts';
-import '../extensions/string.ts';
+import '../extensions/array';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import { type SortResult, comparison } from '../extensions/utils';
 
-export enum Encliticum {
-  nullum = '',
+export enum Encliticus {
+  nullus = '',
   interrogans = 'ne',
   coniugans = 'que',
   eligens = 've'
 }
 
-export const enclitica: string[] = Object.keys(Encliticum);
+export const enclitici: string[] = Object.keys(Encliticus);
 
 export enum Mensa {
   Ianuarius,
@@ -28,18 +29,27 @@ export enum Mensa {
 
 type linea<littera extends string> = littera extends '' ? never : littera;
 
-type Valor<Fultum extends boolean, Valores extends readonly [ linea<string>, ...linea<string>[] ]> =
-  Fultum extends true ? Valores[ number ] : Valores[ number ] | undefined;
+export type Lineae = readonly [ linea<string>, ...linea<string>[] ]
 
-export const errator: (res: Record<linea<string>, linea<string>>) => Error = (res: Record<string, string>) => {
+type Valor<Vexillum extends boolean, Valores extends Lineae> =
+  Vexillum extends true ? Valores[ number ] : Valores[ number ] | undefined;
+
+export const errator: (res: { [ clavis: PropertyKey ]: string; }) => Error =
+    (res: { [ clavis: PropertyKey ]: string; }) => {
   const [ clavis, valor ] = Object.entries(res)[ 0 ];
   return new Error(`Vetatu'st { ${clavis}: '${valor}' }`);
 };
 
-abstract class Res<Fultum extends boolean, Valores extends readonly [ linea<string>, ...linea<string>[] ]> {
-  private _valor: Valor<Fultum, Valores>;
+export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
+  static ordinentur: <Hoc extends Res<boolean, Lineae>>(primum: Hoc, secundum: Hoc) => SortResult =
+      comparison([
+        (hoc) => hoc.nomen, (hoc) => `${hoc.valor}`
+      ])
 
-  private inhaesus (): Valor<Fultum, Valores> { return (this._fultum ? this.valores[ 0 ] : undefined) as Valor<Fultum, Valores>; }
+  private _valor: Valor<Vexillum, Valores>;
+
+  private inhaesus (): Valor<Vexillum, Valores>
+  { return (this._fultum ? this.valores[ 0 ] : undefined) as Valor<Vexillum, Valores>; }
 
   private valet (valor: string): valor is Valores[ number ] { return valor in this.valores; }
 
@@ -47,7 +57,11 @@ abstract class Res<Fultum extends boolean, Valores extends readonly [ linea<stri
 
   aequatur (valor: string): valor is Valores[ number ] { return this._valor === valor; }
 
-  get valor (): Valor<Fultum, Valores> {
+  reponatur (res: Res<Vexillum, Valores>) { if (res.valor) this.valor = res.valor; }
+
+  get nomen(): string { return this.constructor.name.toLowerCase() }
+
+  get valor (): Valor<Vexillum, Valores> {
     Nuntius.noto({
       nomen: this.nomen,
       nuntium: `Reddo rem { ${this.nomen}: ${this._valor} }`
@@ -58,7 +72,7 @@ abstract class Res<Fultum extends boolean, Valores extends readonly [ linea<stri
     Nuntius.noto({
       nomen: this.nomen,
       nuntium: `Initu'st positor ${this.nomen}`
-    }); if (this.valet(valor)) {
+    }); if(this.valet(valor)) {
       this._valor = valor;
       Nuntius.noto({
         nomen: this.nomen,
@@ -72,8 +86,7 @@ abstract class Res<Fultum extends boolean, Valores extends readonly [ linea<stri
     }
   }
 
-  constructor (private readonly _fultum: Fultum,
-    protected readonly nomen: string,
+  constructor (private readonly _fultum: Vexillum,
     protected readonly valores: Valores) {
     this._valor = this.inhaesus();
     Object.defineProperty(this, this.nomen,
@@ -81,36 +94,54 @@ abstract class Res<Fultum extends boolean, Valores extends readonly [ linea<stri
   }
 }
 
-class Fultum<Valores extends readonly [ string, ...string[] ]> extends Res<true, Valores> {
-  constructor (_nomen: string, _valores: Valores) { super(true, _nomen, _valores); }
+export class Fultum<Valores extends Lineae> extends Res<true, Valores> {
+  constructor (_valores: Valores) { super(true, _valores); }
 }
 
-class Fictum<Valores extends readonly [ string, ...string[] ]> extends Res<false, Valores> {
-  constructor (_nomen: string, _valores: Valores) { super(false, _nomen, _valores); }
+class Fictum<Valores extends Lineae> extends Res<false, Valores> {
+  constructor (_valores: Valores) { super(false, _valores); }
 }
 
-export const categoriae: [ linea<string>, ...linea<string>[] ] =
+type FultiStructor<Hoc extends Fultum<Lineae>> = new (valores: Lineae) => Hoc
+
+export class Fulta extends Array<Fultum<Lineae>> {
+  private nominatur<Hoc extends FultiStructor<Fultum<Lineae>>>(hoc: unknown, parma: Hoc): hoc is InstanceType<Hoc>
+  { return hoc instanceof parma }
+
+  inveni<Hoc extends FultiStructor<Fultum<Lineae>>>(parma: Hoc): InstanceType<Hoc> {
+    const fultum: Fultum<Lineae> | undefined = this.find((fultum) =>
+          fultum.nomen === parma.name.toLowerCase())
+    //  eslint-disable-next-line no-extra-boolean-cast
+    if(!!fultum && this.nominatur(fultum, parma)) return fultum
+    else throw new TypeError(`Malu'st fultum ${fultum?.nomen} in classem ${parma.name}`)
+  }
+
+  constructor(prima: Fultum<Lineae>, ...fulta: Fultum<Lineae>[])
+  { super(prima, ...fulta) }
+}
+
+export const categoriae: Lineae =
   [ 'actus', 'adiectivum', 'adverbium', 'coniunctio', 'nomen', 'numerale', 'numeramen', 'praepositio', 'pronomen' ] as const;
-export const casus: [ linea<string>, ...linea<string>[] ] =
+export const casus: Lineae =
   [ 'derectus', 'nominativus', 'genitivus', 'dativus', 'accusativus', 'ablativus', 'vocativus', 'locativus' ] as const;
-export const modi: [ linea<string>, ...linea<string>[] ] =
+export const modi: Lineae =
   [ 'infinitivus', 'indicativus', 'subiunctivus', 'imperativus', 'participium' ] as const;
-export const referenda: [ linea<string>, ...linea<string>[] ] =
+export const relaturi: Lineae =
   [ 'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum', 'distributivum', 'fractionale' ] as const;
-export const tempora: [ linea<string>, ...linea<string>[] ] =
+export const tempora: Lineae =
   [ 'nullum', 'praesens', 'infectum', 'futurum', 'perfectum', 'plusquamperfectum', 'exigendum' ] as const;
-export const genera: [ linea<string>, ...linea<string>[] ] =
+export const genera: Lineae =
   [ 'neutrum', 'masculinum', 'femininum' ] as const;
-export const gradus: [ linea<string>, ...linea<string>[] ] =
+export const gradus: Lineae =
   [ 'positivus', 'comparativus', 'superlativus' ] as const;
-export const personae: [ linea<string>, ...linea<string>[] ] =
+export const personae: Lineae =
   [ 'nulla', 'prima', 'secunda', 'tertia' ] as const;
-export const numeri: [ linea<string>, ...linea<string>[] ] =
+export const numeri: Lineae =
   [ 'nullus', 'singularis', 'pluralis' ] as const;
-export const voces: [ linea<string>, ...linea<string>[] ] =
+export const voces: Lineae =
   [ 'nulla', 'activa', 'passiva' ] as const;
-export const facta: [ linea<string>, ...linea<string>[] ] =
-  [ 'nullum', 'infinitivum', 'gerundium', 'supinum' ] as const;
+export const facti: Lineae =
+  [ 'nullus', 'infinitivus', 'gerundius', 'supinus' ] as const;
 
 export function inflectenda (categoria: string) {
   return [
@@ -128,7 +159,7 @@ export class Categoria extends Fictum<typeof categoriae> {
   }
 
   inflectenda (): boolean { return inflectenda(this.valor ?? ''); }
-  constructor () { super('categoria', categoriae); }
+  constructor () { super(categoriae); }
 }
 
 export class Casus extends Fultum<typeof casus> {
@@ -138,7 +169,7 @@ export class Casus extends Fultum<typeof casus> {
     return temporalis
   }
 
-  constructor () { super('casus', casus); }
+  constructor () { super(casus); }
 }
 export class Modus extends Fultum<typeof modi> {
   static modus(valor: string): Modus {
@@ -147,7 +178,7 @@ export class Modus extends Fultum<typeof modi> {
     return temporalis
   }
 
-  constructor () { super('modus', modi); }
+  constructor () { super(modi); }
 }
 export class Genus extends Fultum<typeof genera> {
   static genus(valor: string): Genus {
@@ -156,7 +187,7 @@ export class Genus extends Fultum<typeof genera> {
     return temporale
   }
 
-  constructor () { super('genus', genera); }
+  constructor () { super(genera); }
 }
 export class Gradus extends Fultum<typeof gradus> {
   static gradus(valor: string): Gradus {
@@ -165,16 +196,16 @@ export class Gradus extends Fultum<typeof gradus> {
     return temporalis
   }
 
-  constructor () { super('gradus', gradus); }
+  constructor () { super(gradus); }
 }
-export class Factum extends Fultum<typeof facta> {
-  static factum(valor: string): Factum {
-    const temporale: Factum = new Factum
+export class Factus extends Fultum<typeof facti> {
+  static factus(valor: string): Factus {
+    const temporale: Factus = new Factus
     temporale.valor = valor;
     return temporale
   }
 
-  constructor () { super('factum', facta); }
+  constructor () { super(facti); }
 }
 
 export class Numerus extends Fultum<typeof numeri> {
@@ -184,7 +215,7 @@ export class Numerus extends Fultum<typeof numeri> {
     return temporalis
   }
 
-  constructor () { super('numerus', numeri); }
+  constructor () { super(numeri); }
 }
 
 export class Persona extends Fultum<typeof personae> {
@@ -194,16 +225,16 @@ export class Persona extends Fultum<typeof personae> {
     return temporalis
   }
 
-  constructor () { super('persona', personae); }
+  constructor () { super(personae); }
 }
-export class Referendum extends Fultum<typeof referenda> {
-  static referendum(valor: string): Referendum {
-    const temporale: Referendum = new Referendum
+export class Relaturus extends Fultum<typeof relaturi> {
+  static referendum(valor: string): Relaturus {
+    const temporale: Relaturus = new Relaturus
     temporale.valor = valor;
     return temporale
   }
 
-  constructor () { super('referendum', referenda); }
+  constructor () { super(relaturi); }
 }
 
 export class Tempus extends Fultum<typeof tempora> {
@@ -213,7 +244,7 @@ export class Tempus extends Fultum<typeof tempora> {
     return temporale
   }
 
-  constructor () { super('tempus', tempora); }
+  constructor () { super(tempora); }
 }
 
 export class Vox extends Fultum<typeof voces> {
@@ -223,8 +254,32 @@ export class Vox extends Fultum<typeof voces> {
     return temporalis
   }
 
-  constructor () { super('vox', voces); }
+  constructor () { super(voces); }
 }
 
 export const inflectendae: linea<string>[] =
   categoriae.filter((categoria) => inflectenda(categoria));
+
+export class Categoricum { categoria: Categoria = new Categoria; }
+
+export class Encliticum { protected _encliticus: Encliticus = Encliticus.nullus; }
+
+export class Casuale { casus: Casus = new Casus; }
+
+export class Factum { factus: Factus = new Factus; }
+
+export class Gradale { gradus: Gradus = new Gradus; }
+
+export class Generale { genus: Genus = new Genus; }
+
+export class Numeratum { numerus: Numerus = new Numerus; }
+
+export class Modestum { modus: Modus = new Modus; }
+
+export class Personale { persona: Persona = new Persona; }
+
+export class Relaturum { relaturus: Relaturus = new Relaturus; }
+
+export class Temporale { tempus: Tempus = new Tempus; }
+
+export class Vocale { vox: Vox = new Vox; }

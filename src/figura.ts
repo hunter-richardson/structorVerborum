@@ -8,10 +8,10 @@ import path from 'path';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
 import { useRouter } from 'vuetify/lib/composables/router.mjs';
-import translation from './extensions/i18next.ts';
-import './extensions/string.ts';
-import appositus from './facies/appositus.vue';
-import Crustula from './miscella/crustula.ts';
+import translation from './extensions/i18next';
+import './extensions/string';
+import Appositus from './facies/appositus.vue';
+import Crustula from './miscella/crustula';
 import { createApp, type App } from 'vue';
 
 useFavicon('/res/picta/favicon.png')
@@ -51,7 +51,7 @@ const deTransferendo = {
 await i18next.use(FsBackend).init(deTransferendo)
 
 export const appositus: App<Element> =
-    createApp(App<Element>)
+    createApp(Appositus)
       .use(i18NextVue, { i18next })
       .use(Crustula).use(useRouter())
 

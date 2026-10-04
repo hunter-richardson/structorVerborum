@@ -1,5 +1,5 @@
 import 'cypress';
-import { loquatur, type Verbum } from './locutio.ts';
+import { loquatur, type Verbum } from './locutio';
 
 describe('dolet', () => {
   it('doloris ipsius loqueretur', () => {

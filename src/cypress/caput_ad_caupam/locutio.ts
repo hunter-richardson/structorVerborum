@@ -1,6 +1,6 @@
 import 'cypress';
-import '../../extensions/array.ts';
-import { enclitica } from '../../miscella/enumerationes.ts';
+import '../../extensions/array';
+import { enclitici } from '../../praebeunda/valores';
 
 export interface  Verbum {
   categoria: string
@@ -34,7 +34,7 @@ export function loquatur (res: Res) {
         // cy.wait(1000)
 
         if (verbum.valores) {
-          verbum.valores.except(enclitica)
+          verbum.valores.except(enclitici)
             .forEach(valor =>
               cy.get(`#colamen_${valor}`).click())
           cy.get('[id^="selige_"]')
@@ -47,7 +47,7 @@ export function loquatur (res: Res) {
           categoria = verbum.sequendum.categoria
           cy.get(`#${verbum.sequendum.lemma}`).click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(enclitica)
+          verbum.sequendum.valores?.except(enclitici)
             .forEach(valor =>
               cy.get(`#colamen_${valor}`).click())
               cy.get('[id^="selige_"]')
@@ -64,7 +64,7 @@ export function loquatur (res: Res) {
           categoria = verbum.sequendum.categoria
           cy.get('#participium').click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(enclitica)
+          verbum.sequendum.valores?.except(enclitici)
             .forEach(valor =>
               cy.get(`#colamen_${valor}`).click())
               cy.get('[id^="selige_"]')
@@ -72,7 +72,7 @@ export function loquatur (res: Res) {
           // cy.wait(1000)
         }
 
-        const encliticum: string = verbum.valores?.intersection(enclitica).first() ?? ''
+        const encliticum: string = verbum.valores?.intersection(enclitici).first() ?? ''
         if (encliticum) {
           cy.get('#enclitica').select(encliticum)
         }

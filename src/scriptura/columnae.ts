@@ -1,6 +1,6 @@
-import translation from '../extensions/i18next.ts';
-import '../extensions/string.ts';
-import { Multiplex } from '../praebeunda/verba.ts';
+import translation from '../extensions/i18next';
+import '../extensions/string';
+import { Multiplex } from '../praebeunda/verba';
 
 interface Generanda<Hoc extends Multiplex> {
   categoria: string

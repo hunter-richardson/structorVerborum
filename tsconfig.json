@@ -16,9 +16,9 @@
     "lib": [
       "dom"
     ],
-    "module": "NodeNext",
+    "module": "ESNext",
     "moduleDetection": "auto",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "bundler",
     "newLine": "lf",
     "noEmit": false,
     "noEmitOnError": true,

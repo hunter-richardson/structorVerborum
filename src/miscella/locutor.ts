@@ -1,12 +1,12 @@
-import { dominus } from './dominus.ts';
-import Ignavum from './ignavum.ts';
-import Nuntius from './nuntius.ts';
-import '../extensions/array.ts';
-import '../extensions/string.ts';
-import { Verbum } from '../praebeunda/verba.ts';
+import { dominus } from './dominus';
+import Nuntius from './nuntius';
+import { Ignavum, Ultimum } from './usus';
+import '../extensions/array';
+import '../extensions/string';
+import { Verbum } from '../praebeunda/verba';
 
-@Nuntius.factum('Locutor')
-export class Locutor {
+@Ultimum @Ignavum @Nuntius.factum
+class Locutor {
 
   private _verba: Verbum[] = []
 
@@ -14,7 +14,7 @@ export class Locutor {
 
   get verba(): Verbum[] { return this._verba }
 
-  @Nuntius.modus('Locutor')
+  @Nuntius.modus
   addatur(verbum: Verbum): void {
     const praevium: Verbum = this._verba.last()
     if (praevium.categoria.valor === 'praepositio') {
@@ -40,17 +40,19 @@ export class Locutor {
     }
   }
 
-  loquitur(unicum: symbol): boolean { return this.verba.some((verbum) => verbum.unicum === unicum) }
+  loquitur(unicum: string): boolean
+  { return this.verba.some((verbum) => verbum.unicum === unicum) }
 
-  removeatur(unicum: symbol): string {
+  removeatur(unicum: string): string {
     this._verba = this._verba.filter((verba) => verba.unicum !== unicum)
     return this.scribantur()
   }
 
   scribantur(): string {
-    const locutio: string = this.verba.map((verba) => verba.monstretur()).join(dominus.hoc().separator.signetur())
-    return locutio[dominus.hoc().magnas.signetur() ? 'toUpperCase' : 'capitalize']()
+    const locutio: string = this.verba.map((verba) =>
+        verba.monstretur()).join(dominus.separator.signetur())
+    return locutio[dominus.magnas.signetur() ? 'toUpperCase' : 'capitalize']()
   }
 }
 
-export const locutor = new Ignavum(Locutor)
+export const locutor: Locutor = new Locutor

@@ -1,6 +1,6 @@
 import 'cypress';
 import { mount } from 'cypress/vue';
-import calculare from '../../facies/calculare.vue';
+import Calculare from '../../facies/calculare.vue';
 
 type Optanda = {
   primus: string,
@@ -12,7 +12,7 @@ type Optanda = {
 function ullum (optanda: Optanda): void {
   describe('mathematicam calculare', () => {
     it('calcularet', () => {
-      const cy: Cypress.Chainable = mount(calculare as any)
+      const cy: Cypress.Chainable = mount(Calculare as any)
       // cy.wait(1000)
 
       cy.get('#praesentes.romanus')

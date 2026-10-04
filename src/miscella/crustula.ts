@@ -1,4 +1,4 @@
-import { dominus } from './dominus.ts';
+import { dominus } from './dominus';
 import { type App } from 'vue';
 
 export default {

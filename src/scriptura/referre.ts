@@ -1,5 +1,5 @@
-import Gustulus from './gustulus.ts';
-import Structor from '../praebeunda/structor.ts';
+import Gustulus from './gustulus';
+import Structor from '../praebeunda/structor';
 
 export function referretne(): boolean {
   return !!navigator.clipboard

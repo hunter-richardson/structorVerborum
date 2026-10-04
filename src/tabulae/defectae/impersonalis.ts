@@ -1,4 +1,5 @@
-import TabulaDefecta from './defecta.ts';
+import TabulaDefecta from './defecta';
+import Nuntius from '../../miscella/nuntius';
 import {
   Modus,
   numeri,
@@ -9,12 +10,11 @@ import {
   Tempus,
   voces,
   Vox
-  } from '../../miscella/enumerationes.ts';
-import Nuntius from '../../miscella/nuntius.ts';
-import { Actus } from '../../praebeunda/verba.ts';
-import { type Colamen } from '../../praebeunda/agenda.ts';
+  } from '../../praebeunda/valores';
+import { Actus } from '../../praebeunda/verba';
+import { type Colamen } from '../../praebeunda/agenda';
 
-@Nuntius.factum('TabulaImpersonalis')
+@Nuntius.factum
 export default class TabulaImpersonalis extends TabulaDefecta<Actus> {
   static apponatur(et: string): Colamen<Actus>[] {
     const colamina: Colamen<Actus>[] = ['praesens', 'perfectum'].map((tempus) => {

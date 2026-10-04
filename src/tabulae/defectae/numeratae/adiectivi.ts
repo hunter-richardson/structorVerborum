@@ -1,3 +1,4 @@
+import Nuntius from '../../../miscella/nuntius';
 import {
   Casus,
   casus,
@@ -6,13 +7,12 @@ import {
   Gradus,
   gradus,
   Numerus
-  } from '../../../miscella/enumerationes.ts';
-import Nuntius from '../../../miscella/nuntius.ts';
-import { Adiectivum } from '../../../praebeunda/verba.ts';
-import TabulaDefecta from '../defecta.ts';
-import { type Colamen } from '../../../praebeunda/agenda.ts';
+  } from '../../../praebeunda/valores';
+import { Adiectivum } from '../../../praebeunda/verba';
+import TabulaDefecta from '../defecta';
+import { type Colamen } from '../../../praebeunda/agenda';
 
-@Nuntius.factum('TabulaAdiectiviNumerata')
+@Nuntius.factum
 export default class TabulaAdiectiviNumerata extends TabulaDefecta<Adiectivum> {
   static apponatur(): Colamen<Adiectivum>[] {
     return gradus.map((gradus) => {

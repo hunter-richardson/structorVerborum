@@ -1,10 +1,10 @@
-import Tabula from './tabula.ts';
-import { Gradus, gradus } from '../miscella/enumerationes.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { AdverbiumAgendum } from '../praebeunda/agenda.ts';
-import { Adverbium } from '../praebeunda/verba.ts';
+import Tabula from './tabula';
+import Nuntius from '../miscella/nuntius';
+import { AdverbiumAgendum } from '../praebeunda/agenda';
+import { Gradus, gradus } from '../praebeunda/valores';
+import { Adverbium } from '../praebeunda/verba';
 
-@Nuntius.factum('TabulaAdverbii')
+@Nuntius.factum
 export default class TabulaAdverbii extends Tabula<Adverbium> {
   public agendum!: AdverbiumAgendum
 
@@ -17,7 +17,7 @@ export default class TabulaAdverbii extends Tabula<Adverbium> {
     }
   }
 
-  @Nuntius.promittum('TabulaAdverbii')
+  @Nuntius.promittum
   async plenetur(): Promise<void> {
     gradus.forEach((gradus) => {
       let scriptum: string = this.#gradatur(gradus)

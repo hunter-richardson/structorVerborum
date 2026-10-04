@@ -1,18 +1,18 @@
-import Anomala, { Mantela } from './anomala.ts';
-import { encliticum } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { Pronomen } from '../praebeunda/verba.ts';
-import TabulaCollata from '../tabulae/collata.ts';
-import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa.ts';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa.ts';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta.ts';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa.ts';
-import TabulaScapalis from '../tabulae/scapalis.ts';
+import Anomala, { Mantela } from './anomala';
+import Nuntius from '../miscella/nuntius';
+import { Ignavum, Ultimum } from '../miscella/usus';
+import { Encliticus } from '../praebeunda/valores';
+import { Pronomen } from '../praebeunda/verba';
+import TabulaCollata from '../tabulae/collata';
+import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa';
+import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
+import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import TabulaScapalis from '../tabulae/scapalis';
 
-@Nuntius.factum('Pronomina')
+@Ultimum @Ignavum @Nuntius.factum
 class Pronomina extends Anomala<Pronomen> {
-  @Nuntius.futurus('Pronomina')
+  @Nuntius.promittum
   protected async numeretur(): Promise<void> {
     const ego: Ignavum<TabulaScapalis<Pronomen>> =
            new Ignavum(TabulaScapalis<Pronomen>, {
@@ -166,7 +166,7 @@ class Pronomina extends Anomala<Pronomen> {
     const quidque: Ignavum<TabulaSuffixa<Pronomen>> =
                new Ignavum(TabulaSuffixa<Pronomen>, {
                      relata: quid,
-                     suffixum: encliticum.coniugans
+                     suffixum: Encliticus.coniugans
                    })
     const quidvis: Ignavum<TabulaSuffixa<Pronomen>> =
                new Ignavum(TabulaSuffixa<Pronomen>, {
@@ -235,4 +235,4 @@ class Pronomina extends Anomala<Pronomen> {
   }
 }
 
-export const pronomina = new Pronomina()
+export const pronomina: Pronomina = new Pronomina()

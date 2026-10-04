@@ -1,4 +1,4 @@
-import Gustulus from './gustulus.ts';
+import Gustulus from './gustulus';
 
 export default class Nuntiator<T> {
   public valor?: T

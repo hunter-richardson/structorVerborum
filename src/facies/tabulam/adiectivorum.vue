@@ -1,11 +1,11 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue';
-  import '../../extensions/array.ts';
-  import translation from '../../extensions/i18next.ts';
-  import { genera, gradus } from '../../miscella/enumerationes.ts';
-  import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda.ts';
-  import { type Faciendum } from '../../praebeunda/interfecta.ts';
-  import { Adiectivum } from '../../praebeunda/verba.ts';
+  import '../../extensions/array';
+  import translation from '../../extensions/i18next';
+  import { genera, gradus } from '../../praebeunda/valores';
+  import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
+  import { type Faciendum } from '../../praebeunda/interfecta';
+  import { Adiectivum } from '../../praebeunda/verba';
   import inflectere from '../inflectere.vue';
   import tabulare from '../tabulare.vue';
 

@@ -1,22 +1,22 @@
-import '../extensions/string.ts';
-import { errator, type Gradus } from '../miscella/enumerationes.ts';
-import Ignavum from '../miscella/ignavum.ts';
-import Nuntius from '../miscella/nuntius.ts';
-import { AdiectivumAgendum } from '../praebeunda/agenda.ts';
-import { Adiectivum } from '../praebeunda/verba.ts';
-import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi.ts';
-import TabulaInflexibilis from '../tabulae/inflexibilis.ts';
-import TabulaRecta from '../tabulae/recta.ts';
-import Tabula from '../tabulae/tabula.ts';
-import TabulaVicaria from '../tabulae/vicaria.ts';
-import { type Percolamen as Incomparabile } from './incomparabilis.ts';
-import type { Putaturum, Radicator } from './putaturum.ts';
+import '../extensions/string';
+import Nuntius from '../miscella/nuntius';
+import Ignavum from '../miscella/usus';
+import { AdiectivumAgendum } from '../praebeunda/agenda';
+import { Adiectivum } from '../praebeunda/verba';
+import TabulaAdiectiviNumerata from '../tabulae/defectae/numeratae/adiectivi';
+import TabulaInflexibilis from '../tabulae/inflexibilis';
+import TabulaRecta from '../tabulae/recta';
+import Tabula from '../tabulae/tabula';
+import TabulaVicaria from '../tabulae/vicaria';
+import { errator, type Gradus } from '../praebeunda/valores';
+import { type Percolamen as Incomparabile } from './incomparabilis';
+import type { Putaturum, Radicator } from './putaturum';
 
 interface Percolamen extends Incomparabile {
   gradus?: Gradus
 }
 
-@Nuntius.factum('PutatorAdiectivi')
+@Nuntius.factum
 class PutatorAdiectivi implements Putaturum<AdiectivumAgendum, Adiectivum> {
   radicetur(versio: string): Radicator<AdiectivumAgendum, Adiectivum> {
     switch (versio) {

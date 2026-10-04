@@ -1,17 +1,17 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue';
-  import '../extensions/string.ts';
-  import { type Eventus } from '../miscella/dictionarium.ts';
-  import { Encliticum, enclitica } from '../miscella/enumerationes.ts';
-  import { locutor } from '../miscella/locutor.ts';
-  import { type NumeramenAgendum } from '../praebeunda/agenda.ts';
-  import { Actus, Multiplex, Numerale, Verbum } from '../praebeunda/verba.ts';
-  import Gustulus from '../scriptura/gustulus.ts';
+  import '../extensions/string';
+  import { type Eventus } from '../miscella/dictionarium';
+  import { Encliticus, enclitici } from '../praebeunda/valores';
+  import { locutor } from '../miscella/locutor';
+  import { type NumeramenAgendum } from '../praebeunda/agenda';
+  import { Actus, Multiplex, Numerale, Verbum, type Numeramen } from '../praebeunda/verba';
+  import Gustulus from '../scriptura/gustulus';
   import Docere from './docere.vue';
   import Gustulare from './gustulare.vue';
   import Inflectere from './inflectere.vue';
 
-  let valorEnclitici: string = Encliticum.nullum
+  let valorEnclitici: string = Encliticus.nullus
 
   export interface Forma {
     gustulus?: Gustulus,
@@ -30,9 +30,9 @@
     ].all()
 
   if(multiplex) {
-    (verbum as Multiplex).valores()
+    (verbum as Multiplex).valores
         .forEach((valor) => valores.push(valor))
-    enclitica.filter((valor) => !verbum.scriptum.endsWith(valor))
+    enclitici.filter((valor) => !verbum.scriptum.endsWith(valor))
              .forEach((valor) => valoresEnclitici.push(valor))
   }
 
@@ -56,6 +56,13 @@
               categoria: 'numeramen'
             }
         }; break
+        case 'numeramen': {
+          const numeramen: Numeramen = verbum as Numeramen
+          // const referendus: Eventus | undefined = numeramen.refer()
+          // // eslint-disable-next-line no-extra-boolean-cast
+          // if(!!referendus)
+          //   eventus.value = referendus
+        }; break
       }
     }
   }
@@ -63,19 +70,19 @@
   function adde() {
     if(verbum) {
       if([multiplex, !!valorEnclitici].all())
-        (verbum as Multiplex).encliticum = valorEnclitici as Encliticum
+        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus
       verbum.scriptum = verbum.scriptum.toLowerCase()
-      locutor.hoc().addatur(verbum)
+      locutor.addatur(verbum)
     }
   }
 
   function addeProprium() {
     if (verbum) {
       if ([ multiplex, !!valorEnclitici ].all())
-        (verbum as Multiplex).encliticum = valorEnclitici as Encliticum;
+        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus;
       if(propriabile)
         verbum.scriptum = verbum.scriptum.capitalize()
-      locutor.hoc().addatur(verbum);
+      locutor.addatur(verbum);
     }
   }
 </script>
@@ -101,15 +108,15 @@
       <Docere :docendum='verbum.categoria.valor' />
       <Docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
       <v-btn-toggle>
-        <template v-if='verbum?.paratumne()'>
+        <template v-if='verbum?.paratust()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'
                  :text="$t('annuli.specere.addere')" />
         </template>
-        <template v-if='propriabile'>
+        <template v-if='propriabile && verbum?.paratust()'>
           <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium()'
                  :text="$t('annuli.specere.addereProprium')" />
         </template>
-        <template v-else-if="verbum?.categoria.aequatur('numerus')">
+        <template v-else-if="/^numer(amen|us)$/.test(verbum?.categoria.valor ?? '')">
           <v-btn icon='quick_reference' id='aperi' @click='aperi()'
                  :text="$t('annuli.specere.aperire')" />
         </template>

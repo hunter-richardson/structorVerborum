@@ -1,7 +1,22 @@
 import RomanNumeral from 'js-roman-numerals';
-import Nuntius from './nuntius.ts';
-
-const source = (re: RegExp) => re.source
+import Nuntius from './nuntius';
+import { Ultimum } from './usus';
+import {
+  anyOf,
+  buildRegExp,
+  capture,
+  choiceOf,
+  EncodedRegex,
+  endOfString,
+  lookahead,
+  optional,
+  regex,
+  RegexConstruct,
+  repeat,
+  startOfString,
+  type CaptureOptions,
+  type RepeatOptions
+  } from 'ts-regex-builder';
 
 export interface Par {
   arabicus: number
@@ -44,27 +59,66 @@ const claves: Fractus[] =
     (Object.keys(fracti) as Array<Fractus>)
            .filter((clavis: Fractus) => !!fracti[clavis]);
 
-const deFractisMinoribus: RegExp = /(?:·|∴|×|:{1,2})/;
-const deFractisMaioribus: RegExp = new RegExp(`S(?:${source(deFractisMinoribus)})?`);
-const deFractis: RegExp = new RegExp(`(?:${source(deFractisMaioribus)})|(?:${source(deFractisMinoribus)})`);
+let spatium: RepeatOptions = { min: 1, max: 2 }
 
-const deIntegris: RegExp = /(?=[MDCLXVI])M{0,3}(?:CM|CD|D?C{0,3})(?:XC|XL|L?X{0,3})(?:IX|IV|V?I{0,3})/;
-const deMixtis: RegExp = new RegExp(`(?:${source(deIntegris)}(?:${source(deFractis)})?|${source(deFractis)})`);
+const deFractisMinoribus: EncodedRegex =  //  /(·|∴|×|:{1,2})/
+    regex([ choiceOf('·', '∴', '×', repeat(':', spatium)) ])
+const deFractisMaioribus: EncodedRegex =  //  /S(·|∴|×|:{1,2})?/
+    regex([ 'S', optional(deFractisMinoribus) ])
+const deFractis: RegexConstruct =  //  /(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+    choiceOf(deFractisMaioribus, deFractisMinoribus)
 
-const colamenMixtum: RegExp = new RegExp(`^(?<integer>${source(deIntegris)})?(?<fractus>${source(deFractis)})?$`);
-const colamen: RegExp = new RegExp(`^(?:(?:\\|(?<maior>${source(deMixtis)})\\|(?<minor>${source(deMixtis)})?)|(?<nihil>(N))|(?:${source(deMixtis)}))$`)
+spatium = { min: 0, max: 3 }
 
-@Nuntius.factum('Numerator')
+const litterae =
+  [
+    { prima: 'C', secunda: 'M', tertia: 'D' },  //  /(CM|CD|D?C{0,3})/
+    { prima: 'X', secunda: 'C', tertia: 'L' },  //  /(XC|XL|L?X{0,3})/
+    { prima: 'I', secunda: 'X', tertia: 'V' }   //  /(IX|IV|V?I{0,3})/
+  ]
+
+const deIntegrisPlurimis: EncodedRegex = regex([  //  /(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
+  ...litterae.map((littera) =>
+        choiceOf(`${littera.prima}${littera.secunda}`, `${littera.prima}${littera.tertia}`,
+                 regex([ optional(littera.tertia), repeat(littera.prima, spatium) ])))
+])
+
+const deIntegris: EncodedRegex =  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
+  regex([ lookahead(anyOf('MDCLXVI')),  //  /(?=[MDCLXVI])/
+          repeat('M', spatium),  //  /M{0,3}/
+          deIntegrisPlurimis ])
+
+const deMixtis: EncodedRegex = regex([  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  choiceOf(regex([ deIntegris, optional(deFractis) ]), deFractis) ])
+
+const integerCapiendus: CaptureOptions = { name: 'integer' }  //  /(?<integer>)/
+const fractusCapiendus: CaptureOptions = { name: 'fractus' }  //  /(?<fractus>)/
+const maiorCapiendus: CaptureOptions = { name: 'maior' }  //  /(?<maior>)/
+const minorCapiendus: CaptureOptions = { name: 'minor' }  //  /(?<minor>)/
+const nihilCapiendum: CaptureOptions = { name: 'nihil' }  //  /(?<nihil>)/
+
+const colamenMixtum: RegExp = buildRegExp([
+  startOfString,  //  /^/
+  optional(capture(deIntegris, integerCapiendus)),  //  /(?<integer>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))/
+  optional(capture(deFractis, fractusCapiendus)),   //  /(?<fractus>(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  endOfString ])  //  /$/
+const colamen: RegExp = buildRegExp([
+  startOfString,  //  /^/
+  choiceOf(regex([ '|', capture(deMixtis, maiorCapiendus), '|',  //  /\\|(?<maior>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))\\|/
+    optional(capture(deMixtis, minorCapiendus)) ])),  //  /(?<minor>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  capture('N', nihilCapiendum),  //  /(?<nihil>)(N)/
+  deMixtis,  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  endOfString ])  //  /$/
+
+@Ultimum @Nuntius.factum
 export default class Numerator {
-  static arabicusConvertibilis(arabicus: number): boolean {
-    return [arabicus >= minimum.arabicus, arabicus <= maximum.arabicus].all()
-  }
+  static arabicusConvertibilis(arabicus: number): boolean
+  { return [arabicus >= minimum.arabicus, arabicus <= maximum.arabicus].all() }
 
-  static romanusConvertibilis(romanus: string): boolean {
-    return colamen.test(romanus)
-  }
+  static romanusConvertibilis(romanus: string): boolean
+  { return colamen.test(romanus) }
 
-  @Nuntius.modus('Numerator')
+  @Nuntius.modus
   // eslint disable complexity
   static romanus(arabicus: number): string {
     if(this.arabicusConvertibilis(arabicus)) {
@@ -81,11 +135,11 @@ export default class Numerator {
         const fractus: Fractus = (12.0 * (arabicus - integer)).toString(12.0) as Fractus
         return `${this.romanus(integer)}${fracti[ fractus ] ?? ''}`
       }
-    } return ''
+    } else return ''
   }
   // eslint enable complexity
 
-  @Nuntius.modus('Numerator')
+  @Nuntius.modus
   // eslint disable complexity
   static arabicus(romanus: string): number {
     if(!romanus) return -1
@@ -105,7 +159,7 @@ export default class Numerator {
           return (parseInt(numerator.toLowerCase(), 12.0) / 12.0) + this.arabicus(integer)
         } else return new RomanNumeral(integer).toInt()
       } else return new RomanNumeral(certamen.groups['minor']).toInt()
-    } return -1
+    } else return -1
   }
   // eslint enable complexity
 }

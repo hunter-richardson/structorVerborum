@@ -1,14 +1,14 @@
 <script setup lang='ts'>
   import { onMounted, ref, type Ref } from 'vue';
-  import translation from '../extensions/i18next.ts';
-  import '../extensions/string.ts';
+  import translation from '../extensions/i18next';
+  import '../extensions/string';
   import {
       dictionarium, type Eventus,
       type Lemma, type Quaerenda
-  } from '../miscella/dictionarium.ts';
-  import { categoriae, inflectenda } from '../miscella/enumerationes.ts';
-  import { type Verbum } from '../praebeunda/verba.ts';
-  import type { Columnae } from '../scriptura/columnae.ts';
+  } from '../miscella/dictionarium';
+  import { categoriae, inflectenda } from '../praebeunda/valores';
+  import { type Verbum } from '../praebeunda/verba';
+  import type { Columnae } from '../scriptura/columnae';
   import Inflectere from './inflectere.vue';
   import Loqui from './loqui.vue';
   import Onerare from './onerare.vue';
@@ -50,13 +50,13 @@
 
   async function sarci (): Promise<void> {
     reoneratur()
-    lemmae.value = await dictionarium.hoc().quaeratur(quaerenda.value)
+    lemmae.value = await dictionarium.quaeratur(quaerenda.value)
     return exoneratur()
   }
 
   async function forsSeligat (): Promise<void> {
     reoneratur()
-    const res: Eventus = await dictionarium.hoc().forsReferatur(quaerenda.value)
+    const res: Eventus = await dictionarium.forsReferatur(quaerenda.value)
     if (inflectenda(res.categoria)) eventus.value = res
     else verbum.value = res as Referendum ?? undefined
     return exoneratur()
@@ -70,7 +70,7 @@
   }
 
   async function aperi (lemma: Lemma) {
-    const res: Eventus | null = await dictionarium.hoc().referatur(lemma)
+    const res: Eventus | null = await dictionarium.referatur(lemma)
     if (res) {
       if (inflectenda(res.categoria)) eventus.value = res
       else verbum.value = res as Referendum

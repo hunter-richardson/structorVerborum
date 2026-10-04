@@ -1,13 +1,13 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue'
-  import '../../extensions/array.ts'
-  import { ActusAgendus } from '../../praebeunda/agenda.ts'
-  import type { Faciendum, Referendum } from '../../praebeunda/interfecta.ts'
-  import { Actus } from '../../praebeunda/verba.ts'
+  import '../../extensions/array'
+  import { ActusAgendus } from '../../praebeunda/agenda'
+  import type { Faciendum, Referendum } from '../../praebeunda/interfecta'
+  import { Actus } from '../../praebeunda/verba'
   import inflectere from '../inflectere.vue'
   import tabulare from '../tabulare.vue'
 
-  const { agendum } = defineProps<{ agendum: Faciendum<Actus> }>('agendum');
+  const { agendum } = defineProps<{ agendum: Faciendum<Actus> }>();
   const lectum: boolean = agendum instanceof ActusAgendus;
   const referendum: Ref<Referendum | undefined> = ref<Referendum | undefined>();
 </script>
