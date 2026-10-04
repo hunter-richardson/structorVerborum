@@ -77,11 +77,11 @@ const litterae =
     { prima: 'I', secunda: 'X', tertia: 'V' }   //  /(IX|IV|V?I{0,3})/
   ]
 
-const deIntegrisPlurimis: EncodedRegex = regex([  //  /(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
-  ...litterae.map((littera) =>
+const deIntegrisPlurimis: EncodedRegex = regex(  //  /(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
+  litterae.map((littera) =>
         choiceOf(`${littera.prima}${littera.secunda}`, `${littera.prima}${littera.tertia}`,
                  regex([ optional(littera.tertia), repeat(littera.prima, spatium) ])))
-])
+)
 
 const deIntegris: EncodedRegex =  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
   regex([ lookahead(anyOf('MDCLXVI')),  //  /(?=[MDCLXVI])/

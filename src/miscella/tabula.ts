@@ -10,13 +10,6 @@ import type { Refector } from '../refectores/refector';
 
 export type Par = { [ clavis: string ]: string }
 
-interface Tabula<Hoc extends Multiplex> {
-  monstrentur (): string[]
-  colantur (radix: string): Hoc[]
-  colantur (...fulta: Par[]): Hoc[]
-  colantur (radix: string, ...fulta: Par[]): Hoc[]
-}
-
 @Ignavum abstract class Tabula<Hoc extends Multiplex> {
   private static aequantur (par: Par, fultum: Fultum<Lineae>): boolean {
     const [ clavis, valor ]: string[] = Object.entries(par)[ 0 ]
@@ -47,6 +40,10 @@ interface Tabula<Hoc extends Multiplex> {
         .flat().sort())
     ]
   }
+
+  colantur (radix: string): Hoc[];
+  colantur (...fulta: Par[]): Hoc[];
+  colantur (radix: string, ...fulta: Par[]): Hoc[]
 
   @Nuntius.modus
   colantur (valor?: (string | Par), ...cetera: Par[]): Hoc[] {
