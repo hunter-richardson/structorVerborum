@@ -2,7 +2,7 @@
   import { onMounted, ref, type Ref } from 'vue'
   import '../extensions/array'
   import { Columnae } from '../scriptura/columnae'
-  import { type Faciendum } from '../praebeunda/interfecta'
+  import { type Tabulator } from '../praebeunda/interfecta'
   import { Multiplex } from '../praebeunda/verba'
   import { categoricum } from '../scriptura/columnae'
   import Gustulus from '../scriptura/gustulus'
@@ -15,7 +15,7 @@
 
   export interface Forma {
     gustulus?: Gustulus,
-    agendum: Faciendum<Hoc>,
+    agendum: Tabulator<Hoc>,
     categoria: string
   }
 

@@ -56,7 +56,7 @@ export const ordinentur: (primum: Verbum, secundum: Verbum) => SortResult =
         (hoc: Verbum) => hoc.categoria.valor ?? ''
       ])
 
-export class Verbum extends Categoricum {
+export class Verbum extends Categoricum implements Lectum {
   readonly unicum: string = crypto.randomUUID()
   protected _scriptum!: string
 

@@ -2,7 +2,7 @@ import Anomala, { Mantela } from './anomala';
 import Nuntius from '../miscella/nuntius';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import Structor from '../praebeunda/structor';
-import { TabulamenAdiectivi, TabulamenIncomparabilis } from '../praebeunda/tabulamina';
+import { TabulamenIncomparabilis } from '../praebeunda/tabulamina';
 import { Encliticus } from '../praebeunda/valores';
 import { Adiectivum } from '../praebeunda/verba';
 import TabulaCollata from '../tabulae/collata';

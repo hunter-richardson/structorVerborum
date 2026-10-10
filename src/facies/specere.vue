@@ -4,12 +4,12 @@
   import { type Eventus } from '../miscella/dictionarium';
   import { Encliticus, enclitici } from '../praebeunda/valores';
   import { locutor } from '../miscella/locutor';
-  import { type NumeramenAgendum } from '../praebeunda/agenda';
-  import { Actus, Multiplex, Numerale, Verbum, type Numeramen } from '../praebeunda/verba';
+  import { Actus, Multiplex, Numerale, Verbum, Numeramen } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
   import Docere from './docere.vue';
   import Gustulare from './gustulare.vue';
   import Inflectere from './inflectere.vue';
+import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
   let valorEnclitici: string = Encliticus.nullus
 
@@ -48,7 +48,7 @@
             }; break
         } case 'numerus': {
           const numerus: Numerale = verbum as Numerale
-          const agendum: NumeramenAgendum | undefined = await numerus.numeramen()
+          const agendum: TabulamenNumeraminis | undefined = await numerus.numeramen()
           // eslint-disable-next-line no-extra-boolean-cast
           if(!!agendum)
             eventus.value = {

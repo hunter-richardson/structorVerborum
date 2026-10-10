@@ -17,8 +17,9 @@ import {
   verborum,
   type Ulla
   } from './lector';
-import { type Referendum } from '../praebeunda/interfecta';
+import { type Referendum, type Tabulator } from '../praebeunda/interfecta';
 import type { TabulamenActus } from '../praebeunda/tabulamina';
+import type { Actus, Adiectivum, Nomen } from '../praebeunda/verba';
 
 export interface Lemma {
   categoria: string
@@ -149,25 +150,23 @@ class Dictionarium {
     }
   }
 
-  private async _referaturActus(lemma: string, lecta: boolean): Promise<Referendum | undefined>
-  { return await (lecta ? actuum.legatur : actus.feratur)(lemma) }
+  private async _referaturActus(lemma: string, lecta: boolean): Promise<Tabulator<Actus> | undefined>
+  { return lecta ? (await actuum.legatur(lemma)).unum : await actus.feratur(lemma) }
 
-  private async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
+  private async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Tabulator<Adiectivum> | undefined> {
     if(lecta) {
       const incomparabile: boolean = !(adiectivorum.omnia).includes(lemma)
-      return await (incomparabile ? incomparabilium : adiectivorum).legatur(lemma)
+      return (await (incomparabile ? incomparabilium : adiectivorum).legatur(lemma)).unum
     } else return await adiectiva.feratur(lemma)
   }
 
-  private async _referaturNomen(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
+  private async _referaturNomen(lemma: string, lecta: boolean): Promise<Tabulator<Nomen> | undefined> {
     if(lecta) {
       const factum: boolean = (actuum.omnia).includes(lemma)
-      if(factum) {
-        const ulla: Ulla<TabulamenActus> = await actuum.legatur(lemma)
-        const actus = Array.isArray(ulla) ? ulla.first() : ulla
-        return await actus?.nomen()
-      } else return await nominum.legatur(lemma)
-    } else return await nomina.feratur(lemma)
+      if(factum)
+           return (await actuum .legatur(lemma)).unum?.nomen()
+      else return (await nominum.legatur(lemma)).unum
+    } else return  await nomina .feratur(lemma)
   }
 
   @Nuntius.promittum

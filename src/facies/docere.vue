@@ -2,7 +2,6 @@
   import { onMounted, ref, type Ref } from 'vue'
   import { dominus } from '../miscella/dominus'
   import '../extensions/array'
-  import file from 'file-fetch'
   import fs from 'fs'
   import { VueMarkdownIt as markdown } from '@f3ve/vue-markdown-it'
   import path from 'path'
@@ -20,15 +19,17 @@
     reoneratur()
     doctum.value = ''
     const via: string = `${path.join('/res/docenda', dominus.lingua.signum, docendum.value!)}.md`
-    fs.createReadStream(`${path.join('/res/docenda', dominus.lingua.signum, docendum.value!)}.md`)
-      .on('data', (pars) => doctum.value = `${doctum.value}${pars.trim()}`}
+    fs.createReadStream(via)
+      .on('data', (pars) =>
+          doctum.value = `${doctum.value}${typeof pars === 'string' ? pars.trim() : pars}`)
   }
 
   async function adliumDoceatur(eventus: MouseEvent) {
     reoneratur()
     eventus.preventDefault()
     const parma: string | undefined =
-        (eventus.currentTarget as HTMLElement)?.closest('a')?.getAttribute('href') ?? undefined
+        (eventus.currentTarget as HTMLElement)?.closest('a')
+            ?.getAttribute('href') ?? undefined
     //  eslint-disable-next-line no-extra-boolean-cast
     if(!!parma && parma.endsWith('.md')) {
       docendum.value = parma.split('/').last().split('.').first()

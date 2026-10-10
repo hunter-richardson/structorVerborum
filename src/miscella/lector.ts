@@ -1,9 +1,4 @@
-import {
-  CsvError,
-  InfoRecord,
-  Options,
-  parse
-  } from 'csv-parse';
+import { CsvError, Options, parse } from 'csv-parse';
 import fs from 'fs';
 import path from 'path';
 import { Writable } from 'stream';
@@ -32,9 +27,8 @@ export class Ulla<Hoc> extends Array<Hoc> {
   get unum (): Hoc { return this.first(); }
   get multa (): Hoc[] { return [ ...this ]; }
 
-  constructor (haec?: Hoc | Hoc[]) {
-    super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [ haec ]));
-  }
+  constructor (haec?: Hoc | Hoc[])
+  { super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [ haec ])) }
 }
 
 @Ignavum @Nuntius.factum

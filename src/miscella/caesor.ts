@@ -26,6 +26,7 @@ import {
   type Lineae
   } from '../praebeunda/valores';
 import type { Tabulamen } from '../praebeunda/tabulamina';
+import type { Lectum } from '../praebeunda/interfecta';
 
 type Cretor = (fulta: Fulta) => boolean
 
@@ -35,7 +36,7 @@ class Caesamen {
   readonly mensura!: number
 }
 
-class Crudum extends (Caesamen as new () => Omit<Caesamen, 'status'>) {
+class Crudum extends (Caesamen as new () => Omit<Caesamen, 'status'>) implements Lectum {
   readonly status!: string
 }
 

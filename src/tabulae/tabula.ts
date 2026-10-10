@@ -100,6 +100,7 @@ export class TabulaDerecta<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> 
 export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends TabulaLegans<Hoc, Illud> {
   @Nuntius.promittum async tabulentur() {
     let refector: Refector<Hoc> | undefined
+    //  eslint-disable-next-line no-extra-boolean-cast
     if (!!this.illud.scriptura)
       refector = new Refector<Hoc>(this.illud.scriptura)
     const agenda: Agendum<Hoc>[] = await this.legantur();
@@ -124,6 +125,7 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
       const radix: string = await caesor.caedatur(this.illud, agendum.valores)
       //  eslint-disable-next-line no-extra-boolean-cast
       agendum.scriptum = !!radix ? `${radix}${agendum.scriptum}` : ''
+      //  eslint-disable-next-line no-extra-boolean-cast
     }); if(!!refector) refector.reficiatur(agenda)
     this._haec.push(
       ...agenda.filter((agendum) => agendum.scriptum.length > 0)
