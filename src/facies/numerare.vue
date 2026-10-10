@@ -20,7 +20,7 @@ import Specere from './specere.vue';
       { return Number.isInteger(arabicus) || useTranslation().t('errores.numerare.deNumeris') }
   ]
 
-  const numerale: Ref<Numerale | undefined> = ref<Numerale | undefined>(undefined)
+  const numerale: Ref<Numerale | undefined> = ref<Numerale | undefined>()
   const romanus: Ref<string> = ref<string>('N')
 
   const arabicus: Ref<Arabicus> = ref<Arabicus>({

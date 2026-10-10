@@ -157,9 +157,9 @@ la:
   errores:
     licuntur: "licuntur"
     numerare:
-      deNumeris: "Arabici numeri soli $tt(errores.licuntur)"
+      deNumeris: "Arabici numeri soli $t(errores.licuntur)"
     quaerere:
-      deLitteris: "Latinae litterae solae $tt(errores.licuntur)"
+      deLitteris: "Latinae litterae solae $t(errores.licuntur)"
   scripta:
     404:
       caput: "Vae CDIV"
@@ -169,7 +169,7 @@ la:
     docere:
       onerans: "Res oneratur..."
     onerare:
-      onerans: "$tt({{pittacium}}_plurale, capitalize) onerantur..."
+      onerans: "$t({{pittacium}}_plurale, capitalize) onerantur..."
     inflectere:
       actus:
         actor: "actor"

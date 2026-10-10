@@ -1,0 +1,4 @@
+clavis, mensura, status
+nominativus, 0, casus = nominativus & numerus = singularis
+nominativus, 0, casus = vocativus & numerus = singularis
+genitivus, 2

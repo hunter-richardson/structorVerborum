@@ -1,41 +1,28 @@
-import deepEqual from 'deep-equal';
-import Tabula from './tabula';
+import equal from 'fast-deep-equal';
+import { Tabula, tabulast, tabulatorst } from './tabula';
 import '../extensions/array';
 import Nuntius from '../miscella/nuntius';
+import { Ignavum, Ultimum } from '../miscella/usus';
 import { Multiplex } from '../praebeunda/verba';
-import type Ignavum from '../miscella/usus';
-import { type Agendum } from '../praebeunda/verba';
-import { type Faciendum } from '../praebeunda/interfecta';
-import type Structor from '../praebeunda/structor';
+import { type Tabulator } from '../praebeunda/interfecta';
 
-export function valedictor<Hoc extends Multiplex>(hoc: Hoc): Agendum<Hoc> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { scriptum: scriptum, categoria: categoria, ...valores } = hoc
-  return valores as any
-}
-
-type Relata<Hoc extends Multiplex> = Ignavum<Tabula<Hoc>> | Structor<Faciendum<Hoc>> | undefined
-
-@Nuntius.factum
+@Ignavum @Ultimum @Nuntius.factum
 export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
-  public relatae!: (Relata<Hoc>)[]
+  tabulae: Tabula<Hoc>[] = []
 
-  #structorest (relata: Relata<Hoc>): relata is Structor<Faciendum<Hoc>> {
-    return typeof (relata as any).struatur === 'function'
-  }
-
-  #ignavust (relata: Relata<Hoc>): relata is Ignavum<Tabula<Hoc>> {
-    return typeof (relata as any).hoc === 'function'
-  }
-
-  @Nuntius.promittum
-  async plenetur(): Promise<void> {
-    this.relatae.forEach(async (relata) => {
-      if(this.#structorest(relata)) relata = relata.struatur().putetur()
-      if(this.#ignavust(relata))
-        (await relata.hoc.tabulentur()).forEach((hoc: Hoc) => {
-          if (this.tabula.none((illud) => deepEqual(valedictor(hoc), valedictor(illud)))) this.tabula.push(hoc)
-        })
+  @Nuntius.promittum async tabulentur() {
+    this.tabulae.forEach((tabula) => {
+      tabula.haec.forEach((illud) => {
+        if(this._haec.none((hoc) => equal(hoc.valores, illud.valores)))
+          this._haec.push(illud)
+      })
     })
+  }
+
+  constructor(...colligenda: (Tabula<Hoc> | Tabulator<Hoc>)[]) {
+    super(); colligenda.forEach((colligendum) => {
+      if(tabulatorst(colligendum)) this.tabulae.push(colligendum.tabula)
+      if(tabulast(colligendum)) this.tabulae.push(colligendum)
+    }); this.tabulentur()
   }
 }

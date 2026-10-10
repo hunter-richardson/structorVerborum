@@ -1,0 +1,106 @@
+modus, vox, tempus, scriptum, numerus, persona
+indicativus, activa, praesens, ere
+indicativus, activa, perfectum, isse
+infinitivus, passiva, praesens, ī
+participium, activa, praesens, iēns
+participium, activa, perfectum, um
+participium, activa, futurum, endum
+participium, passiva, futurum, ūrum
+imperativus, activa, praesens, e, singularis
+imperativus, activa, praesens, ite, pluralis
+imperativus, activa, futurum, itō, singularis
+imperativus, activa, futurum, itōte, pluralis
+imperativus, passiva, praesens, ere, singularis
+imperativus, passiva, praesens, iminī, pluralis
+imperativus, passiva, futurum, itor, singularis
+imperativus, passiva, futurum, untor, pluralis
+indicativus, activa, praesens, ō, singularis, prima
+indicativus, activa, praesens, is, singularis, secunda
+indicativus, activa, praesens, it, singularis, tertia
+indicativus, activa, praesens, imus, pluralis, prima
+indicativus, activa, praesens, itis, pluralis, secunda
+indicativus, activa, praesens, unt, pluralis, tertia
+indicativus, activa, infectum, ēbam, singularis, prima
+indicativus, activa, infectum, ēbās, singularis, secunda
+indicativus, activa, infectum, ēbat, singularis, tertia
+indicativus, activa, infectum, ēbāmus, pluralis, prima
+indicativus, activa, infectum, ēbātis, pluralis, secunda
+indicativus, activa, infectum, ēbant, pluralis, tertia
+indicativus, activa, futurum, am, singularis, prima
+indicativus, activa, futurum, ēs, singularis, secunda
+indicativus, activa, futurum, et, singularis, tertia
+indicativus, activa, futurum, ēmus, pluralis, prima
+indicativus, activa, futurum, ētis, pluralis, secunda
+indicativus, activa, futurum, ent, pluralis, tertia
+indicativus, activa, perfectum, ī, singularis, prima
+indicativus, activa, perfectum, istī, singularis, secunda
+indicativus, activa, perfectum, it, singularis, tertia
+indicativus, activa, perfectum, imus, pluralis, prima
+indicativus, activa, perfectum, istis, pluralis, secunda
+indicativus, activa, perfectum, ērunt, pluralis, tertia
+indicativus, activa, pluperfectum, eram, singularis, prima
+indicativus, activa, pluperfectum, erās, singularis, secunda
+indicativus, activa, pluperfectum, erat, singularis, tertia
+indicativus, activa, pluperfectum, erāmus, pluralis, prima
+indicativus, activa, pluperfectum, erātis, pluralis, secunda
+indicativus, activa, pluperfectum, erant, pluralis, tertia
+indicativus, activa, exigendum, erō, singularis, prima
+indicativus, activa, exigendum, eris, singularis, secunda
+indicativus, activa, exigendum, erit, singularis, tertia
+indicativus, activa, exigendum, erimus, pluralis, prima
+indicativus, activa, exigendum, eritis, pluralis, secunda
+indicativus, activa, exigendum, erint, pluralis, tertia
+indicativus, passiva, praesens, or, singularis, prima
+indicativus, passiva, praesens, eris, singularis, secunda
+indicativus, passiva, praesens, itur, singularis, tertia
+indicativus, passiva, praesens, imur, pluralis, prima
+indicativus, passiva, praesens, iminī, pluralis, secunda
+indicativus, passiva, praesens, untur, pluralis, tertia
+indicativus, passiva, infectum, ēbar, singularis, prima
+indicativus, passiva, infectum, ēbāris, singularis, secunda
+indicativus, passiva, infectum, ēbātur, singularis, tertia
+indicativus, passiva, infectum, ēbāmur, pluralis, prima
+indicativus, passiva, infectum, ēbāminī, pluralis, secunda
+indicativus, passiva, infectum, ēbantur, pluralis, tertia
+indicativus, passiva, futurum, ar, singularis, prima
+indicativus, passiva, futurum, ēris, singularis, secunda
+indicativus, passiva, futurum, ētur, singularis, tertia
+indicativus, passiva, futurum, ēmur, pluralis, prima
+indicativus, passiva, futurum, ēminī, pluralis, secunda
+indicativus, passiva, futurum, entur, pluralis, tertia
+subiunctivus, activa, praesens, am, singularis, prima
+subiunctivus, activa, praesens, ās, singularis, secunda
+subiunctivus, activa, praesens, at, singularis, tertia
+subiunctivus, activa, praesens, āmus, pluralis, prima
+subiunctivus, activa, praesens, ātis, pluralis, secunda
+subiunctivus, activa, praesens, ant, pluralis, tertia
+subiunctivus, activa, infectum, erem, singularis, prima
+subiunctivus, activa, infectum, erēs, singularis, secunda
+subiunctivus, activa, infectum, eret, singularis, tertia
+subiunctivus, activa, infectum, erēmus, pluralis, prima
+subiunctivus, activa, infectum, erētis, pluralis, secunda
+subiunctivus, activa, infectum, erent, pluralis, tertia
+subiunctivus, activa, perfectum, erim, singularis, prima
+subiunctivus, activa, perfectum, erīs, singularis, secunda
+subiunctivus, activa, perfectum, erit, singularis, tertia
+subiunctivus, activa, perfectum, erīmus, pluralis, prima
+subiunctivus, activa, perfectum, erītis, pluralis, secunda
+subiunctivus, activa, perfectum, erint, pluralis, tertia
+subiunctivus, activa, pluperfectum, issem, singularis, prima
+subiunctivus, activa, pluperfectum, issēs, singularis, secunda
+subiunctivus, activa, pluperfectum, isset, singularis, tertia
+subiunctivus, activa, pluperfectum, issēmus, pluralis, prima
+subiunctivus, activa, pluperfectum, issētis, pluralis, secunda
+subiunctivus, activa, pluperfectum, issent, pluralis, tertia
+subiunctivus, passiva, praesens, ar, singularis, prima
+subiunctivus, passiva, praesens, āris, singularis, secunda
+subiunctivus, passiva, praesens, ātur, singularis, tertia
+subiunctivus, passiva, praesens, āmur, pluralis, prima
+subiunctivus, passiva, praesens, āminī, pluralis, secunda
+subiunctivus, passiva, praesens, antur, pluralis, tertia
+subiunctivus, passiva, infectum, erer, singularis, prima
+subiunctivus, passiva, infectum, erēris, singularis, secunda
+subiunctivus, passiva, infectum, erētur, singularis, tertia
+subiunctivus, passiva, infectum, erēmur, pluralis, prima
+subiunctivus, passiva, infectum, erēminī, pluralis, secunda
+subiunctivus, passiva, infectum, erentur, pluralis, tertia

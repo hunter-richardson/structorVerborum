@@ -1,22 +1,24 @@
-import deepEqual from 'deep-equal';
-import { valedictor } from './collata';
-import Tabula from './tabula';
+import { Tabula, tabulast, tabulatorst } from './tabula';
 import '../extensions/array';
 import Nuntius from '../miscella/nuntius';
-import { Multiplex } from '../praebeunda/verba';
-import type Ignavum from '../miscella/usus';
+import Refector from '../miscella/refector';
+import { Ignavum, Ultimum } from '../miscella/usus';
+import { Multiplex, type Agendum } from '../praebeunda/verba';
+import type { Tabulator } from '../praebeunda/interfecta';
 
-@Nuntius.factum
+@Ignavum @Ultimum @Nuntius.factum
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
-  relata!: Ignavum<Tabula<Hoc>>
-  colamina!: Colamen<Hoc>[]
-
-  @Nuntius.promittum
-  async plenetur(): Promise<void> {
-    const haec: Hoc[] = await this.relata.hoc.tabulentur()
-    this.colamina.forEach(async (colamen) => {
-      const hoc: Hoc = haec.first((hoc) => deepEqual(colamen, valedictor(hoc)))
-      if (hoc) this.tabula.push(hoc)
-    })
+  @Nuntius.promittum async tabulentur(): Promise<void> {
+    const refector: Refector<Hoc> = new Refector<Hoc>(this.scriptura)
+    let _relata: Tabula<Hoc> | undefined
+    if(tabulatorst(this.relata)) _relata = this.relata.tabula
+    else if(tabulast(this.relata)) _relata = this.relata
+    else throw new Error('Inflexionis tabulae mala\'st')
+    refector.reficiatur(_relata.haec as Agendum<Hoc>[])
+    _relata.haec.forEach((hoc) => this._haec.push(hoc))
   }
+
+  constructor(private readonly relata: Tabula<Hoc> | Tabulator<Hoc>,
+              private scriptura: string)
+  { super(); this.tabulentur() }
 }

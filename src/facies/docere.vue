@@ -3,12 +3,13 @@
   import { dominus } from '../miscella/dominus'
   import '../extensions/array'
   import file from 'file-fetch'
-  import { VueMarkdownIt } from '@f3ve/vue-markdown-it'
-  import path from 'path';
+  import fs from 'fs'
+  import { VueMarkdownIt as markdown } from '@f3ve/vue-markdown-it'
+  import path from 'path'
 
   let onerans: boolean = true
 
-  const docendum: Ref<string | undefined> = ref<string | undefined>(undefined);
+  const docendum: Ref<string | undefined> = ref<string | undefined>(undefined)
   const doctum: Ref<string | undefined> = ref<string | undefined>(undefined)
 
   async function exoneratur() { onerans = false }
@@ -17,9 +18,10 @@
 
   async function doceatur() {
     reoneratur()
-    const via: string = `${path.join('/res/docenda', dominus.lingua.signetur(), docendum.value!)}.md`;
-    const corpus: Body = await file(new URL(via));
-    doctum.value = (corpus as Response).ok ? (await corpus.text()).trim() : ''
+    doctum.value = ''
+    const via: string = `${path.join('/res/docenda', dominus.lingua.signum, docendum.value!)}.md`
+    fs.createReadStream(`${path.join('/res/docenda', dominus.lingua.signum, docendum.value!)}.md`)
+      .on('data', (pars) => doctum.value = `${doctum.value}${pars.trim()}`}
   }
 
   async function adliumDoceatur(eventus: MouseEvent) {
@@ -53,10 +55,10 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <<v-skeleton-loader v-if='onerans' :loading='onerans' type='paragraph'
                       :loading-text="$t('scripta.docere.onerans')" />
+  <!-- eslint-disable-next-line no-extra-boolean-cast -->
   <div v-else-if='!!doctum' class='markdown' :id="`doctum.${docendum}`">
-    <VueMarkdownIt breaks='true' :source='doctum' />
+    <markdown breaks='true' :source='doctum' />
   </div>
 </template>

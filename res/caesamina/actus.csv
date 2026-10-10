@@ -1,0 +1,5 @@
+clavis, mensura, status
+supinum, 2, modus = participium & tempus = futurum & vox = activa
+supinum, 2, modus = participium & tempus = perfectum
+perfectum, 4, tempus >= perfectum
+praesens, 3

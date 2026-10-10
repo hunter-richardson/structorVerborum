@@ -1,19 +1,19 @@
 export const Nominunm: string[] = [
   'prima',
-  'prima//singularis',
-  'prima//pluralis',
+  'prima//singularis',  //  numerus = pluralis: dele
+  'prima//pluralis',  //  numerus = singularis: dele
   'secundaMasculina',
   'secundaNeutra',
-  'secundaMasculina//singularis',
-  'secundaNeutra//singularis',
-  'secundaMasculina//pluralis',
-  'secundaNeutra//pluralis',
+  'secundaMasculina//singularis',  //  numerus = pluralis: dele
+  'secundaNeutra//singularis',  //  numerus = pluralis: dele
+  'secundaMasculina//pluralis',  //  numerus = singularis: dele
+  'secundaNeutra//pluralis',  //  numerus = singularis: dele
   'tertiaAnimata',
   'tertiaNeutra',
-  'tertiaAnimata//singularis',
-  'tertiaNeutra//singularis',
-  'tertiaAnimata//pluralis',
-  'tertiaNeutra//pluralis',
+  'tertiaAnimata//singularis',  //  numerus = singularis: dele
+  'tertiaNeutra//singularis',  //  numerus = signularis: dele
+  'tertiaAnimata//pluralis',  //  numerus = pluralis: dele
+  'tertiaNeutra//pluralis',  //  numerus = pluralis: dele
   'quarta',
   'quartaVaria',
   'quinta',
@@ -26,24 +26,24 @@ export const Nominunm: string[] = [
   'tertiaAnimata/cumGenitivoVario',
   'tertiaAnimata/cumAblativoVario',
   'tertiaAnimata/cumGenitivoAblativoqueVario',
-  'tertiaAnimata/cumGenitivoVario/singularis',
-  'tertiaAnimata/cumAblativoVario/singularis',
-  'tertiaAnimata/cumGenitivoAblativoqueVario/singularis',
-  'tertiaAnimata/cumGenitivoVario/pluralis',
-  'tertiaAnimata/cumAblativoVario/pluralis',
-  'tertiaAnimata/cumGenitivoAblativoqueVario/pluralis',
+  'tertiaAnimata/cumGenitivoVario/singularis',  //  numerus = pluralis: dele
+  'tertiaAnimata/cumAblativoVario/singularis',  //  numerus = pluralis: dele
+  'tertiaAnimata/cumGenitivoAblativoqueVario/singularis',  //  numerus = pluralis: dele
+  'tertiaAnimata/cumGenitivoVario/pluralis',  //  numerus = singularis: dele
+  'tertiaAnimata/cumAblativoVario/pluralis',  //  numerus = singularis: dele
+  'tertiaAnimata/cumGenitivoAblativoqueVario/pluralis',  //  numerus = singularis: dele
   'tertiaNeutra/cumGenitivoVario',
   'tertiaNeutra/cumAblativoVario',
   'tertiaNeutra/cumGenitivoAblativoqueVario',
   'tertiaNeutra/cumTruncoVario',
-  'tertiaNeutra/cumGenitivoVario/singularis',
-  'tertiaNeutra/cumAblativoVario/singularis',
-  'tertiaNeutra/cumGenitivoAblativoqueVario/singularis',
-  'tertiaNeutra/cumTruncoVario/singularis',
-  'tertiaNeutra/cumGenitivoVario/pluralis',
-  'tertiaNeutra/cumAblativoVario/pluralis',
-  'tertiaNeutra/cumGenitivoAblativoqueVario/pluralis',
-  'tertiaNeutra/cumTruncoVario/pluralis'
+  'tertiaNeutra/cumGenitivoVario/singularis',  //  numerus = pluralis: dele
+  'tertiaNeutra/cumAblativoVario/singularis',  //  numerus = pluralis: dele
+  'tertiaNeutra/cumGenitivoAblativoqueVario/singularis',  //  numerus = pluralis: dele
+  'tertiaNeutra/cumTruncoVario/singularis',  //  numerus = pluralis: dele
+  'tertiaNeutra/cumGenitivoVario/pluralis',  //  numerus = singularis: dele
+  'tertiaNeutra/cumAblativoVario/pluralis',  //  numerus = singularis: dele
+  'tertiaNeutra/cumGenitivoAblativoqueVario/pluralis',  //  numerus = singularis: dele
+  'tertiaNeutra/cumTruncoVario/pluralis'  //  numerus = singularis: dele
 ] as const
 
 export const NominumFactorum: string[] = [
@@ -52,45 +52,45 @@ export const NominumFactorum: string[] = [
   'tertia',
   'tertiaVaria',
   'quarta',
-  'prima/prona',
-  'secunda/prona',
-  'tertia/prona',
-  'tertiaVaria/prona',
-  'quarta/prona'
+  'prima/prona',  //  supinus: dele
+  'secunda/prona',  //  supinus: dele
+  'tertia/prona',  //  supinus: dele
+  'tertiaVaria/prona',  //  supinus: dele
+  'quarta/prona'  //  supinus: dele
 ] as const
 
 export const Adiectivorum: string[] = [
   'positivaAutPrimaAutSecunda',
-  'positivaAutPrimaAutSecunda//pluralis',
+  'positivaAutPrimaAutSecunda//pluralis',  //  numerus = singularis: dele
   'positivaAutPrimaAutSecunda/nominativusDirectus',
-  'positivaAutPrimaAutSecunda/nominativusDirectus/pluralis',
+  'positivaAutPrimaAutSecunda/nominativusDirectus/pluralis',  //  numerus = singularis: dele
   'positivaAutPrimaAutSecunda/cumLitteraR',
-  'positivaAutPrimaAutSecunda/cumLitteraR/pluralis',
+  'positivaAutPrimaAutSecunda/cumLitteraR/pluralis',  //  numerus = singularis: dele
   'positivaTertia',
-  'positivaTertia//pluralis',
+  'positivaTertia//pluralis',  //  numerus = singularis: dele
   'positivaTertia/cumGenitivoVario',
-  'positivaTertia/cumGenitivoVario/pluralis',
+  'positivaTertia/cumGenitivoVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/cumAblativoVario',
-  'positivaTertia/cumAblativoVario/pluralis',
+  'positivaTertia/cumAblativoVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/cumGenitivoAblativoqueVario',
-  'positivaTertia/cumGenitivoAblativoqueVario/pluralis',
+  'positivaTertia/cumGenitivoAblativoqueVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/cumTruncoVario',
-  'positivaTertia/cumTruncoVario/pluralis',
+  'positivaTertia/cumTruncoVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/nominativusUnigener',
-  'positivaTertia/nominativusUnigener/pluralis',
+  'positivaTertia/nominativusUnigener/pluralis',  //  numerus = singularis: dele
   'positivaTertia/nominativusUnigenerCumGenitivoVario',
-  'positivaTertia/nominativusUnigenerCumGenitivoVario/pluralis',
+  'positivaTertia/nominativusUnigenerCumGenitivoVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/nominativusUnigenerCumAblativoVario',
-  'positivaTertia/nominativusUnigenerCumAblativoVario/pluralis',
+  'positivaTertia/nominativusUnigenerCumAblativoVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario',
-  'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis',
+  'positivaTertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis',  //  numerus = singularis: dele
   'positivaTertia/nominativusUnigenerCumTruncoVario',
-  'positivaTertia/nominativusUnigenerCumTruncoVario/pluralis'
+  'positivaTertia/nominativusUnigenerCumTruncoVario/pluralis'  //  numerus = singularis: dele
 ] as const
 
 export const Incomparabilium: string[] = [
   'autPrimaAutSecunda',
-  'autPrimaAutSecunda//pluralis',
+  'autPrimaAutSecunda//pluralis',  //  numerus = singularis: dele
   'autPrimaAutSecunda/nominativusDirectus',
   'autPrimaAutSecunda/cumLitteraR',
   'tertia',
@@ -99,15 +99,15 @@ export const Incomparabilium: string[] = [
   'tertia/cumGenitivoAblativoqueVario',
   'tertia/cumTruncoVario',
   'tertia/nominativusUnigener',
-  'tertia/nominativusUnigener/pluralis',
+  'tertia/nominativusUnigener/pluralis',  //  numerus = singularis: dele
   'tertia/nominativusUnigenerCumGenitivoVario',
-  'tertia/nominativusUnigenerCumGenitivoqueVario/pluralis',
+  'tertia/nominativusUnigenerCumGenitivoqueVario/pluralis',  //  numerus = singularis: dele
   'tertia/nominativusUnigenerCumAblativoVario',
-  'tertia/nominativusUnigenerCumAblativoVario/pluralis',
+  'tertia/nominativusUnigenerCumAblativoVario/pluralis',  //  numerus = singularis: dele
   'tertia/nominativusUnigenerCumGenitivoAblativoqueVario',
-  'tertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis',
+  'tertia/nominativusUnigenerCumGenitivoAblativoqueVario/pluralis',  //  numerus = singularis: dele
   'tertia/nominativusUnigenerCumTruncoVario',
-  'tertia/nominativusUnigenerCumTruncoVario/pluralis',
+  'tertia/nominativusUnigenerCumTruncoVario/pluralis',  //  numerus = singularis: dele
   'pronominalis',
   'pronominalis/nominativusDirectus',
   'pronominalis/cumLitteraR'

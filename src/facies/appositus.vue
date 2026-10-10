@@ -33,10 +33,10 @@
   const trahens: Ref<boolean> = ref<boolean>(false)
 
   async function refer()
-  { if(referretne()) {await referatur(locutor.scribantur())} }
+  { if(referretne()) {await referatur(locutor.locutio)} }
 
   function transduc()
-  { if(transduceretne()) { transducatur(locutor.scribantur()) } }
+  { if(transduceretne()) { transducatur(locutor.locutio) } }
 
   onMounted(() => { document.title = useTranslation().t('appositus.title') })
 </script>
@@ -45,7 +45,7 @@
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title :text="$t('scripta.appositus.titula')" />
-      <template v-if='locutor.locutust()'>
+      <template v-if='locutor.locutust'>
         <v-card location='right'>
           <v-btn-toggle density='compact'>
             <v-btn v-if='referretne' icon='content_copy' id='refer' @click='refer()' />
@@ -82,7 +82,7 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
-  <template v-if="dominus.assensus.signetur() === true">
+  <template v-if="dominus.assensus.signum === true">
     <draggable @start='trahens = true' @end='trahens = false'>
       <v-speed-dial id='crustula' location='bottom center' transition='fade-transition' open-on-click>
         <template #activator='{ props: activator }'>
@@ -92,7 +92,7 @@
           <v-img height='36px' width='36px' :src"$dominus.lingua.scribatur()" />
         </v-btn>
         <v-btn id='crustula.facies' @click='dominus.facies.interverteUtrum()'
-               :icon='dominus.facies.scribatur()' />
+               :icon='dominus.facies.scriptum' />
         <v-btn v-for='vexillum in vexilla' :key='vexillum' :id="`crustula.${vexillum}`"
                @click="`dominus.hoc[${vexillum}].interverteUtrum()`"
                :text="`dominus.hoc[${vexillum}].scribatur()`" />
@@ -102,7 +102,7 @@
       </v-speed-dial>
     </draggable>
   </template>
-  <template v-if='dominus.assensus.inhaesast() === undefined'>
+  <template v-if='dominus.assensus.inhaesast === undefined'>
     <v-footer absolute>
       <v-container>
         <v-row no-gutters>

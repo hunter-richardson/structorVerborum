@@ -1,0 +1,77 @@
+gradus, numerus, casus, scriptum, genus
+positivus, singularis, nominativus, , masculinum
+positivus, singularis, vocativus, , masculinum
+positivus, pluralis, vocativus, , masculinum
+positivus, singularis, nominativus, , femininum
+positivus, singularis, vocativus, , femininum
+positivus, pluralis, vocativus, , femininum
+positivus, singularis, ablativus, e
+positivus, singularis, locativus, e
+positivus, pluralis, dativus, ibus
+positivus, pluralis, ablativus, ibus
+positivus, pluralis, locativus, ibus
+positivus, singularis, genitivus, is
+positivus, pluralis, genitivus, um
+positivus, singularis, dativus, ī
+comparativus, singularis, ablativus, iōre
+comparativus, singularis, locativus, iōre
+comparativus, pluralis, dativus, iōribus
+comparativus, pluralis, ablativus, iōribus
+comparativus, pluralis, locativus, iōribus
+comparativus, singularis, genitivus, iōris
+comparativus, pluralis, genitivus, iōrum
+comparativus, singularis, dativus, iōrī
+superlativus, pluralis, dativus, īs
+superlativus, pluralis, ablativus, īs
+superlativus, pluralis, locativus, īs
+positivus, pluralis, nominativus, a, neutrum
+positivus, pluralis, accusativus, a, neutrum
+positivus, pluralis, vocativus, a, neutrum
+superlativus, pluralis, nominativus, a, neutrum
+superlativus, pluralis, accusativus, a, neutrum
+superlativus, singularis, nominativus, a, femininum
+superlativus, singularis, genitivus, ae, femininum
+superlativus, singularis, dativus, ae, femininum
+superlativus, pluralis, nominativus, ae, femininum
+superlativus, singularis, accusativus, am, femininum
+positivus, singularis, nominativus, e, neutrum
+positivus, singularis, accusativus, e, neutrum
+positivus, singularis, vocativus, e, neutrum
+positivus, singularis, accusativus, em, masculinum
+positivus, singularis, accusativus, em, femininum
+comparativus, singularis, nominativus, ior, masculinum
+comparativus, singularis, vocaivus, ior, masculinum
+comparativus, singularis, nominativus, ior, femininum
+comparativus, singularis, vocaivus, ior, femininum
+comparativus, singularis, nominativus, ius, neutrum
+comparativus, singularis, vocaivus, ius, neutrum
+comparativus, pluralis, nominativus, iōra, neutrum
+comparativus, pluralis, vocaivus, iōra, neutrum
+comparativus, pluralis, nominativus, iōrēs, masculinum
+comparativus, pluralis, vocaivus, iōrēs, masculinum
+comparativus, pluralis, nominativus, iōrēs, femininum
+comparativus, pluralis, vocaivus, iōrēs, femininum
+superlativus, singularis, nominativus, um, neutrum
+superlativus, singularis, accusativus, um, neutrum
+superlativus, singularis, accusativus, um, masculinum
+superlativus, singularis, nominativus, us, masculinum
+superlativus, singularis, ablativus, ā, femininum
+superlativus, singularis, locativus, ā, femininum
+superlativus, pluralis, genitivus, ārum, femininum
+superlativus, pluralis, accusativus, ās, femininum
+positivus, pluralis, nominativus, ēs, masculinum
+positivus, pluralis, accusativus, ēs, masculinum
+positivus, pluralis, nominativus, ēs, femininum
+positivus, pluralis, accusativus, ēs, femininum
+superlativus, singularis, genitivus, ī, neutrum
+superlativus, singularis, genitivus, ī, masculinum
+superlativus, pluralis, nominativus, ī, masculinum
+superlativus, singularis, dativus, ō, neutrum
+superlativus, singularis, ablativus, ō, neutrum
+superlativus, singularis, locativus, ō, neutrum
+superlativus, singularis, dativus, ō, masculinum
+superlativus, singularis, ablativus, ō, masculinum
+superlativus, singularis, locativus, ō, masculinum
+superlativus, pluralis, genitivus, ōrum, neutrum
+superlativus, pluralis, genitivus, ōrum, masculinum
+superlativus, pluralis, accusativus, ōs, masculinum

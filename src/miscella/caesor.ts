@@ -1,141 +1,107 @@
-import { Ultimum } from './usus';
+import path from 'path';
+import {
+  anyOf,
+  buildRegExp,
+  capture,
+  choiceOf,
+  endOfString,
+  oneOrMore,
+  optional,
+  regex,
+  startOfString,
+  whitespace
+  } from 'ts-regex-builder';
+import { LectorMultiplex } from './lector';
+import Nuntius from './nuntius';
+import { Ignavum, Ultimum } from './usus';
 import '../extensions/array';
 import '../extensions/string';
-import { omit } from '../extensions/utils';
+import { Multiplex } from '../praebeunda/verba';
 import {
-  Casus,
-  Factus,
+  errator,
   Fulta,
-  Genus,
-  Gradus,
-  Modus,
-  Numerus,
-  Tempus,
-  Vox
+  nomina,
+  valores,
+  type Fultum,
+  type Lineae
   } from '../praebeunda/valores';
-import {
-  Elementum,
-  ElementumActus,
-  ElementumAdiectivi,
-  ElementumNominis,
-  ElementumNominisFacti,
-  type ElementumIncomparabilis
-  } from '../praebeunda/elementa'
-import { Multiplex, type Actus, type Adiectivum, type Nomen } from '../praebeunda/verba'
+import type { Tabulamen } from '../praebeunda/tabulamina';
 
-export abstract class Caesor<Hoc extends Multiplex, Illud extends Elementum<Hoc>> {
-  protected erratust: (illud: Illud) => Error =
-      (illud: Illud) => new Error(`Malu'st ${omit(illud, 'versio')}`)
-  abstract caedatur (illud: Illud, fulta: Fulta): string
+type Cretor = (fulta: Fulta) => boolean
+
+class Caesamen {
+  readonly status!: Cretor
+  readonly clavis!: string
+  readonly mensura!: number
 }
 
-@Ultimum class CaesorActuum extends Caesor<Actus, ElementumActus> {
-  caedatur (actus: ElementumActus, fulta: Fulta): string {
-    const modus: Modus = fulta.inveni(Modus)
-    const tempus: Tempus = fulta.inveni(Tempus)
-    if (!modus || !tempus) throw this.erratust(actus)
-    else if (modus.valor === 'participium') {
-      const vox: Vox = fulta.inveni(Vox)
-      if (!vox) throw this.erratust(actus)
-      switch (`${vox.valor}_${tempus.valor}`) {
-        case 'activa_praesens': case 'passiva_futurum':
-          return actus.praesens.chop(3)
-        case 'activa_futurum': case 'passiva_perfectum':
-          return actus.supinum.chop(2)
-      }
-    } switch(tempus.valor) {
-      case 'perfectum': case 'plusquamperfectum': case 'exigendum':
-        return actus.perfectum.chop(2)
-      case 'praesens': case 'infectum': case 'futurum':
-        return actus.praesens.chop(3)
-      default: return ''
-    }
-  }
+class Crudum extends (Caesamen as new () => Omit<Caesamen, 'status'>) {
+  readonly status!: string
 }
 
-@Ultimum class CaesorAdiectivorum extends Caesor<Adiectivum, ElementumAdiectivi> {
-  caedatur (adiectivum: ElementumAdiectivi, fulta: Fulta): string {
-    const gradus: Gradus = fulta.inveni(Gradus)
-    if (!gradus) throw this.erratust(adiectivum)
-    switch (gradus.valor) {
-      case 'superlativus': return adiectivum.superlativus.chop(2)
-      case 'comparativus': return adiectivum.comparativus.chop(3)
-      default: {
-        if (adiectivum.versio.split('/').first() === 'positivaTertia') {
-          const numerus: Numerus = fulta.inveni(Numerus)
-          if (!numerus) throw this.erratust(adiectivum)
-          if (numerus.valor === 'singularis') {
-            const casus: Casus = fulta.inveni(Casus)
-            const genus: Genus = fulta.inveni(Genus)
-            if (!casus || !genus) throw this.erratust(adiectivum)
-            switch (casus.valor) {
-              case 'derectus': case 'nominativus':
-              case 'vocativus': return adiectivum.positivus
-              case 'accusativus':
-                { if (genus.valor === 'neutrum') return adiectivum.positivus }
-            }
-          }
-        } return adiectivum.positivus.chop(2)
+@Ignavum @Ultimum @Nuntius.factum
+export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
+  private readonly deSpatiis: RegExp =  //\s+/g
+    buildRegExp([ oneOrMore(whitespace) ], { global: true })
+  private readonly colamen: RegExp =  ///^(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))(?<operator>[<!=>]=?)(?<quaerendus>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
+    buildRegExp([
+      startOfString,  //^/
+      capture(choiceOf(...nomina.except([ 'categoria' ])), { name: 'nomen' }),  ///(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))/
+      capture(choiceOf(anyOf('!='), regex([ anyOf('<>'), optional('=') ]))),  ///(?<operator>[<!=>]=?)/
+      capture(choiceOf(...valores), { name: 'quaerendus' }),  ///(?<quaerendus>ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
+      endOfString  //$/
+    ])
+
+  @Nuntius.modus praedicatur(status: string): Cretor {
+    if(status.length == 0) return (_: Fulta) => true
+    const certamen: RegExpExecArray | undefined = this.colamen.exec(status) ?? undefined
+    if(!certamen || !certamen.groups) throw errator({ status: status })
+    const { nomen, operator, quaerendus } = certamen.groups
+    if(!nomen || !operator || !quaerendus) throw errator({ status: status })
+    return (fulta: Fulta) => {
+      const fultum: Fultum<Lineae> | undefined = fulta.inveni(nomen)
+      if(!fultum) return false
+      const quaerendi: number = fultum.valores.indexOf(quaerendus)
+      const valoris: number = fultum.valores.indexOf(fultum.valor)
+      switch(operator) {
+        case '=' : return valoris === quaerendi
+        case '!' : return valoris !== quaerendi
+        case '<' : return valoris  <  quaerendi
+        case '>' : return valoris  >  quaerendi
+        case '<=': return valoris  <= quaerendi
+        case '>=': return valoris  >= quaerendi
+        default: return false
       }
     }
   }
-}
 
-@Ultimum class CaesorIncomparabilium extends Caesor<Adiectivum, ElementumIncomparabilis> {
-  caedatur (adiectivum: ElementumIncomparabilis, fulta: Fulta): string {
-    if (adiectivum.versio.split('/').first() === 'tertia') {
-      const numerus: Numerus = fulta.inveni(Numerus)
-      if (!numerus) throw this.erratust(adiectivum)
-      if (numerus.valor === 'singularis') {
-        const casus: Casus = fulta.inveni(Casus)
-        const genus: Genus = fulta.inveni(Genus)
-        if (!casus || !genus) throw this.erratust(adiectivum)
-        switch (casus.valor) {
-          case 'derectus': case 'nominativus':
-          case 'vocativus': return adiectivum.nominativus
-          case 'accusativus':
-            { if (genus.valor === 'neutrum') return adiectivum.nominativus }
-        }
-      } return adiectivum.genitivus.chop(2)
-    } else return adiectivum.nominativus.chop(2)
+  @Nuntius.modus praedicantur(status: string): Cretor {
+    status = status.replace(this.deSpatiis, '')
+    if(status.length == 0) return (_: Fulta) => true
+    else return (fulta: Fulta) =>
+        status.split('&').every((ullus) =>
+          this.praedicantur(ullus)(fulta))
+  }
+
+  @Nuntius.promittum async caedatur(illud: Illud, fulta: Fulta): Promise<string> {
+    const caesamina: Caesamen[] = await this.oneratur(illud)
+    const caesamen: Caesamen | undefined =
+        caesamina.find((caesamen) => caesamen.status(fulta))
+    return !!caesamen && caesamen.clavis in illud ?
+        (illud[caesamen.clavis as keyof Illud] as string).chop(caesamen.mensura) : ''
+  }
+
+  @Nuntius.promittum async oneratur(illud: Illud): Promise<Caesamen[]> {
+    let via: string = path.join('caesamina', illud.scapum)
+    let filum: string = illud.principium
+    if(illud.categoria === 'actus')
+    { via = 'caesamina'; filum = 'actus' }
+    else if(illud.categoria === 'nomen' && illud.scapum.includes('secunda'))
+    { via = 'caesamina/nomina'; filum = 'secunda' }
+    return (await new LectorMultiplex<Crudum>(via, Crudum).legatur(filum)).multa
+      .map((crudum) => ({
+        status: this.praedicantur(crudum.status),
+        clavis: crudum.clavis, mensura: crudum.mensura
+      }))
   }
 }
-
-@Ultimum class CaesorNominum extends Caesor<Nomen, ElementumNominis> {
-  caedatur (nomen: ElementumNominis, fulta: Fulta): string {
-    switch (nomen.versio.split('/').first()) {
-      case 'prima': return nomen.nominativus.chop(1)
-      case 'quarta': return nomen.nominativus.chop(nomen.versio.includes('varia') ? 2 : 1)
-      case 'tertia': {
-        const casus: Casus = fulta.inveni(Casus)
-        const genus: Genus = fulta.inveni(Genus)
-        if (!casus) throw this.erratust(nomen)
-        switch (casus.valor) {
-          case 'derectus': case 'nominativus':
-          case 'vocativus': return nomen.nominativus
-          case 'accusativus':
-            { if (genus.valor === 'neutrum') return nomen.nominativus }
-        } return nomen.genitivus.chop(2)
-      }
-      default: return nomen.nominativus.chop(2)
-    }
-  }
-}
-
-@Ultimum class CaesorNominumFactorum extends Caesor<Nomen, ElementumNominisFacti> {
-  caedatur (factum: ElementumNominisFacti, fulta: Fulta): string {
-    const factus: Factus = fulta.inveni(Factus)
-    if (!factus) throw this.erratust(factum)
-    switch(factus.valor) {
-      case 'nullus': return ''
-      case 'indicativus': return factum.indicativum
-      default: return factum[factus.valor as keyof ElementumNominisFacti].chop(2)
-    }
-  }
-}
-
-export const caesorActuum: CaesorActuum = new CaesorActuum
-export const caesorAdiectivorum: CaesorAdiectivorum = new CaesorAdiectivorum
-export const caesorIncomparabilium: CaesorIncomparabilium = new CaesorIncomparabilium
-export const caesorNominum: CaesorNominum = new CaesorNominum
-export const caesorNominumFactorum: CaesorNominumFactorum = new CaesorNominumFactorum

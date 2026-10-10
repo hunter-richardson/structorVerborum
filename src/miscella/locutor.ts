@@ -10,7 +10,7 @@ class Locutor {
 
   private _verba: Verbum[] = []
 
-  locutust(): boolean { return this._verba.length > 0 }
+  get locutust(): boolean { return this._verba.length > 0 }
 
   get verba(): Verbum[] { return this._verba }
 
@@ -45,13 +45,13 @@ class Locutor {
 
   removeatur(unicum: string): string {
     this._verba = this._verba.filter((verba) => verba.unicum !== unicum)
-    return this.scribantur()
+    return this.locutio
   }
 
-  scribantur(): string {
+  get locutio(): string {
     const locutio: string = this.verba.map((verba) =>
-        verba.monstretur()).join(dominus.separator.signetur())
-    return locutio[dominus.magnas.signetur() ? 'toUpperCase' : 'capitalize']()
+        verba.monstretur()).join(dominus.separator.signum)
+    return locutio[dominus.magnas.signum ? 'toUpperCase' : 'capitalize']()
   }
 }
 

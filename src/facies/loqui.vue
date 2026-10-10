@@ -27,7 +27,7 @@
         <template v-for='verbum in locutor.verba' :key='verbum.unicum'>
           <v-chip @click:close='locutor.removeatur(verbum.unicum)' close-icon='remove'
                   :text='verbum.monstretur()' :id='verbum.unicum' selected-class='text-primary'
-                  :data-separator="dominus.separator.signetur()" />
+                  :data-separator="dominus.separator.signum" />
         </template>
       </span>
     </draggable>

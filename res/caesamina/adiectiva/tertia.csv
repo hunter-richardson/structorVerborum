@@ -1,0 +1,6 @@
+clavis, mensura, status
+positivus, 0, gradus = positivus & casus = accusativus & genus = neutrum
+positivus, 0, gradus = positivus & casus = nominativus
+positivus, 0, gradus = positivus & casus = vocativus
+superlativus, 2, gradus = superlativus
+comparativus, 3

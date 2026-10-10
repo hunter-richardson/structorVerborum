@@ -10,7 +10,7 @@ export default class Structor<Hoc extends ([keyof Hoc] extends never ? never : o
     return this
   }
 
-  struatur(): Hoc {
+  get struatur(): Hoc {
     const hoc: Hoc = new this._structor()
     this._actiones.forEach((actio) => actio(hoc))
     return hoc

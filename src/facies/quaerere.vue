@@ -8,7 +8,7 @@
   } from '../miscella/dictionarium';
   import { categoriae, inflectenda } from '../praebeunda/valores';
   import { type Verbum } from '../praebeunda/verba';
-  import type { Columnae } from '../scriptura/columnae';
+  import { type Columnae } from '../scriptura/columnae';
   import Inflectere from './inflectere.vue';
   import Loqui from './loqui.vue';
   import Onerare from './onerare.vue';

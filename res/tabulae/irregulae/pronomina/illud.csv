@@ -1,0 +1,33 @@
+numerus, casus, scriptum, genus
+singularis, genitivus, illīus
+singularis, dativus, illī
+pluralis, dativus, illīs
+pluralis, ablativus, illīs
+pluralis, locativus, illīs
+singularis, nominativus, illud, neutrum
+singularis, accusativus, illud, neutrum
+singularis, ablativus, illō, neutrum
+singularis, locativus, illō, neutrum
+singularis, vocativus, illud, neutrum
+pluralis, nominativus, illa, neutrum
+pluralis, genitivus, illōrum, neutrum
+pluralis, accusativus, illa, neutrum
+pluralis, vocativus, illa, neutrum
+singularis, nominativus, ille, masculinum
+singularis, accusativus, illum, masculinum
+singularis, ablativus, illō, masculinum
+singularis, locativus, illō, masculinum
+singularis, vocativus, ille, masculinum
+pluralis, nominativus, illī, masculinum
+pluralis, genitivus, illōrum, masculinum
+pluralis, accusativus, illōs, masculinum
+pluralis, vocativus, illī, masculinum
+singularis, nominativus, illa, femininum
+singularis, accusativus, illam, femininum
+singularis, ablativus, illā, femininum
+singularis, locativus, illā, femininum
+singularis, vocativus, illa, femininum
+pluralis, nominativus, illae, femininum
+pluralis, genitivus, illārum, femininum
+pluralis, accusativus, illās, femininum
+pluralis, vocativus, illae, femininum

@@ -8,12 +8,12 @@
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
-  let numerus: Numerale | undefined = undefined
-
-  const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%'
+  const numerus: Ref<Numerale | undefined> = ref<Numerale | undefined>()
   const operator: Ref<string> = ref<string>('')
   const praesentes: Ref<Par> = ref<Par>(nihil)
   const praevii: Ref<Par> = ref<Par>(nihil)
+
+  const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%'
 
   function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus); }
 
@@ -43,7 +43,7 @@
     }
   }
 
-  function aequa (): void { numerus = Numerale.numerator(praevii.value.arabicus); }
+  function aequa (): void { numerus.value = Numerale.numerator(praevii.value.arabicus); }
 </script>
 
 <template>

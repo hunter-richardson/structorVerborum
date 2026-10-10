@@ -42,34 +42,3 @@ export function Ultimum<Hoc extends { new(...parametra: any[]): {} }> (parma: Ho
     }
   }
 }
-
-type Praebitust<Hoc extends readonly unknown[],
-  Clavis extends keyof Hoc> =
-  {} extends Pick<Hoc, Clavis> ? true : true;
-
-type Praebita<Nomina extends readonly PropertyKey[],
-  Parametra extends readonly unknown[]> = {
-    [ Clavis in keyof Parametra & keyof Nomina as Praebitust<Parametra, Clavis> extends true ?
-    never : Nomina[ Clavis ] & PropertyKey ]: Parametra[ Clavis ]
-  };
-
-type Nescienda<Nomina extends readonly PropertyKey[],
-  Parametra extends readonly unknown[]> = {
-    [ Clavis in keyof Parametra & keyof Nomina as Praebitust<Parametra, Clavis> extends true ?
-    Nomina[ Clavis ] & PropertyKey : never ]?: Parametra[ Clavis ]
-  };
-
-type Optanda<Nomina extends readonly PropertyKey[],
-             Parametra extends readonly unknown[]> =
-  Praebita<Nomina, Parametra> & Nescienda<Nomina, Parametra>
-
-
-export function ab<Nomina extends readonly (keyof Hoc & PropertyKey)[],
-                   Parametra extends readonly unknown[],
-                   Hoc> ({ structor, nomina, optanda }: {
-                     structor: new (...parametra: Parametra) => Hoc,
-                     nomina: Nomina, optanda: Optanda<Nomina, Parametra>
-                   }): Hoc {
-  return new structor(...nomina.map((nomen: keyof Hoc) =>
-      optanda[ nomen as keyof Optanda<Nomina, Parametra> ]) as unknown as Parametra)
-}

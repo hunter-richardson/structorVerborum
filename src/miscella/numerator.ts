@@ -61,54 +61,54 @@ const claves: Fractus[] =
 
 let spatium: RepeatOptions = { min: 1, max: 2 }
 
-const deFractisMinoribus: EncodedRegex =  //  /(·|∴|×|:{1,2})/
+const deFractisMinoribus: EncodedRegex =  ///(·|∴|×|:{1,2})/
     regex([ choiceOf('·', '∴', '×', repeat(':', spatium)) ])
-const deFractisMaioribus: EncodedRegex =  //  /S(·|∴|×|:{1,2})?/
+const deFractisMaioribus: EncodedRegex =  ///S(·|∴|×|:{1,2})?/
     regex([ 'S', optional(deFractisMinoribus) ])
-const deFractis: RegexConstruct =  //  /(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+const deFractis: RegexConstruct =  ///(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
     choiceOf(deFractisMaioribus, deFractisMinoribus)
 
 spatium = { min: 0, max: 3 }
 
 const litterae =
   [
-    { prima: 'C', secunda: 'M', tertia: 'D' },  //  /(CM|CD|D?C{0,3})/
-    { prima: 'X', secunda: 'C', tertia: 'L' },  //  /(XC|XL|L?X{0,3})/
-    { prima: 'I', secunda: 'X', tertia: 'V' }   //  /(IX|IV|V?I{0,3})/
+    { prima: 'C', secunda: 'M', tertia: 'D' },  ///(CM|CD|D?C{0,3})/
+    { prima: 'X', secunda: 'C', tertia: 'L' },  ///(XC|XL|L?X{0,3})/
+    { prima: 'I', secunda: 'X', tertia: 'V' }   ///(IX|IV|V?I{0,3})/
   ]
 
-const deIntegrisPlurimis: EncodedRegex = regex(  //  /(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
+const deIntegrisPlurimis: EncodedRegex = regex(  ///(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
   litterae.map((littera) =>
         choiceOf(`${littera.prima}${littera.secunda}`, `${littera.prima}${littera.tertia}`,
                  regex([ optional(littera.tertia), repeat(littera.prima, spatium) ])))
 )
 
-const deIntegris: EncodedRegex =  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
-  regex([ lookahead(anyOf('MDCLXVI')),  //  /(?=[MDCLXVI])/
-          repeat('M', spatium),  //  /M{0,3}/
+const deIntegris: EncodedRegex =  ///(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
+  regex([ lookahead(anyOf('MDCLXVI')),  ///(?=[MDCLXVI])/
+          repeat('M', spatium),  ///M{0,3}/
           deIntegrisPlurimis ])
 
-const deMixtis: EncodedRegex = regex([  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+const deMixtis: EncodedRegex = regex([  ///(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
   choiceOf(regex([ deIntegris, optional(deFractis) ]), deFractis) ])
 
-const integerCapiendus: CaptureOptions = { name: 'integer' }  //  /(?<integer>)/
-const fractusCapiendus: CaptureOptions = { name: 'fractus' }  //  /(?<fractus>)/
-const maiorCapiendus: CaptureOptions = { name: 'maior' }  //  /(?<maior>)/
-const minorCapiendus: CaptureOptions = { name: 'minor' }  //  /(?<minor>)/
-const nihilCapiendum: CaptureOptions = { name: 'nihil' }  //  /(?<nihil>)/
+const integerCapiendus: CaptureOptions = { name: 'integer' }  ///(?<integer>)/
+const fractusCapiendus: CaptureOptions = { name: 'fractus' }  ///(?<fractus>)/
+const maiorCapiendus: CaptureOptions = { name: 'maior' }  ///(?<maior>)/
+const minorCapiendus: CaptureOptions = { name: 'minor' }  ///(?<minor>)/
+const nihilCapiendum: CaptureOptions = { name: 'nihil' }  ///(?<nihil>)/
 
-const colamenMixtum: RegExp = buildRegExp([
-  startOfString,  //  /^/
-  optional(capture(deIntegris, integerCapiendus)),  //  /(?<integer>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))/
-  optional(capture(deFractis, fractusCapiendus)),   //  /(?<fractus>(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
-  endOfString ])  //  /$/
-const colamen: RegExp = buildRegExp([
-  startOfString,  //  /^/
-  choiceOf(regex([ '|', capture(deMixtis, maiorCapiendus), '|',  //  /\\|(?<maior>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))\\|/
-    optional(capture(deMixtis, minorCapiendus)) ])),  //  /(?<minor>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
-  capture('N', nihilCapiendum),  //  /(?<nihil>)(N)/
-  deMixtis,  //  /(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
-  endOfString ])  //  /$/
+const colamenMixtum: RegExp = buildRegExp([  ///^(?<integer>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))(?<fractus>(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))$/
+  startOfString,  ///^/
+  optional(capture(deIntegris, integerCapiendus)),  ///(?<integer>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))/
+  optional(capture(deFractis, fractusCapiendus)),   ///(?<fractus>(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  endOfString ])  ///$/
+const colamen: RegExp = buildRegExp([  ///^(?:\|(?<maior>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))\|(?<minor>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2})))?)|(?<nihil>)(N)|(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))$/
+  startOfString,  ///^/
+  choiceOf(regex([ '|', capture(deMixtis, maiorCapiendus), '|',  ///\|(?<maior>)(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))\|/
+    optional(capture(deMixtis, minorCapiendus)) ])),  ///(?<minor>(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?/
+  capture('N', nihilCapiendum),  ///(?<nihil>)(N)/
+  deMixtis,  ///(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))?|(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
+  endOfString ])  ///$/
 
 @Ultimum @Nuntius.factum
 export default class Numerator {
@@ -145,13 +145,17 @@ export default class Numerator {
     if(!romanus) return -1
     romanus = romanus.toUpperCase()
     const certamen: RegExpExecArray | undefined = colamen.exec(romanus) ?? undefined
-    if(certamen && certamen.groups) {
-      if(certamen.groups['nihil']) return 0
-      if(certamen.groups['maior'])
+    //  eslint-disable-next-line no-extra-boolean-cast
+    if(!!certamen && !!certamen.groups) {
+      //  eslint-disable-next-line no-extra-boolean-cast
+      if(!!certamen.groups['nihil']) return 0
+      //  eslint-disable-next-line no-extra-boolean-cast
+      if(!!certamen.groups['maior'])
         return (1000.0 * this.arabicus(certamen.groups['maior'])) +
                          this.arabicus(certamen.groups['minor'] ?? 'N')
       const certamenMixtum: RegExpExecArray | undefined = colamenMixtum.exec(romanus) ?? undefined
-      if(certamenMixtum && certamenMixtum.groups) {
+      //  eslint-disable-next-line no-extra-boolean-cast
+      if(!!certamenMixtum && !!certamenMixtum.groups) {
         const fractus: string | undefined = certamenMixtum.groups['fractus'] ?? undefined
         const integer: string = certamenMixtum.groups['integer'] ?? 'N'
         if(fractus) {

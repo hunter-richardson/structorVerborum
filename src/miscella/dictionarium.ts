@@ -13,11 +13,12 @@ import {
   adverbiorum,
   incomparabilium,
   nominum,
-  numeraminum
-  } from '../lectores/verbalis';
-import { verborum } from '../lectores/verbi';
-import * as Agenda from '../praebeunda/agenda';
+  numeraminum,
+  verborum,
+  type Ulla
+  } from './lector';
 import { type Referendum } from '../praebeunda/interfecta';
+import type { TabulamenActus } from '../praebeunda/tabulamina';
 
 export interface Lemma {
   categoria: string
@@ -42,9 +43,8 @@ class Dictionarium {
   private readonly _relata: Relatum[] = []
 
   private get relata(): Promise<Relatum[]> {
-    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (seratur: (valor: Relatum[]) => void): Promise<void> => {
-      if (!this._relata.length) await this.perscribantur()
+      if (!this._relata.length) this.perscribantur()
       return seratur(this._relata)
     })
   }
@@ -52,7 +52,7 @@ class Dictionarium {
   @Nuntius.promittum
   async perscribantur(): Promise<void> {
     if (!this._relata.length) {
-      (await actuum.omnia()).forEach((res: string) => {
+      (actuum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Actus',
           scriptum: res,
@@ -66,7 +66,7 @@ class Dictionarium {
         })
       });
 
-      (await adverbiorum.omnia()).forEach((res: string) => {
+      (adverbiorum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adverbium',
           scriptum: res,
@@ -74,7 +74,7 @@ class Dictionarium {
         })
       });
 
-      (await adiectivorum.omnia()).forEach((res: string) => {
+      (adiectivorum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adiectivum',
           scriptum: res,
@@ -82,7 +82,7 @@ class Dictionarium {
         })
       });
 
-      (await incomparabilium.omnia()).forEach((res: string) => {
+      (incomparabilium.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Adiectivum',
           scriptum: res,
@@ -90,7 +90,7 @@ class Dictionarium {
         })
       });
 
-      (await nominum.omnia()).forEach((res: string) => {
+      (nominum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Nomen',
           scriptum: res,
@@ -98,7 +98,7 @@ class Dictionarium {
         })
       });
 
-      (await numeraminum.omnia()).forEach((res: string) => {
+      (numeraminum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Numeramen',
           scriptum: res,
@@ -114,7 +114,7 @@ class Dictionarium {
         })
       });
 
-      (await actuum.omnia()).forEach((res: string) => {
+      (actuum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: 'Actus',
           scriptum: res,
@@ -138,7 +138,7 @@ class Dictionarium {
         })
       });
 
-      (await verborum.omnia()).forEach((res: string) => {
+      (verborum.omnia).forEach((res: string) => {
         const [categoria, scriptum] = res.split('/')
         this._relata.push({
           categoria: categoria.capitalize(),
@@ -149,22 +149,23 @@ class Dictionarium {
     }
   }
 
-  async _referaturActus(lemma: string, lecta: boolean): Promise<Referendum | undefined>
+  private async _referaturActus(lemma: string, lecta: boolean): Promise<Referendum | undefined>
   { return await (lecta ? actuum.legatur : actus.feratur)(lemma) }
 
-  async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
+  private async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
     if(lecta) {
-      const incomparabile: boolean = !(await adiectivorum.omnia()).includes(lemma)
+      const incomparabile: boolean = !(adiectivorum.omnia).includes(lemma)
       return await (incomparabile ? incomparabilium : adiectivorum).legatur(lemma)
     } else return await adiectiva.feratur(lemma)
   }
 
-  async _referaturNomen(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
+  private async _referaturNomen(lemma: string, lecta: boolean): Promise<Referendum | undefined> {
     if(lecta) {
-      const factum: boolean = (await actuum.omnia()).includes(lemma)
+      const factum: boolean = (actuum.omnia).includes(lemma)
       if(factum) {
-        const actus: Agenda.ActusAgendus = (await actuum.legatur(lemma)).first()
-        return await actus.nomen()
+        const ulla: Ulla<TabulamenActus> = await actuum.legatur(lemma)
+        const actus = Array.isArray(ulla) ? ulla.first() : ulla
+        return await actus?.nomen()
       } else return await nominum.legatur(lemma)
     } else return await nomina.feratur(lemma)
   }

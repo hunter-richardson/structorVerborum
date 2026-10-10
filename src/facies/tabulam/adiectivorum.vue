@@ -2,7 +2,7 @@
   import { defineProps, ref, type Ref } from 'vue';
   import '../../extensions/array';
   import translation from '../../extensions/i18next';
-  import { genera, gradus } from '../../praebeunda/valores';
+  import { Lineae, genera, gradus } from '../../praebeunda/valores';
   import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
   import { type Faciendum } from '../../praebeunda/interfecta';
   import { Adiectivum } from '../../praebeunda/verba';
@@ -26,7 +26,7 @@
   const nomen: Ref<NomenAgendum | undefined> = ref<NomenAgendum | undefined>(undefined);
   const et: Et = { gradus: '', genus: '' };
 
-  function paria (valores: string[]): Par[] {
+  function paria (valores: Lineae): Par[] {
     return valores.map(valor => {
       return {
         title: translation().tf(`${valor}_singulare`, 'capital'),
@@ -54,7 +54,7 @@
   <inflectere v-if='!!nomen' :agendum='nomen' @blur='nomen = undefined' />
   <tabulare v-else :agendum='agendum' categoria='adiectivum' />
   <template v-if='lectum || incomparabilium'>
-    <v-select density='compact' id='genus' :label="$('partes.genus_singulare', 'capital')"
+    <v-select density='compact' id='genus' :label="$t('partes.genus_singulare', 'capital')"
               v-model='et.genus' :items='valoresGenerum' chips flat open-on-clear />
     <v-btn v-if='incomparabilium' :text="$t('annuli.tabulare.probare')" id='probetur'
            append-icon='open_in_full' @click='referIncomparabile()' />

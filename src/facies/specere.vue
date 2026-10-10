@@ -31,7 +31,7 @@
 
   if(multiplex) {
     (verbum as Multiplex).valores
-        .forEach((valor) => valores.push(valor))
+        .forEach((valor) => valores.push(valor.valor))
     enclitici.filter((valor) => !verbum.scriptum.endsWith(valor))
              .forEach((valor) => valoresEnclitici.push(valor))
   }
@@ -58,10 +58,10 @@
         }; break
         case 'numeramen': {
           const numeramen: Numeramen = verbum as Numeramen
-          // const referendus: Eventus | undefined = numeramen.refer()
-          // // eslint-disable-next-line no-extra-boolean-cast
-          // if(!!referendus)
-          //   eventus.value = referendus
+          const referendus: Eventus | undefined = await numeramen.refer()
+          // eslint-disable-next-line no-extra-boolean-cast
+          if(!!referendus)
+            eventus.value = referendus
         }; break
       }
     }

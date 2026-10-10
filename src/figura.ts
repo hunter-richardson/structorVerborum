@@ -1,54 +1,16 @@
 import { useFavicon } from '@vueuse/core';
-import fs from 'fs';
-import i18next from 'i18next';
-import FsBackend from 'i18next-fs-backend';
 import i18NextVue from 'i18next-vue';
-import yaml from 'js-yaml';
-import path from 'path';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
 import { useRouter } from 'vuetify/lib/composables/router.mjs';
 import translation from './extensions/i18next';
 import './extensions/string';
 import Appositus from './facies/appositus.vue';
+import i18next from './i18n';
 import Crustula from './miscella/crustula';
 import { createApp, type App } from 'vue';
 
 useFavicon('/res/picta/favicon.png')
-
-const deTransferendo = {
-  lng: 'la',
-  initAsync: false,
-  supportedLngs: [ 'en', 'la' ],
-  nonExplicitSupportedLangs: false,
-  ns: [ 'translation' ],
-  saveMissing: true,
-  load: 'languageOnly',
-  interpolation: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    format(valor: string, forma: string, lingua: string) {
-      switch(forma) {
-        case  'uppercase': return String(valor).toUpperCase()
-        case  'lowercase': return String(valor).toLowerCase()
-        case 'capitalize': return String(valor).capitalize()
-        default: return valor
-      }
-    }
-  }, backend: {
-    loadPath: path.resolve('/res/loci/{{lng}}.yml'),
-    addPath: path.resolve('/res/loci/{{lng}}.errata.yml'),
-    parse: function(data: string) { return yaml.load(data) }
-  }, parseMissingKeyHandler: (clavis: string): string => { return clavis },
-  missingKeyHandler: (linguae: string[], spatium: string, clavis: string, inhaesum: string = '') => {
-    linguae.forEach(lingua => {
-      if(spatium) clavis = `${spatium}:${clavis}`
-      const linea: string = inhaesum ? `${clavis}: ${JSON.stringify(inhaesum)}` : `${clavis}: ""`
-      fs.appendFileSync(path.resolve(`/res/loci/${lingua}.errata.yml`), linea)
-    })
-  }
-}
-
-await i18next.use(FsBackend).init(deTransferendo)
 
 export const appositus: App<Element> =
     createApp(Appositus)

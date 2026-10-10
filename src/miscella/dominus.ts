@@ -12,24 +12,24 @@ abstract class Crustulum<Hoc extends Valor> {
   protected vita: number = 365
   private _finis: Date = new Date
 
-  #inhaesa(): string { return this.valores[0] }
+  get inhaesa(): string { return this.valores[0] }
 
-  inhaesast(): boolean { return this.massa === this.#inhaesa() }
+  get inhaesast(): boolean { return this.massa === this.inhaesa }
 
-  inhaereatur() { this.massa = this.#inhaesa() }
+  inhaereatur() { this.massa = this.inhaesa }
 
   @Nuntius.promittum
   protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
-    if(this.coctast()) this._finis.setDate(this._finis.getDate() + this.vita)
+    if(this.coctast) this._finis.setDate(this._finis.getDate() + this.vita)
     else this._finis.setDate(Date.now() + this.vita)
     return dominus.ponam(this.nomen, valor, this._finis)
-                  .then(() => { if(mutatast) this.respondeam() })
+                  .then(() => { if(mutatast) this.responsus() })
                   .then(() => { if(mutatast) window.location.reload() })
   }
 
-  @Nuntius.modus
-  coctast(): boolean { return dominus.quaeram(this.nomen) }
+  @Nuntius.captor
+  get coctast(): boolean { return dominus.quaeram(this.nomen) }
 
   @Nuntius.modus
   concoctast (valor: string): boolean { return this.massa === valor }
@@ -40,15 +40,15 @@ abstract class Crustulum<Hoc extends Valor> {
   get massa(): string {
     if(!!this._finis && this._finis.getTime() >= Date.now()) {
       this.deleatur()
-      return this.#inhaesa()
-    } else return dominus.inveniam(this.nomen) ?? this.#inhaesa()
+      return this.inhaesa
+    } else return dominus.inveniam(this.nomen) ?? this.inhaesa
   }
 
   @Nuntius.positor
   set massa(valor: string) {
     if(this.massa !== valor && this.valores.includes(valor))
          this.coquatur(valor)
-    else this.coquatur(this.#inhaesa())
+    else this.coquatur(this.inhaesa)
   }
 
   @Nuntius.modus
@@ -60,17 +60,17 @@ abstract class Crustulum<Hoc extends Valor> {
   }
 
   async proferatur ()
-  { if (this.coctast()) await this.coquatur(this.massa); }
+  { if (this.coctast) await this.coquatur(this.massa); }
 
   deleatur() { removeCookie(this.nomen) }
 
-  abstract signetur(): Hoc
-  abstract scribatur(): string
-  abstract respondeam(): Promise<void>
+  abstract get signum(): Hoc
+  abstract get scriptum(): string
+  abstract responsus(): Promise<void>
 }
 
 abstract class Vexillum extends Crustulum<boolean> {
-  signetur (): boolean { return this.massa === 'ita' }
+  get signum(): boolean { return this.massa === 'ita' }
   constructor(vexillum: boolean) {
     super()
     this.valores = vexillum ? [ 'ita', 'non' ] : [ 'non', 'ita' ]
@@ -79,23 +79,23 @@ abstract class Vexillum extends Crustulum<boolean> {
 
 @Ultimum @Ignavum
 class Apices extends Vexillum {
-  scribatur (): string { return this.signetur() ? 'ā' : 'a' }
+  get scriptum(): string { return this.signum ? 'ā' : 'a' }
   constructor() { super(true) }
-  async respondeam () { /*noop*/ }
+  async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum
 class UtendaU extends Vexillum {
-  scribatur (): string { return this.signetur() ? 'u' : 'v' }
+  get scriptum(): string { return this.signum ? 'u' : 'v' }
   constructor () { super(true) }
-  async respondeam () { /*noop*/ }
+  async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum
 class Magnas extends Vexillum {
-  scribatur (): string { return this.signetur() ? 'A' : 'a' }
+  get scriptum(): string { return this.signum ? 'A' : 'a' }
   constructor () { super(false) }
-  async respondeam () { /*noop*/ }
+  async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum
@@ -103,10 +103,10 @@ class Sessio extends Crustulum<boolean> {
   override valores = [ '' ]
   override vita = 30
   override set massa(valor: string) { this.coquatur(valor) }
-  signetur(): boolean { return this.coctast() }
-  scribatur() { return '' }
-  async respondeam() {
-    if(this.coctast()) dominus.inhaereantur()
+  get signum(): boolean { return this.coctast }
+  get scriptum() { return '' }
+  async responsus() {
+    if(this.coctast) dominus.inhaereantur()
     else dominus.deleantur()
   }
 }
@@ -115,11 +115,11 @@ class Sessio extends Crustulum<boolean> {
 class Assensus extends Crustulum<boolean | undefined> {
   override valores = [ '', 'assensit', 'negavit' ]
 
-  scribatur (): string { return ''; }
-  signetur (): boolean | undefined
-  { return this.coctast() ? this.concoctast('assensit') : undefined }
-  async respondeam () {
-    if(this.signetur())
+  get scriptum(): string { return ''; }
+  get signum(): boolean | undefined
+  { return this.coctast ? this.concoctast('assensit') : undefined }
+  async responsus () {
+    if(this.signum)
          dominus.inhaereantur()
     else dominus.deleantur()
   }
@@ -128,26 +128,26 @@ class Assensus extends Crustulum<boolean | undefined> {
 @Ultimum @Ignavum
 class Lingua extends Crustulum<string> {
   override valores = [ 'latina', 'anglica' ]
-  signetur (): string { return this.massa === 'anglica' ? 'en' : 'la' }
-  scribatur (): string { return `/res/picta/${this.massa}.png` }
-  async respondeam ()
-  { i18next.changeLanguage(this.signetur()) }
+  get signum(): string { return this.massa === 'anglica' ? 'en' : 'la' }
+  get scriptum(): string { return `/res/picta/${this.massa}.png` }
+  async responsus ()
+  { i18next.changeLanguage(this.signum) }
 }
 
 @Ultimum @Ignavum
 class Facies extends Crustulum<string> {
   override valores = [ 'fusca', 'illustris' ]
-  signetur (): string { return this.massa === 'illustris' ? 'light' : 'dark' }
-  scribatur (): string { return `${this.signetur()}_mode` }
-  async respondeam ()
-  { useTheme().global.name.value = this.signetur() }
+  get signum(): string { return this.massa === 'illustris' ? 'light' : 'dark' }
+  get scriptum(): string { return `${this.signum}_mode` }
+  async responsus ()
+  { useTheme().global.name.value = this.signum }
 }
 
 @Ultimum @Ignavum
 class Separator extends Crustulum<string> {
   override valores = [ 'inane', 'interpunctum', 'nullum' ]
-  scribatur (): string { return '' }
-  signetur (): string {
+  get scriptum(): string { return '' }
+  get signum(): string {
     switch (this.massa) {
       case 'interpunctum': return '·'
       case 'nullum': return ''
@@ -155,7 +155,7 @@ class Separator extends Crustulum<string> {
     }
   }
 
-  async respondeam () {}
+  async responsus () {}
 }
 
 @Ultimum @Ignavum @Nuntius.factum
@@ -194,20 +194,20 @@ class Dominus {
 
   inhaereantur() {
     this.crustula.forEach((crustulum) =>
-      { if(!crustulum.coctast()) crustulum.inhaereatur() })
+      { if(!crustulum.coctast) crustulum.inhaereatur() })
   }
 
   deleantur() {
     this.crustula.forEach((crustulum) =>
-      { if(crustulum.coctast()) crustulum.deleatur() })
+      { if(crustulum.coctast) crustulum.deleatur() })
   }
 
   proferantur() {
     this.crustula.forEach(crustulum =>
-      { if(crustulum.coctast()) crustulum.proferatur() })
+      { if(crustulum.coctast) crustulum.proferatur() })
   }
 
-  sedit(): boolean { return this._sessio.signetur() }
+  get sedit(): boolean { return this._sessio.signum }
 
   sedeat() { this._sessio.massa = crypto.randomUUID() }
 

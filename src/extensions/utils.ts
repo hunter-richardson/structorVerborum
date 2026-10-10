@@ -1,7 +1,7 @@
+import equal from 'fast-deep-equal';
 import isEqualWith from 'lodash.isequalwith';
 import './array';
 import './string';
-import { isDeepStrictEqual } from 'node:util';
 
 export type Comparator<T> = (first: T, second: T) => SortResult
 
@@ -35,7 +35,7 @@ export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: Pro
         (_: unknown, __: unknown, key: PropertyKey | undefined): true | undefined =>
             !!key && ignored.has(key) ? true : undefined
     return isEqualWith(objThis, objThat, customizer)
-  } else return isDeepStrictEqual(objThis, objThat)
+  } else return equal(objThis, objThat)
 }
 
 export function omit<T extends object, K extends keyof T> (obj: T, ...keys: K[]): Omit<T, K> {

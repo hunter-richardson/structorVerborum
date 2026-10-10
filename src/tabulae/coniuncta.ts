@@ -1,31 +1,38 @@
-import deepEqual from 'deep-equal';
-import { valedictor } from './collata';
-import Tabula from './tabula';
+import { areSetsEqual } from '@neoncitylights/sets';
+import equal from 'fast-deep-equal';
+import { Tabula, tabulast, tabulatorst } from './tabula';
 import '../extensions/array';
 import Nuntius from '../miscella/nuntius';
+import { Ignavum, Ultimum } from '../miscella/usus';
+import { Fulta } from '../praebeunda/valores';
 import { Multiplex } from '../praebeunda/verba';
-import type Ignavum from '../miscella/usus';
+import type { Tabulator } from '../praebeunda/interfecta';
 
-@Nuntius.factum
+function valores<Hoc extends Multiplex>(haec: Hoc[]): Set<Fulta>
+{ return new Set(haec.map((hoc) => hoc.valores)) }
+
+@Ignavum @Ultimum @Nuntius.factum
 export default class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> {
-    prima!: Ignavum<Tabula<Hoc>>
-  secunda!: Ignavum<Tabula<Hoc>>
-
-  @Nuntius.promittum
-  async plenetur(): Promise<void> {
-    const aequantur: (prima: Set<any>, secunda: Set<any>) => boolean = (await import('@neoncitylights/sets')).areSetsEqual
-
-    const tabulaPrima  : Hoc[] = await this.  prima.hoc.tabulentur()
-    const tabulaSecunda: Hoc[] = await this.secunda.hoc.tabulentur()
-
-    if (aequantur(new Set(tabulaPrima.map(valedictor)), new Set(tabulaSecunda.map(valedictor)))) {
-      tabulaPrima.forEach(async (primum) => {
-        const secundum: Hoc = tabulaSecunda.first((hoc) => deepEqual(valedictor(hoc), valedictor(primum)))
-        if (secundum) {
-          primum.scriptum += secundum.scriptum
-          this.tabula.push(primum)
-        } else throw new Error("Inflexionis tabulae malae'st")
-      })
-    } else throw new Error("Inflexionis tabulae malae'st")
+  @Nuntius.promittum async tabulentur(): Promise<void> {
+    let _prima: Hoc[] | undefined
+    let _secunda: Hoc[] | undefined
+    if(tabulatorst(this.prima)) _prima = this.prima.tabula.haec
+    else if(tabulast(this.prima)) _prima = this.prima.haec
+    if(tabulatorst(this.secunda)) _secunda = this.secunda.tabula.haec
+    else if(tabulast(this.secunda)) _secunda = this.secunda.haec
+    if(!_prima || !_secunda || !areSetsEqual(valores(_prima), valores(_secunda)))
+      throw new Error('Inflexionis tabulae malae\'st')
+    else _prima.forEach((primum) => {
+      const secundum: Hoc | undefined = _secunda.first((hoc) => equal(primum.valores, hoc.valores))
+      if(!secundum) throw new Error('Inflexionis tabulae malae\'st')
+      else {
+        primum.scriptum = `${primum.scriptum}${secundum.scriptum}`
+        this._haec.push(primum)
+      }
+    })
   }
+
+  constructor(private readonly prima: Tabula<Hoc> | Tabulator<Hoc>,
+              private readonly secunda: Tabula<Hoc> | Tabulator<Hoc>)
+  { super(); this.tabulentur() }
 }

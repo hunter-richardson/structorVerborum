@@ -1,7 +1,7 @@
 import Nuntius from '../miscella/nuntius';
 import { Multiplex } from '../praebeunda/verba';
+import { Tabula } from '../tabulae/tabula';
 import { type Faciendum } from '../praebeunda/interfecta';
-import type Tabula from '../tabulae/tabula';
 
 export class Mantela<Hoc extends Multiplex> implements Faciendum<Hoc> {
   constructor(private readonly _tabula: Tabula<Hoc>) {}

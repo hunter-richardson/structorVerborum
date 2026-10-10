@@ -3,7 +3,7 @@ import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import Numerator from './numerator';
 import { Mensa } from '../praebeunda/valores';
-import { type TransformableInfo } from 'logform';
+import { type TransformableInfo } from 'logform'
 
 const scribatur = (parametra: TransformableInfo & {
   nomen?: string
@@ -26,7 +26,8 @@ export default class Nuntius implements Disposable {
 
   static timeo(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
-      error: parametra.error
+      error: parametra.error,
+      nuntium: parametra.nuntium
     })
   }
 
@@ -143,7 +144,7 @@ export default class Nuntius implements Disposable {
         Nuntius.timeo({
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
-        }); throw error;
+        }); throw error
       }
     }
   }
@@ -165,7 +166,7 @@ export default class Nuntius implements Disposable {
         Nuntius.timeo({
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
-        }); throw error;
+        }); throw error
       }
     }
   }
@@ -182,6 +183,15 @@ export default class Nuntius implements Disposable {
 
   private readonly _nuntiator: winston.Logger
   private readonly _mundusEvolendum: boolean = true
+
+  nuntio (parametra: {
+    error?: Error
+    gradus?: string
+    nuntium?: string
+  }): void {
+    if (parametra.error) this._nuntiator.error(parametra.error)
+    else if (parametra.gradus) this._nuntiator.log(parametra.gradus, parametra.nuntium)
+  }
 
   private constructor(private readonly _nomen?: string) {
     let navigium: winston.transport
@@ -238,15 +248,6 @@ export default class Nuntius implements Disposable {
       level: this._mundusEvolendum ? 'debug' : 'error',
       transports: [navigium]
     })
-  }
-
-  nuntio(parametra: {
-      error?: Error
-     gradus?: string
-    nuntium?: string
-  }): void {
-    if (parametra.error) this._nuntiator.error(parametra.error)
-    else if (parametra.gradus) this._nuntiator.log(parametra.gradus, parametra.nuntium)
   }
 
   [Symbol.dispose](): void {
