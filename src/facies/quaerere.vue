@@ -84,17 +84,14 @@
     } else error.value = true
   }
 
-  onMounted(async () => {
-    await omnia().then((() => exoneratur()))
-  })
+  onMounted(async () =>
+  { await omnia().then((() => exoneratur())) })
 </script>
 
 <template>
   <Loqui />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Specere v-if='!!verbum' :verbum='verbum as Verbum' @blur='verbum = undefined' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Inflectere v-else-if='!!eventus' :eventus='eventus as Eventus' @blur='eventus = undefined' />
+  <Specere v-if='verbum !== undefined' :verbum='verbum as Verbum' @blur='verbum = undefined' />
+  <Inflectere v-else-if='eventus !== undefined' :eventus='eventus as Eventus' @blur='eventus = undefined' />
   <div class='text-center'>
     <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
            :text="$t('annuli.quaerere.sarcire')" />

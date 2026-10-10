@@ -38,7 +38,7 @@ abstract class Crustulum<Hoc extends Valor> {
 
   @Nuntius.captor
   get massa(): string {
-    if(!!this._finis && this._finis.getTime() >= Date.now()) {
+    if(this._finis !== undefined && this._finis.getTime() >= Date.now()) {
       this.deleatur()
       return this.inhaesa
     } else return dominus.inveniam(this.nomen) ?? this.inhaesa

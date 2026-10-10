@@ -88,7 +88,7 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
     const caesamina: Caesamen[] = await this.oneratur(illud)
     const caesamen: Caesamen | undefined =
         caesamina.find((caesamen) => caesamen.status(fulta))
-    return !!caesamen && caesamen.clavis in illud ?
+    return caesamen !== undefined && caesamen.clavis in illud ?
         (illud[caesamen.clavis as keyof Illud] as string).chop(caesamen.mensura) : ''
   }
 

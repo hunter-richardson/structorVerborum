@@ -6,8 +6,7 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <v-snackbar v-if='!!gustulus'
+  <v-snackbar v-if='gustulus !== undefined'
               v-model="gustulus.visibile"
               :color="gustulus.color"
               :timeout="gustulus.vita"

@@ -1,4 +1,13 @@
 import deepEqual from 'deep-equal';
+import {
+  actuum,
+  adiectivorum,
+  adverbiorum,
+  incomparabilium,
+  nominum,
+  numeraminum,
+  verborum
+  } from './lector';
 import Nuntius from './nuntius';
 import { Ignavum, Ultimum } from './usus';
 import { actus } from '../anomala/actus';
@@ -7,18 +16,7 @@ import { nomina } from '../anomala/nomina';
 import { pronomina } from '../anomala/pronomina';
 import '../extensions/array';
 import '../extensions/string';
-import {
-  actuum,
-  adiectivorum,
-  adverbiorum,
-  incomparabilium,
-  nominum,
-  numeraminum,
-  verborum,
-  type Ulla
-  } from './lector';
 import { type Referendum, type Tabulator } from '../praebeunda/interfecta';
-import type { TabulamenActus } from '../praebeunda/tabulamina';
 import type { Actus, Adiectivum, Nomen } from '../praebeunda/verba';
 
 export interface Lemma {
@@ -31,7 +29,7 @@ export interface Relatum extends Lemma {
 }
 
 export interface Quaerenda {
-        pars: string
+  pars: string
   categoriae: string[]
 }
 
@@ -188,7 +186,10 @@ class Dictionarium {
   @Nuntius.promittum
   async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
-      case [!!quaerenda.categoriae, !!quaerenda.pars].all():
+      case [
+            quaerenda.categoriae.length > 0,
+            quaerenda.pars.length > 0
+          ].all():
         return (await this.relata)
           .filter((relatum) =>
             [
@@ -197,15 +198,24 @@ class Dictionarium {
             ].all()
           )
           .map((relatum) => relatum)
-      case [!!quaerenda.categoriae, !quaerenda.pars].all():
+      case [
+            quaerenda.categoriae.length > 0,
+            quaerenda.pars.length == 0
+          ].all():
         return (await this.relata)
           .filter((relatum) => quaerenda.categoriae.includes(relatum.categoria))
           .map((relatum) => relatum)
-      case [!quaerenda.categoriae, !!quaerenda.pars].all():
+      case [
+            quaerenda.categoriae.length == 0,
+            quaerenda.pars.length > 0
+          ].all():
         return (await this.relata)
           .filter((relatum) => relatum.scriptum.includes(quaerenda.pars))
           .map((relatum) => relatum)
-      case [!quaerenda.categoriae, !quaerenda.pars].all():
+      case [
+            quaerenda.categoriae.length == 0,
+            quaerenda.pars.length == 0
+          ].all():
         return (await this.relata).map((relatum) => relatum)
       default: return []
     }

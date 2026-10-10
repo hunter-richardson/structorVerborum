@@ -6,7 +6,7 @@ import Nuntius from '../miscella/nuntius';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import { Fulta } from '../praebeunda/valores';
 import { Multiplex } from '../praebeunda/verba';
-import type { Tabulator } from '../praebeunda/interfecta';
+import { type Tabulator } from '../praebeunda/interfecta';
 
 function valores<Hoc extends Multiplex>(haec: Hoc[]): Set<Fulta>
 { return new Set(haec.map((hoc) => hoc.valores)) }

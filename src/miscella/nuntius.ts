@@ -5,16 +5,14 @@ import Numerator from './numerator';
 import { Mensa } from '../praebeunda/valores';
 import { type TransformableInfo } from 'logform'
 
-const scribatur = (parametra: TransformableInfo & {
-  nomen?: string
-}): string => {
+function scribatur(parametra: TransformableInfo & { nomen?: string }): string {
   const inhaesum: string = `@${Temporis.nunc()} <${parametra.level}> ${parametra.message}`
   return parametra.nomen ? `${parametra.nomen} ${inhaesum}` : inhaesum
 }
 
 interface Parametra {
-    error?: Error
-    nomen?: string
+  error?: Error
+  nomen?: string
   nuntium?: string
 }
 

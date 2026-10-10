@@ -49,8 +49,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
         } case 'numerus': {
           const numerus: Numerale = verbum as Numerale
           const agendum: TabulamenNumeraminis | undefined = await numerus.numeramen()
-          // eslint-disable-next-line no-extra-boolean-cast
-          if(!!agendum)
+          if(agendum !== undefined)
             eventus.value = {
               ...agendum,
               categoria: 'numeramen'
@@ -59,8 +58,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
         case 'numeramen': {
           const numeramen: Numeramen = verbum as Numeramen
           const referendus: Eventus | undefined = await numeramen.refer()
-          // eslint-disable-next-line no-extra-boolean-cast
-          if(!!referendus)
+          if(referendus !== undefined)
             eventus.value = referendus
         }; break
       }
@@ -69,7 +67,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
   function adde() {
     if(verbum) {
-      if([multiplex, !!valorEnclitici].all())
+      if([multiplex, valorEnclitici.length > 0].all())
         (verbum as Multiplex).encliticus = valorEnclitici as Encliticus
       verbum.scriptum = verbum.scriptum.toLowerCase()
       locutor.addatur(verbum)
@@ -78,7 +76,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
   function addeProprium() {
     if (verbum) {
-      if ([ multiplex, !!valorEnclitici ].all())
+      if ([ multiplex, valorEnclitici.length > 0 ].all())
         (verbum as Multiplex).encliticus = valorEnclitici as Encliticus;
       if(propriabile)
         verbum.scriptum = verbum.scriptum.capitalize()
@@ -88,12 +86,9 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Inflectere v-if='!!eventus' :eventus='eventus' @blur='eventus = undefined' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <v-dialog v-else-if='!!verbum && !!verbum.categoria.valor'>
+  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
+  <Inflectere v-if='eventus !== undefined' :eventus='eventus' @blur='eventus = undefined' />
+  <v-dialog v-else-if='verbum !== undefined && verbum.categoria.valor !== undefined'>
     <v-card :title='verbum.monstretur()'
             :subtitle="$t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
       <template v-if='multiplex'>

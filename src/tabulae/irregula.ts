@@ -4,7 +4,7 @@ import i18n from '../i18n';
 import { LectorMultiplex } from '../miscella/lector';
 import Nuntius from '../miscella/nuntius';
 import { Ignavum, Ultimum } from '../miscella/usus';
-import { Agendum, Multiplex } from '../praebeunda/verba';
+import { type Agendum, Multiplex } from '../praebeunda/verba';
 
 @Ignavum @Ultimum @Nuntius.factum export default class TabulaIrregula<Hoc extends Multiplex> extends Tabula<Hoc> {
   @Nuntius.promittum async tabulentur() {

@@ -70,8 +70,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     }, on_skip: (error?: CsvError, crudum?: string) => {
       let nuntium: string = error === undefined ? `Legere defectu'st lemmam ${this.via}` :
         `Invenita'st codicem ${error.code} ad ${this.via}`
-      //  eslint-disable-next-line no-extra-boolean-cast
-      if(!!crudum) nuntium = `${nuntium} ab ${crudum}`
+      if(crudum !== undefined) nuntium = `${nuntium} ab ${crudum}`
       Nuntius.timeo({
         nomen: this.constructor.name,
         nuntium: nuntium,

@@ -63,11 +63,12 @@ export class Verbum extends Categoricum implements Lectum {
   get scriptum(): string { return this._scriptum }
 
   set scriptum(valor: string) {
-    if (valor = valor.trim()) this._scriptum = valor
+    valor = valor.trim()
+    if (valor.length > 0) this._scriptum = valor
     else throw errator({ scriptum: valor })
   }
 
-  paratust(): boolean { return !!this.scriptum }
+  paratust(): boolean { return this.scriptum.length > 0 }
 
   monstretur(): string {
     let monstrandum: string = this.scriptum

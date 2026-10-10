@@ -3,8 +3,8 @@
   import '../../extensions/array';
   import translation from '../../extensions/i18next';
   import { Lineae, genera, gradus } from '../../praebeunda/valores';
-  import { AdiectivumAgendum, Incomparabile, NomenAgendum } from '../../praebeunda/agenda';
-  import { type Faciendum } from '../../praebeunda/interfecta';
+  import { TabulamenAdiectivi, TabulamenIncomparabilis, TabulamenNominis } from '../../praebeunda/tabulamina';
+  import { type Tabulator } from '../../praebeunda/interfecta';
   import { Adiectivum } from '../../praebeunda/verba';
   import inflectere from '../inflectere.vue';
   import tabulare from '../tabulare.vue';
@@ -19,11 +19,11 @@
     genus: string;
   };
 
-  const { agendum } = defineProps<{ agendum: Faciendum<Adiectivum> }>();
-  const lectum: boolean = agendum instanceof AdiectivumAgendum;
-  const incomparabilium: boolean = agendum instanceof Incomparabile;
+  const { agendum } = defineProps<{ agendum: Tabulator<Adiectivum> }>();
+  const incomparabilium: boolean = agendum instanceof TabulamenIncomparabilis;
+  const lectum: boolean = incomparabilium || agendum instanceof TabulamenAdiectivi;
 
-  const nomen: Ref<NomenAgendum | undefined> = ref<NomenAgendum | undefined>(undefined);
+  const nomen: Ref<TabulamenNominis | undefined> = ref<TabulamenNominis | undefined>(undefined);
   const et: Et = { gradus: '', genus: '' };
 
   function paria (valores: Lineae): Par[] {
@@ -39,10 +39,10 @@
   const valoresGenerum: Par[] = paria(genera);
 
   function referIncomparabile (): void
-  { nomen.value = (agendum as Incomparabile).probetur(et.genus) ?? undefined; }
+  { nomen.value = (agendum as TabulamenIncomparabilis).probetur(et.genus) ?? undefined; }
 
   async function referComparabile (): Promise<void> {
-    nomen.value = await (agendum as AdiectivumAgendum).probetur({
+    nomen.value = await (agendum as TabulamenAdiectivi).probetur({
       gradus: et.gradus,
       genus: et.genus
     }) ?? undefined;
@@ -50,8 +50,7 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <inflectere v-if='!!nomen' :agendum='nomen' @blur='nomen = undefined' />
+  <inflectere v-if='nomen !== undefined' :agendum='nomen' @blur='nomen = undefined' />
   <tabulare v-else :agendum='agendum' categoria='adiectivum' />
   <template v-if='lectum || incomparabilium'>
     <v-select density='compact' id='genus' :label="$t('partes.genus_singulare', 'capital')"

@@ -2,22 +2,21 @@
   import { defineProps, ref, type Ref } from 'vue'
   import '../../extensions/array'
   import { NomenActum } from '../../praebeunda/agenda'
-  import { type Faciendum } from '../../praebeunda/interfecta'
+  import { type Tabulator } from '../../praebeunda/interfecta'
   import { Actus, Nomen } from '../../praebeunda/verba'
   import inflectere from '../inflectere.vue'
   import tabulare from '../tabulare.vue'
 
-  const { agendum } = defineProps<{ agendum: Faciendum<Nomen> }>();
+  const { agendum } = defineProps<{ agendum: Tabulator<Nomen> }>();
   const factum: boolean = agendum instanceof NomenActum;
-  const actus: Ref<Faciendum<Actus> | undefined> = ref<Faciendum<Actus> | undefined>(undefined);
+  let actus: Ref<Tabulator<Actus> | undefined> = ref<Tabulator<Actus> | undefined>(undefined);
 
   async function refer ()
   { actus.value = await (agendum as NomenActum).actus() ?? undefined; }
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <inflectere v-if='!!actus' :agendum='actus' @blur='actus = undefined' />
+  <inflectere v-if='actus !== undefined' :agendum='actus' @blur='actus = undefined' />
   <tabulare v-else :agendum='agendum' categoria='nomen' />
   <v-btn v-if='factum' append-icon='sprint' id='actus' @click='refer()'
          :text="$t('categoria.actus.singularis', 'capitalize')" />

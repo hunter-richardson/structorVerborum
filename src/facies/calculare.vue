@@ -17,7 +17,8 @@
 
   function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus); }
 
-  function licta (actus: string): boolean { return operat(actus) || !!praesentes.value.arabicus; }
+  function licta (actus: string): boolean
+  { return operat(actus) || praesentes.value.arabicus > 0; }
 
   function ponatur (actus: string): void {
     if (actus === 'N') {
@@ -47,15 +48,12 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <specere v-if='!!numerus' :verbum='numerus' @blur='numerus = undefined' />
+  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
+  <specere v-if='numerus !== undefined' :verbum='numerus' @blur='numerus = undefined' />
   <div class='text-center'>
     <v-btn v-if='Number.isInteger(praevii.arabicus)' id='refer' icon='aequa' @click='aequa()' />
     <v-card :text='praevii.romanus' />
-    <!-- eslint-disable-next-line no-extra-boolean-cast -->
-    <v-card v-if='!!operator' id='operator' :text='operator' />
+    <v-card v-if='operator.length > 0' id='operator' :text='operator' />
   </div>
   <v-card :text='praesentes.romanus' />
   <div class='text-center' v-for="linea in (actus.split(' ') as string[])" :key='linea'>

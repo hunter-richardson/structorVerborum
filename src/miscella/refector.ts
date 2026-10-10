@@ -125,11 +125,9 @@ export default class Refector<Hoc extends Multiplex> {
       const omnes: string[] = status.split('&')
       omnes.forEach((ullus) => {
         const certamenStatus: RegExpExecArray | undefined = colamenStatus.exec(ullus) ?? undefined
-        //  eslint-disable-next-line no-extra-boolean-cast
-        if (!!certamenStatus && certamenStatus.groups) {
+        if (certamenStatus !== undefined && certamenStatus.groups !== undefined) {
           const { nomen, operator, quaerendus } = certamenStatus.groups
-          //  eslint-disable-next-line no-extra-boolean-cast
-          if (!!nomen && !!operator && !!quaerendus)
+          if (nomen.length > 0 && operator.length > 0 && quaerendus.length > 0)
             praedicenda.push(this.praedicatur(nomen, operator, quaerendus))
         }
       }); return praedicenda.every((praedicendum) => praedicendum(agendum))
@@ -143,7 +141,8 @@ export default class Refector<Hoc extends Multiplex> {
             agenda.slice(numerus--, 1)
       case Actus.Pone:
         return (agenda: Agendum<Hoc>[], numerus: number) => {
-          if(!!nomen && !!novus) {
+          if(nomen !== undefined && nomen.length > 0 &&
+             novus !== undefined && novus.length > 0) {
             const fultum: Fultum<Lineae> | undefined = agenda[numerus].valores.inveni(nomen)
             if(!fultum) throw new Error(`Nullum ${nomen} in ${agenda[numerus]}`)
             fultum.valor = novus
@@ -167,16 +166,13 @@ export default class Refector<Hoc extends Multiplex> {
                .split(';')
     scripturae.forEach((scriptura: string) => {
       const certamen: RegExpExecArray | undefined = colamen.exec(scriptura) ?? undefined
-      if (certamen && certamen.groups) {
+      if (certamen !== undefined && certamen.groups !== undefined) {
         const { status, opus } = certamen.groups
-        //  eslint-disable-next-line no-extra-boolean-cast
-        if (!!status && !!opus) {
+        if (status.length > 0 && opus.length > 0) {
           const certamenOperis: RegExpExecArray | undefined = colamenOperis.exec(opus) ?? undefined
-          //  eslint-disable-next-line no-extra-boolean-cast
-          if (!!certamenOperis && !!certamenOperis.groups) {
+          if (certamenOperis !== undefined && certamenOperis.groups !== undefined) {
             const { actus, nomenNovi, valorNovi } = certamenOperis.groups
-            //  eslint-disable-next-line no-extra-boolean-cast
-            if (!!actus && !!nomenNovi && !!valorNovi)
+            if (actus.length > 0 && nomenNovi.length > 0 && valorNovi.length > 0)
               this.ista.push({
                 praedicendum: this.praedicantur(status),
                 opus: this.agatur(actus as Actus, nomenNovi, valorNovi)

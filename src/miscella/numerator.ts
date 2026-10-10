@@ -57,7 +57,7 @@ const fracti: Fracti = {
 
 const claves: Fractus[] =
     (Object.keys(fracti) as Array<Fractus>)
-           .filter((clavis: Fractus) => !!fracti[clavis]);
+           .filter((clavis: Fractus) => fracti[clavis].length > 0);
 
 let spatium: RepeatOptions = { min: 1, max: 2 }
 
@@ -145,21 +145,18 @@ export default class Numerator {
     if(!romanus) return -1
     romanus = romanus.toUpperCase()
     const certamen: RegExpExecArray | undefined = colamen.exec(romanus) ?? undefined
-    //  eslint-disable-next-line no-extra-boolean-cast
-    if(!!certamen && !!certamen.groups) {
-      //  eslint-disable-next-line no-extra-boolean-cast
-      if(!!certamen.groups['nihil']) return 0
-      //  eslint-disable-next-line no-extra-boolean-cast
-      if(!!certamen.groups['maior'])
+    if(certamen !== undefined && certamen.groups !== undefined) {
+      if(certamen.groups['nihil'].length > 0) return 0
+      if(certamen.groups['maior'].length > 0)
         return (1000.0 * this.arabicus(certamen.groups['maior'])) +
                          this.arabicus(certamen.groups['minor'] ?? 'N')
       const certamenMixtum: RegExpExecArray | undefined = colamenMixtum.exec(romanus) ?? undefined
-      //  eslint-disable-next-line no-extra-boolean-cast
-      if(!!certamenMixtum && !!certamenMixtum.groups) {
-        const fractus: string | undefined = certamenMixtum.groups['fractus'] ?? undefined
-        const integer: string = certamenMixtum.groups['integer'] ?? 'N'
-        if(fractus) {
-          const numerator: string = claves.first((clavis: Fractus) => (fracti[clavis] === fractus)) as string ?? '0'
+      if(certamenMixtum !== undefined && certamenMixtum.groups !== undefined) {
+        let { fractus, integer } = certamenMixtum.groups
+        if(integer.length == 0) integer = 'N'
+        if(fractus.length > 0) {
+          const numerator: string = claves.first((clavis: Fractus) =>
+              (fracti[clavis] === fractus)) as string ?? '0'
           return (parseInt(numerator.toLowerCase(), 12.0) / 12.0) + this.arabicus(integer)
         } else return new RomanNumeral(integer).toInt()
       } else return new RomanNumeral(certamen.groups['minor']).toInt()

@@ -33,7 +33,7 @@ export function Ignavum<Hoc extends Ullum> (valor: Hoc, contextus: ClassDecorato
   } else throw new TypeError('Adornandu\'st classibus @Ignavum')
 }
 
-export function Ultimum<Hoc extends { new(...parametra: any[]): {} }> (parma: Hoc) {
+export function Ultimum<Hoc extends { new(...parametra: any[]): object }> (parma: Hoc) {
   return class extends parma {
     constructor (...parametra: any[]) {
       if (new.target !== parma)

@@ -7,9 +7,9 @@ import Nuntius from '../miscella/nuntius';
 import Refector from '../miscella/refector';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import { Tabulamen } from '../praebeunda/tabulamina';
-import { Agendum, Multiplex } from '../praebeunda/verba';
+import { type Agendum, Multiplex } from '../praebeunda/verba';
 import { Fultum, type Lineae } from '../praebeunda/valores'
-import type { Tabulator } from '../praebeunda/interfecta';
+import { type Tabulator } from '../praebeunda/interfecta';
 
 export type Par = { [ clavis: string ]: string }
 
@@ -100,12 +100,10 @@ export class TabulaDerecta<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> 
 export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends TabulaLegans<Hoc, Illud> {
   @Nuntius.promittum async tabulentur() {
     let refector: Refector<Hoc> | undefined
-    //  eslint-disable-next-line no-extra-boolean-cast
-    if (!!this.illud.scriptura)
+    if (this.illud.scriptura !== undefined && this.illud.scriptura.length > 0)
       refector = new Refector<Hoc>(this.illud.scriptura)
     const agenda: Agendum<Hoc>[] = await this.legantur();
-    //  eslint-disable-next-line no-extra-boolean-cast
-    if (!!this.illud.vices) {
+    if (this.illud.vices !== undefined && this.illud.vices.length > 0) {
       const via: string = path.join('tabulae/vices', this.illud.scapum)
       const vicaria: Agendum<Hoc>[] =
       (await new LectorMultiplex<Agendum<Hoc>>(via, this.structor)
@@ -117,16 +115,11 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
           { agendum.scriptum = vicarium.scriptum; repositum = true }
         }); if (!repositum) agenda.push(vicarium);
       })
-      //  eslint-disable-next-line no-extra-boolean-cast
-    }
-
-    const caesor: Caesor<Hoc, Illud> = new Caesor<Hoc, Illud>()
+    }; const caesor: Caesor<Hoc, Illud> = new Caesor<Hoc, Illud>()
     agenda.forEach(async (agendum) => {
       const radix: string = await caesor.caedatur(this.illud, agendum.valores)
-      //  eslint-disable-next-line no-extra-boolean-cast
-      agendum.scriptum = !!radix ? `${radix}${agendum.scriptum}` : ''
-      //  eslint-disable-next-line no-extra-boolean-cast
-    }); if(!!refector) refector.reficiatur(agenda)
+      agendum.scriptum = radix.length > 0 ? `${radix}${agendum.scriptum}` : ''
+    }); if(refector !== undefined) refector.reficiatur(agenda)
     this._haec.push(
       ...agenda.filter((agendum) => agendum.scriptum.length > 0)
                .map((agendum) => Multiplex.componatur(this.structor, agendum)))

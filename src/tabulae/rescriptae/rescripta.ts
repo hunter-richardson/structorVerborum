@@ -1,8 +1,8 @@
 import Nuntius from '../../miscella/nuntius';
 import { Ignavum, Ultimum } from '../../miscella/usus';
-import { Tabulator } from '../../praebeunda/interfecta';
 import { Multiplex } from '../../praebeunda/verba';
 import { Tabula, tabulast, tabulatorst } from '../tabula';
+import { type Tabulator } from '../../praebeunda/interfecta';
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaRescripta<Hoc extends Multiplex> extends Tabula<Hoc> {

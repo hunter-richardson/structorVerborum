@@ -36,18 +36,21 @@ String.prototype.chop = function (length: number): string { return this.slice(0,
 String.prototype.empty = function (): boolean { return this.length === 0 }
 
 String.prototype.startsWithConsonant = function (): boolean {
-  const first: string | undefined = this.at(0)
-  return !!first && 'bcdfgklmnpqrstxz'.includes(first.toLowerCase())
+  const first: string | undefined = this[ 0 ]
+  return first !== undefined && 'bcdfgklmnpqrstxz'.includes(first.toLowerCase())
 }
 
-String.prototype.startsWithVowel = function (): boolean { return !this.startsWithConsonant() }
+String.prototype.startsWithVowel = function (): boolean {
+  const first: string | undefined = this[ 0 ];
+  return first !== undefined && 'aeiouy'.includes(first.toLowerCase());
+}
 
 String.prototype.removeMacra = function (): string {
   if ([ ...this ].intersection(Object.values(macra)).any()) {
-// eslint-disable-next-line @typescript-eslint/no-wrapper-object-types
+    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias
     let copy: String = this;
     (Object.entries(macra))
-        .forEach(([key, value]: [string, string]) => { copy.replace(value, key) });
+        .forEach(([key, value]: [string, string]) => { copy = copy.replace(value, key) });
     return copy as string
   } else return this as string
 }

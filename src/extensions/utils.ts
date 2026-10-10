@@ -33,7 +33,7 @@ export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: Pro
     const ignored: Set<PropertyKey> = new Set(keys)
     const customizer: Customizer =
         (_: unknown, __: unknown, key: PropertyKey | undefined): true | undefined =>
-            !!key && ignored.has(key) ? true : undefined
+            key !== undefined && ignored.has(key) || undefined
     return isEqualWith(objThis, objThat, customizer)
   } else return equal(objThis, objThat)
 }

@@ -4,7 +4,7 @@ import Nuntius from '../miscella/nuntius';
 import Refector from '../miscella/refector';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import { Multiplex, type Agendum } from '../praebeunda/verba';
-import type { Tabulator } from '../praebeunda/interfecta';
+import { type Tabulator } from '../praebeunda/interfecta';
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {

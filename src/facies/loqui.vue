@@ -18,8 +18,7 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <v-chip-group id='locutio'>
     <draggable v-model='locutor.verba' :ghost-class='pellucidum'
                @start='trahens = true' @end='trahens = false'>

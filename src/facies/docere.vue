@@ -30,12 +30,10 @@
     const parma: string | undefined =
         (eventus.currentTarget as HTMLElement)?.closest('a')
             ?.getAttribute('href') ?? undefined
-    //  eslint-disable-next-line no-extra-boolean-cast
-    if(!!parma && parma.endsWith('.md')) {
+    if(parma !== undefined && parma.endsWith('.md')) {
       docendum.value = parma.split('/').last().split('.').first()
       return doceatur()
-      //  eslint-disable-next-line no-extra-boolean-cast
-    } else if(!!parma)
+    } else if(parma !== undefined)
       return new Promise<void>(() =>
           window.open(parma, '_blank', 'noopener,nooreferrer'))
   }
@@ -59,7 +57,8 @@
   <<v-skeleton-loader v-if='onerans' :loading='onerans' type='paragraph'
                       :loading-text="$t('scripta.docere.onerans')" />
   <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <div v-else-if='!!doctum' class='markdown' :id="`doctum.${docendum}`">
+  <div v-else-if='doctum !== undefined && doctum.length > 0'
+       class='markdown' :id="`doctum.${docendum}`">
     <markdown breaks='true' :source='doctum' />
   </div>
 </template>

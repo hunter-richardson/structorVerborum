@@ -6,7 +6,7 @@
   import { Multiplex } from '../praebeunda/verba'
   import { categoricum } from '../scriptura/columnae'
   import Gustulus from '../scriptura/gustulus'
-  import Tabula from '../tabulae/tabula'
+  import { Tabula } from '../tabulae/tabula'
   import Gustulare from './gustulare.vue'
   import Onerare from './onerare.vue'
   import Specere from './specere.vue'
@@ -62,11 +62,9 @@
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
+  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <Onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Specere v-else-if='!!hoc' :verbum='hoc' @blur='hoc = undefined' />
+  <Specere v-else-if='hoc !== undefined' :verbum='hoc' @blur='hoc = undefined' />
   <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec.clear()' />
   <template v-else-if='haec.length > 1'>
     <div v-if='seligenda.length > 0' id='colamina'>

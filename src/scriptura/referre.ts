@@ -2,6 +2,7 @@ import Gustulus from './gustulus';
 import Structor from '../praebeunda/structor';
 
 export function referretne(): boolean {
+  //  eslint-disable-next-line no-extra-boolean-cast
   return !!navigator.clipboard
 }
 

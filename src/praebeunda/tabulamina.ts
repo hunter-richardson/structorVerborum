@@ -1,6 +1,5 @@
 import { Mixin } from 'ts-mixer';
 import { Tabulator } from './interfecta';
-import { Lectum } from './interfecta';
 import {
   Actus,
   Adiectivum,
@@ -16,7 +15,7 @@ import { Ultimum } from '../miscella/usus';
 import { TabulaDerecta, TabulaRegula, type Tabula } from '../tabulae/tabula';
 import { dictionarium, type Eventus } from '../miscella/dictionarium';
 
-export abstract class Tabulamen<Hoc extends Multiplex> implements Lectum, Tabulator<Hoc> {
+export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc> {
   categoria!: string
   principium!: string
   vices?: string

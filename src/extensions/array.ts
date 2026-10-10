@@ -28,20 +28,23 @@ Array.prototype.first = function <T>(predicate?: (param: T) => boolean): T {
 Array.prototype.last = function <T>(predicate?: (param: T) => boolean): T {
   if (predicate) {
     const copy: T[] = this.filter(predicate)
-    return copy[-1] ?? copy[this.length - 1]
-  } else return this[-1] ?? this[this.length - 1]
+    return copy[copy.length - 1]
+  } else return this[this.length - 1]
 }
 
-Array.prototype.random = function<T> (): T { return this[Math.floor(Math.random() * this.length)] }
+Array.prototype.random = function<T> (): T
+{ return this[Math.floor(Math.random() * this.length)] }
 
-Array.prototype.none = function<T> (predicate?: (param: T) => boolean): boolean {
-  if (predicate) return !this.some(predicate)
-  else return !this.some((status) => !!status)
-}
+Array.prototype.none = function<T> (predicate?: (param: T) => boolean): boolean
+{ return !(predicate ? this.some(predicate) : this.any()) }
 
-Array.prototype.all = function (): boolean { return this.every((status) => !!status) }
+//  eslint-disable-next-line no-extra-boolean-cast
+Array.prototype.all = function (): boolean
+{ return this.every((status) => !!status) }
 
-Array.prototype.any = function (): boolean { return this.some((status) => !!status) }
+//  eslint-disable-next-line no-extra-boolean-cast
+Array.prototype.any = function (): boolean
+{ return this.some((status) => !!status) }
 
 Array.prototype.intersection = function <T> (withThese: T[]): T[]
 { return this.filter(value => withThese.includes(value)) }
@@ -52,7 +55,8 @@ Array.prototype.union = function<T> (these: T[]): T[]
 Array.prototype.except = function <T> (these: T[]): T[]
 { return this.filter(value => !these.includes(value)) }
 
-Array.prototype.excludes = function<T>(these?: T): boolean { return !this.includes(these ?? []) }
+Array.prototype.excludes = function<T>(these?: T): boolean
+{ return !this.includes(these ?? []) }
 
 Array.prototype.count = function<T>(predicate?: (param: T) => boolean): number {
   return predicate ? this.reduce((count: number, item: T): number =>
@@ -64,12 +68,12 @@ Array.prototype.sortRecursive = function<T>(...comparators: Comparator<T>[]): T[
     for(const comparator of comparators) {
       const result: SortResult = comparator(first, second)
       if(result !== 0) return result
-    }; return 0
+    } return 0
   }; return this.sort(compare)
 }
 
 Array.prototype.clear = function() { this.length = 0 }
 
-// eslint-disable-next-line @typescript-estlint/no-useless-empty-export
-export {};
+// eslint-disable-next-line @typescript-eslint/no-useless-empty-export
+export {}
 

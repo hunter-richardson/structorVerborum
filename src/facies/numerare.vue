@@ -40,10 +40,8 @@ import Specere from './specere.vue';
 </script>
 
 <template>
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Gustulare v-if='!!gustulus' :gustulus='gustulus' />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <Specere v-if='!!numerale' :verbum='numerale' @blur='numerale = undefined' />
+  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
+  <Specere v-if='numerale !== undefined' :verbum='numerale' @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
     <v-btn v-if='arabicus.numerator === 0' icon='equal' id='aequa' @click='refer()' />

@@ -1,7 +1,8 @@
 import { NewTabOpener } from 'new-tab-opener';
 
 export function transduceretne(): boolean {
-    try { return !!new Blob }
+  //  eslint-disable-next-line no-extra-boolean-cast
+  try { return !!new Blob }
   catch { return false }
 }
 
