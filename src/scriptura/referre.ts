@@ -8,17 +8,15 @@ export function referretne(): boolean {
 
 export async function referatur(valor?: string): Promise<Gustulus> {
   if (valor) {
+    const structor: Structor<Gustulus> = new Structor(Gustulus)
+            .ponatur((gustulus) => (gustulus.vita = 3000))
     if (referretne()) {
       await navigator.clipboard.writeText(valor)
-      return new Structor(Gustulus)
-                   .ponatur((gustulus) => (gustulus.nuntium = 'Locutio referatur'))
-                   .ponatur((gustulus) => (gustulus.vita = 3000))
-                   .ponatur((gustulus) => (gustulus.color = 'green'))
-                   .struatur
-    } else return new Structor(Gustulus)
-                        .ponatur((gustulus) => (gustulus.nuntium = 'Modus referendum non fert'))
-                        .ponatur((gustulus) => (gustulus.vita = 3000))
-                        .ponatur((gustulus) => (gustulus.color = 'red'))
-                        .struatur
+      return structor.ponatur((gustulus) => (gustulus.nuntium = 'Locutio referatur'))
+                     .ponatur((gustulus) => (gustulus.color = 'green'))
+                     .struatur
+    } else return structor.ponatur((gustulus) => (gustulus.nuntium = 'Modus referendum non fert'))
+                          .ponatur((gustulus) => (gustulus.color = 'red'))
+                          .struatur
   } else return new Gustulus
 }

@@ -14,8 +14,7 @@ export default class TabulaRescripta<Hoc extends Multiplex> extends Tabula<Hoc> 
     _relata.haec.forEach((relatum) => {
       relatum.scriptum = this.rescriptor(relatum.scriptum)
       this._haec.push(relatum)
-    })
-  }
+  }) }
 
   constructor(private readonly relata: Tabula<Hoc> | Tabulator<Hoc>,
               protected readonly rescriptor: (scriptum: string) => string)

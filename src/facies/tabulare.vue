@@ -33,8 +33,8 @@
 
   const hoc: Ref<Hoc | undefined> = ref<Hoc | undefined>(undefined)
 
-  const seligenda: string[] = [
-    ...new Set<string>(haec?.map((multiplex: Multiplex) => multiplex.valores()).flat())
+  const seligenda: Fultum<Lineae>[] = [
+    haec?.map((multiplex: Multiplex) => multiplex.valores()).flat().unique()
   ];
 
   const selecta: string[] = [];

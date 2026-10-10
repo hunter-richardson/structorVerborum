@@ -10,12 +10,11 @@
     "assumeChangesOnlyAffectDirectDependencies": true,
     "declaration": true,
     "extendedDiagnostics": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "incremental": true,
-    "lib": [
-      "dom"
-    ],
+    "lib": [ "dom" ],
     "module": "ESNext",
     "moduleDetection": "auto",
     "moduleResolution": "bundler",
@@ -49,7 +48,7 @@
       ]
     }, "pretty": true,
     "sourceMap": true,
-    "target": "ES2022",
+    "target": "ES2023",
     "types": [
       "@types/node",
       "cypress",

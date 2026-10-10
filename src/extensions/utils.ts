@@ -19,14 +19,13 @@ function compareResults<T extends number | string>(first: T, second: T): SortRes
 
 type Customizer = NonNullable<Parameters<typeof isEqualWith>[ 2 ]>
 
-export function comparison<T>(extractors: Extractor<T>[]): Comparator<T> {
+export function comparison<T>(...extractors: Extractor<T>[]): Comparator<T> {
   return (first: T, second: T): SortResult => {
     for(const extractor of extractors) {
       const result: SortResult = compareResults(extractor(first), extractor(second))
       if(result !== 0) return result
     } return 0
-  }
-}
+} }
 
 export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: PropertyKey[]): boolean {
   if(keys.length > 0) {

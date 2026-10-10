@@ -42,9 +42,7 @@ export const errator: (res: { [ clavis: PropertyKey ]: string }) => Error =
 
 export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
   static ordinentur: <Hoc extends Res<boolean, Lineae>>(primum: Hoc, secundum: Hoc) => SortResult =
-    comparison([
-      (hoc) => hoc.nomen, (hoc) => `${hoc.valor}`
-    ])
+      comparison((hoc) => hoc.nomen, (hoc) => `${hoc.valor}`)
 
   private _valor: Valor<Vexillum, Valores>
 
@@ -151,7 +149,7 @@ export const facti: Lineae = [ 'nullus', 'infinitivus', 'gerundius', 'supinus' ]
 export const nomina: string[] = [
   'casus', 'categoria', 'factus', 'genus', 'gradus', 'modus', 'numerus', 'persona', 'relaturus', 'tempus', 'vox'
 ] as const
-export const valores: string[] = [ ...new Set([ casus, facti, genera, gradus, modi, numeri, personae, relaturi, voces ]) ].flat()
+export const valores: string[] = [ casus, facti, genera, gradus, modi, numeri, personae, relaturi, voces ].flat().unique()
 
 export function inflectenda (categoria: string) {
   return [

@@ -6,9 +6,7 @@ async function aguntur(imperia: string[]): Promise<boolean> {
   imperia.forEach(async (imperium) => {
     const eventus: Eventus = await execa`${imperium}`
     if (eventus.failed) throw new Error(eventus.shortMessage ?? eventus.stderr?.toString())
-  })
-
-  return true
+  }); return true
 }
 
 (async (): Promise<void> => {
@@ -19,7 +17,6 @@ async function aguntur(imperia: string[]): Promise<boolean> {
     ])) {
       // eslint-disable-next-line no-console
       console.log('Inceptust collegi')
-
       if (await aguntur([
           'npm run build',
           'git --work-tree build add --all',
@@ -29,7 +26,6 @@ async function aguntur(imperia: string[]): Promise<boolean> {
         console.log('Successu collectust')
         // eslint-disable-next-line no-console
         console.log('Inceptust expediri')
-
         if (await aguntur([
             'git push origin HEAD:gh-pages --force --verbose',
             'srm -dfrv -ll build',
@@ -38,11 +34,7 @@ async function aguntur(imperia: string[]): Promise<boolean> {
           ])) {
           // eslint-disable-next-line no-console
           console.log('Expeditust successu')
-        }
-      }
-    }
-  } catch (error) {
+  } } } } catch (error) {
     console.log(error)
     process.exit(1)
-  }
-})()
+} })()

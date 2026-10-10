@@ -10,9 +10,9 @@ class Locutor {
 
   private _verba: Verbum[] = []
 
-  get locutust(): boolean { return this._verba.length > 0 }
-
+  @Nuntius.captor
   get verba(): Verbum[] { return this._verba }
+  get locutust(): boolean { return this._verba.length > 0 }
 
   @Nuntius.modus
   addatur(verbum: Verbum): void {
@@ -34,11 +34,7 @@ class Locutor {
               case 'ā': praevium.scriptum = 'ab'; break
               case 'ē': praevium.scriptum = 'ex'; break
             } this.addatur(praevium)
-          }
-        }
-      }
-    }
-  }
+} } } } }
 
   loquitur(unicum: string): boolean
   { return this.verba.some((verbum) => verbum.unicum === unicum) }
@@ -52,7 +48,6 @@ class Locutor {
     const locutio: string = this.verba.map((verba) =>
         verba.monstretur()).join(dominus.separator.signum)
     return locutio[dominus.magnas.signum ? 'toUpperCase' : 'capitalize']()
-  }
-}
+} }
 
 export const locutor: Locutor = new Locutor

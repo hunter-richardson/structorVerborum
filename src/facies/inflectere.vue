@@ -12,20 +12,28 @@
 
   const categoria: string = eventus.value?.categoria ?? ''
   const referendum: Ref<Referendum | undefined> = ref<Referendum | undefined>(eventus as Referendum)
+
+  function aliust(): boolean {
+    buildRegExp([
+      startOfString,
+      choiceOf(...[
+        Adverbium, Numeramen, Pronomen
+      ].map(classis => classis.name.toLowerCase()) ),
+      endOfString ]).test(categoria)
+  }
 </script>
 
 <template>
-  <template v-if='referendum !== undefined'>
+  <template v-if='referendum !== undefined && categoria !== undefined'>
     <v-dialog @blur='referendum = undefined; eventus = undefined'>
-      <Actuum v-if="categoria === 'actus'"
+      <Actuum v-if='categoria === Actus.name.toLowerCase()'
               :agendum='referendum as TabulatorActuum' />
-      <Nominum v-else-if="categoria === 'nomen'"
+      <Nominum v-else-if='categoria === Nomen.name.toLowerCase()'
                :agendum='referendum as Tabulator<Nomen>' />
-      <Adiectivorum v-else-if="categoria === 'adiectivum'"
+      <Adiectivorum v-else-if='categoria === Adiectivum.name.toLowerCase()'
                     :agendum='referendum as Tabulator<Adiectivum>' />
-      <Tabulare v-else-if="/^(adverium|(numera|prono)men)$/.test(categoria ?? '')"
-                :agendum='referendum as Tabulator<Adverbium | Numeramen | Pronomen>'
-                :categoria='categoria' />
+      <Tabulare v-else-if='aliust()' :categoria='categoria'
+                :agendum='referendum as Tabulator<Adverbium | Numeramen | Pronomen>' />
       <template v-else><div /></template>
     </v-dialog>
   </template>

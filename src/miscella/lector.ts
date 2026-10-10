@@ -1,5 +1,5 @@
 import { CsvError, Options, parse } from 'csv-parse';
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import { Writable } from 'stream';
 import { buildRegExp, choiceOf } from 'ts-regex-builder';
@@ -22,6 +22,7 @@ import {
   Res
   } from '../praebeunda/valores';
 import { Verbum } from '../praebeunda/verba';
+import fsPromise from 'node:fs/promises'
 
 export class Ulla<Hoc> extends Array<Hoc> {
   get unum (): Hoc { return this.first(); }
@@ -46,17 +47,14 @@ export class Lector<Hoc extends Lectum> implements Disposable {
           Nuntius.timeo({
             nomen: this.constructor.name,
             error: error as Error
-          })
-        }
-      }; this.haec.push(hoc)
+      }) } }; this.haec.push(hoc)
       return vocator()
-    }
-  })
+  } })
 
-  private readonly deConditis: RegExp =
-      buildRegExp(choiceOf(
-        /\p{Control}/u,
-        /\p{Cf}/u), { global: true, unicode: true })
+  private readonly deConditis: RegExp =  //\p{Control}|\p{Cf}/gu
+      buildRegExp([
+        choiceOf(/\p{Control}/u, /\p{Cf}/u)
+      ], { global: true, unicode: true })
 
   private readonly optanda: Options = {
     skip_empty_lines: true,
@@ -76,16 +74,16 @@ export class Lector<Hoc extends Lectum> implements Disposable {
         nuntium: nuntium,
         error: error
       }); return undefined
-    }
-  }
+  } }
 
   private async aperiatur(): Promise<void> {
     this[Symbol.dispose]()
     Nuntius.noto({
       nomen: this.constructor.name,
       nuntium: `Lego lemmam ${this.via}`
-    }); return new Promise(dissolvatur => {
-      fs.createReadStream(this.via)
+    }); return new Promise(async dissolvatur => {
+      (await fsPromise.open(this.via, 'r'))
+        .createReadStream()
         .pipe(parse(this.optanda))
         .pipe(this.scriptor)
         .on('finish', () => {
@@ -94,17 +92,15 @@ export class Lector<Hoc extends Lectum> implements Disposable {
             nuntium: `Legere finitu'st lemmam ${this.via}`
           })
         }); dissolvatur()
-    })
-  }
+  } )}
 
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {
     if(clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
     else throw errator({ [clavis]: valor })
   }
 
-  @Nuntius.captor get omnia(): string[] {
-    return fs.readdirSync('/path/to/your/directory')
-  }
+  @Nuntius.captor get omnia(): Promise<string[]>
+  { return fs.readdir('/path/to/your/directory') }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
     this.via = path.join(this.scapum, `${lemma}.csv`)

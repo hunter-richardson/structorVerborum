@@ -7,5 +7,7 @@ export function transduceretne(): boolean {
 }
 
 export function transducatur(locutio: string): void {
-  if (transduceretne()) (new NewTabOpener).open(URL.createObjectURL(new Blob([locutio], { type: 'text/plaincharset=utf-8' })))
+  if (transduceretne()) (new NewTabOpener)
+      .open(URL.createObjectURL(new Blob([locutio],
+            { type: 'text/plaincharset=utf-8' })))
 }

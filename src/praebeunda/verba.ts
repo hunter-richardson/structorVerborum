@@ -4,6 +4,8 @@ import {
   choiceOf,
   endOfString,
   lookahead,
+  optional,
+  regex,
   startOfString
   } from 'ts-regex-builder';
 import Structor from './structor';
@@ -49,12 +51,19 @@ export type Agendum<Hoc extends Multiplex> = Lectum &
     Omit<Hoc, 'categoria' | 'unicum' | '_encliticus' | 'encliticus' | 'monstretur' | 'paratust'>
 
 export const ordinentur: (primum: Verbum, secundum: Verbum) => SortResult =
-      comparison([
-        (hoc: Verbum) => hoc instanceof Multiplex ?
-            hoc.valores.count((valor) => !/^(?:null(?:a|u[ms])|derectus)$/.test(valor.valor)) : 0,
-        (hoc: Verbum) => hoc.scriptum,
-        (hoc: Verbum) => hoc.categoria.valor ?? ''
-      ])
+      comparison((hoc: Verbum) => hoc instanceof Multiplex ?
+                     hoc.valores.count((valor) =>  ///^(?:null(?:um|us|a))|derectus$//
+                         !buildRegExp([
+                           startOfString,  //^/
+                           choiceOf(  //(?:null(?:um|us|a))|derectus/
+                             regex([
+                               'null', //null/
+                               choiceOf('um', 'us', 'a')  //(?:um|us|a)/
+                             ]), 'derectus'),  //derectus/
+                           endOfString  //$/
+                         ]).test(valor.valor)) : 0,
+                 (hoc: Verbum) => hoc.scriptum,
+                 (hoc: Verbum) => hoc.categoria.valor ?? '')
 
 export class Verbum extends Categoricum implements Lectum {
   readonly unicum: string = crypto.randomUUID()
@@ -73,14 +82,14 @@ export class Verbum extends Categoricum implements Lectum {
   monstretur(): string {
     let monstrandum: string = this.scriptum
     if(dominus.utendaU.signum) {
-      const subsituendae = { U: 'V', u: 'v', Ū: 'V̄', ū: 'v̄' };
+      const subsituendae = { U: 'V', u: 'v', Ū: 'V̄', ū: 'v̄' }
       if([...monstrandum].intersection(Object.keys(subsituendae)).any()) {
         Object.entries(subsituendae).forEach(([clavis, valor]: [string, string]) =>
             monstrandum = monstrandum.replace(clavis, valor))
-      }
-    }; if(dominus.apices.signum)
+    } }
+    if(dominus.apices.signum)
           monstrandum = monstrandum.removeMacra()
-       if(dominus.magnas.signum)
+    if(dominus.magnas.signum)
           monstrandum = monstrandum.toUpperCase()
     return monstrandum
   }
@@ -113,11 +122,8 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
       startOfString,
       choiceOf('derectus', 'nullum', 'nullus', 'nulla'),
       endOfString ])
-    return comparison([
-      (hoc: Multiplex) =>
-        hoc.valores.count((valor) =>
-          !deNullis.test(valor.valor))
-    ])(primum, secundum)
+    return comparison((hoc: Multiplex) => hoc.valores.count((valor) =>
+          !deNullis.test(valor.valor)))(primum, secundum)
   }
 
   static componatur<Hoc extends Multiplex> (constructor: new () => Hoc, agendum: Agendum<Hoc>): Hoc {
@@ -145,8 +151,7 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
         return [ 'genus', 'numerus', 'casus', 'scriptum' ]
       default:
         return [  ]
-    }
-  }
+  } }
 
   protected _valores!: Fulta
 
@@ -175,10 +180,8 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
 }
 
 @Ultimum export class Actus extends Mixin(Modestum, Multiplex, Numeratum, Personale, Temporale, Vocale) {
-  constructor() {
-    super();
-    this._valores = new Fulta(this.modus, this.vox, this.tempus, this.numerus, this.persona)
-  }
+  constructor()
+  { super(); this._valores = new Fulta(this.modus, this.vox, this.tempus, this.numerus, this.persona) }
 
   override paratust(): boolean
   { return !this.modus.aequatur('participium') && super.paratust() }
@@ -209,33 +212,29 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
 }
 
 @Ultimum export class Adiectivum extends Mixin(Casuale, Gradale, Generale, Multiplex, Numeratum) {
-  constructor () {
-    super()
-    this._valores = new Fulta(this.gradus, this.genus, this.numerus, this.casus)
-  }
+  constructor ()
+  { super(); this._valores = new Fulta(this.gradus, this.genus, this.numerus, this.casus) }
 }
 
 @Ultimum export class Adverbium extends Mixin(Gradale, Multiplex) {
-  constructor() {
-    super()
-    this._valores = new Fulta(this.gradus)
-  }
+  constructor()
+  { super(); this._valores = new Fulta(this.gradus) }
 }
 
 @Ultimum export class Nomen extends Mixin(Casuale, Factum, Multiplex, Numeratum) {
-  constructor() {
-    super()
-    this._valores = new Fulta(this.factus, this.numerus, this.casus)
-  }
+  constructor()
+  { super(); this._valores = new Fulta(this.factus, this.numerus, this.casus) }
 }
 
 @Ultimum export class Numeramen extends Mixin(Multiplex, Relaturum) {
   async refer(): Promise<Eventus | undefined> {
-    let nova: '' | 'numerus' | 'adverbium' | 'adiectivum' = ''
+    let nova: '' | 'numerus' | 'nomen' | 'adverbium' | 'adiectivum' = ''
     switch(this.relaturus.valor) {
       case 'numerus':
       case 'adverbium':
         nova = this.relaturus.valor; break
+      case 'fractional':
+        nova = 'nomen'; break
       default:
         nova = 'adiectivum'; break
     }; return await dictionarium.referatur({
@@ -244,17 +243,13 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
     }) ?? undefined
   }
 
-  constructor() {
-    super()
-    this._valores = new Fulta(this.relaturus)
-  }
+  constructor()
+  { super(); this._valores = new Fulta(this.relaturus) }
 }
 
 @Ultimum export class Pronomen extends Mixin(Casuale, Generale, Multiplex, Numeratum) {
-  constructor () {
-    super()
-    this._valores = new Fulta(this.genus, this.numerus, this.casus)
-  }
+  constructor ()
+  { super(); this._valores = new Fulta(this.genus, this.numerus, this.casus) }
 }
 
 export abstract class TabulatorActuum implements Tabulator<Actus> {
@@ -278,19 +273,19 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
       masculinum: {
         actus: _supinus,
         principium: 'animata',
-        repositum: /um$/,
+        repositum: buildRegExp([ 'um', endOfString ]),  //um$/
         nominativus: 'or',
         genitivus: 'ōris'
       }, femininum: {
         actus: _supinus,
         principium: 'animata',
-        repositum: /t?um$/,
+        repositum: buildRegExp([ optional('t'), 'um', endOfString ]),  //t?um$/
         nominativus: 'trīx',
         genitivus: 'trīcis'
       }, neutrum: {
         actus: _infinitivus,
         principium: 'neutra',
-        repositum: /re$/,
+        repositum: buildRegExp([ 're', endOfString ]),  //re$/
         nominativus: 'āmen',
         genitivus: 'āminis'
       }
@@ -347,13 +342,10 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
             .ponatur((nomen) => (nomen.gerundium = _gerundius?.scriptum ?? ''))
             .ponatur((nomen) => (nomen.supinum = _supinus?.scriptum ?? ''))
             .ponatur((nomen) => (nomen.principium = 'facta'))
-    if(!_infinitivus)
-      structor.ponatur((nomen) => nomen.scriptura = 'factus = infinitivus: dele; ')
-    if (!_gerundius)
-      structor.ponatur((nomen) => nomen.scriptura = 'factus = gerundius: dele; ')
-    if (!_supinus)
-      structor.ponatur((nomen) => nomen.scriptura = 'factus = supinus: dele; ')
+    if(!_infinitivus) structor.ponatur((nomen) => nomen.scriptura = 'factus = infinitivus: dele; ')
+    if(!_gerundius) structor.ponatur((nomen) => nomen.scriptura = 'factus = gerundius: dele; ')
+    if(!_supinus) structor.ponatur((nomen) => nomen.scriptura = 'factus = supinus: dele; ')
     return structor.ponatur((nomen) => nomen.scriptura = nomen.scriptura?.replace(deVacuis, ''))
-            .struatur
+                   .struatur
   }
 }

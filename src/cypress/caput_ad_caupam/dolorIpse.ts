@@ -144,9 +144,5 @@ describe('dolet', () => {
 
     loquatur({
       locutio: 'Ut labōre et dolōre magnam aliquam quaerat voluptātem',
-      verba: [
-        ut, labore, et, dolore, magnam, aliquam, quaerat, voluptatem
-      ]
-    })
-  })
-})
+      verba: [ ut, labore, et, dolore, magnam, aliquam, quaerat, voluptatem ]
+})})})

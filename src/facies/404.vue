@@ -15,12 +15,12 @@
 <template>
   <v-app>
     <v-container>
-      <v-empty-state :text="$t('scripta.404.nuntium')"
+      <v-empty-state image='/res/picta/latina.png' icon='arrow_back'
+                     :text="$t('scripta.404.nuntium')"
                      :title="$t('scripta.404.titula')"
                      :headline="$t('scripta.404.caput')"
                      :actionText="$t('scripta.404.actum')"
-                     @click:action='$router.back()' image='/res/picta/latina.png'
-                     icon='arrow_back' />
+                     @click:action='$router.back()' />
     </v-container>
   </v-app>
 </template>

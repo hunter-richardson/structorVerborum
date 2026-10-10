@@ -7,7 +7,6 @@ import { type Tabulator } from '../../praebeunda/interfecta';
 
 @Ultimum @Ignavum @Nuntius.factum
 export default class TabulaSuffixa<Hoc extends Multiplex> extends TabulaRescripta<Hoc> {
-  constructor (relata: Tabula<Hoc> | Tabulator<Hoc>, private readonly suffixum: string) {
-    super(relata, (scriptum: string) => `${scriptum}${this.suffixum}`)
-  }
+  constructor (relata: Tabula<Hoc> | Tabulator<Hoc>, private readonly suffixum: string)
+  { super(relata, (scriptum: string) => `${scriptum}${this.suffixum}`) }
 }

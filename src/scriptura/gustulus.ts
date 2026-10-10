@@ -1,4 +1,4 @@
-const Please = require('pleasejs');
+import Please from 'pleasejs';
 
 export default class Gustulus {
   private _vita: number = 0

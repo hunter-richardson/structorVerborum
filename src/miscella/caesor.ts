@@ -72,9 +72,7 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
         case '<=': return valoris  <= quaerendi
         case '>=': return valoris  >= quaerendi
         default: return false
-      }
-    }
-  }
+  } } }
 
   @Nuntius.modus praedicantur(status: string): Cretor {
     status = status.replace(this.deSpatiis, '')
@@ -100,9 +98,8 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
     else if(illud.categoria === 'nomen' && illud.scapum.includes('secunda'))
     { via = 'caesamina/nomina'; filum = 'secunda' }
     return (await new LectorMultiplex<Crudum>(via, Crudum).legatur(filum)).multa
-      .map((crudum) => ({
-        status: this.praedicantur(crudum.status),
-        clavis: crudum.clavis, mensura: crudum.mensura
-      }))
-  }
-}
+      .map((crudum): Caesamen => ({
+          status: this.praedicantur(crudum.status),
+          clavis: crudum.clavis, mensura: crudum.mensura
+        } as Caesamen))
+} }

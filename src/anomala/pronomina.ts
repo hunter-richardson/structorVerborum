@@ -1,4 +1,5 @@
 import Anomala, { Mantela } from './anomala';
+import '../extensions/array';
 import Nuntius from '../miscella/nuntius';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import { Encliticus } from '../praebeunda/valores';
@@ -12,16 +13,21 @@ import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
 
 @Ultimum @Ignavum @Nuntius.factum
 class Pronomina extends Anomala<Pronomen> {
+  @Nuntius.captor get omnia(): Promise<string[]> {
+    return new Promise(() => [
+        'aliquid', 'aliquod', 'aliquodpiam', 'ecquid', 'ecquod', 'ego', 'egomet', 'hoc', 'id', 'idem', 'illud', 'ipsum', 'istud', 'quid', 'quidnam', 'quidpiam', 'quidquam', 'quidque', 'quidvīs', 'quod', 'quodnam', 'quodpiam', 'quodvīs', 'sē', 'sēmet', 'tū', 'tūte', 'tūtemet'
+      ].sort().unique())
+  }
+
   @Nuntius.promittum
   protected async numeretur(): Promise<void> {
-    const ego: TabulaIrregula<Pronomen> = new TabulaIrregula<Pronomen>(Pronomen, 'ego')
-    const hoc: TabulaIrregula<Pronomen> = new TabulaIrregula<Pronomen>(Pronomen, 'hoc')
-    const id: TabulaIrregula<Pronomen> = new TabulaIrregula<Pronomen>(Pronomen, 'id')
-    const illud: TabulaIrregula<Pronomen> = new TabulaIrregula<Pronomen>(Pronomen, 'illud')
-    const se: TabulaIrregula<Pronomen> = new TabulaIrregula<Pronomen>(Pronomen, 'sē')
-
-    const egomet: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(ego, 'met')
-    const idem: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(id,
+    this.contenta['ego'] = new Mantela(new TabulaIrregula<Pronomen>(Pronomen, 'ego'))
+    this.contenta['hoc'] = new Mantela(new TabulaIrregula<Pronomen>(Pronomen, 'hoc'))
+    this.contenta['id'] = new Mantela(new TabulaIrregula<Pronomen>(Pronomen, 'id'))
+    this.contenta['illud'] = new Mantela(new TabulaIrregula<Pronomen>(Pronomen, 'illud'))
+    this.contenta['se'] = new Mantela(new TabulaIrregula<Pronomen>(Pronomen, 'sē'))
+    this.contenta['egomet'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['ego'], 'met'))
+    this.contenta[ 'idem' ] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['id'],
       (scriptum: string): string => {
         switch(scriptum) {
           case 'is':
@@ -29,15 +35,14 @@ class Pronomina extends Anomala<Pronomen> {
             return 'īdem'
           default:
             return `${scriptum}dem`
-        }
-      })
-    const ipsum: TabulaCollata<Pronomen> = new TabulaCollata<Pronomen>(
+      } }))
+    this.contenta['ipsum'] = new Mantela(new TabulaCollata<Pronomen>(
              new TabulaIrregula<Pronomen>(Pronomen, 'ipsum'),
-             new TabulaRescripta<Pronomen>(illud,
-                   (scriptum: string): string => scriptum.replace('ll', 'ps')))
-    const istud: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(illud,
-              (scriptum: string): string => scriptum.replace('ll', 'st'))
-    const quid: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(id,
+             new TabulaRescripta<Pronomen>(this.contenta['illud'],
+                   (scriptum: string): string => scriptum.replace('ll', 'ps'))))
+    this.contenta['istud'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['illud'],
+              (scriptum: string): string => scriptum.replace('ll', 'st')))
+    this.contenta['quid'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['id'],
       (scriptum: string): string => {
         switch(scriptum) {
           case 'ea':
@@ -51,9 +56,8 @@ class Pronomina extends Anomala<Pronomen> {
             return 'cui'
           default:
             return scriptum.replace('e', 'qu')
-        }
-      })
-    const quod: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(quid,
+      } }))
+    this.contenta['quod'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['quid'],
       (scriptum: string): string => {
         switch(scriptum) {
           case 'quid':
@@ -62,59 +66,29 @@ class Pronomina extends Anomala<Pronomen> {
             return 'quī'
           default:
             return scriptum
-        }
-      })
-    const tu: TabulaCollata<Pronomen> = new TabulaCollata<Pronomen>(
+      } }))
+    this.contenta['tu'] = new Mantela(new TabulaCollata<Pronomen>(
           new TabulaIrregula<Pronomen>(Pronomen, 'tū'),
-          new TabulaRescripta<Pronomen>(se,
-                (scriptum: string): string => scriptum.replace('s', 't')))
-    const aliquid: TabulaPraefixa<Pronomen> = new TabulaPraefixa<Pronomen>('ali', quid)
-    const aliquod: TabulaPraefixa<Pronomen> = new TabulaPraefixa<Pronomen>('ali', quod)
-    const aliquodpiam: TabulaCircumfixa<Pronomen> = new TabulaCircumfixa<Pronomen>('ali', quod, 'piam')
-    const ecquid: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(quid,
-      (scriptum: string): string => (scriptum === 'cuius' ? 'ecculus' : `ec${scriptum}`))
-    const ecquod: TabulaPraefixa<Pronomen> = new TabulaPraefixa<Pronomen>('ec', quod)
-    const quidnam: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quid, 'nam')
-    const quidpiam: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quid, 'piam')
-    const quidquam: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quid, 'quam')
-    const quidque: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quid, Encliticus.coniugans)
-    const quidvis: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quid, 'vīs')
-    const quodnam: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quod, 'nam')
-    const quodpiam: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quod, 'piam')
-    const quodvis: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(quod, 'vīs')
-    const semet: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(se, 'met')
-    const tute: TabulaRescripta<Pronomen> = new TabulaRescripta<Pronomen>(tu,
-      (scriptum: string): string => scriptum === 'tū' ? 'tūte' : scriptum)
-    const tutemet: TabulaSuffixa<Pronomen> = new TabulaSuffixa<Pronomen>(tute, 'met')
-
-    this.contenta.set('aliquid', new Mantela(aliquid))
-    this.contenta.set('aliquod', new Mantela(aliquod))
-    this.contenta.set('aliquodpiam', new Mantela(aliquodpiam))
-    this.contenta.set('ecquid', new Mantela(ecquid))
-    this.contenta.set('ecquod', new Mantela(ecquod))
-    this.contenta.set('ego', new Mantela(ego))
-    this.contenta.set('egomet', new Mantela(egomet))
-    this.contenta.set('hoc', new Mantela(hoc))
-    this.contenta.set('id', new Mantela(id))
-    this.contenta.set('idem', new Mantela(idem))
-    this.contenta.set('illud', new Mantela(illud))
-    this.contenta.set('ipsum', new Mantela(ipsum))
-    this.contenta.set('istud', new Mantela(istud))
-    this.contenta.set('quid', new Mantela(quid))
-    this.contenta.set('quidnam', new Mantela(quidnam))
-    this.contenta.set('quidpiam', new Mantela(quidpiam))
-    this.contenta.set('quidquam', new Mantela(quidquam))
-    this.contenta.set('quidque', new Mantela(quidque))
-    this.contenta.set('quidvīs', new Mantela(quidvis))
-    this.contenta.set('quod', new Mantela(quod))
-    this.contenta.set('quodnam', new Mantela(quodnam))
-    this.contenta.set('quodpiam', new Mantela(quodpiam))
-    this.contenta.set('quodvīs', new Mantela(quodvis))
-    this.contenta.set('sē', new Mantela(se))
-    this.contenta.set('sēmet', new Mantela(semet))
-    this.contenta.set('tū', new Mantela(tu))
-    this.contenta.set('tūte', new Mantela(tute))
-    this.contenta.set('tūtemet', new Mantela(tutemet))
+          new TabulaRescripta<Pronomen>(this.contenta['se'],
+                (scriptum: string): string => scriptum.replace('s', 't'))))
+    this.contenta['aliquid'] = new Mantela(new TabulaPraefixa<Pronomen>('ali', this.contenta['quid']))
+    this.contenta['aliquod'] = new Mantela(new TabulaPraefixa<Pronomen>('ali', this.contenta['quod']))
+    this.contenta[ 'aliquodpiam' ] = new Mantela(new TabulaCircumfixa<Pronomen>('ali', this.contenta['quod'], 'piam'))
+    this.contenta['ecquid'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['quid'],
+      (scriptum: string): string => (scriptum === 'cuius' ? 'ecculus' : `ec${scriptum}`)))
+    this.contenta['ecquod'] = new Mantela(new TabulaPraefixa<Pronomen>('ec', this.contenta['quod']))
+    this.contenta['quidnam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'nam'))
+    this.contenta['quidpiam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'piam'))
+    this.contenta['quidquam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'quam'))
+    this.contenta['quidque'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], Encliticus.coniugans))
+    this.contenta['quidvis'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'vīs'))
+    this.contenta['quodnam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'nam'))
+    this.contenta['quodpiam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'piam'))
+    this.contenta['quodvis'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'vīs'))
+    this.contenta['semet'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['se'], 'met'))
+    this.contenta['tute'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['tu'],
+      (scriptum: string): string => scriptum === 'tū' ? 'tūte' : scriptum))
+    this.contenta['tutemet'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['tute'], 'met'))
   }
 }
 

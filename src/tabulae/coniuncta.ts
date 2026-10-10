@@ -28,9 +28,7 @@ export default class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> 
       else {
         primum.scriptum = `${primum.scriptum}${secundum.scriptum}`
         this._haec.push(primum)
-      }
-    })
-  }
+  } }) }
 
   constructor(private readonly prima: Tabula<Hoc> | Tabulator<Hoc>,
               private readonly secunda: Tabula<Hoc> | Tabulator<Hoc>)

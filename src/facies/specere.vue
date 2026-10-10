@@ -9,7 +9,7 @@
   import Docere from './docere.vue';
   import Gustulare from './gustulare.vue';
   import Inflectere from './inflectere.vue';
-import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
+  import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
   let valorEnclitici: string = Encliticus.nullus
 
@@ -21,7 +21,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
   const valores: string[] = []
   const valoresEnclitici: string[] = []
 
-  const { gustulus, verbum } = defineProps<Forma>();
+  const { gustulus, verbum } = defineProps<Forma>()
   const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
   const multiplex: boolean = verbum instanceof Multiplex
   const propriabile: boolean = [
@@ -44,7 +44,7 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
           if(actus.modus.aequatur('participium'))
             eventus.value = {
               ...(await actus.participialis()),
-              categoria: 'adiectivum'
+              categoria: Adiectivum.name.toLowerCase()
             }; break
         } case 'numerus': {
           const numerus: Numerale = verbum as Numerale
@@ -52,14 +52,13 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
           if(agendum !== undefined)
             eventus.value = {
               ...agendum,
-              categoria: 'numeramen'
+              categoria: Numeramen.name.toLowerCase()
             }
         }; break
         case 'numeramen': {
           const numeramen: Numeramen = verbum as Numeramen
           const referendus: Eventus | undefined = await numeramen.refer()
-          if(referendus !== undefined)
-            eventus.value = referendus
+          if(referendus !== undefined) eventus.value = referendus
         }; break
       }
     }
@@ -77,10 +76,10 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
   function addeProprium() {
     if (verbum) {
       if ([ multiplex, valorEnclitici.length > 0 ].all())
-        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus;
+        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus
       if(propriabile)
         verbum.scriptum = verbum.scriptum.capitalize()
-      locutor.addatur(verbum);
+      locutor.addatur(verbum)
     }
   }
 </script>
@@ -100,8 +99,8 @@ import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
                   :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
                   :items='valoresEnclitici' chips flat open-on-clear />
       </template>
-      <Docere :docendum='verbum.categoria.valor' />
-      <Docere v-if='multiplex' v-for='valor in valores' :key='valor' :docendum='valor' />
+      <Docere :prima='verbum.categoria.valor' />
+      <Docere v-if='multiplex' v-for='valor in valores' :key='valor' :prima='valor' />
       <v-btn-toggle>
         <template v-if='verbum?.paratust()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'

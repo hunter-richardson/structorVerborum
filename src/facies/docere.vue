@@ -1,41 +1,50 @@
 <script setup lang='ts'>
-  import { onMounted, ref, type Ref } from 'vue'
+  import { onMounted, defineProps, ref, type Ref } from 'vue'
   import { dominus } from '../miscella/dominus'
   import '../extensions/array'
   import fs from 'fs'
-  import { VueMarkdownIt as markdown } from '@f3ve/vue-markdown-it'
+  import { VueMarkdownIt as Markdown } from '@f3ve/vue-markdown-it'
   import path from 'path'
 
-  let onerans: boolean = true
+  type Monstrandum = {
+    onerans: boolean,
+    doctum?: string,
+    res: string
+  }
 
-  const docendum: Ref<string | undefined> = ref<string | undefined>(undefined)
-  const doctum: Ref<string | undefined> = ref<string | undefined>(undefined)
+  const prima: string = defineProps<string>()
 
-  async function exoneratur() { onerans = false }
+  const monstranda: Ref<Monstrandum[]> = ref<Monstrandum[]>([ await doceatur(prima) ])
 
-  function reoneratur() { onerans = true }
+  let concitatust: Ref<boolean> = ref<boolean>(false)
 
-  async function doceatur() {
-    reoneratur()
-    doctum.value = ''
-    const via: string = `${path.join('/res/docenda', dominus.lingua.signum, docendum.value!)}.md`
-    fs.createReadStream(via)
-      .on('data', (pars) =>
-          doctum.value = `${doctum.value}${typeof pars === 'string' ? pars.trim() : pars}`)
+  async function doceatur(res: string): Promise<Monstrandum> {
+    return await new Promise((solvatur) => {
+      const monstrandum: Monstrandum = {
+        onerans: true,
+        res: res
+      }; const via: string = `${path.join('/res/docenda', dominus.lingua.signum, monstrandum.res)}.md`
+      fs.createReadStream(via)
+        .on('data', (pars) => monstrandum.doctum += (typeof pars === 'string' ? pars.trim() : pars)
+        .on('end', () => {
+          monstrandum.onerans = false
+          solvatur(monstrandum)
+        })
+    })
   }
 
   async function adliumDoceatur(eventus: MouseEvent) {
-    reoneratur()
     eventus.preventDefault()
     const parma: string | undefined =
         (eventus.currentTarget as HTMLElement)?.closest('a')
             ?.getAttribute('href') ?? undefined
-    if(parma !== undefined && parma.endsWith('.md')) {
-      docendum.value = parma.split('/').last().split('.').first()
-      return doceatur()
-    } else if(parma !== undefined)
-      return new Promise<void>(() =>
+    if(parma !== undefined) {
+      if(parma.endsWith('.md')) {
+        const res: string = parma.split('/').last().split('.').first();
+        monstranda.value.push(await doceatur(res));
+      } else return await new Promise<void>(() =>
           window.open(parma, '_blank', 'noopener,nooreferrer'))
+    }
   }
 
   async function iungantur() {
@@ -47,18 +56,22 @@
                                 { once: true, capture: true, passive: false }))
   }
 
-  onMounted(async () => {
-    await doceatur().then(() => iungantur())
-                    .then(() => exoneratur())
-  })
+  onMounted(async () => await iungantur())
 </script>
 
 <template>
-  <<v-skeleton-loader v-if='onerans' :loading='onerans' type='paragraph'
-                      :loading-text="$t('scripta.docere.onerans')" />
-  <!-- eslint-disable-next-line no-extra-boolean-cast -->
-  <div v-else-if='doctum !== undefined && doctum.length > 0'
-       class='markdown' :id="`doctum.${docendum}`">
-    <markdown breaks='true' :source='doctum' />
-  </div>
+  <v-dialog v-model='concitatust' full-width='true' lazy='true' scrollable='true'>
+    <template v-slot:activator='{ isActive: concitatust }'>
+      <v-btn :text='prima' @click='concitatust = true' />
+    </template>
+    <v-card v-for='monstrandum in monstranda' key='monstrandum.res'>
+      <v-card-title>{{ monstrandum.res }}</v-card-title>
+      <v-skeleton-loader v-if='monstrandum.onerans' type='paragraph'
+                         :loading-text='$t(`scripta.docere.onerans`)' />
+      <div v-else-if='monstrandum.doctum !== undefined && monstrandum.doctum.length > 0'
+           :id='`doctum.${monstrandum.res}`' class='markdown'>
+        <Markdown :source='monstrandum.doctum' breaks='true' />
+      </div>
+    </v-card>
+  </v-dialog>
 </template>

@@ -15,9 +15,7 @@ export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
       tabula.haec.forEach((illud) => {
         if(this._haec.none((hoc) => equal(hoc.valores, illud.valores)))
           this._haec.push(illud)
-      })
-    })
-  }
+  }) }) }
 
   constructor(...colligenda: (Tabula<Hoc> | Tabulator<Hoc>)[]) {
     super(); colligenda.forEach((colligendum) => {

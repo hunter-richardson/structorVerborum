@@ -86,7 +86,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc>
   gerundium!: string
   supinum!: string
 
-  async actus(): Promise<Eventus | undefined> {
+  @Nuntius.promittum async actus(): Promise<Eventus | undefined> {
     return await dictionarium.referatur({
       scriptum: this.infinitivum,
       categoria: 'actus'

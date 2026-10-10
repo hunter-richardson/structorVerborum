@@ -10,19 +10,14 @@ export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
   get tabula(): Tabula<Hoc> { return this._tabula }
 }
 
-export default abstract class Anomala<Hoc extends Multiplex> implements Disposable {
-  protected readonly contenta: Map<string, Mantela<Hoc>> = new Map
+export default abstract class Anomala<Hoc extends Multiplex> {
+  protected readonly contenta: Record<string, Tabulator<Hoc>> = {}
   protected abstract numeretur(): Promise<void>
+  abstract get omnia(): Promise<string[]>
 
-  @Nuntius.promittum async omnia(): Promise<string[]> {
-    if (!this.contenta.size) this.numeretur()
-    return [...this.contenta.keys()].sort()
+  @Nuntius.promittum async feratur(lemma: string): Promise<Tabulator<Hoc> | undefined> {
+    if (!this.contenta) await this.numeretur()
+    else if(!(lemma in this.contenta)) return undefined
+    return this.contenta[lemma]
   }
-
-  @Nuntius.promittum async feratur(lemma: string): Promise<Mantela<Hoc> | undefined> {
-    if (!this.contenta.size) this.numeretur()
-    return this.contenta.get(lemma)
-  }
-
-  @Nuntius.exutor [Symbol.dispose](): void { this.contenta.clear() }
 }

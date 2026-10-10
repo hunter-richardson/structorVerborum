@@ -23,22 +23,17 @@ export function loquatur (res: Res) {
 
       res.verba.forEach(verbum => {
         let categoria: string = verbum.categoria
-        cy.get('#quaerenda.categoriae')
-          .select(categoria)
+        cy.get('#quaerenda.categoriae').select(categoria)
         // cy.wait(1000)
-        cy.get('#quaerenda.lemmae')
-          .type(verbum.lemma)
+        cy.get('#quaerenda.lemmae').type(verbum.lemma)
         // cy.wait(1000)
-        cy.get('[id^="aperi_"]')
-          .first().click()
+        cy.get('[id^="aperi_"]').first().click()
         // cy.wait(1000)
 
         if (verbum.valores) {
           verbum.valores.except(enclitici)
-            .forEach(valor =>
-              cy.get(`#colamen_${valor}`).click())
-          cy.get('[id^="selige_"]')
-            .first().click()
+            .forEach(valor => cy.get(`#colamen_${valor}`).click())
+          cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
@@ -50,8 +45,7 @@ export function loquatur (res: Res) {
           verbum.sequendum.valores?.except(enclitici)
             .forEach(valor =>
               cy.get(`#colamen_${valor}`).click())
-              cy.get('[id^="selige_"]')
-                .first().click()
+              cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
@@ -67,15 +61,12 @@ export function loquatur (res: Res) {
           verbum.sequendum.valores?.except(enclitici)
             .forEach(valor =>
               cy.get(`#colamen_${valor}`).click())
-              cy.get('[id^="selige_"]')
-                .first().click()
+              cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
-        const encliticum: string = verbum.valores?.intersection(enclitici).first() ?? ''
-        if (encliticum) {
-          cy.get('#enclitica').select(encliticum)
-        }
+        const encliticus: string = verbum.valores?.intersection(enclitici).first() ?? ''
+        if (encliticus) cy.get('#enclitici').select(encliticus)
 
         // cy.wait(1000)
         cy.get('#adde').click()
@@ -87,8 +78,4 @@ export function loquatur (res: Res) {
       cy.window().then(fenestra => {
         fenestra.navigator.clipboard.readText().then((scriptum) => {
           expect(scriptum).to.eq(res.locutio)
-        })
-      })
-    })
-  })
-}
+})})})}) }

@@ -115,9 +115,7 @@ export default class Refector<Hoc extends Multiplex> {
         case '<': return comparatum < 0
         case '>': return comparatum > 0
         default: throw errator({ operator: operator })
-      }
-    }
-  }
+  } } }
 
   private praedicantur(status: string): Praedicendum<Hoc> {
     return (agendum: Agendum<Hoc>) => {
@@ -129,10 +127,8 @@ export default class Refector<Hoc extends Multiplex> {
           const { nomen, operator, quaerendus } = certamenStatus.groups
           if (nomen.length > 0 && operator.length > 0 && quaerendus.length > 0)
             praedicenda.push(this.praedicatur(nomen, operator, quaerendus))
-        }
-      }); return praedicenda.every((praedicendum) => praedicendum(agendum))
-    }
-  }
+      } }); return praedicenda.every((praedicendum) => praedicendum(agendum))
+  } }
 
   private agatur(actus: Actus, nomen?: string, novus?: string): Opus<Hoc> {
     switch(actus) {
@@ -146,19 +142,14 @@ export default class Refector<Hoc extends Multiplex> {
             const fultum: Fultum<Lineae> | undefined = agenda[numerus].valores.inveni(nomen)
             if(!fultum) throw new Error(`Nullum ${nomen} in ${agenda[numerus]}`)
             fultum.valor = novus
-          }
-        }
-    }
-  }
+  }  }  } }
 
   reficiatur(agenda: Agendum<Hoc>[]) {
     for(let numerus = 0; numerus < agenda.length; numerus++) {
       this.ista.forEach((istud) => {
         if(istud.praedicendum(agenda[numerus]))
           istud.opus(agenda, numerus)
-      })
-    }
-  }
+  }) } }
 
   constructor(readonly scriptura: string) {
     const scripturae: string[] =
@@ -176,10 +167,4 @@ export default class Refector<Hoc extends Multiplex> {
               this.ista.push({
                 praedicendum: this.praedicantur(status),
                 opus: this.agatur(actus as Actus, nomenNovi, valorNovi)
-              })
-          }
-        }
-      }
-    })
-  }
-}
+}  )} } } }) } }

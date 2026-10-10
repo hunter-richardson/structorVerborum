@@ -32,9 +32,4 @@ describe('Carthago delendast', () => {
             categoria: 'adiectivum',
             lemma: 'participium',
             valores: [ 'singularis', 'accusativus', 'femininum' ]
-          }
-        }
-      ]
-    })
-  })
-})
+} } ] })})})

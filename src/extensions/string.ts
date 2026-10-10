@@ -28,8 +28,7 @@ declare global {
     capitalize(): string
     isCapitalized(): boolean
     compare(other: string): SortResult
-  }
-}
+} }
 
 String.prototype.chop = function (length: number): string { return this.slice(0, -1 * length) }
 

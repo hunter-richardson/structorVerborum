@@ -22,7 +22,10 @@ export default class TabulaBifissa extends Tabula<Nomen> {
     if(tabulatorst(this.pluralis)) _pluralis = this.pluralis.tabula.colantur(this._pluralis)
     if(tabulast(this.pluralis)) _pluralis = this.pluralis.colantur(this._pluralis)
     if(!_singularis || !_pluralis) throw new Error('Inflexionis tabulae mala\'st')
-    else [ ..._singularis, ..._pluralis ].flat().forEach((hoc) => this._haec.push(hoc))
+    else [
+      ..._singularis,
+      ..._pluralis
+    ].flat().forEach((hoc) => this._haec.push(hoc))
   }
 
   constructor (private readonly singularis: Tabula<Nomen> | Tabulator<Nomen>,

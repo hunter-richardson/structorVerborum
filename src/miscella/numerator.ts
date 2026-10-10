@@ -70,8 +70,7 @@ const deFractis: RegexConstruct =  ///(S(·|∴|×|:{1,2})|(·|∴|×|:{1,2}))/
 
 spatium = { min: 0, max: 3 }
 
-const litterae =
-  [
+const litterae = [
     { prima: 'C', secunda: 'M', tertia: 'D' },  ///(CM|CD|D?C{0,3})/
     { prima: 'X', secunda: 'C', tertia: 'L' },  ///(XC|XL|L?X{0,3})/
     { prima: 'I', secunda: 'X', tertia: 'V' }   ///(IX|IV|V?I{0,3})/
@@ -134,8 +133,7 @@ export default class Numerator {
         const integer: number = Math.floor(arabicus)
         const fractus: Fractus = (12.0 * (arabicus - integer)).toString(12.0) as Fractus
         return `${this.romanus(integer)}${fracti[ fractus ] ?? ''}`
-      }
-    } else return ''
+    } } else return ''
   }
   // eslint enable complexity
 

@@ -1,4 +1,4 @@
-npm-debug.log*
+fnpm-debug.log*
 
 node_modules
 .DS_Store
@@ -38,6 +38,8 @@ src/cypress/support/e2e.ts
 res/loci/*.errata.yml
 
 src/**/*.d.ts
+!src/vue-shim.d.ts
+!src/pleasejs-shim.d.ts
 src/**/*.js
 
 *.config.js

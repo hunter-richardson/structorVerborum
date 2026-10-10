@@ -16,8 +16,15 @@ import { nomina } from '../anomala/nomina';
 import { pronomina } from '../anomala/pronomina';
 import '../extensions/array';
 import '../extensions/string';
+import {
+  Actus,
+  Adiectivum,
+  Adverbium,
+  Nomen,
+  Numeramen,
+  Pronomen
+  } from '../praebeunda/verba';
 import { type Referendum, type Tabulator } from '../praebeunda/interfecta';
-import type { Actus, Adiectivum, Nomen } from '../praebeunda/verba';
 
 export interface Lemma {
   categoria: string
@@ -45,122 +52,82 @@ class Dictionarium {
     return new Promise(async (seratur: (valor: Relatum[]) => void): Promise<void> => {
       if (!this._relata.length) this.perscribantur()
       return seratur(this._relata)
-    })
-  }
+  } )}
 
   @Nuntius.promittum
   async perscribantur(): Promise<void> {
     if (!this._relata.length) {
-      (actuum.omnia).forEach((res: string) => {
+      (await adverbiorum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Actus',
+          categoria: Adverbium.name.toLowerCase(),
           scriptum: res,
           lecta: true
-        })
-
+      })}); (await adiectivorum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Nomen',
+          categoria: Adiectivum.name.toLowerCase(),
           scriptum: res,
           lecta: true
-        })
-      });
-
-      (adverbiorum.omnia).forEach((res: string) => {
+      })}); (await incomparabilium.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Adverbium',
+          categoria: Adiectivum.name.toLowerCase(),
           scriptum: res,
           lecta: true
-        })
-      });
-
-      (adiectivorum.omnia).forEach((res: string) => {
+      })}); (await nominum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Adiectivum',
+          categoria: Nomen.name.toLowerCase(),
           scriptum: res,
           lecta: true
-        })
-      });
-
-      (incomparabilium.omnia).forEach((res: string) => {
+      })}); (await numeraminum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Adiectivum',
+          categoria: Numeramen.name.toLowerCase(),
           scriptum: res,
           lecta: true
-        })
-      });
-
-      (nominum.omnia).forEach((res: string) => {
+      })}); (await pronomina.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Nomen',
-          scriptum: res,
-          lecta: true
-        })
-      });
-
-      (numeraminum.omnia).forEach((res: string) => {
-        this._relata.push({
-          categoria: 'Numeramen',
-          scriptum: res,
-          lecta: true
-        })
-      });
-
-      (await pronomina.omnia()).forEach((res: string) => {
-        this._relata.push({
-          categoria: 'Pronomen',
+          categoria: Pronomen.name.toLowerCase(),
           scriptum: res,
           lecta: false
-        })
-      });
-
-      (actuum.omnia).forEach((res: string) => {
+      })}); (await actuum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Actus',
+          categoria: Actus.name.toLowerCase(),
           scriptum: res,
           lecta: false
-        })
-      });
-
-      (await adiectiva.omnia()).forEach((res: string) => {
+      })}); (await actus.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Adiectivum',
+          categoria: Actus.name.toLowerCase(),
           scriptum: res,
           lecta: false
-        })
-      });
-
-      (await nomina.omnia()).forEach((res: string) => {
+      })}); (await adiectiva.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: 'Nomen',
+          categoria: Adiectivum.name.toLowerCase(),
           scriptum: res,
           lecta: false
-        })
-      });
-
-      (verborum.omnia).forEach((res: string) => {
+      })}); (await nomina.omnia).forEach((res: string) => {
+        this._relata.push({
+          categoria: Nomen.name.toLowerCase(),
+          scriptum: res,
+          lecta: false
+      })}); (await verborum.omnia).forEach((res: string) => {
         const [categoria, scriptum] = res.split('/')
         this._relata.push({
-          categoria: categoria.capitalize(),
+          categoria: categoria,
           scriptum: scriptum,
           lecta: true
-        })
-      })
-    }
-  }
+  })} )} }
 
   private async _referaturActus(lemma: string, lecta: boolean): Promise<Tabulator<Actus> | undefined>
   { return lecta ? (await actuum.legatur(lemma)).unum : await actus.feratur(lemma) }
 
   private async _referaturAdiectivum(lemma: string, lecta: boolean): Promise<Tabulator<Adiectivum> | undefined> {
     if(lecta) {
-      const incomparabile: boolean = !(adiectivorum.omnia).includes(lemma)
+      const incomparabile: boolean = !(await adiectivorum.omnia).includes(lemma)
       return (await (incomparabile ? incomparabilium : adiectivorum).legatur(lemma)).unum
     } else return await adiectiva.feratur(lemma)
   }
 
   private async _referaturNomen(lemma: string, lecta: boolean): Promise<Tabulator<Nomen> | undefined> {
     if(lecta) {
-      const factum: boolean = (actuum.omnia).includes(lemma)
+      const factum: boolean = (await actuum.omnia).includes(lemma)
       if(factum)
            return (await actuum .legatur(lemma)).unum?.nomen()
       else return (await nominum.legatur(lemma)).unum
@@ -191,13 +158,11 @@ class Dictionarium {
             quaerenda.pars.length > 0
           ].all():
         return (await this.relata)
-          .filter((relatum) =>
-            [
+          .filter((relatum) => [
               relatum.scriptum.includes(quaerenda.pars),
               quaerenda.categoriae.includes(relatum.categoria)
             ].all()
-          )
-          .map((relatum) => relatum)
+          ).map((relatum) => relatum)
       case [
             quaerenda.categoriae.length > 0,
             quaerenda.pars.length == 0
@@ -218,8 +183,7 @@ class Dictionarium {
           ].all():
         return (await this.relata).map((relatum) => relatum)
       default: return []
-    }
-  }
+  } }
 
   @Nuntius.promittum
   async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
@@ -228,9 +192,7 @@ class Dictionarium {
       if (quaerenda) eventus = await this.referatur((await this.quaeratur(quaerenda)).random())
       else eventus = await this.referatur((await this.relata).random())
     } while (!eventus)
-
     return eventus
-  }
-}
+} }
 
 export const dictionarium: Dictionarium = new Dictionarium

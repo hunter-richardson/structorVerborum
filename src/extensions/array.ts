@@ -15,21 +15,17 @@ declare global {
     excludes(these?: T): boolean
     sortRecursive(...comparators: Comparator<T>[]): T[]
     clear(): void
-  }
-}
+    unique(): T[]
+} }
 
-Array.prototype.first = function <T>(predicate?: (param: T) => boolean): T {
-  if (predicate) {
-    const copy: T[] = this.filter(predicate)
-    return copy[0]
-  } else return this[0]
-}
+Array.prototype.first = function <T>(predicate?: (param: T) => boolean): T
+{ return predicate !== undefined ? this.find(predicate) : this[0] }
 
-Array.prototype.last = function <T>(predicate?: (param: T) => boolean): T {
-  if (predicate) {
-    const copy: T[] = this.filter(predicate)
-    return copy[copy.length - 1]
-  } else return this[this.length - 1]
+Array.prototype.last = function <T>(predicate?: (param: T) => boolean): T | undefined {
+  if(!predicate) return this[this.length - 1]
+  for(let index = this.length - 1; index >= 0; index--)
+  { if(predicate(this[index])) return this[index] }
+  return undefined
 }
 
 Array.prototype.random = function<T> (): T
@@ -38,12 +34,12 @@ Array.prototype.random = function<T> (): T
 Array.prototype.none = function<T> (predicate?: (param: T) => boolean): boolean
 { return !(predicate ? this.some(predicate) : this.any()) }
 
-//  eslint-disable-next-line no-extra-boolean-cast
 Array.prototype.all = function (): boolean
+//  eslint-disable-next-line no-extra-boolean-cast
 { return this.every((status) => !!status) }
 
-//  eslint-disable-next-line no-extra-boolean-cast
 Array.prototype.any = function (): boolean
+//  eslint-disable-next-line no-extra-boolean-cast
 { return this.some((status) => !!status) }
 
 Array.prototype.intersection = function <T> (withThese: T[]): T[]
@@ -73,6 +69,8 @@ Array.prototype.sortRecursive = function<T>(...comparators: Comparator<T>[]): T[
 }
 
 Array.prototype.clear = function() { this.length = 0 }
+
+Array.prototype.unique = function<T>(): T[] { return [ ...new Set(this) ] }
 
 // eslint-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}

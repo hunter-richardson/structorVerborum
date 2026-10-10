@@ -8,7 +8,7 @@ import Refector from '../miscella/refector';
 import { Ignavum, Ultimum } from '../miscella/usus';
 import { Tabulamen } from '../praebeunda/tabulamina';
 import { type Agendum, Multiplex } from '../praebeunda/verba';
-import { Fultum, type Lineae } from '../praebeunda/valores'
+import { Fultum, Res, type Lineae } from '../praebeunda/valores'
 import { type Tabulator } from '../praebeunda/interfecta';
 
 export type Par = { [ clavis: string ]: string }
@@ -44,16 +44,14 @@ export function tabulatorst<Hoc extends Multiplex>
 
   @Nuntius.captor
   get monstrentur (): string[] {
-    return [
-      ...new Set(this._haec.map((hoc) =>
-        hoc.valores.map(valor =>
-          `${valor.nomen}: ${valor.valor}`))
-        .flat().sort())
-    ]
+    return this._haec.map((hoc) => hoc.valores)
+                     .flat().sort(Res.ordinentur)
+                     .map((res) => `${res.nomen}: ${res.valor}`)
+                     .unique()
   }
 
-  colantur (radix: string): Hoc[];
-  colantur (...fulta: Par[]): Hoc[];
+  colantur (radix: string): Hoc[]
+  colantur (...fulta: Par[]): Hoc[]
   colantur (radix: string, ...fulta: Par[]): Hoc[]
 
   @Nuntius.modus
@@ -113,9 +111,9 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
         agenda.forEach((agendum) => {
           if (equal(vicarium.valores, agendum.valores))
           { agendum.scriptum = vicarium.scriptum; repositum = true }
-        }); if (!repositum) agenda.push(vicarium);
+        }); if (!repositum) agenda.push(vicarium)
       })
-    }; const caesor: Caesor<Hoc, Illud> = new Caesor<Hoc, Illud>()
+    } const caesor: Caesor<Hoc, Illud> = new Caesor<Hoc, Illud>()
     agenda.forEach(async (agendum) => {
       const radix: string = await caesor.caedatur(this.illud, agendum.valores)
       agendum.scriptum = radix.length > 0 ? `${radix}${agendum.scriptum}` : ''

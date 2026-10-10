@@ -45,18 +45,14 @@ abstract class Crustulum<Hoc extends Valor> {
   }
 
   @Nuntius.positor
-  set massa(valor: string) {
-    if(this.massa !== valor && this.valores.includes(valor))
-         this.coquatur(valor)
-    else this.coquatur(this.inhaesa)
-  }
+  set massa(valor: string)
+  { this.coquatur(this.massa !== valor && this.valores.includes(valor) ? valor : this.inhaesa) }
 
   @Nuntius.modus
   interverteUtrum() {
     const valor: string = this.massa
-    if(this.valores.length == 2) {
+    if(this.valores.length == 2)
       this.massa = this.valores[ +!this.valores.indexOf(valor) ]
-    }
   }
 
   async proferatur ()
@@ -74,8 +70,7 @@ abstract class Vexillum extends Crustulum<boolean> {
   constructor(vexillum: boolean) {
     super()
     this.valores = vexillum ? [ 'ita', 'non' ] : [ 'non', 'ita' ]
-  }
-}
+} }
 
 @Ultimum @Ignavum
 class Apices extends Vexillum {
@@ -105,10 +100,7 @@ class Sessio extends Crustulum<boolean> {
   override set massa(valor: string) { this.coquatur(valor) }
   get signum(): boolean { return this.coctast }
   get scriptum() { return '' }
-  async responsus() {
-    if(this.coctast) dominus.inhaereantur()
-    else dominus.deleantur()
-  }
+  async responsus() { dominus[this.coctast ? 'inhaereantur' : 'deleantur']() }
 }
 
 @Ultimum @Ignavum
@@ -118,11 +110,7 @@ class Assensus extends Crustulum<boolean | undefined> {
   get scriptum(): string { return ''; }
   get signum(): boolean | undefined
   { return this.coctast ? this.concoctast('assensit') : undefined }
-  async responsus () {
-    if(this.signum)
-         dominus.inhaereantur()
-    else dominus.deleantur()
-  }
+  async responsus() { dominus[this.signum === true ? 'inhaereantur' : 'deleantur']() }
 }
 
 @Ultimum @Ignavum
@@ -130,8 +118,7 @@ class Lingua extends Crustulum<string> {
   override valores = [ 'latina', 'anglica' ]
   get signum(): string { return this.massa === 'anglica' ? 'en' : 'la' }
   get scriptum(): string { return `/res/picta/${this.massa}.png` }
-  async responsus ()
-  { i18next.changeLanguage(this.signum) }
+  async responsus () { i18next.changeLanguage(this.signum) }
 }
 
 @Ultimum @Ignavum
@@ -139,8 +126,7 @@ class Facies extends Crustulum<string> {
   override valores = [ 'fusca', 'illustris' ]
   get signum(): string { return this.massa === 'illustris' ? 'light' : 'dark' }
   get scriptum(): string { return `${this.signum}_mode` }
-  async responsus ()
-  { useTheme().global.name.value = this.signum }
+  async responsus () { useTheme().global.name.value = this.signum }
 }
 
 @Ultimum @Ignavum
@@ -152,10 +138,9 @@ class Separator extends Crustulum<string> {
       case 'interpunctum': return '·'
       case 'nullum': return ''
       default: return ' '
-    }
-  }
+  } }
 
-  async responsus () {}
+  async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum @Nuntius.factum
@@ -189,23 +174,16 @@ class Dominus {
       domain: 'conans',
       sameSite: 'strict',
       expires: finis
-    })
-  }
+  } )}
 
-  inhaereantur() {
-    this.crustula.forEach((crustulum) =>
-      { if(!crustulum.coctast) crustulum.inhaereatur() })
-  }
+  inhaereantur()
+  { this.crustula.forEach((crustulum) => { if(!crustulum.coctast) crustulum.inhaereatur() }) }
 
-  deleantur() {
-    this.crustula.forEach((crustulum) =>
-      { if(crustulum.coctast) crustulum.deleatur() })
-  }
+  deleantur()
+  { this.crustula.forEach((crustulum) => { if(crustulum.coctast) crustulum.deleatur() }) }
 
-  proferantur() {
-    this.crustula.forEach(crustulum =>
-      { if(crustulum.coctast) crustulum.proferatur() })
-  }
+  proferantur()
+  { this.crustula.forEach(crustulum => { if(crustulum.coctast) crustulum.proferatur() }) }
 
   get sedit(): boolean { return this._sessio.signum }
 

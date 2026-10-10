@@ -25,10 +25,7 @@ export function Ignavum<Hoc extends Ullum> (valor: Hoc, contextus: ClassDecorato
             const parma: InstanceType<Hoc> = hoc()
             const valor: unknown = Reflect.get(parma, clavis, captor)
             return typeof valor === 'function' ? valor.bind(parma) : valor
-          }
-        })
-      }
-    }; Object.setPrototypeOf(Classis, valor)
+    } }) } }; Object.setPrototypeOf(Classis, valor)
     return Classis as unknown as Hoc
   } else throw new TypeError('Adornandu\'st classibus @Ignavum')
 }
@@ -39,6 +36,4 @@ export function Ultimum<Hoc extends { new(...parametra: any[]): object }> (parma
       if (new.target !== parma)
         throw new TypeError(`Ne ultimum inhaereatur ${parma.name}`)
       super(...parametra)
-    }
-  }
-}
+} } }

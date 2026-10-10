@@ -21,6 +21,4 @@ export function categoricum<Hoc extends Multiplex> (generanda: Generanda<Hoc>): 
       return {
         title: translation().tf(clavis, 'capitalize'),
         key: clavis
-      }
-    })
-}
+} }) }
