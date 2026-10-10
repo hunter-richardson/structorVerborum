@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "lint": "eslint src",
     "type-check": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
     "build.debug": "vite build --mode development",
     "build.release": "vite build --mode production"
@@ -87,8 +88,8 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "allowScripts": {
-    "cypress@16.1.0": true,
-    "highlight.js@9.18.5": true
+    "highlight.js@9.18.5": true,
+    "cypress@16.1.1": true
   },
   "dependencies": {
     "oxlint": "^1.83.0"
