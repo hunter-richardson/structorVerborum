@@ -27,7 +27,7 @@ class Gustulator {
   valor is Gustulus { return 'vita' in valor }
 
   #gustulamenust (valor: Gustulus | Gustulamen):
-  valor is Gustulamen { return 'error' in valor; }
+  valor is Gustulamen { return 'error' in valor }
 
   proponatur(gustulamen: Gustulamen): void
   proponatur(gustulus: Gustulus): void
@@ -38,13 +38,11 @@ class Gustulator {
               .ponatur((hoc) => (hoc.vita = valor.vita || 3000))
               .ponatur((hoc) => (hoc.color = valor.error ? 'red' : 'green'));
       if (valor.nuntium.length > 0)
-        structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium));
+        structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium))
       this._gustulus = structor.struatur
     }; if(this.gustulus !== undefined && this.gustulus.visibile === true) {
       setTimeout(this.gustulus.vita + 500)
             .then(() => this.extricetur())
-    }
-  }
-}
+} } }
 
 export const gustulator: Gustulator = new Gustulator
