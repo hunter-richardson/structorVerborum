@@ -61,7 +61,7 @@
     "make-dir": "^5.1.0",
     "new-tab-opener": "^1.0.2",
     "npm-run-all": "^4.1.5",
-    "oxc-minify": "^0.150.0",
+    "oxc-minify": "^0.152.0",
     "pleasejs": "^0.4.2",
     "ts-mixer": "^6.0.4",
     "ts-regex-builder": "^1.8.2",
