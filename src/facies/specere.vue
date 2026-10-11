@@ -5,9 +5,7 @@
   import { Encliticus, enclitici } from '../praebeunda/valores';
   import { locutor } from '../miscella/locutor';
   import { Actus, Multiplex, Numerale, Verbum, Numeramen, Adiectivum } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
   import Docere from './docere.vue';
-  import Gustulare from './gustulare.vue';
   import Inflectere from './inflectere.vue';
   import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
@@ -15,8 +13,6 @@
 
   const valores: string[] = []
   const valoresEnclitici: string[] = []
-
-  const gustulus = defineProps<Gustulus>()
 
   const verbum: Ref<Verbum | undefined> = ref()
   const eventus: Ref<Eventus | undefined> = ref()
@@ -82,7 +78,6 @@
 </script>
 
 <template>
-  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <Inflectere v-if='eventus !== undefined' :eventus='eventus' @blur='eventus = undefined' />
   <v-dialog v-else-if='verbum !== undefined && verbum.categoria.valor !== undefined'>
     <v-card :title='verbum.monstretur()'

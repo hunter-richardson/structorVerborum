@@ -1,13 +1,9 @@
 <script setup lang='ts'>
   import { useTranslation } from 'i18next-vue';
-import { defineProps, ref, type Ref } from 'vue';
-import Numerator from '../miscella/numerator';
-import { Numerale } from '../praebeunda/verba';
-import Gustulus from '../scriptura/gustulus';
-import Gustulare from './gustulare.vue';
-import Specere from './specere.vue';
-
-  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
+  import { ref, type Ref } from 'vue';
+  import Numerator from '../miscella/numerator';
+  import { Numerale } from '../praebeunda/verba';
+  import Specere from './specere.vue';
 
   type Arabicus = {
     integer: number,
@@ -40,7 +36,6 @@ import Specere from './specere.vue';
 </script>
 
 <template>
-  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <Specere v-if='numerale !== undefined' :verbum='numerale' @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />

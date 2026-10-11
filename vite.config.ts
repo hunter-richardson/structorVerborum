@@ -18,6 +18,7 @@ const figura: Figura = (env: ConfigEnv) => {
       mangle: {
         reserved: [
           'Sessio', 'Apices', 'UtendaU', 'Magnas', 'Assensus', 'Facies', 'Lingua', 'Separator',
+          'Actus', 'Adiectivum', 'Adverbium', 'Nomen', 'Numerale', 'Numeramen', 'Pronomen',
           'Categoria', 'Casus', 'Factus', 'Genus', 'Gradus', 'Modus',
           'Numerus', 'Persona', 'Referendus', 'Tempus', 'Vox'
         ]

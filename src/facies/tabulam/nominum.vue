@@ -1,18 +1,19 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue'
   import '../../extensions/array'
-  import { NomenActum } from '../../praebeunda/agenda'
+  import { TabulamenNominis, type TabulamenFacti } from '../../praebeunda/tabulamina'
   import { type Tabulator } from '../../praebeunda/interfecta'
-  import { Actus, Nomen } from '../../praebeunda/verba'
+  import { Nomen } from '../../praebeunda/verba'
   import inflectere from '../inflectere.vue'
   import tabulare from '../tabulare.vue'
+import type { Eventus } from '../../miscella/dictionarium';
 
   const { agendum } = defineProps<{ agendum: Tabulator<Nomen> }>();
-  const factum: boolean = agendum instanceof NomenActum;
-  const actus: Ref<Tabulator<Actus> | undefined> = ref(undefined);
+  const factum: boolean = agendum instanceof TabulamenNominis;
+  const actus: Ref<Eventus | undefined> = ref(undefined);
 
   async function refer ()
-  { actus.value = await (agendum as NomenActum).actus() ?? undefined; }
+  { actus.value = await (agendum as TabulamenFacti).actus() ?? undefined; }
 </script>
 
 <template>

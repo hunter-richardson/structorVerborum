@@ -150,6 +150,9 @@ an:
     appositus:
       titula: "Phrase Factory"
       rogatum: "What would you like to do or say?"
+      referrendi:
+        successus: "Successfully copied your phrase"
+        defectus: "Failed to copy your phrase"
       deCrustulis: |
         - Here cookies are used so that you may choose details for your own experience; or you can choose not to store cookies and use the site unchanged in this case, the only cookie stored would be your refusal of them.
         -

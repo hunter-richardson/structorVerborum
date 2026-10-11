@@ -1,4 +1,5 @@
-import Gustulus from './gustulus';
+import translation from '../extensions/i18next';
+import { Gustulus } from '../miscella/gustulator';
 import Structor from '../praebeunda/structor';
 
 export function referretne(): boolean
@@ -10,10 +11,12 @@ export async function referatur(valor?: string): Promise<Gustulus> {
             .ponatur((gustulus) => (gustulus.vita = 3000))
     if (referretne()) {
       await navigator.clipboard.writeText(valor)
-      return structor.ponatur((gustulus) => (gustulus.nuntium = 'Locutio referatur'))
+      return structor.ponatur((gustulus) =>
+          (gustulus.nuntium = translation().t(`scriptum.appositus.referrendi.successus`)))
                      .ponatur((gustulus) => (gustulus.color = 'green'))
                      .struatur
-    } else return structor.ponatur((gustulus) => (gustulus.nuntium = 'Modus referendum non fert'))
+    } else return structor.ponatur((gustulus) =>
+          (gustulus.nuntium = translation().t(`scriptum.appositus.referrendi.defectust`)))
                           .ponatur((gustulus) => (gustulus.color = 'red'))
                           .struatur
   } else return new Gustulus

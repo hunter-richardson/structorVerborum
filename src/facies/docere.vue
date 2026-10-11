@@ -6,7 +6,6 @@
   import fs from 'fs'
   import { VueMarkdownIt as Markdown } from '@f3ve/vue-markdown-it'
   import path from 'path'
-  import { pipeline } from 'node:stream'
 
   type Monstrandum = {
     onerans: boolean,
@@ -21,18 +20,15 @@
   const concitatust: Ref<boolean> = ref(false)
 
   async function doceatur(res: string): Promise<Monstrandum> {
-    return await new Promise((solvatur) => {
-      const monstrandum: Monstrandum = {
-        onerans: true,
-        res: res
-      }; const via: string = `${path.join('/res/docenda', dominus.lingua.signum, monstrandum.res)}.md`
-      await pipeline((await fs.open(via), 'r').createReadStream())
-        .on('data', (pars) => monstrandum.doctum! += (typeof pars === 'string' ? pars.trim() : pars))
-        .on('end', () => {
-          monstrandum.onerans = false
-          solvatur(monstrandum)
-        })
-    })
+    const via: string = `${path.join('/res/docenda', dominus.lingua.signum, res)}.md`
+    let doctum: string = ''
+    fs.createReadStream(via).on('data', (pars) =>
+          doctum += (typeof pars === 'string' ? pars.trim() : pars))
+    return {
+      onerans: false,
+      doctum: doctum,
+      res: res
+    };
   }
 
   async function adliumDoceatur(eventus: MouseEvent) {

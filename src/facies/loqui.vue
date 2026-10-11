@@ -3,24 +3,22 @@
   import draggable from 'vuedraggable'
   import { dominus } from '../miscella/dominus'
   import { locutor } from '../miscella/locutor'
-  import Gustulus from '../scriptura/gustulus'
   import Gustulare from './gustulare.vue'
-  import { ClassifyX } from 'classifyx'
-  import { Please } from 'pleasejs'
+  import { cfx } from 'classifyx'
+  import * as Please from 'pleasejs'
 
-  const pellucidum: string[] = ClassifyX({
+  const pellucidum: string[] = cfx({
     opacity: 0.5,
-    background: Please.make_color(
-      { value: dominus.facies.inhaereatur() }
-    )
+    background: Please.make_color({
+      value: dominus.facies.inhaereatur(),
+      format: 'hex'
+    })
   })
-
-  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
   const trahens: Ref<boolean> = ref(false)
 </script>
 
 <template>
-  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
+  <Gustulare />
   <v-chip-group id='locutio'>
     <draggable v-model='locutor.verba' :ghost-class='pellucidum'
                @start='trahens = true' @end='trahens = false'>

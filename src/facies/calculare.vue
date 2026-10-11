@@ -1,12 +1,8 @@
 <script setup lang='ts'>
-  import { defineProps, ref, type Ref } from 'vue';
+  import { ref, type Ref } from 'vue';
   import Numerator, { minimum as nihil, type Par } from '../miscella/numerator';
   import { Numerale } from '../praebeunda/verba';
-  import Gustulus from '../scriptura/gustulus';
-  import Gustulare from './gustulare.vue';
   import specere from './specere.vue';
-
-  const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
   const numerus: Ref<Numerale | undefined> = ref()
   const operator: Ref<string> = ref('')
@@ -48,7 +44,6 @@
 </script>
 
 <template>
-  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <specere v-if='numerus !== undefined' :verbum='numerus' @blur='numerus = undefined' />
   <div class='text-center'>
     <v-btn v-if='Number.isInteger(praevii.arabicus)' id='refer' icon='aequa' @click='aequa()' />

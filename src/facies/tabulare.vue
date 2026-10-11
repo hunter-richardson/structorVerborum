@@ -5,21 +5,18 @@
   import { type Tabulator } from '../praebeunda/interfecta'
   import { Multiplex } from '../praebeunda/verba'
   import { categoricum } from '../scriptura/columnae'
-  import Gustulus from '../scriptura/gustulus'
   import { Tabula } from '../tabulae/tabula'
-  import Gustulare from './gustulare.vue'
   import Onerare from './onerare.vue'
   import Specere from './specere.vue'
 
   const onerans: Ref<boolean> = ref<boolean>(true)
 
   export interface Forma {
-    gustulus?: Gustulus,
     agendum: Tabulator<Hoc>,
     categoria: string
   }
 
-  const { gustulus, agendum, categoria } = defineProps<Forma>()
+  const { agendum, categoria } = defineProps<Forma>()
   const tabula: Tabula<Hoc> | undefined = agendum.putetur()
 
   async function omnia(): Promise<Hoc[]> { return await tabula?.tabulentur() ?? [] }
@@ -62,7 +59,6 @@
 </script>
 
 <template>
-  <Gustulare v-if='gustulus !== undefined' :gustulus='gustulus' />
   <Onerare v-if='onerans' :onerans='onerans' :pittacium='categoria' />
   <Specere v-else-if='hoc !== undefined' :verbum='hoc' @blur='hoc = undefined' />
   <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec.clear()' />

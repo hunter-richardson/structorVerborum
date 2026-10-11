@@ -35,8 +35,6 @@ src/cypress/support
 
 res/loci/*.errata.yml
 
-src/**/*.d.ts
-!src/*-shim.d.ts
 src/**/*.js
 
 *.config.js

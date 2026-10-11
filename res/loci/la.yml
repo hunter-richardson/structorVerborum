@@ -177,6 +177,9 @@ la:
     appositus:
       titula: "Structor Verborum"
       rogatum: "Quid agere loquive velles"
+      referrendi:
+        successus: "Bene locutionem relatust"
+        defectus: "Locutionem referre defectust"
       deCrustulis: |
         - Hic crustula utantur ut singulas opteris pro usu tibi, aut crustula condita negare optares et situm immutatum utereris, atque solum crustulum conditum erit renutus eorum.
         -

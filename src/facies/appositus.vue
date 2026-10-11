@@ -10,6 +10,7 @@
   import Quaerere from './quaerere.vue';
   import '../extensions/array'
   import { locutor } from '../miscella/locutor';
+  import { gustulator } from '../miscella/gustulator';
 
   const separatores: string[] = Object.keys(dominus.separatores)
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]
@@ -33,15 +34,16 @@
   const trahens: Ref<boolean> = ref(false)
 
   async function refer()
-  { if(referretne()) {await referatur(locutor.locutio)} }
+  { if(referretne()) gustulator.proponatur(await referatur(locutor.locutio)) }
 
   function transduc()
-  { if(transduceretne()) { transducatur(locutor.locutio) } }
+  { if(transduceretne()) transducatur(locutor.locutio) }
 
   onMounted(() => { document.title = useTranslation().t('appositus.title') })
 </script>
 
 <template>
+  <Gustulare />
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
       <v-app-bar-title :text="$t('scripta.appositus.titula')" />
@@ -89,7 +91,7 @@
           <v-fab v-bind='activator' size='medium' icon='cake' />
         </template>
         <v-btn key='lingua' id='crustula.lingua' @click='dominus.lingua.interverteUtrum()' icon>
-          <v-img height='36px' width='36px' :src='dominus.lingua.scribatur()' />
+          <v-img height='36px' width='36px' :src='dominus.lingua.scriptum' />
         </v-btn>
         <v-btn id='crustula.facies' @click='dominus.facies.interverteUtrum()'
                :icon='dominus.facies.scriptum' />
