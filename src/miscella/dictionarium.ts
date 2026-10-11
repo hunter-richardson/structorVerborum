@@ -1,4 +1,9 @@
-import deepEqual from 'deep-equal';
+import { actus } from '@/anomala/actus';
+import { adiectiva } from '@/anomala/adiectiva';
+import { nomina } from '@/anomala/nomina';
+import { pronomina } from '@/anomala/pronomina';
+import '@/extensions/array';
+import '@/extensions/string';
 import {
   actuum,
   adiectivorum,
@@ -7,15 +12,9 @@ import {
   nominum,
   numeraminum,
   verborum
-  } from './lector';
-import Nuntius from './nuntius';
-import { Ignavum, Ultimum } from './usus';
-import { actus } from '../anomala/actus';
-import { adiectiva } from '../anomala/adiectiva';
-import { nomina } from '../anomala/nomina';
-import { pronomina } from '../anomala/pronomina';
-import '../extensions/array';
-import '../extensions/string';
+  } from '@/miscella/lector';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
 import {
   Actus,
   Adiectivum,
@@ -23,8 +22,9 @@ import {
   Nomen,
   Numeramen,
   Pronomen
-  } from '../praebeunda/verba';
-import { type Referendum, type Tabulator } from '../praebeunda/interfecta';
+  } from '@/praebeunda/verba';
+import deepEqual from 'deep-equal';
+import { type Referendum, type Tabulator } from '@/praebeunda/interfecta';
 
 export interface Lemma {
   categoria: string

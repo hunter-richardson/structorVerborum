@@ -1,27 +1,32 @@
 <script setup lang='ts'>
   import { ref, type Ref } from 'vue'
-  import draggable from 'vuedraggable'
-  import { dominus } from '../miscella/dominus'
-  import { locutor } from '../miscella/locutor'
-  import Gustulare from './gustulare.vue'
+  import draggable from 'vue-draggable-next'
+  import { dominus } from '@/miscella/dominus'
+  import { locutor } from '@/miscella/locutor'
   import { cfx } from 'classifyx'
-  import * as Please from 'pleasejs'
 
-  const pellucidum: string[] = cfx({
-    opacity: 0.5,
-    background: Please.make_color({
-      value: dominus.facies.inhaereatur(),
-      format: 'hex'
-    })
-  })
   const trahens: Ref<boolean> = ref(false)
+  const delectum: string = cfx({
+    background: dominus.facies.tonus,
+  })
+  const tractum: string = cfx({
+    backgrounnd: delectum,
+    opacity: 0.5
+  })
+  const pellucidum: string = cfx({
+    background: delectum,
+    opacity: 0.25
+  });
 </script>
 
 <template>
-  <Gustulare />
   <v-chip-group id='locutio'>
-    <draggable v-model='locutor.verba' :ghost-class='pellucidum'
-               @start='trahens = true' @end='trahens = false'>
+    <draggable v-model='locutor.verba'
+               @start='trahens = true'
+               @end='trahens = false'
+               :ghost-class='pellucidum'
+               :chosen-class='delectum'
+               :drag-class='tractum'>
       <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
         <template v-for='verbum in locutor.verba' :key='verbum.unicum'>
           <v-chip @click:close='locutor.removeatur(verbum.unicum)' close-icon='remove'

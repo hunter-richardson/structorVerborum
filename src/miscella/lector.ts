@@ -1,11 +1,6 @@
-import { CsvError, Options, parse } from 'csv-parse';
-import fs from 'fs/promises';
-import path from 'path';
-import { Writable } from 'stream';
-import { buildRegExp, choiceOf } from 'ts-regex-builder';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import { Lectum } from '../praebeunda/interfecta';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Lectum } from '@/praebeunda/interfecta';
 import {
   TabulamenActus,
   TabulamenAdiectivi,
@@ -14,14 +9,19 @@ import {
   TabulamenIncomparabilis,
   TabulamenNominis,
   TabulamenNumeraminis
-  } from '../praebeunda/tabulamina';
+  } from '@/praebeunda/tabulamina';
 import {
   errator,
   Lineae,
   nomina,
   Res
-  } from '../praebeunda/valores';
-import { Verbum } from '../praebeunda/verba';
+  } from '@/praebeunda/valores';
+import { Verbum } from '@/praebeunda/verba';
+import { CsvError, Options, parse } from 'csv-parse';
+import fs from 'fs/promises';
+import path from 'path';
+import { Writable } from 'stream';
+import { buildRegExp, choiceOf } from 'ts-regex-builder';
 import { pipeline } from 'node:stream';
 
 export class Ulla<Hoc> extends Array<Hoc> {
@@ -94,7 +94,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
   }
 
   @Nuntius.captor get omnia(): Promise<string[]>
-  { return fs.readdir('/path/to/your/directory') }
+  { return fs.readdir(this.scapum) }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
     this.via = path.join(this.scapum, `${lemma}.csv`)
@@ -110,7 +110,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
   }
 
   constructor(private scapum: string, private readonly structor: new () => Hoc)
-  { this.scapum = path.join('@/res', scapum) }
+  { this.scapum = path.join('@res', scapum) }
 
   [Symbol.dispose]() { this.haec.length = 0 }
 }

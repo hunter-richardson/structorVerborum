@@ -1,15 +1,18 @@
-import Anomala, { Mantela } from './anomala';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import Structor from '../praebeunda/structor';
-import { TabulamenIncomparabilis } from '../praebeunda/tabulamina';
-import { Encliticus } from '../praebeunda/valores';
-import { Adiectivum } from '../praebeunda/verba';
-import TabulaCollata from '../tabulae/collata';
-import TabulaConiuncta from '../tabulae/coniuncta';
-import TabulaIrregula from '../tabulae/irregula';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import Anomala, { Mantela } from '@/anomala/anomala';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import Structor from '@/praebeunda/structor';
+import { TabulamenIncomparabilis } from '@/praebeunda/tabulamina';
+import { Encliticus } from '@/praebeunda/valores';
+import { Adiectivum, TabulatorAdiectivorum } from '@/praebeunda/verba';
+import TabulaCollata from '@/tabulae/collata';
+import TabulaConiuncta from '@/tabulae/coniuncta';
+import TabulaIrregula from '@/tabulae/irregula';
+import TabulaRescripta from '@/tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '@/tabulae/rescriptae/suffixa';
+import { Mixin } from 'ts-mixer';
+
+class Anomalon extends Mixin(Mantela<Adiectivum>, TabulatorAdiectivorum) {}
 
 @Ultimum @Ignavum @Nuntius.factum
 class Adiectiva extends Anomala<Adiectivum> {
@@ -32,15 +35,15 @@ class Adiectiva extends Anomala<Adiectivum> {
                    .ponatur((adiectivum) => (adiectivum.genitivus = 'utrī'))
                    .struatur
 
-    this.contenta['mille'] = new Mantela(new TabulaIrregula<Adiectivum>(Adiectivum, 'mīlle'))
-    this.contenta['aliud'] = new Mantela(new TabulaCollata<Adiectivum>(
+    this.contenta['mille'] = new Anomalon(new TabulaIrregula<Adiectivum>(Adiectivum, 'mīlle'))
+    this.contenta['aliud'] = new Anomalon(new TabulaCollata<Adiectivum>(
         new TabulaIrregula<Adiectivum>(Adiectivum, 'aliud'),
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'pronominalis'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'alium'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'aliī'))
               .struatur))
-    this.contenta['ambo'] = new Mantela(new TabulaCollata<Adiectivum>(
+    this.contenta['ambo'] = new Anomalon(new TabulaCollata<Adiectivum>(
         new TabulaIrregula<Adiectivum>(Adiectivum, 'ambō'),
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda/pluralis'))
@@ -48,60 +51,60 @@ class Adiectiva extends Anomala<Adiectivum> {
               .ponatur((adiectivum) => (adiectivum.nominativus = 'ambum'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'ambī'))
               .struatur))
-    this.contenta['meum'] = new Mantela(new TabulaCollata<Adiectivum>(
+    this.contenta['meum'] = new Anomalon(new TabulaCollata<Adiectivum>(
         new TabulaIrregula<Adiectivum>(Adiectivum, 'meum'),
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'meum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'meī'))
               .struatur))
-    this.contenta['nonumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['nonumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'nōnum'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'nōnī'))
               .struatur, decimum))
-    this.contenta['octavumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['octavumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'octāvum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'octāvī'))
               .struatur, decimum))
-    this.contenta['quartumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['quartumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'quārtum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'quārtī'))
               .struatur, decimum))
-    this.contenta['quintumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['quintumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'quīntum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'quīntī'))
               .struatur, decimum))
-    this.contenta['septimumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['septimumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'septimum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'septimī'))
               .struatur, decimum))
-    this.contenta['sextumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['sextumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'sextum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'sextī'))
               .struatur, decimum))
-    this.contenta['tertiumdecimum'] = new Mantela(new TabulaConiuncta<Adiectivum>(
+    this.contenta['tertiumdecimum'] = new Anomalon(new TabulaConiuncta<Adiectivum>(
         new Structor(TabulamenIncomparabilis)
               .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
               .ponatur((adiectivum) => (adiectivum.nominativus = 'sextum'))
               .ponatur((adiectivum) => (adiectivum.genitivus = 'sextī'))
               .struatur, decimum))
-    this.contenta['duo'] = new Mantela(new TabulaRescripta<Adiectivum>(this.contenta['ambo'],
+    this.contenta['duo'] = new Anomalon(new TabulaRescripta<Adiectivum>(this.contenta['ambo'],
         (scriptum: string): string => scriptum.replace('amb', 'du')))
-    this.contenta['utrumque'] = new Mantela(new TabulaSuffixa<Adiectivum>(utrum, Encliticus.coniugans))
-    this.contenta['utrumcumque'] = new Mantela(new TabulaSuffixa<Adiectivum>(utrum, `cum${Encliticus.coniugans}`))
-    this.contenta['utrumvis'] = new Mantela(new TabulaSuffixa<Adiectivum>(utrum, 'vīs'))
+    this.contenta['utrumque'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, Encliticus.coniugans))
+    this.contenta['utrumcumque'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, `cum${Encliticus.coniugans}`))
+    this.contenta['utrumvis'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, 'vīs'))
   }
 }
 

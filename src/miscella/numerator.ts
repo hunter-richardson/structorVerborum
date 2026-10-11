@@ -1,6 +1,6 @@
+import Nuntius from '@/miscella/nuntius';
+import { Ultimum } from '@/miscella/usus';
 import RomanNumeral from 'js-roman-numerals';
-import Nuntius from './nuntius';
-import { Ultimum } from './usus';
 import {
   anyOf,
   buildRegExp,

@@ -1,5 +1,5 @@
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
 
 type Actio<Hoc> = (hoc: Hoc) => void
 

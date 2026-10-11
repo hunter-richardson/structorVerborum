@@ -1,6 +1,7 @@
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import Structor from '@/praebeunda/structor';
+import { setTimeout } from 'timers/promises';
 import Nuntius from './nuntius';
-import { Ignavum, Ultimum } from './usus';
-import Structor from '../praebeunda/structor';
 
 export class Gustulus {
   vita!: number
@@ -20,7 +21,7 @@ class Gustulator {
   private _gustulus?: Gustulus
   get gustulus(): Gustulus | undefined { return this._gustulus }
 
-  extricetur() { this._gustulus = undefined }
+  private extricetur() { this._gustulus = undefined }
 
   #gustulust(valor: Gustulus | Gustulamen):
   valor is Gustulus { return 'vita' in valor }
@@ -39,6 +40,9 @@ class Gustulator {
       if (valor.nuntium.length > 0)
         structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium));
       this._gustulus = structor.struatur
+    }; if(this.gustulus !== undefined && this.gustulus.visibile === true) {
+      setTimeout(this.gustulus.vita + 500)
+            .then(() => this.extricetur())
     }
   }
 }

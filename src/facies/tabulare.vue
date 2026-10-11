@@ -1,13 +1,13 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
   import { onMounted, ref, type Ref } from 'vue'
-  import '../extensions/array'
-  import { Columnae } from '../scriptura/columnae'
-  import { type Tabulator } from '../praebeunda/interfecta'
-  import { Multiplex } from '../praebeunda/verba'
-  import { categoricum } from '../scriptura/columnae'
-  import { Tabula } from '../tabulae/tabula'
-  import Onerare from './onerare.vue'
-  import Specere from './specere.vue'
+  import '@/extensions/array'
+  import { Columnae } from '@/scriptura/columnae'
+  import { type Tabulator } from '@/praebeunda/interfecta'
+  import { Multiplex } from '@/praebeunda/verba'
+  import { categoricum } from '@/scriptura/columnae'
+  import { Tabula } from '@/tabulae/tabula'
+  import Onerare from '@/facies/onerare.vue'
+  import Specere from '@/facies/specere.vue'
 
   const onerans: Ref<boolean> = ref<boolean>(true)
 
@@ -17,7 +17,7 @@
   }
 
   const { agendum, categoria } = defineProps<Forma>()
-  const tabula: Tabula<Hoc> | undefined = agendum.putetur()
+  const tabula: Tabula<Hoc> | undefined = agendum.tabula
 
   async function omnia(): Promise<Hoc[]> { return await tabula?.tabulentur() ?? [] }
 
@@ -28,7 +28,7 @@
     haec: haec
   })
 
-  const hoc: Ref<Hoc | undefined> = ref(undefined)
+  const hoc: Ref<Hoc | undefined> = ref()
 
   const seligenda: Fultum<Lineae>[] = [
     haec?.map((multiplex: Multiplex) => multiplex.valores()).flat().unique()

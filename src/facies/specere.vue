@@ -1,13 +1,13 @@
 <script setup lang='ts'>
-  import { defineProps, ref, type Ref } from 'vue';
-  import '../extensions/string';
-  import { type Eventus } from '../miscella/dictionarium';
-  import { Encliticus, enclitici } from '../praebeunda/valores';
-  import { locutor } from '../miscella/locutor';
-  import { Actus, Multiplex, Numerale, Verbum, Numeramen, Adiectivum } from '../praebeunda/verba';
-  import Docere from './docere.vue';
-  import Inflectere from './inflectere.vue';
-  import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
+  import { ref, type Ref } from 'vue';
+  import '@/extensions/string';
+  import { type Eventus } from '@/miscella/dictionarium';
+  import { Encliticus, enclitici } from '@/praebeunda/valores';
+  import { locutor } from '@/miscella/locutor';
+  import { Actus, Multiplex, Numerale, Verbum, Numeramen, Adiectivum } from '@/praebeunda/verba';
+  import Docere from '@/facies/docere.vue';
+  import Inflectere from '@/facies/inflectere.vue';
+  import type { TabulamenNumeraminis } from '@/praebeunda/tabulamina';
 
   const valorEnclitici: Ref<string> = ref(Encliticus.nullus)
 
@@ -23,9 +23,10 @@
     ].all()
 
   if(verbum.value !== undefined && multiplex) {
+    const scriptum: string = verbum.value.scriptum;
     (verbum.value as Multiplex).valores
         .forEach((valor) => valores.push(valor.valor))
-    enclitici.filter((valor) => !(verbum.value.scriptum.endsWith(valor)))
+    enclitici.filter((valor) => !(scriptum.endsWith(valor)))
              .forEach((valor) => valoresEnclitici.push(valor))
   }
 

@@ -1,10 +1,10 @@
+import '@/extensions/array';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Multiplex } from '@/praebeunda/verba';
 import equal from 'fast-deep-equal';
 import { Tabula, tabulast, tabulatorst } from './tabula';
-import '../extensions/array';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import { Multiplex } from '../praebeunda/verba';
-import { type Tabulator } from '../praebeunda/interfecta';
+import { type Tabulator } from '@/praebeunda/interfecta';
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {

@@ -1,14 +1,17 @@
-import Anomala, { Mantela } from './anomala';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import Structor from '../praebeunda/structor';
-import { TabulamenActus } from '../praebeunda/tabulamina';
-import { Actus } from '../praebeunda/verba';
-import TabulaCollata from '../tabulae/collata';
-import TabulaFissa from '../tabulae/fissa';
-import TabulaIrregula from '../tabulae/irregula';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta';
+import Anomala, { Mantela } from '@/anomala/anomala';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import Structor from '@/praebeunda/structor';
+import { TabulamenActus } from '@/praebeunda/tabulamina';
+import { Actus, TabulatorActuum } from '@/praebeunda/verba';
+import TabulaCollata from '@/tabulae/collata';
+import TabulaFissa from '@/tabulae/fissa';
+import TabulaIrregula from '@/tabulae/irregula';
+import TabulaPraefixa from '@/tabulae/rescriptae/praefixa';
+import TabulaRescripta from '@/tabulae/rescriptae/rescripta';
+import { Mixin } from 'ts-mixer';
+
+class Anomalon extends Mixin(Mantela<Actus>, TabulatorActuum) {}
 
 @Ultimum @Ignavum @Nuntius.factum
 class ActusAnomali extends Anomala<Actus> {
@@ -20,7 +23,7 @@ class ActusAnomali extends Anomala<Actus> {
 
   @Nuntius.promittum
   protected override async numeretur(): Promise<void> {
-    this.contenta['facere'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['facere'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'facere'),
         new Structor(TabulamenActus)
               .ponatur((actus) => (actus.principium = 'terta/varia/cumImperativoBrevi'))
@@ -31,12 +34,12 @@ class ActusAnomali extends Anomala<Actus> {
     const facereFalsum = new TabulaRescripta<Actus>(this.contenta['facere'],
         (scriptum: string) => scriptum === 'fac' ? 'face' : scriptum)
 
-    this.contenta['aiere'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'aiere'))
-    this.contenta['esse'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'esse'))
-    this.contenta['fieri'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'fierī'))
-    this.contenta['infieri'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'īnfierī'))
-    this.contenta['inquii'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'inquiī'))
-    this.contenta['coesse'] = new Mantela(new TabulaFissa<Actus>(
+    this.contenta['aiere'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'aiere'))
+    this.contenta['esse'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'esse'))
+    this.contenta['fieri'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'fierī'))
+    this.contenta['infieri'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'īnfierī'))
+    this.contenta['inquii'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'inquiī'))
+    this.contenta['coesse'] = new Anomalon(new TabulaFissa<Actus>(
         new TabulaRescripta<Actus>(this.contenta['esse'],
             (scriptum: string) => {
               switch(scriptum[0]) {
@@ -47,7 +50,7 @@ class ActusAnomali extends Anomala<Actus> {
               }
             }
         ), 'persona = prima: dele; persona = secunda: dele; modus = participium & vox = passiva: dele; persona = tertia: pone(persona: nulla)'))
-    this.contenta['dare'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['dare'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'dare'),
         new Structor(TabulamenActus)
               .ponatur((actus) => (actus.principium = 'prima'))
@@ -55,7 +58,7 @@ class ActusAnomali extends Anomala<Actus> {
               .ponatur((actus) => (actus.perfectum = 'dedisse'))
               .ponatur((actus) => (actus.supinum = 'dātum'))
               .struatur))
-    this.contenta['ferre'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['ferre'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'ferre'),
         new Structor(TabulamenActus)
               .ponatur((actus) => (actus.principium = 'tertia/cumImperativoBrevi'))
@@ -63,11 +66,11 @@ class ActusAnomali extends Anomala<Actus> {
               .ponatur((actus) => (actus.perfectum = 'tulisse'))
               .ponatur((actus) => (actus.supinum = 'lātum'))
               .struatur))
-    this.contenta['ire'] = new Mantela(new TabulaIrregula<Actus>(Actus, 'īre'))
-    this.contenta['perire'] = new Mantela(new TabulaFissa<Actus>(
+    this.contenta['ire'] = new Anomalon(new TabulaIrregula<Actus>(Actus, 'īre'))
+    this.contenta['perire'] = new Anomalon(new TabulaFissa<Actus>(
         new TabulaPraefixa<Actus>('per', this.contenta['ire']),
         'persona ! tertia & tempus < perfect: dele; persona = tertia & tempus < perfect: pone(persona: nulla)'))
-    this.contenta['velle'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['velle'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'velle'),
         new Structor(TabulamenActus)
               .ponatur((actus) => (actus.principium = 'tertia'))
@@ -75,24 +78,24 @@ class ActusAnomali extends Anomala<Actus> {
               .ponatur((actus) => (actus.praesens = 'volere'))
               .ponatur((actus) => (actus.perfectum = 'voluisse'))
               .struatur))
-    this.contenta['malle'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['malle'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'mālle'),
         new TabulaRescripta<Actus>(this.contenta['velle'],
           (scriptum: string) => scriptum.replace('ve', 'mā'))))
-    this.contenta['meminisse'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['meminisse'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'meminisse'),
         new Structor(TabulamenActus)
               .ponatur((actus) => (actus.scriptura = 'modus ! participium & tempus < perfectum: dele; modus = participium & tempus ! praesens; dele; tempus = perfectum: pone(tempus: praesens); tempus = plusquamperfectum: pone(tempus: infectum); tempus = exigendum: pone(tempus: futurum)'))
               .ponatur((actus) => (actus.principium = 'tertia'))
               .ponatur((actus) => (actus.perfectum = 'meminisse'))
               .struatur))
-    this.contenta['abdare'] = new Mantela(new TabulaPraefixa<Actus>('ab', this.contenta['dare']))
-    this.contenta['abesse'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['esse'],
+    this.contenta['abdare'] = new Anomalon(new TabulaPraefixa<Actus>('ab', this.contenta['dare']))
+    this.contenta['abesse'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['esse'],
         (scriptum: string) => `${scriptum.startsWith('f') ? 'ā' : 'ab'}${scriptum}`))
-    this.contenta['abire'] = new Mantela(new TabulaPraefixa<Actus>('ab', this.contenta['ire']))
-    this.contenta['afferre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['abire'] = new Anomalon(new TabulaPraefixa<Actus>('ab', this.contenta['ire']))
+    this.contenta['afferre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => `a${scriptum[0]}${scriptum}`))
-    this.contenta['auferre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['auferre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => {
           switch(scriptum[0]) {
             case 'f': return `au${scriptum}`
@@ -101,7 +104,7 @@ class ActusAnomali extends Anomala<Actus> {
             default: return ''
           }
         }))
-    this.contenta['nolle'] = new Mantela(new TabulaCollata<Actus>(
+    this.contenta['nolle'] = new Anomalon(new TabulaCollata<Actus>(
         new TabulaIrregula<Actus>(Actus, 'nōlle'),
         new TabulaRescripta<Actus>(this.contenta['velle'],
           (scriptum: string) => {
@@ -114,10 +117,10 @@ class ActusAnomali extends Anomala<Actus> {
                 return scriptum.replace('ve', 'nō')
             }
           })))
-    this.contenta['coire'] = new Mantela(new TabulaPraefixa<Actus>('co', this.contenta['ire']))
-    this.contenta['collabefieri'] = new Mantela(new TabulaPraefixa<Actus>('collabe', this.contenta['fieri']))
-    this.contenta['confieri'] = new Mantela(new TabulaPraefixa<Actus>('cōn', this.contenta['fieri']))
-    this.contenta['conferre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['coire'] = new Anomalon(new TabulaPraefixa<Actus>('co', this.contenta['ire']))
+    this.contenta['collabefieri'] = new Anomalon(new TabulaPraefixa<Actus>('collabe', this.contenta['fieri']))
+    this.contenta['confieri'] = new Anomalon(new TabulaPraefixa<Actus>('cōn', this.contenta['fieri']))
+    this.contenta['conferre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => {
                         switch(scriptum[0]) {
                           case 'f': return `cōn${scriptum}`
@@ -126,12 +129,12 @@ class ActusAnomali extends Anomala<Actus> {
                           default: return scriptum
                         }
                       }))
-    this.contenta['dedare'] = new Mantela(new TabulaPraefixa<Actus>('dē', this.contenta['dare']))
-    this.contenta['deesse'] = new Mantela(new TabulaPraefixa<Actus>('dē', this.contenta['esse']))
-    this.contenta['deferre'] = new Mantela(new TabulaPraefixa<Actus>('dē', this.contenta['ferre']))
-    this.contenta['defieri'] = new Mantela(new TabulaPraefixa<Actus>('dē', this.contenta['fieri']))
-    this.contenta['deire'] = new Mantela(new TabulaPraefixa<Actus>('de', this.contenta['ire']))
-    this.contenta['differre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['dedare'] = new Anomalon(new TabulaPraefixa<Actus>('dē', this.contenta['dare']))
+    this.contenta['deesse'] = new Anomalon(new TabulaPraefixa<Actus>('dē', this.contenta['esse']))
+    this.contenta['deferre'] = new Anomalon(new TabulaPraefixa<Actus>('dē', this.contenta['ferre']))
+    this.contenta['defieri'] = new Anomalon(new TabulaPraefixa<Actus>('dē', this.contenta['fieri']))
+    this.contenta['deire'] = new Anomalon(new TabulaPraefixa<Actus>('de', this.contenta['ire']))
+    this.contenta['differre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => {
           switch(scriptum[0]) {
             case 'f': return `dif${scriptum}`
@@ -140,9 +143,9 @@ class ActusAnomali extends Anomala<Actus> {
             default: return scriptum
           }
         }))
-    this.contenta['disperire'] = new Mantela(new TabulaPraefixa<Actus>('disper', this.contenta['ire']))
-    this.contenta['didare'] = new Mantela(new TabulaPraefixa<Actus>('dī', this.contenta['dare']))
-    this.contenta['efferre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['disperire'] = new Anomalon(new TabulaPraefixa<Actus>('disper', this.contenta['ire']))
+    this.contenta['didare'] = new Anomalon(new TabulaPraefixa<Actus>('dī', this.contenta['dare']))
+    this.contenta['efferre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => {
           switch(scriptum[0]) {
             case 'f': return `ef${scriptum}`
@@ -151,10 +154,10 @@ class ActusAnomali extends Anomala<Actus> {
             default: return scriptum
           }
         }))
-    this.contenta['exire'] = new Mantela(new TabulaPraefixa<Actus>('ex', this.contenta['ire']))
-    this.contenta['inesse'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['esse'],
+    this.contenta['exire'] = new Anomalon(new TabulaPraefixa<Actus>('ex', this.contenta['ire']))
+    this.contenta['inesse'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['esse'],
         (scriptum: string) => `${(scriptum.startsWith('e') ? 'in' : 'īn')}${scriptum}`))
-    this.contenta['inferre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['inferre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string) => {
           switch(scriptum[0]) {
             case 'f': return `īn${scriptum}`
@@ -163,21 +166,21 @@ class ActusAnomali extends Anomala<Actus> {
             default: return scriptum
           }
         }))
-    this.contenta['interesse'] = new Mantela(new TabulaPraefixa<Actus>('inter', this.contenta['esse']))
-    this.contenta['interferre'] = new Mantela(new TabulaPraefixa<Actus>('inter', this.contenta['ferre']))
-    this.contenta['introferre'] = new Mantela(new TabulaPraefixa<Actus>('intrō', this.contenta['ferre']))
-    this.contenta['inire'] = new Mantela(new TabulaPraefixa<Actus>('in', this.contenta['ire']))
-    this.contenta['interire'] = new Mantela(new TabulaPraefixa<Actus>('inter', this.contenta['ire']))
-    this.contenta['introire'] = new Mantela(new TabulaPraefixa<Actus>('intro', this.contenta['ire']))
-    this.contenta['nequire'] = new Mantela(new TabulaPraefixa<Actus>('nequ', this.contenta['ire']))
-    this.contenta['obesse'] = new Mantela(new TabulaPraefixa<Actus>('ob', this.contenta['esse']))
-    this.contenta['obire'] = new Mantela(new TabulaPraefixa<Actus>('ob', this.contenta['ire']))
-    this.contenta['obsolefieri'] = new Mantela(new TabulaPraefixa<Actus>('obsole', this.contenta['fieri']))
-    this.contenta['offerre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['ferre'],
+    this.contenta['interesse'] = new Anomalon(new TabulaPraefixa<Actus>('inter', this.contenta['esse']))
+    this.contenta['interferre'] = new Anomalon(new TabulaPraefixa<Actus>('inter', this.contenta['ferre']))
+    this.contenta['introferre'] = new Anomalon(new TabulaPraefixa<Actus>('intrō', this.contenta['ferre']))
+    this.contenta['inire'] = new Anomalon(new TabulaPraefixa<Actus>('in', this.contenta['ire']))
+    this.contenta['interire'] = new Anomalon(new TabulaPraefixa<Actus>('inter', this.contenta['ire']))
+    this.contenta['introire'] = new Anomalon(new TabulaPraefixa<Actus>('intro', this.contenta['ire']))
+    this.contenta['nequire'] = new Anomalon(new TabulaPraefixa<Actus>('nequ', this.contenta['ire']))
+    this.contenta['obesse'] = new Anomalon(new TabulaPraefixa<Actus>('ob', this.contenta['esse']))
+    this.contenta['obire'] = new Anomalon(new TabulaPraefixa<Actus>('ob', this.contenta['ire']))
+    this.contenta['obsolefieri'] = new Anomalon(new TabulaPraefixa<Actus>('obsole', this.contenta['fieri']))
+    this.contenta['offerre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['ferre'],
         (scriptum: string): string => `${scriptum.startsWith('f') ? 'of' : 'ob'}${scriptum}`))
-    this.contenta['perferre'] = new Mantela(new TabulaPraefixa<Actus>('per', this.contenta['ferre']))
-    this.contenta['pervelle'] = new Mantela(new TabulaPraefixa<Actus>('per', this.contenta['velle']))
-    this.contenta['posse'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['esse'],
+    this.contenta['perferre'] = new Anomalon(new TabulaPraefixa<Actus>('per', this.contenta['ferre']))
+    this.contenta['pervelle'] = new Anomalon(new TabulaPraefixa<Actus>('per', this.contenta['velle']))
+    this.contenta['posse'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['esse'],
         (scriptum: string) => {
           switch(true) {
             case scriptum === 'esse': return 'posse'
@@ -188,64 +191,65 @@ class ActusAnomali extends Anomala<Actus> {
             default: return ''
           }
         }))
-    this.contenta['postferre'] = new Mantela(new TabulaPraefixa<Actus>('post', this.contenta['ferre']))
-    this.contenta['praeesse'] = new Mantela(new TabulaPraefixa<Actus>('prae', this.contenta['esse']))
-    this.contenta['praeterferre'] = new Mantela(new TabulaPraefixa<Actus>('praeter', this.contenta['ferre']))
-    this.contenta[ 'praeterire' ] = new Mantela(new TabulaPraefixa<Actus>('praeter', this.contenta[ 'ire' ]))
-    this.contenta['prodesse'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['esse'],
+
+    this.contenta['postferre'] = new Anomalon(new TabulaPraefixa<Actus>('post', this.contenta['ferre']))
+    this.contenta['praeesse'] = new Anomalon(new TabulaPraefixa<Actus>('prae', this.contenta['esse']))
+    this.contenta['praeterferre'] = new Anomalon(new TabulaPraefixa<Actus>('praeter', this.contenta['ferre']))
+    this.contenta[ 'praeterire' ] = new Anomalon(new TabulaPraefixa<Actus>('praeter', this.contenta[ 'ire' ]))
+    this.contenta['prodesse'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['esse'],
         (scriptum: string) => `${scriptum.startsWith('e') ? 'prō' : 'prōd'}${scriptum}`))
-    this.contenta['prodire'] = new Mantela(new TabulaPraefixa<Actus>('prōd', this.contenta['ire']))
-    this.contenta['proferre'] = new Mantela(new TabulaPraefixa<Actus>('prō', this.contenta['ferre']))
-    this.contenta['quire'] = new Mantela(new TabulaPraefixa<Actus>('qu', this.contenta['ire']))
-    this.contenta['redire'] = new Mantela(new TabulaPraefixa<Actus>('red', this.contenta['ire']))
-    this.contenta['referre'] = new Mantela(new TabulaRescripta<Actus>(this.contenta['esse'],
+    this.contenta['prodire'] = new Anomalon(new TabulaPraefixa<Actus>('prōd', this.contenta['ire']))
+    this.contenta['proferre'] = new Anomalon(new TabulaPraefixa<Actus>('prō', this.contenta['ferre']))
+    this.contenta['quire'] = new Anomalon(new TabulaPraefixa<Actus>('qu', this.contenta['ire']))
+    this.contenta['redire'] = new Anomalon(new TabulaPraefixa<Actus>('red', this.contenta['ire']))
+    this.contenta['referre'] = new Anomalon(new TabulaRescripta<Actus>(this.contenta['esse'],
         (scriptum: string) => `${scriptum.startsWith('t') ? 'ret' : 're'}${scriptum}`))
-    this.contenta['subesse'] = new Mantela(new TabulaPraefixa<Actus>('sub', this.contenta['esse']))
-    this.contenta['subire'] = new Mantela(new TabulaPraefixa<Actus>('sub', this.contenta['ire']))
-    this.contenta['sufferre'] = new Mantela(new TabulaPraefixa<Actus>('suf', this.contenta['ferre']))
-    this.contenta['superesse'] = new Mantela(new TabulaPraefixa<Actus>('super', this.contenta['esse']))
-    this.contenta['suffieri'] = new Mantela(new TabulaPraefixa<Actus>('suf', this.contenta['fieri']))
-    this.contenta['superfieri'] = new Mantela(new TabulaPraefixa<Actus>('super', this.contenta['fieri']))
-    this.contenta['transabire'] = new Mantela(new TabulaPraefixa<Actus>('trānsab', this.contenta['ire']))
-    this.contenta['transire'] = new Mantela(new TabulaPraefixa<Actus>('trāns', this.contenta['ire']))
-    this.contenta['venire'] = new Mantela(new TabulaPraefixa<Actus>('vēn', this.contenta['ire']))
-    this.contenta['arefacere'] = new Mantela(new TabulaPraefixa<Actus>('āre', facereFalsum))
-    this.contenta['arfacere'] = new Mantela(new TabulaPraefixa<Actus>('ār', facereFalsum))
-    this.contenta['benefacere'] = new Mantela(new TabulaPraefixa<Actus>('bene', facereFalsum))
-    this.contenta['calfacere'] = new Mantela(new TabulaPraefixa<Actus>('cal', facereFalsum))
-    this.contenta['calefacere'] = new Mantela(new TabulaPraefixa<Actus>('cale', facereFalsum))
-    this.contenta['commonefacere'] = new Mantela(new TabulaPraefixa<Actus>('commone', facereFalsum))
-    this.contenta['condocfacere'] = new Mantela(new TabulaPraefixa<Actus>('condoce', facereFalsum))
-    this.contenta['consuefacere'] = new Mantela(new TabulaPraefixa<Actus>('cōnsuē', facereFalsum))
-    this.contenta['expergefacere'] = new Mantela(new TabulaPraefixa<Actus>('expergē', facereFalsum))
-    this.contenta['fervefacere'] = new Mantela(new TabulaPraefixa<Actus>('fervē', facereFalsum))
-    this.contenta['infervefacere'] = new Mantela(new TabulaPraefixa<Actus>('inverve', facereFalsum))
-    this.contenta['labefacere'] = new Mantela(new TabulaPraefixa<Actus>('labe', facereFalsum))
-    this.contenta['liquifacere'] = new Mantela(new TabulaPraefixa<Actus>('liqui', facereFalsum))
-    this.contenta['madefacere'] = new Mantela(new TabulaPraefixa<Actus>('made', facereFalsum))
-    this.contenta['malefacere'] = new Mantela(new TabulaPraefixa<Actus>('male', facereFalsum))
-    this.contenta['mollifacere'] = new Mantela(new TabulaPraefixa<Actus>('molli', facereFalsum))
-    this.contenta['multifacere'] = new Mantela(new TabulaPraefixa<Actus>('multi', facereFalsum))
-    this.contenta['mansuefacere'] = new Mantela(new TabulaPraefixa<Actus>('mansuē', facereFalsum))
-    this.contenta['olfacere'] = new Mantela(new TabulaPraefixa<Actus>('ol', facereFalsum))
-    this.contenta['patefacere'] = new Mantela(new TabulaPraefixa<Actus>('pate', facereFalsum))
-    this.contenta['pavefacere'] = new Mantela(new TabulaPraefixa<Actus>('pave', facereFalsum))
-    this.contenta['putrefacere'] = new Mantela(new TabulaPraefixa<Actus>('putre', facereFalsum))
-    this.contenta['satisfacere'] = new Mantela(new TabulaPraefixa<Actus>('satis', facereFalsum))
-    this.contenta['stupefacere'] = new Mantela(new TabulaPraefixa<Actus>('stupe', facereFalsum))
-    this.contenta['tepefacere'] = new Mantela(new TabulaPraefixa<Actus>('tepe', facereFalsum))
-    this.contenta['tremefacere'] = new Mantela(new TabulaPraefixa<Actus>('treme', facereFalsum))
-    this.contenta['tumefacere'] = new Mantela(new TabulaPraefixa<Actus>('tume', facereFalsum))
-    this.contenta['vacuefacere'] = new Mantela(new TabulaPraefixa<Actus>('vacuē', facereFalsum))
-    this.contenta['incalfacere'] = new Mantela(new TabulaPraefixa<Actus>('incal', facereFalsum))
-    this.contenta['percalfacere'] = new Mantela(new TabulaPraefixa<Actus>('percal', facereFalsum))
-    this.contenta['recalfacere'] = new Mantela(new TabulaPraefixa<Actus>('recal', facereFalsum))
-    this.contenta['permadefacere'] = new Mantela(new TabulaPraefixa<Actus>('permade', facereFalsum))
-    this.contenta['subolfacere'] = new Mantela(new TabulaPraefixa<Actus>('subol', facereFalsum))
-    this.contenta['confervefacere'] = new Mantela(new TabulaPraefixa<Actus>('conferve', facereFalsum))
-    this.contenta['defervefacere'] = new Mantela(new TabulaPraefixa<Actus>('dēferve', facereFalsum))
-    this.contenta['obstupefacere'] = new Mantela(new TabulaPraefixa<Actus>('obstupe', facereFalsum))
-    this.contenta['rarefacere'] = new Mantela(new TabulaPraefixa<Actus>('rāre', facereFalsum))
+    this.contenta['subesse'] = new Anomalon(new TabulaPraefixa<Actus>('sub', this.contenta['esse']))
+    this.contenta['subire'] = new Anomalon(new TabulaPraefixa<Actus>('sub', this.contenta['ire']))
+    this.contenta['sufferre'] = new Anomalon(new TabulaPraefixa<Actus>('suf', this.contenta['ferre']))
+    this.contenta['superesse'] = new Anomalon(new TabulaPraefixa<Actus>('super', this.contenta['esse']))
+    this.contenta['suffieri'] = new Anomalon(new TabulaPraefixa<Actus>('suf', this.contenta['fieri']))
+    this.contenta['superfieri'] = new Anomalon(new TabulaPraefixa<Actus>('super', this.contenta['fieri']))
+    this.contenta['transabire'] = new Anomalon(new TabulaPraefixa<Actus>('trānsab', this.contenta['ire']))
+    this.contenta['transire'] = new Anomalon(new TabulaPraefixa<Actus>('trāns', this.contenta['ire']))
+    this.contenta['venire'] = new Anomalon(new TabulaPraefixa<Actus>('vēn', this.contenta['ire']))
+    this.contenta['arefacere'] = new Anomalon(new TabulaPraefixa<Actus>('āre', facereFalsum))
+    this.contenta['arfacere'] = new Anomalon(new TabulaPraefixa<Actus>('ār', facereFalsum))
+    this.contenta['benefacere'] = new Anomalon(new TabulaPraefixa<Actus>('bene', facereFalsum))
+    this.contenta['calfacere'] = new Anomalon(new TabulaPraefixa<Actus>('cal', facereFalsum))
+    this.contenta['calefacere'] = new Anomalon(new TabulaPraefixa<Actus>('cale', facereFalsum))
+    this.contenta['commonefacere'] = new Anomalon(new TabulaPraefixa<Actus>('commone', facereFalsum))
+    this.contenta['condocfacere'] = new Anomalon(new TabulaPraefixa<Actus>('condoce', facereFalsum))
+    this.contenta['consuefacere'] = new Anomalon(new TabulaPraefixa<Actus>('cōnsuē', facereFalsum))
+    this.contenta['expergefacere'] = new Anomalon(new TabulaPraefixa<Actus>('expergē', facereFalsum))
+    this.contenta['fervefacere'] = new Anomalon(new TabulaPraefixa<Actus>('fervē', facereFalsum))
+    this.contenta['infervefacere'] = new Anomalon(new TabulaPraefixa<Actus>('inverve', facereFalsum))
+    this.contenta['labefacere'] = new Anomalon(new TabulaPraefixa<Actus>('labe', facereFalsum))
+    this.contenta['liquifacere'] = new Anomalon(new TabulaPraefixa<Actus>('liqui', facereFalsum))
+    this.contenta['madefacere'] = new Anomalon(new TabulaPraefixa<Actus>('made', facereFalsum))
+    this.contenta['malefacere'] = new Anomalon(new TabulaPraefixa<Actus>('male', facereFalsum))
+    this.contenta['mollifacere'] = new Anomalon(new TabulaPraefixa<Actus>('molli', facereFalsum))
+    this.contenta['multifacere'] = new Anomalon(new TabulaPraefixa<Actus>('multi', facereFalsum))
+    this.contenta['mansuefacere'] = new Anomalon(new TabulaPraefixa<Actus>('mansuē', facereFalsum))
+    this.contenta['olfacere'] = new Anomalon(new TabulaPraefixa<Actus>('ol', facereFalsum))
+    this.contenta['patefacere'] = new Anomalon(new TabulaPraefixa<Actus>('pate', facereFalsum))
+    this.contenta['pavefacere'] = new Anomalon(new TabulaPraefixa<Actus>('pave', facereFalsum))
+    this.contenta['putrefacere'] = new Anomalon(new TabulaPraefixa<Actus>('putre', facereFalsum))
+    this.contenta['satisfacere'] = new Anomalon(new TabulaPraefixa<Actus>('satis', facereFalsum))
+    this.contenta['stupefacere'] = new Anomalon(new TabulaPraefixa<Actus>('stupe', facereFalsum))
+    this.contenta['tepefacere'] = new Anomalon(new TabulaPraefixa<Actus>('tepe', facereFalsum))
+    this.contenta['tremefacere'] = new Anomalon(new TabulaPraefixa<Actus>('treme', facereFalsum))
+    this.contenta['tumefacere'] = new Anomalon(new TabulaPraefixa<Actus>('tume', facereFalsum))
+    this.contenta['vacuefacere'] = new Anomalon(new TabulaPraefixa<Actus>('vacuē', facereFalsum))
+    this.contenta['incalfacere'] = new Anomalon(new TabulaPraefixa<Actus>('incal', facereFalsum))
+    this.contenta['percalfacere'] = new Anomalon(new TabulaPraefixa<Actus>('percal', facereFalsum))
+    this.contenta['recalfacere'] = new Anomalon(new TabulaPraefixa<Actus>('recal', facereFalsum))
+    this.contenta['permadefacere'] = new Anomalon(new TabulaPraefixa<Actus>('permade', facereFalsum))
+    this.contenta['subolfacere'] = new Anomalon(new TabulaPraefixa<Actus>('subol', facereFalsum))
+    this.contenta['confervefacere'] = new Anomalon(new TabulaPraefixa<Actus>('conferve', facereFalsum))
+    this.contenta['defervefacere'] = new Anomalon(new TabulaPraefixa<Actus>('dēferve', facereFalsum))
+    this.contenta['obstupefacere'] = new Anomalon(new TabulaPraefixa<Actus>('obstupe', facereFalsum))
+    this.contenta['rarefacere'] = new Anomalon(new TabulaPraefixa<Actus>('rāre', facereFalsum))
   }
 }
 

@@ -1,8 +1,8 @@
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import { Tabulator } from '../praebeunda/interfecta';
-import { Multiplex } from '../praebeunda/verba';
-import { Tabula } from '../tabulae/tabula';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Tabulator } from '@/praebeunda/interfecta';
+import { Multiplex } from '@/praebeunda/verba';
+import { Tabula } from '@/tabulae/tabula';
 
 @Ignavum @Ultimum @Nuntius.factum
 export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {

@@ -1,3 +1,17 @@
+import '@/extensions/array';
+import '@/extensions/string';
+import { dominus } from '@/miscella/dominus';
+import { numeraminum } from '@/miscella/lector';
+import Numerator from '@/miscella/numerator';
+import Nuntius from '@/miscella/nuntius';
+import { Ultimum } from '@/miscella/usus';
+import {
+  TabulamenAdiectivi,
+  TabulamenFacti,
+  TabulamenNominis,
+  TabulamenNumeraminis
+  } from '@/praebeunda/tabulamina';
+import { Tabula } from '@/tabulae/tabula';
 import { Mixin } from 'ts-mixer';
 import {
   buildRegExp,
@@ -9,21 +23,7 @@ import {
   startOfString
   } from 'ts-regex-builder';
 import Structor from './structor';
-import {
-  TabulamenAdiectivi,
-  TabulamenFacti,
-  TabulamenNominis,
-  TabulamenNumeraminis
-  } from './tabulamina';
-import '../extensions/array';
-import '../extensions/string';
-import { dominus } from '../miscella/dominus';
-import { numeraminum } from '../miscella/lector';
-import Numerator from '../miscella/numerator';
-import Nuntius from '../miscella/nuntius';
-import { Ultimum } from '../miscella/usus';
-import { Tabula } from '../tabulae/tabula';
-import { dictionarium, type Eventus } from '../miscella/dictionarium';
+import { dictionarium, type Eventus } from '@/miscella/dictionarium';
 import {
   Casuale,
   Categoricum,
@@ -44,7 +44,7 @@ import {
   type Fultum,
   type Lineae,
   } from './valores';
-import { comparison, type SortResult } from '../extensions/utils';
+import { comparison, type SortResult } from '@/extensions/utils';
 import type { Lectum, Tabulator } from './interfecta';
 
 export type Agendum<Hoc extends Multiplex> = Lectum &
@@ -256,19 +256,18 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
   abstract get tabula(): Tabula<Actus>
 
   @Nuntius.promittum async actor(genus: 'masculinum' | 'femininum' | 'neutrum'): Promise<TabulamenNominis | undefined> {
-    const actus: Actus[] = this.tabula.haec;
     const _supinus: Actus | undefined =
-      actus.find((hoc) => [
-        hoc.modus.aequatur('participium'),
-        hoc.tempus.aequatur('perfectum'),
-        hoc.vox.aequatur('passiva')
-      ].all())
+      this.tabula.colantur({
+        modus: 'participium',
+        tempus: 'perfectum',
+        vox: 'passiva'
+      }).first()
     const _infinitivus: Actus | undefined =
-      actus.find((hoc) => [
-        hoc.modus.aequatur('infinitivus'),
-        hoc.tempus.aequatur('praesens'),
-        hoc.vox.aequatur('activa')
-      ].all())
+      this.tabula.colantur({
+        modus: 'infinitivus',
+        tempus: 'praesens',
+        vox: 'activa'
+      }).first()
     const optanda = {
       masculinum: {
         actus: _supinus,
@@ -296,46 +295,27 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
                  .ponatur((nomen) => (nomen.nominativus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.nominativus) ?? ''))
                  .ponatur((nomen) => (nomen.genitivus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.genitivus) ?? ''))
                  .struatur
-    // switch(genus) {
-    //   case 'masculinum':
-    //     return structor.ponatur((nomen) => (nomen.principium = 'tertia/animata'))
-    //                    .ponatur((nomen) => (nomen.nominativus = _supinus.scriptum.replace(/um$/, 'or')))
-    //                    .ponatur((nomen) => (nomen.genitivus = _supinus.scriptum.replace(/um$/, 'ōris')))
-    //                    .struatur
-    //   case 'femininum':
-    //     return structor.ponatur((nomen) => (nomen.principium = 'tertia/animata'))
-    //                    .ponatur((nomen) => (nomen.nominativus = _supinus.scriptum.replace(/t?um$/, 'trīx')))
-    //                    .ponatur((nomen) => (nomen.genitivus = _supinus.scriptum.replace(/t?um$/, 'trīcis')))
-    //                    .struatur
-    //   case 'neutrum':
-    //     return structor.ponatur((nomen) => (nomen.principium = 'tertia/neutra'))
-    //                    .ponatur((nomen) => (nomen.nominativus = _supinus.scriptum.replace(/um$/, 'āmen')))
-    //                    .ponatur((nomen) => (nomen.genitivus = _supinus.scriptum.replace(/um$/, 'āminis')))
-    //                    .struatur
-    //   default: return undefined
-    // }
   }
 
   @Nuntius.promittum async nomen(): Promise<TabulamenFacti> {
-    const actus: Actus[] = this.tabula.haec
     const _infinitivus: Actus | undefined =
-      actus.find((hoc) => [
-        hoc.modus.aequatur('infinitivus'),
-        hoc.tempus.aequatur('praesens'),
-        hoc.vox.aequatur('activa')
-      ].all())
+      this.tabula.colantur({
+        modus: 'infinitivus',
+        tempus: 'praesens',
+        vox: 'activa'
+      }).first()
     const _gerundius: Actus | undefined =
-      actus.find((hoc) => [
-        hoc.modus.aequatur('participium'),
-        hoc.tempus.aequatur('futurum'),
-        hoc.vox.aequatur('passiva')
-      ].all())
+      this.tabula.colantur({
+        modus: 'participium',
+        tempus: 'futurum',
+        vox: 'passiva'
+      }).first()
     const _supinus: Actus | undefined =
-        actus.find((hoc) => [
-          hoc.modus.aequatur('participium'),
-          hoc.tempus.aequatur('perfectum'),
-          hoc.vox.aequatur('passiva')
-        ].all())
+        this.tabula.colantur({
+          modus: 'participium',
+          tempus: 'perfectum',
+          vox: 'passiva'
+        }).first()
     const deVacuis: RegExp = buildRegExp([ '; ', lookahead(choiceOf(';', endOfString)) ], { global: true })
     const structor: Structor<TabulamenFacti> = new Structor(TabulamenFacti)
             .ponatur((nomen) => (nomen.infinitivum = _infinitivus?.scriptum ?? ''))
@@ -347,5 +327,38 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
     if(!_supinus) structor.ponatur((nomen) => nomen.scriptura = 'factus = supinus: dele; ')
     return structor.ponatur((nomen) => nomen.scriptura = nomen.scriptura?.replace(deVacuis, ''))
                    .struatur
+  }
+}
+
+export abstract class TabulatorAdiectivorum implements Tabulator<Adiectivum> {
+  abstract get tabula(): Tabula<Adiectivum>
+
+  async probetur({ genus, gradus }: { genus: string, gradus: string }): Promise<TabulamenNominis | undefined> {
+    const _nominativum: Adiectivum | undefined =
+      this.tabula.colantur({
+        genus: genus, gradus: gradus,
+        numerus: 'singularis',
+        casus: 'nominativus'
+      }).first();
+    const _genitivum: Adiectivum | undefined =
+      this.tabula.colantur({
+        genus: genus, gradus: gradus,
+        numerus: 'singularis',
+        casus: 'genitivus'
+      }).first();
+    if (!_nominativum || !_genitivum) return undefined;
+    const structor: Structor<TabulamenNominis> = new Structor(TabulamenNominis)
+      .ponatur((hoc) => (hoc.nominativus = _nominativum.scriptum.capitalize()))
+      .ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalize()));
+    switch (_genitivum.scriptum.slice(-2)) {
+      case 'ae':
+        structor.ponatur((nomen) => (nomen.principium = 'prima'));
+        break;
+      case 'is':
+        structor.ponatur((nomen) => (nomen.principium = 'tertia'));
+        break;
+      default:
+        structor.ponatur((nomen) => (nomen.principium = 'secunda'));
+    } return structor.struatur
   }
 }

@@ -1,8 +1,8 @@
 <script setup lang='ts'>
   import { onMounted, defineProps, ref, type Ref } from 'vue'
-  import { dominus } from '../miscella/dominus'
-  import '../extensions/array'
-  import { transduceretne, transducatur } from '../scriptura/transducere'
+  import { dominus } from '@/miscella/dominus'
+  import '@/extensions/array'
+  import { transduceretne, transducatur } from '@/scriptura/transducere'
   import fs from 'fs'
   import { VueMarkdownIt as Markdown } from '@f3ve/vue-markdown-it'
   import path from 'path'
@@ -54,23 +54,28 @@
                                 { once: true, capture: true, passive: false }))
   }
 
+  function revelatur() { concitatust.value = true }
+  function celatur() { concitatust.value = false }
+
   onMounted(async () => await iungantur())
 </script>
 
 <template>
   <v-dialog v-model='concitatust' :scrollable='true' full-width='true' lazy='true'>
     <template v-slot:activator='{ isActive: concitatust }'>
-      <v-btn :text='prima' @click='concitatust = true' />
+      <v-btn :text='prima' @click='revelatur()' />
     </template>
-    <v-card v-for='monstrandum in monstranda' :key='monstrandum.res'>
-      <v-card-title>{{ monstrandum.res }}</v-card-title>
-      <v-skeleton-loader v-if='monstrandum.onerans' type='paragraph'
-                         :loading-text='$t(`scripta.docere.onerans`)' />
-      <div v-else-if='monstrandum.doctum !== undefined && monstrandum.doctum.length > 0'
-           :id='`doctum.${monstrandum.res}`' class='markdown'>
-        <Markdown :source='monstrandum.doctum' breaks='true' />
-      </div>
-      <v-spacer />
-    </v-card>
+    <template @blur='celatur()'>
+      <v-card v-for='monstrandum in monstranda' :key='monstrandum.res'>
+        <v-card-title>{{ monstrandum.res }}</v-card-title>
+        <v-skeleton-loader v-if='monstrandum.onerans' type='paragraph'
+                           :loading-text='$t(`scripta.docere.onerans`)' />
+        <div v-else-if='monstrandum.doctum !== undefined && monstrandum.doctum.length > 0'
+             :id='`doctum.${monstrandum.res}`' class='markdown'>
+          <Markdown :source='monstrandum.doctum' breaks='true' />
+        </div>
+        <v-spacer />
+      </v-card>
+    </template>
   </v-dialog>
 </template>

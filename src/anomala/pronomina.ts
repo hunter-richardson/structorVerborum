@@ -1,15 +1,15 @@
-import Anomala, { Mantela } from './anomala';
-import '../extensions/array';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import { Encliticus } from '../praebeunda/valores';
-import { Pronomen } from '../praebeunda/verba';
-import TabulaCollata from '../tabulae/collata';
-import TabulaIrregula from '../tabulae/irregula';
-import TabulaCircumfixa from '../tabulae/rescriptae/circumfixa';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
-import TabulaRescripta from '../tabulae/rescriptae/rescripta';
-import TabulaSuffixa from '../tabulae/rescriptae/suffixa';
+import Anomala, { Mantela } from '@/anomala/anomala';
+import '@/extensions/array';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Encliticus } from '@/praebeunda/valores';
+import { Pronomen } from '@/praebeunda/verba';
+import TabulaCollata from '@/tabulae/collata';
+import TabulaIrregula from '@/tabulae/irregula';
+import TabulaCircumfixa from '@/tabulae/rescriptae/circumfixa';
+import TabulaPraefixa from '@/tabulae/rescriptae/praefixa';
+import TabulaRescripta from '@/tabulae/rescriptae/rescripta';
+import TabulaSuffixa from '@/tabulae/rescriptae/suffixa';
 
 @Ultimum @Ignavum @Nuntius.factum
 class Pronomina extends Anomala<Pronomen> {

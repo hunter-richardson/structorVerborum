@@ -1,6 +1,6 @@
+import Calculare from '@/facies/calculare.vue';
 import 'cypress';
 import { mount } from 'cypress/vue';
-import Calculare from '../../facies/calculare.vue';
 
 type Optanda = {
   primus: string,

@@ -1,9 +1,9 @@
+import '@/extensions/string';
 import fs from 'fs';
 import i18next, { InitOptions } from 'i18next';
 import FsBackend from 'i18next-fs-backend';
 import yaml from 'js-yaml';
 import path from 'path';
-import './extensions/string';
 
 const deTransferendo: InitOptions = {
   lng: 'la',

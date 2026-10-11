@@ -1,8 +1,8 @@
 <script setup lang='ts'>
   import { ref, type Ref } from 'vue';
-  import Numerator, { minimum as nihil, type Par } from '../miscella/numerator';
-  import { Numerale } from '../praebeunda/verba';
-  import specere from './specere.vue';
+  import Numerator, { minimum as nihil, type Par } from '@/miscella/numerator';
+  import { Numerale } from '@/praebeunda/verba';
+  import specere from '@/facies/specere.vue';
 
   const numerus: Ref<Numerale | undefined> = ref()
   const operator: Ref<string> = ref('')

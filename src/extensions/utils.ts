@@ -1,7 +1,7 @@
+import '@/extensions/array';
+import '@/extensions/string';
 import equal from 'fast-deep-equal';
 import isEqualWith from 'lodash.isequalwith';
-import './array';
-import './string';
 
 export type Comparator<T> = (first: T, second: T) => SortResult
 

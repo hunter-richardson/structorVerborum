@@ -1,6 +1,6 @@
+import '@/extensions/array';
+import { enclitici } from '@/praebeunda/valores';
 import 'cypress';
-import '../../extensions/array';
-import { enclitici } from '../../praebeunda/valores';
 
 export interface  Verbum {
   categoria: string

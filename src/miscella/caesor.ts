@@ -1,3 +1,9 @@
+import '@/extensions/array';
+import '@/extensions/string';
+import { LectorMultiplex } from '@/miscella/lector';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Multiplex } from '@/praebeunda/verba';
 import path from 'path';
 import {
   anyOf,
@@ -11,12 +17,6 @@ import {
   startOfString,
   whitespace
   } from 'ts-regex-builder';
-import { LectorMultiplex } from './lector';
-import Nuntius from './nuntius';
-import { Ignavum, Ultimum } from './usus';
-import '../extensions/array';
-import '../extensions/string';
-import { Multiplex } from '../praebeunda/verba';
 import {
   errator,
   Fulta,
@@ -24,9 +24,9 @@ import {
   valores,
   type Fultum,
   type Lineae
-  } from '../praebeunda/valores';
-import type { Tabulamen } from '../praebeunda/tabulamina';
-import type { Lectum } from '../praebeunda/interfecta';
+  } from '@/praebeunda/valores';
+import type { Tabulamen } from '@/praebeunda/tabulamina';
+import type { Lectum } from '@/praebeunda/interfecta';
 
 type Cretor = (fulta: Fulta) => boolean
 

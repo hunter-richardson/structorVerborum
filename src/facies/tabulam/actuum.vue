@@ -1,11 +1,11 @@
 <script setup lang='ts'>
   import { defineProps, ref, type Ref } from 'vue'
-  import '../../extensions/array'
-  import { type Referendum } from '../../praebeunda/interfecta'
-  import { type TabulatorActuum } from '../../praebeunda/verba'
-  import inflectere from '../inflectere.vue'
-  import tabulare from '../tabulare.vue'
-  import { TabulamenActus } from '../../praebeunda/tabulamina';
+  import '@/extensions/array'
+  import { type Referendum } from '@/praebeunda/interfecta'
+  import { type TabulatorActuum } from '@/praebeunda/verba'
+  import inflectere from '@/facies/inflectere.vue'
+  import tabulare from '@/facies/tabulare.vue'
+  import { TabulamenActus } from '@/praebeunda/tabulamina';
 
   const { agendum } = defineProps<{ agendum: TabulatorActuum }>();
   const lectum: boolean = agendum instanceof TabulamenActus;

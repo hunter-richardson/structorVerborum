@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
+  import { useRouter } from 'vue-router';
   import Nuntius from '../miscella/nuntius'
+
+  function recipatur() { useRouter().back() }
 
   onMounted(() => {
     if ([ location.href, location.href !== '404' ].all()) {
@@ -20,7 +23,7 @@
                      :title="$t('scripta.404.titula')"
                      :headline="$t('scripta.404.caput')"
                      :actionText="$t('scripta.404.actum')"
-                     @click:action='$router.back()' />
+                     @click:action='recipatur()' />
     </v-container>
   </v-app>
 </template>

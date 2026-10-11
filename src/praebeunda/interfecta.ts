@@ -1,6 +1,6 @@
-import { Multiplex } from './verba';
-import '../extensions/string';
-import { Tabula } from '../tabulae/tabula';
+import '@/extensions/string';
+import { Multiplex } from '@/praebeunda/verba';
+import { Tabula } from '@/tabulae/tabula';
 
 export interface Referendum {}
 

@@ -2,6 +2,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import checker from 'vite-plugin-checker';
 import VueDevTools from 'vite-plugin-vue-devtools';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import { configDefaults, defineConfig, type ConfigEnv } from 'vitest/config';
 import { fileURLToPath, URL } from 'node:url';
 
@@ -41,11 +42,9 @@ const figura: Figura = (env: ConfigEnv) => {
         }
       }
     }, plugins: [
-      checker({ typescript: true }),
+      checker({ typescript: true }), tsconfigPaths(),
       vue(), vueJsx(), operandi ? [] : VueDevTools()
-    ], resolve: {
-      alias: { '@': fileURLToPath(new URL('./src/', import.meta.url)) }
-    }, test: {
+    ], test: {
       environment: 'jsdom',
       exclude: [ ...configDefaults.exclude, 'e2e/**' ],
       root: fileURLToPath(new URL('/', import.meta.url))

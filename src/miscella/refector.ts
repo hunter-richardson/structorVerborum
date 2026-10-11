@@ -1,3 +1,15 @@
+import '@/extensions/array';
+import { SortResult } from '@/extensions/utils';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import {
+  errator,
+  Fultum,
+  Lineae,
+  nomina,
+  valores
+  } from '@/praebeunda/valores';
+import { Agendum, Multiplex } from '@/praebeunda/verba';
 import {
   anyOf,
   buildRegExp,
@@ -12,18 +24,6 @@ import {
   whitespace,
   zeroOrMore
   } from 'ts-regex-builder';
-import '../extensions/array';
-import { SortResult } from '../extensions/utils';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import {
-  errator,
-  Fultum,
-  Lineae,
-  nomina,
-  valores
-  } from '../praebeunda/valores';
-import { Agendum, Multiplex } from '../praebeunda/verba.ts';
 
 enum Actus {
   Dele = 'dele',

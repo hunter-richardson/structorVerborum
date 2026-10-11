@@ -1,9 +1,9 @@
 <script setup lang='ts'>
   import { useTranslation } from 'i18next-vue';
   import { ref, type Ref } from 'vue';
-  import Numerator from '../miscella/numerator';
-  import { Numerale } from '../praebeunda/verba';
-  import Specere from './specere.vue';
+  import Numerator from '@/miscella/numerator';
+  import { Numerale } from '@/praebeunda/verba';
+  import Specere from '@/facies/specere.vue';
 
   type Arabicus = {
     integer: number,

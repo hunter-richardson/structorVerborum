@@ -1,13 +1,13 @@
-import Anomala, { Mantela } from './anomala';
-import Nuntius from '../miscella/nuntius';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import Structor from '../praebeunda/structor';
-import { TabulamenNominis } from '../praebeunda/tabulamina';
-import { Nomen } from '../praebeunda/verba';
-import TabulaBifissa from '../tabulae/bifissa';
-import TabulaCollata from '../tabulae/collata';
-import TabulaIrregula from '../tabulae/irregula';
-import TabulaPraefixa from '../tabulae/rescriptae/praefixa';
+import Anomala, { Mantela } from '@/anomala/anomala';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import Structor from '@/praebeunda/structor';
+import { TabulamenNominis } from '@/praebeunda/tabulamina';
+import { Nomen } from '@/praebeunda/verba';
+import TabulaBifissa from '@/tabulae/bifissa';
+import TabulaCollata from '@/tabulae/collata';
+import TabulaIrregula from '@/tabulae/irregula';
+import TabulaPraefixa from '@/tabulae/rescriptae/praefixa';
 
 @Ultimum @Ignavum @Nuntius.factum
 class Nomina extends Anomala<Nomen> {

@@ -1,5 +1,5 @@
-import './array';
-import type { SortResult } from './utils';
+import '@/extensions/array';
+import type { SortResult } from '@/extensions/utils';
 
 const macra = {
   A: 'Ā',

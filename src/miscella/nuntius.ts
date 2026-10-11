@@ -1,8 +1,8 @@
+import { Mensa } from '@/praebeunda/valores';
 import { makeDirectorySync } from 'make-dir';
 import winston from 'winston';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import Numerator from './numerator';
-import { Mensa } from '../praebeunda/valores';
 import { type TransformableInfo } from 'logform'
 
 function scribatur(parametra: TransformableInfo & { nomen?: string }): string {

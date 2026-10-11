@@ -1,6 +1,6 @@
-import translation from '../extensions/i18next';
-import { Gustulus } from '../miscella/gustulator';
-import Structor from '../praebeunda/structor';
+import translation from '@/extensions/i18next';
+import { Gustulus } from '@/miscella/gustulator';
+import Structor from '@/praebeunda/structor';
 
 export function referretne(): boolean
 { return navigator.clipboard !== undefined }

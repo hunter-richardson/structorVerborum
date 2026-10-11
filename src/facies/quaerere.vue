@@ -1,19 +1,19 @@
 <script setup lang='ts'>
   import { onMounted, ref, type Ref } from 'vue';
-  import translation from '../extensions/i18next';
-  import '../extensions/string';
+  import translation from '@/extensions/i18next';
+  import '@/extensions/string';
   import {
       dictionarium, type Eventus,
       type Lemma, type Quaerenda
-  } from '../miscella/dictionarium';
-  import { categoriae, inflectenda } from '../praebeunda/valores';
-  import { type Verbum } from '../praebeunda/verba';
-  import { type Columnae } from '../scriptura/columnae';
-  import Inflectere from './inflectere.vue';
-  import Loqui from './loqui.vue';
-  import Onerare from './onerare.vue';
-  import Specere from './specere.vue';
-  import type { Referendum } from '../praebeunda/interfecta';
+  } from '@/miscella/dictionarium';
+  import { categoriae, inflectenda } from '@/praebeunda/valores';
+  import { type Verbum } from '@/praebeunda/verba';
+  import { type Columnae } from '@/scriptura/columnae';
+  import Inflectere from '@/facies/inflectere.vue';
+  import Loqui from '@/facies/loqui.vue';
+  import Onerare from '@/facies/onerare.vue';
+  import Specere from '@/facies/specere.vue';
+  import type { Referendum } from '@/praebeunda/interfecta';
 
   const { t, tf } = translation()
 

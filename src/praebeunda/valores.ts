@@ -1,7 +1,7 @@
-import '../extensions/array';
-import '../extensions/string';
-import Nuntius from '../miscella/nuntius';
-import { type SortResult, comparison } from '../extensions/utils'
+import '@/extensions/array';
+import '@/extensions/string';
+import Nuntius from '@/miscella/nuntius';
+import { type SortResult, comparison } from '@/extensions/utils'
 
 export enum Encliticus {
   nullus = '',

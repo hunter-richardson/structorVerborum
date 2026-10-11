@@ -1,9 +1,9 @@
-import { dominus } from './dominus';
-import Nuntius from './nuntius';
-import { Ignavum, Ultimum } from './usus';
-import '../extensions/array';
-import '../extensions/string';
-import { Verbum } from '../praebeunda/verba';
+import '@/extensions/array';
+import '@/extensions/string';
+import { dominus } from '@/miscella/dominus';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Verbum } from '@/praebeunda/verba';
 
 @Ultimum @Ignavum @Nuntius.factum
 class Locutor {

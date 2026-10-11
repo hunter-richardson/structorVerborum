@@ -32,21 +32,16 @@
     "rewriteRelativeImportExtensions": true,
     "rootDir": "./src",
     "paths": {
-      "@res": [ "./res/" ],
-      "@figura": [ "./src/figura.ts" ],
-      "@scriptura": [ "./src/scriptura/*.ts" ],
-      "@productura": [ "./src/extensions/*.ts" ],
-      "@facies": [
-        "./src/facies/*.vue",
-        "./src/facies/tabulam/*.vue"
-      ],
+      "@res": [ "./res/*" ],
+      "@/*": [ "./src/*" ]
     }, "pretty": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "target": "ES2023",
     "types": [
       "@types/node",
       "cypress",
-      "cypress-map",
+      "cypress-map"
       // "node"
     ]
   }, "files": [],

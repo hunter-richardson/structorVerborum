@@ -1,9 +1,10 @@
+import '@/extensions/env';
+import Nuntius from '@/miscella/nuntius';
+import { Ignavum, Ultimum } from '@/miscella/usus';
 import i18next from 'i18next';
+import * as Please from 'pleasejs';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
-import Nuntius from './nuntius';
-import { Ignavum, Ultimum } from './usus';
-import '../extensions/env';
 
 type Valor = string | boolean | number | undefined
 
@@ -74,21 +75,21 @@ abstract class Vexillum extends Crustulum<boolean> {
 
 @Ultimum @Ignavum
 class Apices extends Vexillum {
-  get scriptum(): string { return this.signum ? 'ā' : 'a' }
+  get scriptum (): 'ā' | 'a' { return this.signum ? 'ā' : 'a' }
   constructor() { super(true) }
   async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum
 class UtendaU extends Vexillum {
-  get scriptum(): string { return this.signum ? 'u' : 'v' }
+  get scriptum (): 'u' | 'v' { return this.signum ? 'u' : 'v' }
   constructor () { super(true) }
   async responsus () { /*noop*/ }
 }
 
 @Ultimum @Ignavum
 class Magnas extends Vexillum {
-  get scriptum(): string { return this.signum ? 'A' : 'a' }
+  get scriptum (): 'A' | 'a' { return this.signum ? 'A' : 'a' }
   constructor () { super(false) }
   async responsus () { /*noop*/ }
 }
@@ -99,7 +100,7 @@ class Sessio extends Crustulum<boolean> {
   override vita = 30
   override set massa(valor: string) { this.coquatur(valor) }
   get signum(): boolean { return this.coctast }
-  get scriptum() { return '' }
+  get scriptum(): '' { return '' }
   async responsus() { dominus[this.coctast ? 'inhaereantur' : 'deleantur']() }
 }
 
@@ -107,7 +108,7 @@ class Sessio extends Crustulum<boolean> {
 class Assensus extends Crustulum<boolean | undefined> {
   override valores = [ '', 'assensit', 'negavit' ]
 
-  get scriptum(): string { return ''; }
+  get scriptum(): '' { return ''; }
   get signum(): boolean | undefined
   { return this.coctast ? this.concoctast('assensit') : undefined }
   async responsus() { dominus[this.signum === true ? 'inhaereantur' : 'deleantur']() }
@@ -116,24 +117,40 @@ class Assensus extends Crustulum<boolean | undefined> {
 @Ultimum @Ignavum
 class Lingua extends Crustulum<string> {
   override valores = [ 'latina', 'anglica' ]
-  get signum(): string { return this.massa === 'anglica' ? 'en' : 'la' }
-  get scriptum(): string { return `/res/picta/${this.massa}.png` }
+  get signum (): 'en' | 'la' { return this.massa === 'anglica' ? 'en' : 'la' }
+  get scriptum (): string { return `@res/picta/${this.massa}.png` }
   async responsus () { i18next.changeLanguage(this.signum) }
 }
 
 @Ultimum @Ignavum
 class Facies extends Crustulum<string> {
   override valores = [ 'fusca', 'illustris' ]
-  get signum(): string { return this.massa === 'illustris' ? 'light' : 'dark' }
-  get scriptum(): string { return `${this.signum}_mode` }
+  get signum(): 'light' | 'dark' { return this.massa === 'illustris' ? 'light' : 'dark' }
+  get scriptum (): 'light_mode' | 'dark_mode' { return `${this.signum}_mode` }
   async responsus () { useTheme().global.name.value = this.signum }
+
+  get tonus(): Please.MakeColorResult {
+    if(this.inhaesast) return Please.make_color({
+      colors_returned: 1,
+      saturation: 0.65,
+      format: 'hex',
+      value: 0.9,
+      golden: true
+    }); else return Please.make_color({
+      colors_returned: 1,
+      saturation: 0.75,
+      format: 'hex',
+      value: 0.55,
+      golden: true
+    })
+  }
 }
 
 @Ultimum @Ignavum
 class Separator extends Crustulum<string> {
   override valores = [ 'inane', 'interpunctum', 'nullum' ]
-  get scriptum(): string { return '' }
-  get signum(): string {
+  get scriptum(): '' { return '' }
+  get signum (): ' ' | '·' | '' {
     switch (this.massa) {
       case 'interpunctum': return '·'
       case 'nullum': return ''
@@ -170,7 +187,7 @@ class Dominus {
 
   async ponam(nomen: string, valor: string, finis: Date) {
     setCookie(nomen, valor, {
-      secure: process.env[ 'NODE_ENV' ] === 'production',  //  process.env.NODE_ENV
+      secure: process.env[ 'NODE_ENV' ] === 'production',
       domain: 'conans',
       sameSite: 'strict',
       expires: finis

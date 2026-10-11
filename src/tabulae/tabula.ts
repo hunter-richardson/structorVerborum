@@ -1,15 +1,15 @@
+import '@/extensions/array';
+import Caesor from '@/miscella/caesor';
+import { LectorMultiplex } from '@/miscella/lector';
+import Nuntius from '@/miscella/nuntius';
+import Refector from '@/miscella/refector';
+import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Tabulamen } from '@/praebeunda/tabulamina';
 import equal from 'fast-deep-equal';
 import path from 'path';
-import '../extensions/array';
-import Caesor from '../miscella/caesor';
-import { LectorMultiplex } from '../miscella/lector';
-import Nuntius from '../miscella/nuntius';
-import Refector from '../miscella/refector';
-import { Ignavum, Ultimum } from '../miscella/usus';
-import { Tabulamen } from '../praebeunda/tabulamina';
-import { type Agendum, Multiplex } from '../praebeunda/verba';
-import { Fultum, Res, type Lineae } from '../praebeunda/valores'
-import { type Tabulator } from '../praebeunda/interfecta';
+import { type Agendum, Multiplex } from '@/praebeunda/verba';
+import { Fultum, Res, type Lineae } from '@/praebeunda/valores'
+import { type Tabulator } from '@/praebeunda/interfecta';
 
 export type Par = { [ clavis: string ]: string }
 

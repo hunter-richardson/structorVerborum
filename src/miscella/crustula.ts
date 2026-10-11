@@ -1,4 +1,4 @@
-import { dominus } from './dominus';
+import { dominus } from '@/miscella/dominus';
 import { type App } from 'vue';
 
 export default {

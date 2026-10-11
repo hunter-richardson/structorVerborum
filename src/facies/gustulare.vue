@@ -1,15 +1,6 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue';
-  import { Gustulus, gustulator } from '../miscella/gustulator'
-  import { setTimeout } from 'timers/promises';
-
+  import { Gustulus, gustulator } from '@/miscella/gustulator'
   const gustulus: Gustulus | undefined = gustulator.gustulus
-
-  const aetas: Promise<void> =
-    gustulus === undefined || gustulus?.visibile === true ? Promise.resolve() :
-      setTimeout(gustulus.vita).then(() => (gustulator.extricetur()))
-
-  onMounted(async () => await aetas)
 </script>
 
 <template>

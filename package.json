@@ -28,7 +28,6 @@
     "@types/jsdom": "^30.0.0",
     "@types/lodash.isequalwith": "^4.4.9",
     "@types/node": "^22.20.3",
-    "@types/pleasejs": "^0.0.33",
     "@vitejs/plugin-basic-ssl": "^2.3.0",
     "@vitejs/plugin-vue": "^6.0.9",
     "@vitejs/plugin-vue-jsx": "^5.1.6",
@@ -80,12 +79,13 @@
     "vite-plugin-oxlint": "^2.2.0",
     "vite-plugin-vue-devtools": "^8.2.1",
     "vite-plugin-vue-facing-decorator-hmr": "^1.0.1",
+    "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^5.0.1",
     "vue": "^3.5.42",
     "vue-facing-decorator": "^4.0.1",
+    "vue-router": "^5.4.0",
     "vue-tsc": "^3.3.11",
     "vue-unused-components-checker": "^1.1.2",
-    "vuedraggable": "^2.24.3",
     "vuetify": "^4.2.1",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0"
@@ -96,6 +96,7 @@
     "esbuild@0.28.2": true
   },
   "dependencies": {
-    "oxlint": "^1.83.0"
+    "oxlint": "^1.83.0",
+    "vue-draggable-next": "^2.3.0"
   }
 }

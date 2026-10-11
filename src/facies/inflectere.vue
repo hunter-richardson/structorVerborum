@@ -1,12 +1,12 @@
 <script setup lang='ts'>
   import { ref, type Ref } from 'vue'
-  import { type Eventus } from '../miscella/dictionarium'
-  import type { Referendum, Tabulator } from '../praebeunda/interfecta'
-  import { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen, type TabulatorActuum } from '../praebeunda/verba'
-  import Actuum from './tabulam/actuum.vue'
-  import Adiectivorum from './tabulam/adiectivorum.vue'
-  import Nominum from './tabulam/nominum.vue'
-  import Tabulare from './tabulare.vue'
+  import { type Eventus } from '@/miscella/dictionarium'
+  import type { Referendum, Tabulator } from '@/praebeunda/interfecta'
+  import { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen, type TabulatorActuum } from '@/praebeunda/verba'
+  import Actuum from '@/facies/tabulam/actuum.vue'
+  import Adiectivorum from '@/facies/tabulam/adiectivorum.vue'
+  import Nominum from '@/facies/tabulam/nominum.vue'
+  import Tabulare from '@/facies/tabulare.vue'
   import { buildRegExp, choiceOf, endOfString, startOfString } from 'ts-regex-builder';
 
   const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()

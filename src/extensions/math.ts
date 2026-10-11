@@ -1,4 +1,4 @@
-import { Ultimum } from '../miscella/usus.ts';
+import { Ultimum } from '@/miscella/usus';
 
 @Ultimum export class NumberRange {
   in (value: number): boolean

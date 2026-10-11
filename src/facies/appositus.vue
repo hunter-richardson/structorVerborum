@@ -1,16 +1,17 @@
 <script setup lang='ts'>
   import { onMounted, ref, type Ref } from 'vue';
-  import draggable from 'vuedraggable';
-  import { dominus } from '../miscella/dominus';
+  import draggable from 'vue-draggable-next';
+  import { dominus } from '@/miscella/dominus';
   import { useTranslation } from 'i18next-vue';
-  import { referatur, referretne } from '../scriptura/referre';
-  import { transducatur, transduceretne } from '../scriptura/transducere';
-  import Calculare from './calculare.vue';
-  import Numerare from './numerare.vue';
-  import Quaerere from './quaerere.vue';
-  import '../extensions/array'
-  import { locutor } from '../miscella/locutor';
-  import { gustulator } from '../miscella/gustulator';
+  import { referatur, referretne } from '@/scriptura/referre';
+  import { transducatur, transduceretne } from '@/scriptura/transducere';
+  import Calculare from '@/facies/calculare.vue';
+  import Numerare from '@/facies/numerare.vue';
+  import Quaerere from '@/facies/quaerere.vue';
+  import '@/extensions/array'
+  import { locutor } from '@/miscella/locutor';
+  import { gustulator } from '@/miscella/gustulator';
+  import Gustulare from '@/facies/gustulare.vue';
 
   const separatores: string[] = Object.keys(dominus.separatores)
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]

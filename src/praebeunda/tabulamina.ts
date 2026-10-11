@@ -1,5 +1,6 @@
-import { Mixin } from 'ts-mixer';
-import { Tabulator } from './interfecta';
+import translation from '@/extensions/i18next';
+import Nuntius from '@/miscella/nuntius';
+import { Ultimum } from '@/miscella/usus';
 import {
   Actus,
   Adiectivum,
@@ -7,13 +8,13 @@ import {
   Multiplex,
   Nomen,
   Numeramen,
-  TabulatorActuum
-  } from './verba';
-import translation from '../extensions/i18next';
-import Nuntius from '../miscella/nuntius';
-import { Ultimum } from '../miscella/usus';
-import { TabulaDerecta, TabulaRegula, type Tabula } from '../tabulae/tabula';
-import { dictionarium, type Eventus } from '../miscella/dictionarium';
+  TabulatorActuum,
+  TabulatorAdiectivorum
+  } from '@/praebeunda/verba';
+import { Mixin } from 'ts-mixer';
+import { Tabulator } from './interfecta';
+import { TabulaDerecta, TabulaRegula, type Tabula } from '@/tabulae/tabula';
+import { dictionarium, type Eventus } from '@/miscella/dictionarium';
 
 export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc> {
   categoria!: string
@@ -36,7 +37,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc>
   { return new TabulaRegula<Actus, TabulamenActus>(Actus, this) }
 }
 
-@Ultimum @Nuntius.factum export class TabulamenAdiectivi extends Tabulamen<Adiectivum> {
+@Ultimum @Nuntius.factum export class TabulamenAdiectivi extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
   override categoria = Adiectivum.name.toLowerCase()
   positivus!: string
   comparativus!: string
@@ -56,7 +57,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc>
   { return new TabulaDerecta<Adverbium, TabulamenAdverbii>(Adverbium, this) }
 }
 
-@Ultimum export class TabulamenIncomparabilis extends Tabulamen<Adiectivum> {
+@Ultimum export class TabulamenIncomparabilis extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
   override categoria = Adiectivum.name.toLowerCase()
   nominativus!: string
   genitivus!: string

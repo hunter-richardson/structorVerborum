@@ -1,17 +1,17 @@
-import 'cypress';
-import 'cypress-map';
-import { mount } from 'cypress/vue';
-import '../../extensions/array';
-import '../../extensions/string';
-import Quaerere from '../../facies/quaerere.vue';
-import { inflectenda } from '../../praebeunda/valores';
+import '@/extensions/array';
+import '@/extensions/string';
+import Quaerere from '@/facies/quaerere.vue';
+import { inflectenda } from '@/praebeunda/valores';
 import {
   Actus,
   Adiectivum,
   Adverbium,
   Nomen,
   Pronomen
-  } from '../../praebeunda/verba';
+  } from '@/praebeunda/verba';
+import 'cypress';
+import 'cypress-map';
+import { mount } from 'cypress/vue';
 
 function ullum (res: {
   categoria: string,

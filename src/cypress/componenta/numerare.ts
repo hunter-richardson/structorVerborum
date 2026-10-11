@@ -1,6 +1,6 @@
+import Numerare from '@/facies/numerare.vue';
 import 'cypress';
 import { mount } from 'cypress/vue';
-import Numerare from '../../../facies/numerare.vue';
 
 describe('Romano Anglicum numerum convertere', () => {
   it('converteret', () => {

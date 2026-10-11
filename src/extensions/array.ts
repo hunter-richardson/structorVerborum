@@ -1,4 +1,4 @@
-import type { Comparator, SortResult } from './utils';
+import type { Comparator, SortResult } from '@/extensions/utils';
 
 declare global {
   interface Array<T> {

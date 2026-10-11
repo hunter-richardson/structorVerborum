@@ -1,16 +1,16 @@
+import translation from '@/extensions/i18next';
+import '@/extensions/string';
+import Appositus from '@/facies/appositus.vue';
+import i18next from '@/i18n';
+import Crustula from '@/miscella/crustula';
 import { useFavicon } from '@vueuse/core';
 import i18NextVue from 'i18next-vue';
+import { useRouter } from 'vue-router';
 import { createVuetify } from 'vuetify';
 import { md3 } from 'vuetify/blueprints';
-import { useRouter } from 'vuetify/lib/composables/router.mjs';
-import translation from './extensions/i18next';
-import './extensions/string';
-import Appositus from './facies/appositus.vue';
-import i18next from './i18n';
-import Crustula from './miscella/crustula';
 import { createApp, type App } from 'vue';
 
-useFavicon('/res/picta/favicon.png')
+useFavicon('@res/picta/favicon.png')
 
 export const appositus: App<Element> =
     createApp(Appositus)
