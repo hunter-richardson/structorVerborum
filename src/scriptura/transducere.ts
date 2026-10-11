@@ -1,9 +1,7 @@
 import { NewTabOpener } from 'new-tab-opener';
 
-export function transduceretne(): boolean {
-  try { return new Blob !== undefined }
-  catch { return false }
-}
+export function transduceretne(): boolean
+{ return typeof Blob !== 'undefined' }
 
 export function transducatur(locutio: string): void {
   if (transduceretne()) (new NewTabOpener)
