@@ -200,7 +200,7 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
           structor
             .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('ēns$', 'entior')))
             .ponatur((adiectivum) => (adiectivum.superlativus = this.scriptum.replace('ēns$', 'entissimum')))
-        }; return structor.struatur
+        } return structor.struatur
       } else return new Structor(TabulamenAdiectivi)
                           .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
                           .ponatur((adiectivum) => (adiectivum.positivus = this.scriptum))
@@ -237,7 +237,7 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
         nova = 'nomen'; break
       default:
         nova = 'adiectivum'; break
-    }; return await dictionarium.referatur({
+    } return await dictionarium.referatur({
       categoria: nova,
       scriptum: this.scriptum
     }) ?? undefined

@@ -26,26 +26,20 @@
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noPropertyAccessFromIndexSignature": true,
-    // "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "outDir": "./dist/js",
     "removeComments": true,
     "rewriteRelativeImportExtensions": true,
     "rootDir": "./src",
     "paths": {
-      "facies": [
+      "@res": [ "./res/" ],
+      "@figura": [ "./src/figura.ts" ],
+      "@scriptura": [ "./src/scriptura/*.ts" ],
+      "@productura": [ "./src/extensions/*.ts" ],
+      "@facies": [
         "./src/facies/*.vue",
         "./src/facies/tabulam/*.vue"
       ],
-      "figura": [
-        "./src/figura.ts"
-      ],
-      "scriptura": [
-        "./src/scriptura/*.ts"
-      ],
-      "productura": [
-        "./src/extensions/*.ts"
-      ]
     }, "pretty": true,
     "sourceMap": true,
     "target": "ES2023",
@@ -55,14 +49,12 @@
       "cypress-map",
       // "node"
     ]
-  },
-  "files": [],
+  }, "files": [],
   "include": [
     "./src/**/*.ts",
     "./src/facies/*.vue",
-    "./src/views/tabulam/*.vue"
-  ],
-  "exclude": [
+    "./src/facies/tabulam/*.vue"
+  ], "exclude": [
     "./src/cypress/e2e/**",
     "./src/cypress/fixtures/*.json",
     "./src/cypress/support/*.ts"

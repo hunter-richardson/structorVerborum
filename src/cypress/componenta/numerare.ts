@@ -4,7 +4,7 @@ import Numerare from '../../../facies/numerare.vue';
 
 describe('Romano Anglicum numerum convertere', () => {
   it('converteret', () => {
-    const cy: Cypress.Chainable = mount(Numerare as any)
+    const cy: Cypress.Chainable = mount(Numerare)
     //    cy.wait(1000)
 
     cy.get('#effectus').should('have.text', 'N')

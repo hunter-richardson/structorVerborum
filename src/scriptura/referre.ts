@@ -1,13 +1,11 @@
 import Gustulus from './gustulus';
 import Structor from '../praebeunda/structor';
 
-export function referretne(): boolean {
-  //  eslint-disable-next-line no-extra-boolean-cast
-  return !!navigator.clipboard
-}
+export function referretne(): boolean
+{ return navigator.clipboard !== undefined }
 
 export async function referatur(valor?: string): Promise<Gustulus> {
-  if (valor) {
+  if (valor !== undefined) {
     const structor: Structor<Gustulus> = new Structor(Gustulus)
             .ponatur((gustulus) => (gustulus.vita = 3000))
     if (referretne()) {

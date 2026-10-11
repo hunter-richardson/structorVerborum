@@ -49,9 +49,9 @@ class Dictionarium {
   private readonly _relata: Relatum[] = []
 
   private get relata(): Promise<Relatum[]> {
-    return new Promise(async (seratur: (valor: Relatum[]) => void): Promise<void> => {
+    return new Promise((seratur: (valor: Relatum[]) => void) => {
       if (!this._relata.length) this.perscribantur()
-      return seratur(this._relata)
+      seratur(this._relata)
   } )}
 
   @Nuntius.promittum
@@ -136,7 +136,7 @@ class Dictionarium {
 
   @Nuntius.promittum
   async referatur(lemma: Lemma): Promise<Eventus | null> {
-    var referendum: Referendum | undefined = undefined
+    let referendum: Referendum | undefined = undefined
     const lecta: boolean =
       (await this.relata).first((relatum) => deepEqual(lemma, relatum as Lemma))?.lecta ?? false
     switch (lemma.categoria.toLowerCase()) {

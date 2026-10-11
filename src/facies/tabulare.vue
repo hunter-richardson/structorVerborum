@@ -31,7 +31,7 @@
     haec: haec
   })
 
-  const hoc: Ref<Hoc | undefined> = ref<Hoc | undefined>(undefined)
+  const hoc: Ref<Hoc | undefined> = ref(undefined)
 
   const seligenda: Fultum<Lineae>[] = [
     haec?.map((multiplex: Multiplex) => multiplex.valores()).flat().unique()

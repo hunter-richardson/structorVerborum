@@ -4,82 +4,79 @@
   import { type Eventus } from '../miscella/dictionarium';
   import { Encliticus, enclitici } from '../praebeunda/valores';
   import { locutor } from '../miscella/locutor';
-  import { Actus, Multiplex, Numerale, Verbum, Numeramen } from '../praebeunda/verba';
+  import { Actus, Multiplex, Numerale, Verbum, Numeramen, Adiectivum } from '../praebeunda/verba';
   import Gustulus from '../scriptura/gustulus';
   import Docere from './docere.vue';
   import Gustulare from './gustulare.vue';
   import Inflectere from './inflectere.vue';
   import type { TabulamenNumeraminis } from '../praebeunda/tabulamina';
 
-  let valorEnclitici: string = Encliticus.nullus
-
-  export interface Forma {
-    gustulus?: Gustulus,
-    verbum: Verbum
-  }
+  const valorEnclitici: Ref<string> = ref(Encliticus.nullus)
 
   const valores: string[] = []
   const valoresEnclitici: string[] = []
 
-  const { gustulus, verbum } = defineProps<Forma>()
-  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
-  const multiplex: boolean = verbum instanceof Multiplex
+  const gustulus = defineProps<Gustulus>()
+
+  const verbum: Ref<Verbum | undefined> = ref()
+  const eventus: Ref<Eventus | undefined> = ref()
+  const multiplex: boolean = verbum.value !== undefined && verbum.value instanceof Multiplex
   const propriabile: boolean = [
-      [ 'nomen', 'adiectiva' ].includes(verbum.categoria.valor ?? ''),
-      verbum.scriptum.isCapitalized()
+      [ 'nomen', 'adiectiva' ].includes(verbum.value?.categoria.valor ?? ''),
+      verbum.value?.scriptum.isCapitalized() || false
     ].all()
 
-  if(multiplex) {
-    (verbum as Multiplex).valores
+  if(verbum.value !== undefined && multiplex) {
+    (verbum.value as Multiplex).valores
         .forEach((valor) => valores.push(valor.valor))
-    enclitici.filter((valor) => !verbum.scriptum.endsWith(valor))
+    enclitici.filter((valor) => !(verbum.value.scriptum.endsWith(valor)))
              .forEach((valor) => valoresEnclitici.push(valor))
   }
 
   async function aperi() {
-    if(verbum) {
-      switch(verbum.categoria.valor) {
+    if(verbum.value !== undefined) {
+      switch(verbum.value.categoria.valor) {
         case 'actus': {
-          const actus: Actus = verbum as Actus
+          const actus: Actus = verbum.value as Actus
           if(actus.modus.aequatur('participium'))
             eventus.value = {
               ...(await actus.participialis()),
               categoria: Adiectivum.name.toLowerCase()
             }; break
         } case 'numerus': {
-          const numerus: Numerale = verbum as Numerale
+          const numerus: Numerale = verbum.value as Numerale
           const agendum: TabulamenNumeraminis | undefined = await numerus.numeramen()
           if(agendum !== undefined)
             eventus.value = {
               ...agendum,
               categoria: Numeramen.name.toLowerCase()
             }
-        }; break
+        } break
         case 'numeramen': {
-          const numeramen: Numeramen = verbum as Numeramen
+          const numeramen: Numeramen = verbum.value as Numeramen
           const referendus: Eventus | undefined = await numeramen.refer()
           if(referendus !== undefined) eventus.value = referendus
-        }; break
+        } break
       }
     }
   }
 
   function adde() {
-    if(verbum) {
-      if([multiplex, valorEnclitici.length > 0].all())
-        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus
-      verbum.scriptum = verbum.scriptum.toLowerCase()
-      locutor.addatur(verbum)
+    if(verbum.value !== undefined) {
+      if([ multiplex, valorEnclitici.value.length > 0 ].all())
+        (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
+      verbum.value.scriptum = verbum.value.scriptum.toLowerCase()
+      locutor.addatur(verbum.value)
     }
   }
 
   function addeProprium() {
-    if (verbum) {
-      if ([ multiplex, valorEnclitici.length > 0 ].all())
-        (verbum as Multiplex).encliticus = valorEnclitici as Encliticus
+    if (verbum.value !== undefined) {
+      if ([ multiplex, valorEnclitici.value.length > 0 ].all())
+        (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
       if(propriabile)
-        verbum.scriptum = verbum.scriptum.capitalize()
-      locutor.addatur(verbum)
+        verbum.value.scriptum = verbum.value.scriptum.capitalize()
+      locutor.addatur(verbum.value)
     }
   }
 </script>
@@ -100,7 +97,9 @@
                   :items='valoresEnclitici' chips flat open-on-clear />
       </template>
       <Docere :prima='verbum.categoria.valor' />
-      <Docere v-if='multiplex' v-for='valor in valores' :key='valor' :prima='valor' />
+      <template v-if='multiplex'>
+        <Docere v-for='valor in valores' :key='valor' :prima='valor' />
+      </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratust()'>
           <v-btn icon='chat_add_on' id='adde' @click='adde()'

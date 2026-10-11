@@ -22,7 +22,7 @@ import {
   Res
   } from '../praebeunda/valores';
 import { Verbum } from '../praebeunda/verba';
-import fsPromise from 'node:fs/promises'
+import { pipeline } from 'node:stream';
 
 export class Ulla<Hoc> extends Array<Hoc> {
   get unum (): Hoc { return this.first(); }
@@ -39,7 +39,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
 
   private readonly scriptor: Writable = new Writable({
     objectMode: true,
-    write: (res: Record<string, string>, _: any, vocator: () => void) => {
+    write: (res: Record<string, string>, _: BufferEncoding, vocator: () => void) => {
       const hoc: Hoc = new this.structor()
       for(const [ columna, crudum ] of Object.entries(res)) {
         try { this.ponatur(hoc, columna, crudum) }
@@ -47,7 +47,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
           Nuntius.timeo({
             nomen: this.constructor.name,
             error: error as Error
-      }) } }; this.haec.push(hoc)
+      }) } } this.haec.push(hoc)
       return vocator()
   } })
 
@@ -81,19 +81,13 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     Nuntius.noto({
       nomen: this.constructor.name,
       nuntium: `Lego lemmam ${this.via}`
-    }); return new Promise(async dissolvatur => {
-      (await fsPromise.open(this.via, 'r'))
-        .createReadStream()
-        .pipe(parse(this.optanda))
-        .pipe(this.scriptor)
-        .on('finish', () => {
-          Nuntius.noto({
-            nomen: this.constructor.name,
-            nuntium: `Legere finitu'st lemmam ${this.via}`
-          })
-        }); dissolvatur()
-  } )}
-
+    }); await pipeline((await fs.open(this.via, 'r')).createReadStream(),
+                       parse(this.optanda), this.scriptor)
+    Nuntius.noto({
+      nomen: this.constructor.name,
+      nuntium: `Legere finitu'st lemmam ${this.via}`
+    })
+  }
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {
     if(clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
     else throw errator({ [clavis]: valor })

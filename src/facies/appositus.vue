@@ -14,7 +14,6 @@
   const separatores: string[] = Object.keys(dominus.separatores)
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]
   const annuli: string[] = [ 'quaerere', 'numerare', 'calculare' ]
-  let annulus: string = annuli.first()
 
   const assentienda = [
     {
@@ -30,7 +29,8 @@
     }
   ]
 
-  const trahens: Ref<boolean> = ref<boolean>(false)
+  const annulus: Ref<string> = ref(annuli.first())
+  const trahens: Ref<boolean> = ref(false)
 
   async function refer()
   { if(referretne()) {await referatur(locutor.locutio)} }
@@ -75,7 +75,7 @@
              text='res.titula' density='compact' tile />
     </v-tabs>
     <v-tabs-window v-model='annulus'>
-      <v-tabs-window-item v-for='valor in annuli' :value='valor'>
+      <v-tabs-window-item v-for='valor in annuli' :key='valor' :value='valor'>
         <template v-if="valor === 'quaerere'"><Quaerere /></template>
         <template v-else-if="valor === 'numerare'"><Numerare /></template>
         <template v-else-if="valor === 'calculare'"><Calculare /></template>
@@ -89,7 +89,7 @@
           <v-fab v-bind='activator' size='medium' icon='cake' />
         </template>
         <v-btn key='lingua' id='crustula.lingua' @click='dominus.lingua.interverteUtrum()' icon>
-          <v-img height='36px' width='36px' :src"$dominus.lingua.scribatur()" />
+          <v-img height='36px' width='36px' :src='dominus.lingua.scribatur()' />
         </v-btn>
         <v-btn id='crustula.facies' @click='dominus.facies.interverteUtrum()'
                :icon='dominus.facies.scriptum' />

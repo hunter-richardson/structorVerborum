@@ -35,11 +35,11 @@ Array.prototype.none = function<T> (predicate?: (param: T) => boolean): boolean
 { return !(predicate ? this.some(predicate) : this.any()) }
 
 Array.prototype.all = function (): boolean
-//  eslint-disable-next-line no-extra-boolean-cast
+//  eslint-disable-next-line no-extra-boolean-cast -- Hoc modus ullum alat
 { return this.every((status) => !!status) }
 
 Array.prototype.any = function (): boolean
-//  eslint-disable-next-line no-extra-boolean-cast
+//  eslint-disable-next-line no-extra-boolean-cast --  Hoc modus ullum alat
 { return this.some((status) => !!status) }
 
 Array.prototype.intersection = function <T> (withThese: T[]): T[]
@@ -72,6 +72,5 @@ Array.prototype.clear = function() { this.length = 0 }
 
 Array.prototype.unique = function<T>(): T[] { return [ ...new Set(this) ] }
 
-// eslint-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}
 

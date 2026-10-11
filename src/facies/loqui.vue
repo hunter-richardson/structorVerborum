@@ -5,16 +5,18 @@
   import { locutor } from '../miscella/locutor'
   import Gustulus from '../scriptura/gustulus'
   import Gustulare from './gustulare.vue'
+  import { ClassifyX } from 'classifyx'
+  import { Please } from 'pleasejs'
 
-  const pellucidum: string[] = require('classifyx')({
+  const pellucidum: string[] = ClassifyX({
     opacity: 0.5,
-    background: require('pleasejs').make_color(
+    background: Please.make_color(
       { value: dominus.facies.inhaereatur() }
     )
   })
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
-  const trahens: Ref<boolean> = ref<boolean>(false)
+  const trahens: Ref<boolean> = ref(false)
 </script>
 
 <template>

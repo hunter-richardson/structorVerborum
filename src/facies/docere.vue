@@ -2,9 +2,11 @@
   import { onMounted, defineProps, ref, type Ref } from 'vue'
   import { dominus } from '../miscella/dominus'
   import '../extensions/array'
+  import { transduceretne, transducatur } from '../scriptura/transducere'
   import fs from 'fs'
   import { VueMarkdownIt as Markdown } from '@f3ve/vue-markdown-it'
   import path from 'path'
+  import { pipeline } from 'node:stream'
 
   type Monstrandum = {
     onerans: boolean,
@@ -14,9 +16,9 @@
 
   const prima: string = defineProps<string>()
 
-  const monstranda: Ref<Monstrandum[]> = ref<Monstrandum[]>([ await doceatur(prima) ])
+  const monstranda: Ref<Monstrandum[]> = ref([ await doceatur(prima) ])
 
-  let concitatust: Ref<boolean> = ref<boolean>(false)
+  const concitatust: Ref<boolean> = ref(false)
 
   async function doceatur(res: string): Promise<Monstrandum> {
     return await new Promise((solvatur) => {
@@ -24,8 +26,8 @@
         onerans: true,
         res: res
       }; const via: string = `${path.join('/res/docenda', dominus.lingua.signum, monstrandum.res)}.md`
-      fs.createReadStream(via)
-        .on('data', (pars) => monstrandum.doctum += (typeof pars === 'string' ? pars.trim() : pars)
+      await pipeline((await fs.open(via), 'r').createReadStream())
+        .on('data', (pars) => monstrandum.doctum! += (typeof pars === 'string' ? pars.trim() : pars))
         .on('end', () => {
           monstrandum.onerans = false
           solvatur(monstrandum)
@@ -42,10 +44,10 @@
       if(parma.endsWith('.md')) {
         const res: string = parma.split('/').last().split('.').first();
         monstranda.value.push(await doceatur(res));
-      } else return await new Promise<void>(() =>
-          window.open(parma, '_blank', 'noopener,nooreferrer'))
-    }
-  }
+      } else return await new Promise<void>(() => {
+          if(transduceretne()) transducatur(parma)
+          else window.open(parma, '_blank', 'noopener,nooreferrer')
+  } )} }
 
   async function iungantur() {
     const collecta =
@@ -60,11 +62,11 @@
 </script>
 
 <template>
-  <v-dialog v-model='concitatust' full-width='true' lazy='true' scrollable='true'>
+  <v-dialog v-model='concitatust' :scrollable='true' full-width='true' lazy='true'>
     <template v-slot:activator='{ isActive: concitatust }'>
       <v-btn :text='prima' @click='concitatust = true' />
     </template>
-    <v-card v-for='monstrandum in monstranda' key='monstrandum.res'>
+    <v-card v-for='monstrandum in monstranda' :key='monstrandum.res'>
       <v-card-title>{{ monstrandum.res }}</v-card-title>
       <v-skeleton-loader v-if='monstrandum.onerans' type='paragraph'
                          :loading-text='$t(`scripta.docere.onerans`)' />
@@ -72,6 +74,7 @@
            :id='`doctum.${monstrandum.res}`' class='markdown'>
         <Markdown :source='monstrandum.doctum' breaks='true' />
       </div>
+      <v-spacer />
     </v-card>
   </v-dialog>
 </template>

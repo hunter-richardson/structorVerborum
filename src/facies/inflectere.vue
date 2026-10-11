@@ -2,19 +2,20 @@
   import { ref, type Ref } from 'vue'
   import { type Eventus } from '../miscella/dictionarium'
   import type { Referendum, Tabulator } from '../praebeunda/interfecta'
-  import { Adiectivum, Adverbium, Nomen, Numeramen, Pronomen, type TabulatorActuum } from '../praebeunda/verba'
+  import { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen, type TabulatorActuum } from '../praebeunda/verba'
   import Actuum from './tabulam/actuum.vue'
   import Adiectivorum from './tabulam/adiectivorum.vue'
   import Nominum from './tabulam/nominum.vue'
   import Tabulare from './tabulare.vue'
+  import { buildRegExp, choiceOf, endOfString, startOfString } from 'ts-regex-builder';
 
   const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
 
   const categoria: string = eventus.value?.categoria ?? ''
-  const referendum: Ref<Referendum | undefined> = ref<Referendum | undefined>(eventus as Referendum)
+  const referendum: Ref<Referendum | undefined> = ref(eventus as Referendum)
 
   function aliust(): boolean {
-    buildRegExp([
+    return buildRegExp([
       startOfString,
       choiceOf(...[
         Adverbium, Numeramen, Pronomen

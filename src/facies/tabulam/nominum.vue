@@ -9,7 +9,7 @@
 
   const { agendum } = defineProps<{ agendum: Tabulator<Nomen> }>();
   const factum: boolean = agendum instanceof NomenActum;
-  let actus: Ref<Tabulator<Actus> | undefined> = ref<Tabulator<Actus> | undefined>(undefined);
+  const actus: Ref<Tabulator<Actus> | undefined> = ref(undefined);
 
   async function refer ()
   { actus.value = await (agendum as NomenActum).actus() ?? undefined; }

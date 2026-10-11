@@ -4,13 +4,12 @@ import { mount } from 'cypress/vue';
 import '../../extensions/array';
 import '../../extensions/string';
 import Quaerere from '../../facies/quaerere.vue';
-import { inflectenda } from '../../praebeunda/enumerationes.js';
+import { inflectenda } from '../../praebeunda/valores';
 import {
   Actus,
   Adiectivum,
   Adverbium,
   Nomen,
-  Numeramen,
   Pronomen
   } from '../../praebeunda/verba';
 
@@ -20,7 +19,7 @@ function ullum (res: {
 }): void {
   describe(`${res.accusativa} invenire`, () => {
     it('inveniret', () => {
-      const cy: Cypress.Chainable = mount(Quaerere as any)
+      const cy: Cypress.Chainable = mount(Quaerere)
       // cy.wait(1000)
 
       cy.get('#quaerenda.categoriae').select(res.categoria)
@@ -71,7 +70,7 @@ describe('omnia invenire', () => {
     categoria: Pronomen.name.toLowerCase(),
     accusativa: Pronomen.name.toLowerCase(),
   }); it('numeramen inveniret', () => {
-    const cy: Cypress.Chainable = mount(Quaerere as any)
+    const cy: Cypress.Chainable = mount(Quaerere)
     // cy.wait(1000)
 
     cy.get('#quaerenda.categoriae').select('numeramen')

@@ -12,7 +12,7 @@ type Optanda = {
 function ullum (optanda: Optanda): void {
   describe('mathematicam calculare', () => {
     it('calcularet', () => {
-      const cy: Cypress.Chainable = mount(Calculare as any)
+      const cy: Cypress.Chainable = mount(Calculare)
       // cy.wait(1000)
 
       cy.get('#praesentes.romanus').should('have.text', 'N')

@@ -8,10 +8,10 @@
 
   const gustulus: Gustulus | undefined = defineProps<Gustulus | undefined>()
 
-  const numerus: Ref<Numerale | undefined> = ref<Numerale | undefined>()
-  const operator: Ref<string> = ref<string>('')
-  const praesentes: Ref<Par> = ref<Par>(nihil)
-  const praevii: Ref<Par> = ref<Par>(nihil)
+  const numerus: Ref<Numerale | undefined> = ref()
+  const operator: Ref<string> = ref('')
+  const praesentes: Ref<Par> = ref(nihil)
+  const praevii: Ref<Par> = ref(nihil)
 
   const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%'
 

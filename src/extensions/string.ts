@@ -46,7 +46,7 @@ String.prototype.startsWithVowel = function (): boolean {
 
 String.prototype.removeMacra = function (): string {
   if ([ ...this ].intersection(Object.values(macra)).any()) {
-    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias
+    // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias -- Hoc modum regignere lineam licet
     let copy: String = this;
     (Object.entries(macra))
         .forEach(([key, value]: [string, string]) => { copy = copy.replace(value, key) });
@@ -63,6 +63,5 @@ String.prototype.isCapitalized = function(): boolean
 String.prototype.compare = function(other: string): SortResult
 { return Math.sign(new Intl.Collator().compare(`${this}`, other)) as SortResult }
 
-// eslint-disable-next-line @typescript-eslint/no-useless-empty-export
 export {}
 

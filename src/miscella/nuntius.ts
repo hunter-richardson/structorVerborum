@@ -64,20 +64,23 @@ export default class Nuntius implements Disposable {
       nuntium: parametra.nuntium
   } )}
 
-  static positor<Hoc, Valor extends any> (
+  static positor<Hoc, Valor> (
       positor: (this: Hoc, valor: Valor) => void,
       contextus: ClassSetterDecoratorContext<Hoc, Valor>) {
     return function (this: Hoc, valor: Valor) {
       Nuntius.noto({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Initu'st positor ${contextus.name.toString()}`
       }); try { positor.call(this, valor) }
       catch(error) {
         Nuntius.timeo({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
         }); throw error
       } Nuntius.noto({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Exitu'st positor ${contextus.name.toString()}`
   } )} }
@@ -87,74 +90,90 @@ export default class Nuntius implements Disposable {
       contextus: ClassGetterDecoratorContext<Hoc, Illud>) {
     return function (this: Hoc): Illud {
       Nuntius.noto({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Initu'st captor ${contextus.name.toString()}`
       }); try {
         const illud: Illud = captor.call(this)
         Nuntius.noto({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Exitu'st captor ${contextus.name.toString()}`
         }); return illud
       } catch(error) {
         Nuntius.timeo({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
   static factum<Hoc extends new (...parametra: any[]) => any> (constr: Hoc,) {
     return class extends constr {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
       constructor(...parametra: any[]) {
         super(...parametra)
         Nuntius.noto({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: 'Fit'
   } )} } }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
   static modus<Hoc, Parametra extends any[], Illud> (
       modus: (this: Hoc, ...parametra: Parametra) => Illud,
       contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
     return function (this: Hoc, ...parametra: Parametra): Illud {
       Nuntius.noto({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Initu'st modus ${contextus.name.toString()}`
       }); try {
         const illud: Illud = modus.call(this, ...parametra)
         Nuntius.noto({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Exitu'st modus ${contextus.name.toString()}`
         }); return illud
       } catch (error) {
         Nuntius.timeo({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
   static promittum<Hoc, Parametra extends any[], Illud> (
       promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
       contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
     return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
       Nuntius.noto({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Initu'st promittum ${contextus.name.toString()}`
       }); try {
         const illud: Promise<Illud> = promittum.apply(this, parametra)
         Nuntius.noto({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Exitu'st promittum ${contextus.name.toString()}`
         }); return illud
       } catch (error) {
         Nuntius.timeo({
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.toLowerCase(),
           nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
 
   static exutor(exutor: () => void, contextus: ClassMethodDecoratorContext) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
     return function (this: any): void {
       exutor.call(this)
       Nuntius.noto({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.toLowerCase(),
         nuntium: `Exutu'st ${contextus.name.toString()}`
   } )} }

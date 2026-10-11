@@ -150,13 +150,12 @@ export default class Numerator {
                          this.arabicus(certamen.groups['minor'] ?? 'N')
       const certamenMixtum: RegExpExecArray | undefined = colamenMixtum.exec(romanus) ?? undefined
       if(certamenMixtum !== undefined && certamenMixtum.groups !== undefined) {
-        let { fractus, integer } = certamenMixtum.groups
-        if(integer.length == 0) integer = 'N'
+        const { fractus, integer } = certamenMixtum.groups
         if(fractus.length > 0) {
           const numerator: string = claves.first((clavis: Fractus) =>
               (fracti[clavis] === fractus)) as string ?? '0'
-          return (parseInt(numerator.toLowerCase(), 12.0) / 12.0) + this.arabicus(integer)
-        } else return new RomanNumeral(integer).toInt()
+          return (parseInt(numerator.toLowerCase(), 12.0) / 12.0) + this.arabicus(integer || 'N')
+        } else return new RomanNumeral(integer || 'N').toInt()
       } else return new RomanNumeral(certamen.groups['minor']).toInt()
     } else return -1
   }

@@ -15,16 +15,16 @@ async function aguntur(imperia: string[]): Promise<boolean> {
       'sudo apt-get install -y secure-delete',
       'git checkout --orgphan gh-pages'
     ])) {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line no-console -- Hoc cursorem struere programmam licet
       console.log('Inceptust collegi')
       if (await aguntur([
           'npm run build',
           'git --work-tree build add --all',
           "git --work-tree commit -m 'expedire'"
         ])) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- Hoc cursorem struere programmam licet
         console.log('Successu collectust')
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- Hoc cursorem struere programmam licet
         console.log('Inceptust expediri')
         if (await aguntur([
             'git push origin HEAD:gh-pages --force --verbose',
@@ -32,7 +32,7 @@ async function aguntur(imperia: string[]): Promise<boolean> {
             'git checkout -f princeps',
             'git branch -D gh-pages'
           ])) {
-          // eslint-disable-next-line no-console
+          // eslint-disable-next-line no-console -- Hoc cursorem struere programmam licet
           console.log('Expeditust successu')
   } } } } catch (error) {
     console.log(error)

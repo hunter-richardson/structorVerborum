@@ -19,7 +19,7 @@
 
   const columnae: Columnae = [
     'lemma', 'categoriae'
-  ].map(function(this: any, columna: string) {
+  ].map(function(columna: string) {
     return {
       title: tf(`partes.${columna}_singularis`, 'capitalize'),
       key: columna
@@ -27,19 +27,19 @@
   })
 
   const validator: ((pars: string) => boolean | string)[] = [
-    function(this: any, pars: string): boolean | string {
+    function(pars: string): boolean | string {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
       return licta.test(pars.toLowerCase()) || t('errores.quaerere.deLitteris')
     }
   ]
 
-  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
-  const verbum: Ref<Referendum | undefined> = ref<Referendum | undefined>()
+  const eventus: Ref<Eventus | undefined> = ref()
+  const verbum: Ref<Referendum | undefined> = ref()
 
-  const onerans: Ref<boolean> = ref<boolean>(false)
-  const error: Ref<boolean> = ref<boolean>(false)
-  const lemmae: Ref<Lemma[]> = ref<Lemma[]>([])
-  const quaerenda: Ref<Quaerenda> = ref<Quaerenda>({
+  const onerans: Ref<boolean> = ref(false)
+  const error: Ref<boolean> = ref(false)
+  const lemmae: Ref<Lemma[]> = ref([])
+  const quaerenda: Ref<Quaerenda> = ref({
     categoriae: [],
     pars: ''
   })
@@ -116,15 +116,17 @@
       </tr>
     </template>
     <Onerare :onerans='onerans' pittacium='lemmae' />
-    <template v-if='!onerans' v-for='lemma in lemmae' :key="`${lemma.categoria}_${lemma.scriptum}`">
-      <tr><td>{{ lemma.categoria }}</td></tr>
-      <tr><td>{{ lemma.scriptum }}</td></tr>
-      <tr>
-        <td>
-          <v-btn :text="$t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
-                  append-icon='open_in_full' @click='aperi(lemma)' />
-        </td>
-      </tr>
+    <template v-if='!onerans'>
+      <template v-for='lemma in lemmae' :key="`${lemma.categoria}_${lemma.scriptum}`">
+        <tr><td>{{ lemma.categoria }}</td></tr>
+        <tr><td>{{ lemma.scriptum }}</td></tr>
+        <tr>
+          <td>
+            <v-btn :text="$t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
+                    append-icon='open_in_full' @click='aperi(lemma)' />
+          </td>
+        </tr>
+      </template>
     </template>
   </v-data-table>
 </template>

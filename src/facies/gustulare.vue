@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { defineProps } from 'vue'
+  import { ref, type Ref } from 'vue'
   import Gustulus from '../scriptura/gustulus'
 
-  const gustulus: Gustulus | undefined = defineProps<{ gustulus: Gustulus | undefined }>()
+  const gustulus: Ref<Gustulus | undefined> = ref()
 </script>
 
 <template>
