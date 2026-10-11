@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "lint": "eslint src",
+    "eslint:build": "esbuild ./eslint.config.ts --bundle --platform=node --format=esm --packages=external --outfile=eslint.config.js",
     "type-check": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
     "build.debug": "vite build --mode development",
     "build.release": "vite build --mode production"
@@ -43,6 +44,7 @@
     "cypress": "^16.1.0",
     "cypress-map": "^1.56.0",
     "dependabot": "^0.1.1",
+    "esbuild": "^0.28.2",
     "eslint": "^10.0.0",
     "eslint-plugin-cypress": "^7.0.2",
     "eslint-plugin-vue": "^10.11.0",
@@ -90,7 +92,8 @@
   },
   "allowScripts": {
     "highlight.js@9.18.5": true,
-    "cypress@16.1.1": true
+    "cypress@16.1.1": true,
+    "esbuild@0.28.2": true
   },
   "dependencies": {
     "oxlint": "^1.83.0"
