@@ -11,7 +11,6 @@ import {
   TabulamenNominis,
   TabulamenNumeraminis
   } from '@/praebeunda/tabulamina';
-import { Tabula } from '@/tabulae/tabula';
 import { Mixin } from 'ts-mixer';
 import {
   buildRegExp,
