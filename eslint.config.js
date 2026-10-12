@@ -21,9 +21,13 @@ var source = {
     }
   },
   rules: {
-    "vue/multi-word-component-names": "off",
-    "@typescript-eslint/no-useless-empty-export": "off",
+    "vue/html-quotes": ["error", "single", { "avoidEscape": true }],
     "@eslint-community/eslint-comments/require-description": "error",
+    "@typescript-eslint/no-useless-empty-export": "off",
+    "vue/html-closing-bracket-newline": "off",
+    "vue/multi-word-component-names": "off",
+    "vue/first-attribute-linebreak": "off",
+    "vue/max-attributes-per-line": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

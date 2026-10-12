@@ -22,16 +22,16 @@
 <template>
   <v-chip-group id='locutio'>
     <draggable v-model='locutor.verba'
-               @start='trahens = true'
-               @end='trahens = false'
                :ghost-class='pellucidum'
                :chosen-class='delectum'
-               :drag-class='tractum'>
+               :drag-class='tractum'
+               @start='trahens = true'
+               @end='trahens = false'>
       <span :class="`mr-2 cursor-${trahens ? 'grab' : 'grabbing'}`">
         <template v-for='verbum in locutor.verba' :key='verbum.unicum'>
-          <v-chip @click:close='locutor.removeatur(verbum.unicum)' close-icon='remove'
-                  :text='verbum.monstretur()' :id='verbum.unicum' selected-class='text-primary'
-                  :data-separator="dominus.separator.signum" />
+          <v-chip :id='verbum.unicum' close-icon='remove'
+                  :text='verbum.monstretur()' selected-class='text-primary' :data-separator='dominus.separator.signum'
+                  @click:close='locutor.removeatur(verbum.unicum)' />
         </template>
       </span>
     </draggable>

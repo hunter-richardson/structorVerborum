@@ -1,5 +1,6 @@
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Tabulator } from '@/praebeunda/interfecta';
 import { Nomen } from '@/praebeunda/verba';
 import {
   type Par,
@@ -7,7 +8,6 @@ import {
   tabulast,
   tabulatorst
   } from './tabula';
-import { type Tabulator } from '@/praebeunda/interfecta';
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaBifissa extends Tabula<Nomen> {

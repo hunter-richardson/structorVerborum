@@ -24,7 +24,7 @@ import {
   Pronomen
   } from '@/praebeunda/verba';
 import deepEqual from 'deep-equal';
-import { type Referendum, type Tabulator } from '@/praebeunda/interfecta';
+import type { Referendum, Tabulator } from '@/praebeunda/interfecta';
 
 export interface Lemma {
   categoria: string
@@ -140,13 +140,13 @@ class Dictionarium {
     const lecta: boolean =
       (await this.relata).first((relatum) => deepEqual(lemma, relatum as Lemma))?.lecta ?? false
     switch (lemma.categoria.toLowerCase()) {
-      case      'actus': referendum = await this._referaturActus(lemma.scriptum, lecta); break
-      case 'adiectivum': referendum = await this._referaturAdiectivum(lemma.scriptum, lecta); break
-      case      'nomen': referendum = await this._referaturNomen(lemma.scriptum, lecta); break
-      case  'adverbium': referendum = await adverbiorum.legatur(lemma.scriptum); break
-      case  'numeramen': referendum = await numeraminum.legatur(lemma.scriptum); break
-      case   'promomen': referendum = await pronomina.feratur(lemma.scriptum); break
-                default: referendum = await verborum.legatur(lemma.scriptum); break
+      case      'actus': referendum =  await this._referaturActus(lemma.scriptum, lecta); break
+      case 'adiectivum': referendum =  await this._referaturAdiectivum(lemma.scriptum, lecta); break
+      case      'nomen': referendum =  await this._referaturNomen(lemma.scriptum, lecta); break
+      case  'adverbium': referendum = (await adverbiorum.legatur(lemma.scriptum)).unum; break
+      case  'numeramen': referendum = (await numeraminum.legatur(lemma.scriptum)).unum; break
+      case   'promomen': referendum =  await pronomina.feratur(lemma.scriptum); break
+      default          : referendum = (await verborum.legatur(lemma.scriptum)).unum; break
     } return referendum ? { ...referendum, categoria: lemma.categoria.toLowerCase() } : null
   }
 

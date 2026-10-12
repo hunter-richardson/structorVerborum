@@ -1,9 +1,9 @@
 import '@/extensions/string';
 import fs from 'fs';
-import i18next, { InitOptions } from 'i18next';
 import FsBackend from 'i18next-fs-backend';
 import yaml from 'js-yaml';
 import path from 'path';
+import i18next, { type InitOptions } from 'i18next';
 
 const deTransferendo: InitOptions = {
   lng: 'la',
@@ -14,15 +14,15 @@ const deTransferendo: InitOptions = {
   saveMissing: true,
   load: 'languageOnly',
   backend: {
-    loadPath: path.resolve('/res/loci/{{lng}}.yml'),
-    addPath: path.resolve('/res/loci/{{lng}}.errata.yml'),
+    loadPath: path.resolve('@res/loci/{{lng}}.yml'),
+    addPath: path.resolve('@res/loci/{{lng}}.errata.yml'),
     parse: function (data: string) { return yaml.load(data) }
   }, parseMissingKeyHandler: (clavis: string): string => { return clavis },
   missingKeyHandler: (linguae: readonly string[], spatium: string, clavis: string, inhaesum: string = '') => {
     linguae.forEach(lingua => {
       if (spatium) clavis = `${spatium}:${clavis}`
       const linea: string = inhaesum ? `${clavis}: ${JSON.stringify(inhaesum)}` : `${clavis}: ""`
-      fs.appendFileSync(path.resolve(`/res/loci/${lingua}.errata.yml`), linea)
+      fs.appendFileSync(path.resolve(`@res/loci/${lingua}.errata.yml`), linea)
     })
   }
 }

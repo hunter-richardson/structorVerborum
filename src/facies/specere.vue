@@ -85,36 +85,36 @@
             :subtitle="$t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
       <template v-if='multiplex'>
         <v-chip-group>
-          <v-chip v-for='valor in valores' :key='valor' :text='valor' :id="`valor_${valor}`"
+          <v-chip v-for='valor in valores' :id='`valor_${valor}`' :key='valor' :text='valor'
                   selected-class='text-primary' prepend-icon='category' />
         </v-chip-group>
-        <v-select density='compact' id='enclitica' v-model='valorEnclitici'
+        <v-select id='enclitica' v-model='valorEnclitici' density='compact'
                   :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
                   :items='valoresEnclitici' chips flat open-on-clear />
       </template>
-      <Docere :prima='verbum.categoria.valor' />
+      <Docere :activator='verbum.categoria.valor' />
       <template v-if='multiplex'>
-        <Docere v-for='valor in valores' :key='valor' :prima='valor' />
+        <Docere v-for='valor in valores' :key='valor' :activator='valor' />
       </template>
       <v-btn-toggle>
         <template v-if='verbum?.paratust()'>
-          <v-btn icon='chat_add_on' id='adde' @click='adde()'
-                 :text="$t('annuli.specere.addere')" />
+          <v-btn id='adde' icon='chat_add_on' :text="$t('annuli.specere.addere')"
+                 @click='adde()' />
         </template>
         <template v-if='propriabile && verbum?.paratust()'>
-          <v-bnt icon='chat_add_on' id='addeProprium' @click='addeProprium()'
-                 :text="$t('annuli.specere.addereProprium')" />
+          <v-bnt id='addeProprium' icon='chat_add_on' :text="$t('annuli.specere.addereProprium')"
+                 @click='addeProprium()' />
         </template>
         <template v-else-if="/^numer(amen|us)$/.test(verbum?.categoria.valor ?? '')">
-          <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text="$t('annuli.specere.aperire')" />
+          <v-btn id='aperi' icon='quick_reference' :text="$t('annuli.specere.aperire')"
+                 @click='aperi()' />
         </template>
         <template v-else-if="[
           verbum?.categoria.aequatur('actus'),
           valores.includes('participium')
         ].all()">
-          <v-btn icon='quick_reference' id='aperi' @click='aperi()'
-                 :text="$tf('categoriae.participium_singulare', 'capitalize')" />
+          <v-btn id='aperi' icon='quick_reference' :text="$tf('categoriae.participium_singulare', 'capitalize')"
+                 @click='aperi()' />
         </template>
       </v-btn-toggle>
     </v-card>

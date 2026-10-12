@@ -2,11 +2,11 @@
   import { defineProps, ref, type Ref } from 'vue'
   import '@/extensions/array'
   import { TabulamenNominis, type TabulamenFacti } from '@/praebeunda/tabulamina'
-  import { type Tabulator } from '@/praebeunda/interfecta'
+  import { Tabulator } from '@/praebeunda/interfecta'
   import { Nomen } from '@/praebeunda/verba'
   import inflectere from '@/facies/inflectere.vue'
   import tabulare from '@/facies/tabulare.vue'
-import type { Eventus } from '@/miscella/dictionarium';
+  import type { Eventus } from '@/miscella/dictionarium';
 
   const { agendum } = defineProps<{ agendum: Tabulator<Nomen> }>();
   const factum: boolean = agendum instanceof TabulamenNominis;
@@ -19,6 +19,6 @@ import type { Eventus } from '@/miscella/dictionarium';
 <template>
   <inflectere v-if='actus !== undefined' :agendum='actus' @blur='actus = undefined' />
   <tabulare v-else :agendum='agendum' categoria='nomen' />
-  <v-btn v-if='factum' append-icon='sprint' id='actus' @click='refer()'
+  <v-btn v-if='factum' id='actus' append-icon='sprint' @click='refer()'
          :text="$t('categoria.actus.singularis', 'capitalize')" />
 </template>

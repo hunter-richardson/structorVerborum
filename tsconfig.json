@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
-    "declaration": true,
     "extendedDiagnostics": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

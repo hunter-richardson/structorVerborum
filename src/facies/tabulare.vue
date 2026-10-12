@@ -1,38 +1,37 @@
 <script setup lang="ts" generic='Hoc extends Multiplex'>
-  import { onMounted, ref, type Ref } from 'vue'
+  import { onMounted, defineProps, ref, type Ref } from 'vue'
   import '@/extensions/array'
-  import { Columnae } from '@/scriptura/columnae'
-  import { type Tabulator } from '@/praebeunda/interfecta'
+  import { type Columnae } from '@/scriptura/columnae'
+  import { Tabulator } from '@/praebeunda/interfecta'
   import { Multiplex } from '@/praebeunda/verba'
   import { categoricum } from '@/scriptura/columnae'
   import { Tabula } from '@/tabulae/tabula'
   import Onerare from '@/facies/onerare.vue'
   import Specere from '@/facies/specere.vue'
+  import { Fulta } from '../praebeunda/valores';
 
-  const onerans: Ref<boolean> = ref<boolean>(true)
-
-  export interface Forma {
+  interface Forma {
     agendum: Tabulator<Hoc>,
     categoria: string
   }
 
-  const { agendum, categoria } = defineProps<Forma>()
-  const tabula: Tabula<Hoc> | undefined = agendum.tabula
+  const onerans: Ref<boolean> = ref<boolean>(true)
 
-  async function omnia(): Promise<Hoc[]> { return await tabula?.tabulentur() ?? [] }
+  const { agendum, categoria } = defineProps<Forma>()
+  const tabula: Tabula<Hoc> = agendum.tabula
+
+  async function omnia(): Promise<Hoc[]> { return tabula.haec }
 
   const haec: Hoc[] = await omnia()
 
-  const columnae: Colummae = categoricum<Hoc>({
+  const columnae: Columnae = categoricum<Hoc>({
     categoria: categoria,
     haec: haec
   })
 
   const hoc: Ref<Hoc | undefined> = ref()
 
-  const seligenda: Fultum<Lineae>[] = [
-    haec?.map((multiplex: Multiplex) => multiplex.valores()).flat().unique()
-  ];
+  const seligenda: Fulta = new Fulta(...haec.map((illud: Hoc): Fulta => illud.valores).flat().unique())
 
   const selecta: string[] = [];
 
@@ -41,21 +40,22 @@
   async function exoneretur() { onerans.value = false; }
 
   async function forsInflectat() {
-    await reoneratur()
-    value = haec.random()
-    return await exoneratur()
+    await reoneretur()
+    hoc.value = haec.random()
+    return await exoneretur()
   }
 
   async function cole(selecta: string[]) {
-    await reoneratur()
+    await reoneretur()
     haec.length = 0;
     (await omnia())?.filter((illud: Hoc) =>
-        selecta.every((selectum) => illud.valores().includes(selectum)))
+        selecta.every((selectum) =>
+           illud.valores.some((istud) => istud.valor === selectum)))
                .forEach((illud: Hoc) => haec.push(illud))
-    return await exoneratur()
+    return await exoneretur()
   }
 
-  onMounted(async () => await exoneratur())
+  onMounted(async () => await exoneretur())
 </script>
 
 <template>
@@ -64,19 +64,19 @@
   <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec.clear()' />
   <template v-else-if='haec.length > 1'>
     <div v-if='seligenda.length > 0' id='colamina'>
-      <v-chip-group selected-class='text-primary' v-model='selecta' filter multiple>
-        <v-chip v-for='seligendum in seligenda' :key='seligendum'
-                @change='cole(selecta)' :id="`colamen_${seligendum}`"
-                :text="$t(`${seligendum}_singularis`, 'capitalize')" />
+      <v-chip-group v-model='selecta' selected-class='text-primary' filter multiple>
+        <v-chip v-for='seligendum in seligenda' :id='`colamen_${seligendum.nomen}_${seligendum.valor}`'
+                :key='`${seligendum.nomen}_${seligendum.valor}`' :text='`${$t(`partes.${seligendum.nomen}_singularis`)}: ${$t(`partes.${seligendum.nomen}.${seligendum.valor}`)}`'
+                @change='cole(selecta)' />
       </v-chip-group>
     </div>
-    <v-btn append-icon='casino' @click='forsInflectat()'
-           id='fortuna' :text="$t('annuli.tabulare.aForte')" />
-    <v-data-table :items='haec' :headers='columnae' density='compact'
-                  id='tabula' items-per-page='10' item-selectable='false'>
-      <v-btn v-for='illud in haec' :key='illud.unicum'
-             :text="$t('annuli.tabulare.aMemet')"
-             append-icon='open_in_full' :id='`selige_${illud.unicum.toString()}`'
+    <v-btn id='fortuna' append-icon='casino'
+           :text="$t('annuli.tabulare.aForte')" @click='forsInflectat()' />
+    <v-data-table id='tabula' :items='haec' :headers='columnae'
+                  density='compact' items-per-page='10' item-selectable='false'>
+      <v-btn v-for='illud in haec' :id='`selige_${illud.scriptum}_${illud.unicum.toString()}`'
+             :key='illud.unicum'
+             :text="$t('annuli.tabulare.aMemet')" append-icon='open_in_full'
              @click='hoc = illud' />
     </v-data-table>
   </template>

@@ -1,7 +1,7 @@
 <script setup lang='ts'>
   import { ref, type Ref } from 'vue'
   import { type Eventus } from '@/miscella/dictionarium'
-  import type { Referendum, Tabulator } from '@/praebeunda/interfecta'
+  import { type Referendum, Tabulator } from '@/praebeunda/interfecta'
   import { Actus, Adiectivum, Adverbium, Nomen, Numeramen, Pronomen, type TabulatorActuum } from '@/praebeunda/verba'
   import Actuum from '@/facies/tabulam/actuum.vue'
   import Adiectivorum from '@/facies/tabulam/adiectivorum.vue'
@@ -9,19 +9,21 @@
   import Tabulare from '@/facies/tabulare.vue'
   import { buildRegExp, choiceOf, endOfString, startOfString } from 'ts-regex-builder';
 
-  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
+  type TabulatorumDirectorum = Tabulator<Adverbium | Numeramen | Pronomen>
 
-  const categoria: string = eventus.value?.categoria ?? ''
-  const referendum: Ref<Referendum | undefined> = ref(eventus as Referendum)
-
-  function aliust(): boolean {
+  function aliust (): boolean {
     return buildRegExp([
       startOfString,
       choiceOf(...[
         Adverbium, Numeramen, Pronomen
-      ].map(classis => classis.name.toLowerCase()) ),
-      endOfString ]).test(categoria)
+      ].map(classis => classis.name.toLowerCase())),
+      endOfString ]).test(categoria);
   }
+
+  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
+
+  const categoria: string = eventus.value?.categoria ?? ''
+  const referendum: Ref<Referendum | undefined> = ref(eventus.value as Referendum)
 </script>
 
 <template>
@@ -34,8 +36,10 @@
       <Adiectivorum v-else-if='categoria === Adiectivum.name.toLowerCase()'
                     :agendum='referendum as Tabulator<Adiectivum>' />
       <Tabulare v-else-if='aliust()' :categoria='categoria'
-                :agendum='referendum as Tabulator<Adverbium | Numeramen | Pronomen>' />
-      <template v-else><div /></template>
+                :agendum='referendum as TabulatorumDirectorum' />
+      <template v-else>
+        <div />
+      </template>
     </v-dialog>
   </template>
 </template>

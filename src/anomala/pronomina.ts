@@ -30,11 +30,8 @@ class Pronomina extends Anomala<Pronomen> {
     this.contenta[ 'idem' ] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['id'],
       (scriptum: string): string => {
         switch(scriptum) {
-          case 'is':
-          case 'eī':
-            return 'īdem'
-          default:
-            return `${scriptum}dem`
+          case 'is': case 'eī': return 'īdem'
+          default: return `${scriptum}dem`
       } }))
     this.contenta['ipsum'] = new Mantela(new TabulaCollata<Pronomen>(
              new TabulaIrregula<Pronomen>(Pronomen, 'ipsum'),
@@ -45,16 +42,16 @@ class Pronomina extends Anomala<Pronomen> {
     this.contenta['quid'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['id'],
       (scriptum: string): string => {
         switch(scriptum) {
-          case 'ea':
-          case 'eae':
+          case 'ea'  :
+          case 'eae' :
             return 'quae'
-          case 'eum':
+          case 'eum' :
             return 'quem'
           case 'eius':
             return 'cuius'
-          case 'eī':
+          case 'eī'  :
             return 'cui'
-          default:
+          default    :
             return scriptum.replace('e', 'qu')
       } }))
     this.contenta['quod'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['quid'],
@@ -64,7 +61,7 @@ class Pronomina extends Anomala<Pronomen> {
             return 'quod'
           case 'quis':
             return 'quī'
-          default:
+          default    :
             return scriptum
       } }))
     this.contenta['tu'] = new Mantela(new TabulaCollata<Pronomen>(

@@ -1,6 +1,5 @@
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
-import { Lectum } from '@/praebeunda/interfecta';
 import {
   TabulamenActus,
   TabulamenAdiectivi,
@@ -10,18 +9,19 @@ import {
   TabulamenNominis,
   TabulamenNumeraminis
   } from '@/praebeunda/tabulamina';
-import {
-  errator,
-  Lineae,
-  nomina,
-  Res
-  } from '@/praebeunda/valores';
 import { Verbum } from '@/praebeunda/verba';
-import { CsvError, Options, parse } from 'csv-parse';
 import fs from 'fs/promises';
 import path from 'path';
 import { Writable } from 'stream';
 import { buildRegExp, choiceOf } from 'ts-regex-builder';
+import { type Lectum } from '@/praebeunda/interfecta';
+import {
+  errator,
+  type Lineae,
+  nomina,
+  Res
+  } from '@/praebeunda/valores';
+import { CsvError, type Options, parse } from 'csv-parse';
 import { pipeline } from 'node:stream';
 
 export class Ulla<Hoc> extends Array<Hoc> {

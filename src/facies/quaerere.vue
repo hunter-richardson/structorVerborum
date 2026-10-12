@@ -13,7 +13,7 @@
   import Loqui from '@/facies/loqui.vue';
   import Onerare from '@/facies/onerare.vue';
   import Specere from '@/facies/specere.vue';
-  import type { Referendum } from '@/praebeunda/interfecta';
+  import { type Referendum } from '@/praebeunda/interfecta';
 
   const { t, tf } = translation()
 
@@ -93,37 +93,37 @@
   <Specere v-if='verbum !== undefined' :verbum='verbum as Verbum' @blur='verbum = undefined' />
   <Inflectere v-else-if='eventus !== undefined' :eventus='eventus as Eventus' @blur='eventus = undefined' />
   <div class='text-center'>
-    <v-btn append-icon='search' @click='sarci()' :disabled='onerans' id='sarci'
-           :text="$t('annuli.quaerere.sarcire')" />
-    <v-btn append-icon='casino' @click='forsSeligat()' :disabled='onerans' id='fortuna'
-           :text="$t('annuli.quaerere.seligere')" />
+    <v-btn id='sarci' append-icon='search' :disabled='onerans' :text="$t('annuli.quaerere.sarcire')"
+           @click='sarci()' />
+    <v-btn id='fortuna' append-icon='casino' :disabled='onerans' :text="$t('annuli.quaerere.seligere')"
+           @click='forsSeligat()' />
   </div>
-  <v-data-table :items-per-page='10' :loading='onerans' :disabled='onerans'
-                density='compact' id='tabula' :headers='columnae'>
+  <v-data-table id='tabula' :items-per-page='10' :loading='onerans'
+                :disabled='onerans' density='compact' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <td v-for='columna in headers.flat()' :key='columna.key ?? ""'>
           <v-icon v-if='isSorted(columna)' :icon='getSortIcon(columna)' />
-          <v-text-field v-if="columna.key === 'lemma'" :label='columna.title'
-                        v-model='quaerenda.pars' :disabled='onerans' :loading='onerans'
-                        validate-on='input' :rules='validator' id='quaerenda.pars'
-                        density='compact' @blur='removeApices()' autofocus flat single-line />
-          <v-select v-else-if="columna.key === 'categoriae'" :loading='onerans' density='compact'
-                    id='quaerenda.categoriae' v-model='quaerenda.categoriae' :disabled='onerans'
+          <v-text-field v-if="columna.key === 'lemma'" id='quaerenda.pars'
+                        v-model='quaerenda.pars' :label='columna.title' :disabled='onerans'
+                        :loading='onerans' validate-on='input' :rules='validator'
+                        density='compact' autofocus flat single-line @blur='removeApices()' />
+          <v-select v-else-if="columna.key === 'categoriae'" id='quaerenda.categoriae' v-model='quaerenda.categoriae'
+                    :loading='onerans' density='compact' :disabled='onerans'
                     :label='columna.title' :items='categoriae' chips flat multiple open-on-clear />
-          <span class='mr-2 cursor-pointer' :id="`ordina_${columna.key}`" @click='toggleSort(columna)' />
+          <span :id='`ordina_${columna.key}`' class='mr-2 cursor-pointer' @click='toggleSort(columna)' />
         </td>
       </tr>
     </template>
     <Onerare :onerans='onerans' pittacium='lemmae' />
     <template v-if='!onerans'>
-      <template v-for='lemma in lemmae' :key="`${lemma.categoria}_${lemma.scriptum}`">
+      <template v-for='lemma in lemmae' :key='`${lemma.categoria}_${lemma.scriptum}`'>
         <tr><td>{{ lemma.categoria }}</td></tr>
         <tr><td>{{ lemma.scriptum }}</td></tr>
         <tr>
           <td>
-            <v-btn :text="$t('annuli.quaerere.aperire')" :disabled='error' id='aperi'
-                    append-icon='open_in_full' @click='aperi(lemma)' />
+            <v-btn id='aperi' :text="$t('annuli.quaerere.aperire')" :disabled='error'
+                   append-icon='open_in_full' @click='aperi(lemma)' />
           </td>
         </tr>
       </template>

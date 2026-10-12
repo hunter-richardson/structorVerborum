@@ -45,7 +45,7 @@ import {
   type Lineae,
   } from './valores';
 import { comparison, type SortResult } from '@/extensions/utils';
-import type { Lectum, Tabulator } from './interfecta';
+import { LATIBILE, LEGIBILE, Tabulator, type Lectum } from './interfecta';
 
 export type Agendum<Hoc extends Multiplex> = Lectum &
     Omit<Hoc, 'categoria' | 'unicum' | '_encliticus' | 'encliticus' | 'monstretur' | 'paratust'>
@@ -66,6 +66,8 @@ export const ordinentur: (primum: Verbum, secundum: Verbum) => SortResult =
                  (hoc: Verbum) => hoc.categoria.valor ?? '')
 
 export class Verbum extends Categoricum implements Lectum {
+  readonly [ LATIBILE ] = true as const
+  readonly [ LEGIBILE ] = true as const
   readonly unicum: string = crypto.randomUUID()
   protected _scriptum!: string
 
@@ -137,19 +139,19 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
 
   static colamina(categoria: string): string[] {
     switch (categoria) {
-      case 'actus':
+      case      'actus':
         return [ 'modus', 'vox', 'tempus', 'numerus', 'persona', 'scriptum' ]
       case 'adiectivum':
         return [ 'gradus', 'genus', 'numerus', 'casus', 'scriptum' ]
-      case 'adverbium':
+      case  'adverbium':
         return [ 'gradus', 'scriptum' ]
-      case 'nomen':
+      case      'nomen':
         return [ 'factus', 'numerus', 'casus', 'scriptum' ]
-      case 'numeramen':
+      case  'numeramen':
         return [ 'referendus', 'scriptum' ]
-      case 'pronomen':
+      case   'pronomen':
         return [ 'genus', 'numerus', 'casus', 'scriptum' ]
-      default:
+      default          :
         return [  ]
   } }
 
@@ -230,12 +232,12 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
   async refer(): Promise<Eventus | undefined> {
     let nova: '' | 'numerus' | 'nomen' | 'adverbium' | 'adiectivum' = ''
     switch(this.relaturus.valor) {
-      case 'numerus':
-      case 'adverbium':
+      case    'numerus':
+      case  'adverbium':
         nova = this.relaturus.valor; break
       case 'fractional':
         nova = 'nomen'; break
-      default:
+      default          :
         nova = 'adiectivum'; break
     } return await dictionarium.referatur({
       categoria: nova,
@@ -252,9 +254,7 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
   { super(); this._valores = new Fulta(this.genus, this.numerus, this.casus) }
 }
 
-export abstract class TabulatorActuum implements Tabulator<Actus> {
-  abstract get tabula(): Tabula<Actus>
-
+export abstract class TabulatorActuum extends Tabulator<Actus> {
   @Nuntius.promittum async actor(genus: 'masculinum' | 'femininum' | 'neutrum'): Promise<TabulamenNominis | undefined> {
     const _supinus: Actus | undefined =
       this.tabula.colantur({
@@ -330,9 +330,7 @@ export abstract class TabulatorActuum implements Tabulator<Actus> {
   }
 }
 
-export abstract class TabulatorAdiectivorum implements Tabulator<Adiectivum> {
-  abstract get tabula(): Tabula<Adiectivum>
-
+export abstract class TabulatorAdiectivorum extends Tabulator<Adiectivum> {
   async probetur({ genus, gradus }: { genus: string, gradus: string }): Promise<TabulamenNominis | undefined> {
     const _nominativum: Adiectivum | undefined =
       this.tabula.colantur({
@@ -352,13 +350,13 @@ export abstract class TabulatorAdiectivorum implements Tabulator<Adiectivum> {
       .ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalize()));
     switch (_genitivum.scriptum.slice(-2)) {
       case 'ae':
-        structor.ponatur((nomen) => (nomen.principium = 'prima'));
-        break;
+        structor.ponatur((nomen) => (nomen.principium = 'prima'))
+        break
       case 'is':
-        structor.ponatur((nomen) => (nomen.principium = 'tertia'));
-        break;
-      default:
-        structor.ponatur((nomen) => (nomen.principium = 'secunda'));
+        structor.ponatur((nomen) => (nomen.principium = 'tertia'))
+        break
+      default  :
+        structor.ponatur((nomen) => (nomen.principium = 'secunda'))
     } return structor.struatur
   }
 }

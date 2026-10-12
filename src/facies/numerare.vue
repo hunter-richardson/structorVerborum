@@ -39,14 +39,14 @@
   <Specere v-if='numerale !== undefined' :verbum='numerale' @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
-    <v-btn v-if='arabicus.numerator === 0' icon='equal' id='aequa' @click='refer()' />
+    <v-btn v-if='arabicus.numerator === 0' id='aequa' icon='equal' @click='refer()' />
   </div>
   <div class='text-center'>
-    <v-number-input @change='effiat()' id='integer' :rules='validator' validateOn='input'
-                    v-model='arabicus.integer' autofocus clearable flat reverse />
+    <v-number-input id='integer' v-model='arabicus.integer' :rules='validator' validate-on='input'
+                    autofocus clearable flat reverse @change='effiat()' />
     <v-card text=' + ' />
-    <v-number-input @change='effiat()' id='numerator' :rules='validator' validateOn='input'
-                    v-model='arabicus.numerator' clearable flat />
-    <v-card :text="` + ${arabicus.denominator.toString()}`" />
+    <v-number-input id='numerator' v-model='arabicus.numerator' :rules='validator' validate-on='input'
+                    clearable flat @change='effiat()' />
+    <v-card :text='` + ${arabicus.denominator.toString()}`' />
   </div>
 </template>

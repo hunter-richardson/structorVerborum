@@ -122,7 +122,7 @@ export class Fulta extends Array<Fultum<Lineae>> {
     } return fultum
   }
 
-  constructor (prima: Fultum<Lineae>, ...fulta: Fultum<Lineae>[]) { super(prima, ...fulta) }
+  constructor (...fulta: Fultum<Lineae>[]) { super(...fulta) }
 }
 
 export const categoriae: Lineae = [

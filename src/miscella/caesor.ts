@@ -25,8 +25,9 @@ import {
   type Fultum,
   type Lineae
   } from '@/praebeunda/valores';
-import type { Tabulamen } from '@/praebeunda/tabulamina';
-import type { Lectum } from '@/praebeunda/interfecta';
+import { type Tabulamen } from '@/praebeunda/tabulamina';
+import { LEGIBILE, type Lectum } from '@/praebeunda/interfecta';
+import { type SortResult } from '../extensions/utils';
 
 type Cretor = (fulta: Fulta) => boolean
 
@@ -37,6 +38,7 @@ class Caesamen {
 }
 
 class Crudum extends (Caesamen as new () => Omit<Caesamen, 'status'>) implements Lectum {
+  readonly [ LEGIBILE ] = true as const
   readonly status!: string
 }
 
@@ -64,14 +66,15 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
       if(!fultum) return false
       const quaerendi: number = fultum.valores.indexOf(quaerendus)
       const valoris: number = fultum.valores.indexOf(fultum.valor)
+      const comparatum: SortResult = Math.sign(valoris - quaerendi) as SortResult
       switch(operator) {
-        case '=' : return valoris === quaerendi
-        case '!' : return valoris !== quaerendi
-        case '<' : return valoris  <  quaerendi
-        case '>' : return valoris  >  quaerendi
-        case '<=': return valoris  <= quaerendi
-        case '>=': return valoris  >= quaerendi
-        default: return false
+        case '=' : return comparatum === 0
+        case '!' : return comparatum !== 0
+        case '<=': return comparatum  <= 0
+        case '>=': return comparatum  >= 0
+        case '<' : return comparatum  <  0
+        case '>' : return comparatum  >  0
+        default  : return false
   } } }
 
   @Nuntius.modus praedicantur(status: string): Cretor {

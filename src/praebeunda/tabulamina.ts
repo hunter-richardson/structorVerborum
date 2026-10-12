@@ -12,19 +12,18 @@ import {
   TabulatorAdiectivorum
   } from '@/praebeunda/verba';
 import { Mixin } from 'ts-mixer';
-import { Tabulator } from './interfecta';
+import { LEGIBILE, Tabulator } from './interfecta';
 import { TabulaDerecta, TabulaRegula, type Tabula } from '@/tabulae/tabula';
 import { dictionarium, type Eventus } from '@/miscella/dictionarium';
 
-export abstract class Tabulamen<Hoc extends Multiplex> implements Tabulator<Hoc> {
+export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
+  readonly [ LEGIBILE ] = true as const
   categoria!: string
   principium!: string
   vices?: string
   scriptura?: string
   get scapum(): string
   { return translation().t(`partes.${this.categoria}_pluralis`, { la: 'la' }) }
-
-  abstract get tabula(): Tabula<Hoc>
 }
 
 @Ultimum @Nuntius.factum export class TabulamenActus extends Mixin(Tabulamen<Actus>, TabulatorActuum) {

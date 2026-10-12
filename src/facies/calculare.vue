@@ -51,10 +51,10 @@
     <v-card v-if='operator.length > 0' id='operator' :text='operator' />
   </div>
   <v-card :text='praesentes.romanus' />
-  <div class='text-center' v-for="linea in (actus.split(' ') as string[])" :key='linea'>
-    <span class='text-center' v-for="littera in Array.from(linea)" :key='littera'>
-      <v-card :text="` ${littera} `" :id='`actus_${littera}`' :disabled='licta(littera)'
-              density='comfortable' @click='ponatur(littera)' position='absolute' border hover />
+  <div v-for="linea in (actus.split(' ') as string[])" :key='linea' class='text-center'>
+    <span v-for='littera in Array.from(linea)' :key='littera' class='text-center'>
+      <v-card :id='`actus_${littera}`' :text='` ${littera} `' :disabled='licta(littera)'
+              density='comfortable' position='absolute' border hover @click='ponatur(littera)' />
     </span>
   </div>
 </template>

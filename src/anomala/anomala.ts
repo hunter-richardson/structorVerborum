@@ -1,11 +1,12 @@
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
-import { Tabulator } from '@/praebeunda/interfecta';
+import { LATIBILE, Tabulator } from '@/praebeunda/interfecta';
 import { Multiplex } from '@/praebeunda/verba';
 import { Tabula } from '@/tabulae/tabula';
 
 @Ignavum @Ultimum @Nuntius.factum
 export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
+  readonly [ LATIBILE ] = true as const
   constructor(private readonly _tabula: Tabula<Hoc>) {}
   get tabula(): Tabula<Hoc> { return this._tabula }
 }

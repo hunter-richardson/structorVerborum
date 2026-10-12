@@ -2,9 +2,9 @@ import '@/extensions/array';
 import Nuntius from '@/miscella/nuntius';
 import Refector from '@/miscella/refector';
 import { Ignavum, Ultimum } from '@/miscella/usus';
+import { Tabulator } from '@/praebeunda/interfecta';
 import { Tabula, tabulast, tabulatorst } from './tabula';
 import { Multiplex, type Agendum } from '@/praebeunda/verba';
-import { type Tabulator } from '@/praebeunda/interfecta';
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {

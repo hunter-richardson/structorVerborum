@@ -1,22 +1,22 @@
 import '@/extensions/array';
-import { SortResult } from '@/extensions/utils';
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
+import { type SortResult } from '@/extensions/utils';
 import {
   errator,
   Fultum,
-  Lineae,
+  type Lineae,
   nomina,
   valores
   } from '@/praebeunda/valores';
-import { Agendum, Multiplex } from '@/praebeunda/verba';
+import { type Agendum, Multiplex } from '@/praebeunda/verba';
 import {
   anyOf,
   buildRegExp,
   capture,
-  CaptureOptions,
+  type CaptureOptions,
   choiceOf,
-  EncodedRegex,
+  type EncodedRegex,
   endOfString,
   optional,
   regex,
@@ -108,13 +108,13 @@ export default class Refector<Hoc extends Multiplex> {
       if(quaerendi == -1) throw errator({ [nomen]: quaerendus })
       const comparatum: SortResult = Math.sign(valoris - quaerendi) as SortResult
       switch(operator) {
-        case '=': return comparatum == 0
-        case '!': return comparatum != 0
-        case '<=': return comparatum <= 0
-        case '>=': return comparatum >= 0
-        case '<': return comparatum < 0
-        case '>': return comparatum > 0
-        default: throw errator({ operator: operator })
+        case '=' : return comparatum === 0
+        case '!' : return comparatum !== 0
+        case '<=': return comparatum  <= 0
+        case '>=': return comparatum  >= 0
+        case '<' : return comparatum  <  0
+        case '>' : return comparatum  >  0
+        default  : return false
   } } }
 
   private praedicantur(status: string): Praedicendum<Hoc> {

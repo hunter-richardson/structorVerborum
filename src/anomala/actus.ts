@@ -46,7 +46,7 @@ class ActusAnomali extends Anomala<Actus> {
                 case 'e': return `co${scriptum}`
                 case 'f': return `cō${scriptum}`
                 case 's': return `cōn${scriptum}`
-                default: return ''
+                default : return ''
               }
             }
         ), 'persona = prima: dele; persona = secunda: dele; modus = participium & vox = passiva: dele; persona = tertia: pone(persona: nulla)'))
@@ -101,7 +101,7 @@ class ActusAnomali extends Anomala<Actus> {
             case 'f': return `au${scriptum}`
             case 'l': return `abs${scriptum}`
             case 't': return `ab${scriptum}`
-            default: return ''
+            default : return ''
           }
         }))
     this.contenta['nolle'] = new Anomalon(new TabulaCollata<Actus>(
@@ -109,12 +109,9 @@ class ActusAnomali extends Anomala<Actus> {
         new TabulaRescripta<Actus>(this.contenta['velle'],
           (scriptum: string) => {
             switch(scriptum) {
-              case 'vīs':
-              case 'vult':
-              case 'vultis':
-                return ''
-              default:
-                return scriptum.replace('ve', 'nō')
+              case    'vīs': case 'vult':
+              case 'vultis': return ''
+              default: return scriptum.replace('ve', 'nō')
             }
           })))
     this.contenta['coire'] = new Anomalon(new TabulaPraefixa<Actus>('co', this.contenta['ire']))
@@ -126,7 +123,7 @@ class ActusAnomali extends Anomala<Actus> {
                           case 'f': return `cōn${scriptum}`
                           case 't': return `con${scriptum}`
                           case 'l': return `col${scriptum}`
-                          default: return scriptum
+                          default : return scriptum
                         }
                       }))
     this.contenta['dedare'] = new Anomalon(new TabulaPraefixa<Actus>('dē', this.contenta['dare']))
@@ -140,7 +137,7 @@ class ActusAnomali extends Anomala<Actus> {
             case 'f': return `dif${scriptum}`
             case 't': return `dis${scriptum}`
             case 'l': return `dī${scriptum}`
-            default: return scriptum
+            default : return scriptum
           }
         }))
     this.contenta['disperire'] = new Anomalon(new TabulaPraefixa<Actus>('disper', this.contenta['ire']))
@@ -151,7 +148,7 @@ class ActusAnomali extends Anomala<Actus> {
             case 'f': return `ef${scriptum}`
             case 't': return `ex${scriptum}`
             case 'l': return `ē${scriptum}`
-            default: return scriptum
+            default : return scriptum
           }
         }))
     this.contenta['exire'] = new Anomalon(new TabulaPraefixa<Actus>('ex', this.contenta['ire']))
@@ -163,7 +160,7 @@ class ActusAnomali extends Anomala<Actus> {
             case 'f': return `īn${scriptum}`
             case 't': return `in${scriptum}`
             case 'l': return `il${scriptum}`
-            default: return scriptum
+            default : return scriptum
           }
         }))
     this.contenta['interesse'] = new Anomalon(new TabulaPraefixa<Actus>('inter', this.contenta['esse']))

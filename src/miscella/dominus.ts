@@ -153,8 +153,8 @@ class Separator extends Crustulum<string> {
   get signum (): ' ' | '·' | '' {
     switch (this.massa) {
       case 'interpunctum': return '·'
-      case 'nullum': return ''
-      default: return ' '
+      case       'nullum': return ''
+      default            : return ' '
   } }
 
   async responsus () { /*noop*/ }

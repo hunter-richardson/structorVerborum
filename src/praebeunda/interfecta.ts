@@ -2,10 +2,18 @@ import '@/extensions/string';
 import { Multiplex } from '@/praebeunda/verba';
 import { Tabula } from '@/tabulae/tabula';
 
-export interface Referendum {}
+export const LATIBILE: unique symbol = Symbol('LATIBILE')
+export const LEGIBILE: unique symbol = Symbol('LEGIBILE')
 
-export interface Lectum extends Referendum {}
+export interface Referendum {
+  readonly [LATIBILE]: true
+}
 
-export interface Tabulator<Illud extends Multiplex> extends Referendum {
-  readonly tabula: Tabula<Illud>
+export interface Lectum {
+  readonly [LEGIBILE]: true
+}
+
+export abstract class Tabulator<Hoc extends Multiplex> implements Referendum {
+  readonly [ LATIBILE ] = true as const
+  abstract get tabula(): Tabula<Hoc>
 }
