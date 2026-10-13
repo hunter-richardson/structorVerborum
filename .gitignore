@@ -38,5 +38,5 @@ res/loci/*.errata.yml
 src/**/*.js
 
 *.config.js
-!eslint.config.js
+!.oxlintrc.json
 eslint.config.ts

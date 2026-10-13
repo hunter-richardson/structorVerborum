@@ -1,2 +1,2 @@
-eslint.config.js
+.oxlintrc.json
 !eslint.config.ts
