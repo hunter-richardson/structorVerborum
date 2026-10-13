@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang='ts'>
   import { Gustulus, gustulator } from '@/miscella/gustulator'
   const gustulus: Gustulus | undefined = gustulator.gustulus
 </script>

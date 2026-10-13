@@ -36,17 +36,21 @@
 </script>
 
 <template>
-  <Specere v-if='numerale !== undefined' :verbum='numerale' @blur='numerale = undefined' />
+  <Specere v-if='numerale !== undefined' :verbum='numerale'
+           @blur='numerale = undefined' />
   <div class='text-center'>
     <v-card id='effectus' :text='romanus' />
-    <v-btn v-if='arabicus.numerator === 0' id='aequa' icon='equal' @click='refer()' />
+    <v-btn v-if='arabicus.numerator === 0' id='aequa'
+           icon='equal' @click='refer()' />
   </div>
   <div class='text-center'>
-    <v-number-input id='integer' v-model='arabicus.integer' :rules='validator' validate-on='input'
-                    autofocus clearable flat reverse @change='effiat()' />
+    <v-number-input id='integer' v-model='arabicus.integer' :rules='validator'
+                    validate-on='input' autofocus clearable flat reverse
+                    @change='effiat()' />
     <v-card text=' + ' />
-    <v-number-input id='numerator' v-model='arabicus.numerator' :rules='validator' validate-on='input'
-                    clearable flat @change='effiat()' />
+    <v-number-input id='numerator' v-model='arabicus.numerator' flat
+                    :rules='validator' validate-on='input' clearable
+                    @change='effiat()' />
     <v-card :text='` + ${arabicus.denominator.toString()}`' />
   </div>
 </template>

@@ -3,6 +3,7 @@
   import Numerator, { minimum as nihil, type Par } from '@/miscella/numerator';
   import { Numerale } from '@/praebeunda/verba';
   import specere from '@/facies/specere.vue';
+import { anyOf, buildRegExp, endOfString, startOfString } from 'ts-regex-builder';
 
   const numerus: Ref<Numerale | undefined> = ref()
   const operator: Ref<string> = ref('')
@@ -11,12 +12,18 @@
 
   const actus: string = 'IC·+ VD:- XM∴• L|×÷ =NS%'
 
-  function operat (actus: string): boolean { return /^\+-•÷%=$/.test(actus); }
+  function operat (actus: string): boolean {
+    return buildRegExp([
+      startOfString,
+      anyOf('+-•÷%='),
+      endOfString
+    ]).test(actus);
+  }
 
   function licta (actus: string): boolean
   { return operat(actus) || praesentes.value.arabicus > 0; }
 
-  function ponatur (actus: string): void {
+  function ponatur (actus: string) {
     if (actus === 'N') {
       praevii.value = praesentes.value = nihil;
     } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
@@ -40,21 +47,27 @@
     }
   }
 
-  function aequa (): void { numerus.value = Numerale.numerator(praevii.value.arabicus); }
+  function aequa () { numerus.value = Numerale.numerator(praevii.value.arabicus); }
 </script>
 
 <template>
-  <specere v-if='numerus !== undefined' :verbum='numerus' @blur='numerus = undefined' />
+  <specere v-if='numerus !== undefined' :verbum='numerus'
+           @blur='numerus = undefined' />
   <div class='text-center'>
-    <v-btn v-if='Number.isInteger(praevii.arabicus)' id='refer' icon='aequa' @click='aequa()' />
+    <v-btn v-if='Number.isInteger(praevii.arabicus)'
+           id='refer' icon='aequa' @click='aequa()' />
     <v-card :text='praevii.romanus' />
-    <v-card v-if='operator.length > 0' id='operator' :text='operator' />
+    <v-card v-if='operator.length > 0'
+            id='operator' :text='operator' />
   </div>
   <v-card :text='praesentes.romanus' />
-  <div v-for="linea in (actus.split(' ') as string[])" :key='linea' class='text-center'>
-    <span v-for='littera in Array.from(linea)' :key='littera' class='text-center'>
-      <v-card :id='`actus_${littera}`' :text='` ${littera} `' :disabled='licta(littera)'
-              density='comfortable' position='absolute' border hover @click='ponatur(littera)' />
+  <div v-for="linea in (actus.split(' ') as string[])"
+       :key='linea' class='text-center'>
+    <span v-for='littera in Array.from(linea)'
+          :key='littera' class='text-center'>
+      <v-card :id='`actus_${littera}`' :text='` ${littera} `'
+              density='comfortable' position='absolute' border hover
+              :disabled='licta(littera)' @click='ponatur(littera)' />
     </span>
   </div>
 </template>

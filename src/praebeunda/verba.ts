@@ -70,6 +70,13 @@ export class Verbum extends Categoricum implements Lectum {
   readonly unicum: string = crypto.randomUUID()
   protected _scriptum!: string
 
+  actust(): this is Actus { return this.categoria.aequatur(Actus.name.toLowerCase()) }
+  adiectivust(): this is Adiectivum { return this.categoria.aequatur(Adiectivum.name.toLowerCase()) }
+  adverbiust(): this is Adverbium { return this.categoria.aequatur(Adverbium.name.toLowerCase()) }
+  nomest(): this is Nomen { return this.categoria.aequatur(Nomen.name.toLowerCase()) }
+  numeramest(): this is Numeramen { return this.categoria.aequatur(Numeramen.name.toLowerCase()) }
+  pronomest(): this is Pronomen { return this.categoria.aequatur(Pronomen.name.toLowerCase()) }
+
   get scriptum(): string { return this._scriptum }
 
   set scriptum(valor: string) {
@@ -102,6 +109,9 @@ class Praedicandum extends Verbum {
 }
 
 @Ultimum export class Numerale extends Praedicandum {
+  override paratust(): boolean
+  { return Numerator.arabicusConvertibilis(this.anglicus) }
+
   constructor(public readonly anglicus: number) {
     super()
     if (!Numerator.arabicusConvertibilis(anglicus))

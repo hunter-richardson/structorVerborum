@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-  import { onMounted, defineProps, ref, type Ref } from 'vue'
+  import { onMounted, ref, type Ref } from 'vue'
   import { dominus } from '@/miscella/dominus'
   import '@/extensions/array'
   import { transduceretne, transducatur } from '@/scriptura/transducere'
@@ -16,7 +16,6 @@
   const { activator } = defineProps<{ activator: string}>()
 
   const monstranda: Ref<Monstrandum[]> = ref([ await doceatur(activator) ])
-
   const concitatust: Ref<boolean> = ref(false)
 
   async function doceatur(res: string): Promise<Monstrandum> {
@@ -68,7 +67,7 @@
                          :loading-text='$t(`scripta.docere.onerans`)' />
       <div v-else-if='monstrandum.doctum !== undefined && monstrandum.doctum.length > 0'
            :id='`doctum.${monstrandum.res}`' class='markdown'>
-        <Markdown :source='monstrandum.doctum' breaks='true' />
+        <Markdown :source='monstrandum.doctum' breaks />
       </div>
       <v-spacer />
     </v-card>

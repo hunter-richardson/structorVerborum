@@ -23,7 +23,7 @@ import {
   Numeramen,
   Pronomen
   } from '@/praebeunda/verba';
-import deepEqual from 'deep-equal';
+import equal from 'fast-deep-equal';
 import type { Referendum, Tabulator } from '@/praebeunda/interfecta';
 
 export interface Lemma {
@@ -138,7 +138,7 @@ class Dictionarium {
   async referatur(lemma: Lemma): Promise<Eventus | null> {
     let referendum: Referendum | undefined = undefined
     const lecta: boolean =
-      (await this.relata).first((relatum) => deepEqual(lemma, relatum as Lemma))?.lecta ?? false
+      (await this.relata).first((relatum) => equal(lemma, relatum as Lemma))?.lecta ?? false
     switch (lemma.categoria.toLowerCase()) {
       case      'actus': referendum =  await this._referaturActus(lemma.scriptum, lecta); break
       case 'adiectivum': referendum =  await this._referaturAdiectivum(lemma.scriptum, lecta); break

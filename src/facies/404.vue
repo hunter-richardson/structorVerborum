@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang='ts'>
   import { onMounted } from 'vue'
   import { useRouter } from 'vue-router';
   import Nuntius from '../miscella/nuntius'
@@ -19,10 +19,10 @@
   <v-app>
     <v-container>
       <v-empty-state image='@res/picta/latina.png' icon='arrow_back'
+                     :action-text="$t('scripta.404.actum')"
+                     :headline="$t('scripta.404.caput')"
                      :text="$t('scripta.404.nuntium')"
                      :title="$t('scripta.404.titula')"
-                     :headline="$t('scripta.404.caput')"
-                     :action-text="$t('scripta.404.actum')"
                      @click:action='recipatur()' />
     </v-container>
   </v-app>

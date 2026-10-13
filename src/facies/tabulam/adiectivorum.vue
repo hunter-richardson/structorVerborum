@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-  import { defineProps, ref, type Ref } from 'vue';
+  import { ref, type Ref } from 'vue';
   import '@/extensions/array';
   import translation from '@/extensions/i18next';
   import { type Lineae, genera, gradus } from '@/praebeunda/valores';
@@ -14,16 +14,13 @@
     value: string
   }
 
-  type Et = {
-    gradus: string,
-    genus: string
-  }
-
   const { agendum } = defineProps<{ agendum: Tabulator<Adiectivum> }>()
-  const incomparabilium: boolean = agendum instanceof TabulamenIncomparabilis
-
   const nomen: Ref<TabulamenNominis | undefined> = ref<TabulamenNominis | undefined>()
-  const et: Et = { gradus: '', genus: '' }
+
+  const incomparabilium: boolean = agendum instanceof TabulamenIncomparabilis
+  const graduum: Par[] = paria(gradus);
+  const generum: Par[] = paria(genera);
+  const et = { gradus: '', genus: '' }
 
   function paria (valores: Lineae): Par[] {
     return valores.map(valor => {
@@ -34,9 +31,6 @@
     })
   }
 
-  const valoresGraduum: Par[] = paria(gradus);
-  const valoresGenerum: Par[] = paria(genera);
-
   async function referComparabile (): Promise<void> {
     nomen.value = await (agendum as TabulamenAdiectivi).probetur({
       gradus: et.gradus,
@@ -46,17 +40,20 @@
 </script>
 
 <template>
-  <inflectere v-if='nomen !== undefined' :agendum='nomen' @blur='nomen = undefined' />
-  <tabulare v-else :agendum='agendum' categoria='adiectivum' />
+  <inflectere v-if='nomen !== undefined' :agendum='nomen'
+              @blur='nomen = undefined' />
+  <tabulare v-else :agendum='agendum' :categoria='Adiectivum.name.toLowerCase()' />
   <v-select id='genus' v-model='et.genus' density='compact'
-            :label="$t('partes.genus_singulare', 'capital')" :items='valoresGenerum' chips flat open-on-clear />
+            :label="$t('partes.genus_singulare', 'capital')"
+            :items='generum' chips flat open-on-clear />
   <v-btn id='probetur' :text="$t('annuli.tabulare.probare')"
-          append-icon='open_in_full' @click='referComparabile()' />
+         append-icon='open_in_full' @click='referComparabile()' />
   <template v-if='!incomparabilium'>
     <v-select id='gradus' v-model='et.gradus' density='compact'
-              :items='valoresGraduum' chips flat open-on-clear
+              :items='graduum' chips flat open-on-clear
               :label="$tf('partes.gradus_singulare', 'capitalize' )" />
-    <v-btn id='probetur' :text="$t('annuli.tabulare.probare')"
-            append-icon='open_in_full' @click='referComparabile()' />
+    <v-btn id='probetur' append-icon='open_in_full'
+           :text="$t('annuli.tabulare.probare')"
+           @click='referComparabile()' />
   </template>
 </template>

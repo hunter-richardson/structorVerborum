@@ -44,6 +44,18 @@
     pars: ''
   })
 
+  const duo = [
+    {
+      actus: sarci,
+      scriptum: 'seligere',
+      icon: 'search'
+    }, {
+      actus: forsSeligat,
+      scriptum: 'sarcire',
+      icon: 'casino'
+    }
+  ]
+
   function reoneratur() { onerans.value = true }
 
   async function exoneratur (): Promise<void> { onerans.value = false }
@@ -90,42 +102,51 @@
 
 <template>
   <Loqui />
-  <Specere v-if='verbum !== undefined' :verbum='verbum as Verbum' @blur='verbum = undefined' />
-  <Inflectere v-else-if='eventus !== undefined' :eventus='eventus as Eventus' @blur='eventus = undefined' />
-  <div class='text-center'>
-    <v-btn id='sarci' append-icon='search' :disabled='onerans' :text="$t('annuli.quaerere.sarcire')"
-           @click='sarci()' />
-    <v-btn id='fortuna' append-icon='casino' :disabled='onerans' :text="$t('annuli.quaerere.seligere')"
-           @click='forsSeligat()' />
-  </div>
-  <v-data-table id='tabula' :items-per-page='10' :loading='onerans'
-                :disabled='onerans' density='compact' :headers='columnae'>
+  <Specere v-if='verbum !== undefined'
+           :verbum='verbum as Verbum'
+           @blur='verbum = undefined' />
+  <Inflectere v-else-if='eventus !== undefined'
+              :eventus='eventus as Eventus'
+              @blur='eventus = undefined' />
+  <template v-if='!onerans'>
+    <div class='text-center'>
+      <v-btn v-for='res in duo' :id='res.scriptum'
+             :key='res.scriptum' :disabled='onerans'
+             :text='$t(`annuli.quaerere.${res.scriptum}`)'
+             :append-icon='res.icon' @click='res.actus()' />
+    </div>
+  </template>
+  <v-data-table id='tabula' :items-per-page='10' density='compact'
+                :loading='onerans' :disabled='onerans' :headers='columnae'>
     <template #headers='{ headers, isSorted, getSortIcon, toggleSort }'>
       <tr>
         <td v-for='columna in headers.flat()' :key='columna.key ?? ""'>
           <v-icon v-if='isSorted(columna)' :icon='getSortIcon(columna)' />
           <v-text-field v-if="columna.key === 'lemma'" id='quaerenda.pars'
-                        v-model='quaerenda.pars' :label='columna.title' :disabled='onerans'
-                        :loading='onerans' validate-on='input' :rules='validator'
-                        density='compact' autofocus flat single-line @blur='removeApices()' />
-          <v-select v-else-if="columna.key === 'categoriae'" id='quaerenda.categoriae' v-model='quaerenda.categoriae'
+                        v-model='quaerenda.pars' :label='columna.title'
+                        :disabled='onerans' :loading='onerans' :rules='validator'
+                        validate-on='input' density='compact' single-line
+                        autofocus flat @blur='removeApices()' />
+          <v-select v-else-if="columna.key === 'categoriae'"
+                    id='quaerenda.categoriae' v-model='quaerenda.categoriae'
                     :loading='onerans' density='compact' :disabled='onerans'
-                    :label='columna.title' :items='categoriae' chips flat multiple open-on-clear />
+                    :label='columna.title' :items='categoriae'
+                    chips flat multiple open-on-clear />
           <span :id='`ordina_${columna.key}`' class='mr-2 cursor-pointer' @click='toggleSort(columna)' />
         </td>
       </tr>
     </template>
-    <Onerare :onerans='onerans' pittacium='lemmae' />
-    <template v-if='!onerans'>
+    <Onerare v-if='onerans' :onerans='onerans' pittacium='lemmae' />
+    <template v-else-if='!onerans'>
       <template v-for='lemma in lemmae' :key='`${lemma.categoria}_${lemma.scriptum}`'>
-        <tr><td>{{ lemma.categoria }}</td></tr>
-        <tr><td>{{ lemma.scriptum }}</td></tr>
-        <tr>
-          <td>
-            <v-btn id='aperi' :text="$t('annuli.quaerere.aperire')" :disabled='error'
-                   append-icon='open_in_full' @click='aperi(lemma)' />
-          </td>
+        <tr v-for="clavis in [ 'categoria', 'scriptum' ]" :key='clavis'>
+          <td>{{ lemma[clavis] }}</td>
         </tr>
+        <tr><td>
+          <v-btn id='aperi' :disabled='error'
+                 :text="$t('annuli.quaerere.aperire')"
+                 append-icon='open_in_full' @click='aperi(lemma)' />
+        </td></tr>
       </template>
     </template>
   </v-data-table>

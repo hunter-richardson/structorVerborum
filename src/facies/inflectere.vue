@@ -11,6 +11,10 @@
 
   type TabulatorumDirectorum = Tabulator<Adverbium | Numeramen | Pronomen>
 
+  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>();
+  const referendum: Ref<Referendum | undefined> = ref(eventus.value as Referendum);
+  const categoria: string = eventus.value?.categoria ?? '';
+
   function aliust (): boolean {
     return buildRegExp([
       startOfString,
@@ -19,11 +23,6 @@
       ].map(classis => classis.name.toLowerCase())),
       endOfString ]).test(categoria);
   }
-
-  const eventus: Ref<Eventus | undefined> = ref<Eventus | undefined>()
-
-  const categoria: string = eventus.value?.categoria ?? ''
-  const referendum: Ref<Referendum | undefined> = ref(eventus.value as Referendum)
 </script>
 
 <template>
