@@ -118,7 +118,7 @@ export default class Numerator {
   { return colamen.test(romanus) }
 
   @Nuntius.modus
-  // eslint disable complexity
+  // oxlint-disable complexity
   static romanus(arabicus: number): string {
     if(this.arabicusConvertibilis(arabicus)) {
       if(arabicus.toString(12.0) === minimum.arabicus.toString(12.0)) return minimum.romanus
@@ -135,10 +135,10 @@ export default class Numerator {
         return `${this.romanus(integer)}${fracti[ fractus ] ?? ''}`
     } } else return ''
   }
-  // eslint enable complexity
+  // oxlint-enable complexity
 
   @Nuntius.modus
-  // eslint disable complexity
+  // oxlint-disable complexity
   static arabicus(romanus: string): number {
     if(!romanus) return -1
     romanus = romanus.toUpperCase()
@@ -159,7 +159,7 @@ export default class Numerator {
       } else return new RomanNumeral(certamen.groups['minor']).toInt()
     } else return -1
   }
-  // eslint enable complexity
+  // oxlint-enable complexity
 }
 
 // N  ->  0
