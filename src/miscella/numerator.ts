@@ -117,9 +117,8 @@ export default class Numerator {
   static romanusConvertibilis(romanus: string): boolean
   { return colamen.test(romanus) }
 
-  @Nuntius.modus
-  // oxlint-disable complexity
-  static romanus(arabicus: number): string {
+  // oxlint-disable complexity -- Romani numeri nodosissimi sunt
+  @Nuntius.modus static romanus(arabicus: number): string {
     if(this.arabicusConvertibilis(arabicus)) {
       if(arabicus.toString(12.0) === minimum.arabicus.toString(12.0)) return minimum.romanus
       else if(arabicus.toString(12.0) === maximum.arabicus.toString(12.0)) return maximum.romanus
@@ -137,9 +136,8 @@ export default class Numerator {
   }
   // oxlint-enable complexity
 
-  @Nuntius.modus
-  // oxlint-disable complexity
-  static arabicus(romanus: string): number {
+  // oxlint-disable complexity -- Romani numeri nodosissimi sunt
+  @Nuntius.modus static arabicus(romanus: string): number {
     if(!romanus) return -1
     romanus = romanus.toUpperCase()
     const certamen: RegExpExecArray | undefined = colamen.exec(romanus) ?? undefined

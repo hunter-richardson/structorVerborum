@@ -39,4 +39,4 @@ src/**/*.js
 
 *.config.js
 !.oxlintrc.json
-eslint.config.ts
+!eslint.config.ts
