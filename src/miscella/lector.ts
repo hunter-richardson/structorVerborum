@@ -10,9 +10,8 @@ import {
   TabulamenNumeraminis
   } from '@/praebeunda/tabulamina';
 import { Verbum } from '@/praebeunda/verba';
-import fs from 'fs/promises';
+import fs from 'fs';
 import path from 'path';
-import { Writable } from 'stream';
 import { buildRegExp, choiceOf } from 'ts-regex-builder';
 import { type Lectum } from '@/praebeunda/interfecta';
 import {
@@ -21,8 +20,8 @@ import {
   nomina,
   Res
   } from '@/praebeunda/valores';
-import { CsvError, type Options, parse } from 'csv-parse';
-import { pipeline } from 'node:stream';
+import { CsvError, type Options, parse, type Parser } from 'csv-parse';
+import { pipeline, type PipelineCallback } from 'node:stream';
 
 export class Ulla<Hoc> extends Array<Hoc> {
   get unum (): Hoc { return this.first(); }
@@ -36,20 +35,6 @@ export class Ulla<Hoc> extends Array<Hoc> {
 export class Lector<Hoc extends Lectum> implements Disposable {
   private haec: Hoc[] = []
   private via!: string
-
-  private readonly scriptor: Writable = new Writable({
-    objectMode: true,
-    write: (res: Record<string, string>, _: BufferEncoding, vocator: () => void) => {
-      const hoc: Hoc = new this.structor()
-      for(const [ columna, crudum ] of Object.entries(res)) {
-        try { this.ponatur(hoc, columna, crudum) }
-        catch(error) {
-          Nuntius.timeo({
-            nomen: this.constructor.name,
-            error: error as Error
-      }) } } this.haec.push(hoc)
-      return vocator()
-  } })
 
   private readonly deConditis: RegExp =  //\p{Control}|\p{Cf}/gu
       buildRegExp([
@@ -81,20 +66,54 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     Nuntius.noto({
       nomen: this.constructor.name,
       nuntium: `Lego lemmam ${this.via}`
-    }); await pipeline((await fs.open(this.via, 'r')).createReadStream(),
-                       parse(this.optanda), this.scriptor)
+    }); const vocator: PipelineCallback<Parser> = (error: Error | null, res?: Record<string, string>) => {
+      if(error !== null) {
+        Nuntius.timeo({
+          nomen: this.constructor.name,
+          error: error
+        }); throw error
+      } else if(res !== undefined) {
+        const hoc: Hoc = new this.structor();
+        for (const [ columna, crudum ] of Object.entries(res)) {
+          try { this.ponatur(hoc, columna, crudum); }
+          catch (error) {
+            Nuntius.timeo({
+              nomen: this.constructor.name,
+              error: error as Error
+            });
+          }
+        } this.haec.push(hoc)
+      }
+    }; await pipeline(fs.createReadStream(this.via, { flags: 'r' }),
+                      parse(this.optanda), vocator)
     Nuntius.noto({
       nomen: this.constructor.name,
       nuntium: `Legere finitu'st lemmam ${this.via}`
     })
   }
+
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {
     if(clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
     else throw errator({ [clavis]: valor })
   }
 
-  @Nuntius.captor get omnia(): Promise<string[]>
-  { return fs.readdir(this.scapum) }
+  @Nuntius.captor get omnia(): string[] {
+    const omnia: string[] = []
+    fs.readdir(this.scapum, {
+      encoding: 'utf-8',
+      recursive: false
+    }, () => (error: Error | null, valores: string[]) =>{
+        if(valores.length > 0)
+          valores.forEach((valor: string) => omnia.push(valor))
+        if(error !== null) {
+          Nuntius.timeo({
+            nomen: this.constructor.name,
+            error: error
+          }); throw error
+        }
+      })
+    return omnia
+  }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
     this.via = path.join(this.scapum, `${lemma}.csv`)
