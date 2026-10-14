@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "vite",
     "lint": "eslint src",
-    "eslint:build": "@oxlint/migrate ./eslint.config.ts",
+    "oxlint": "@oxlint/migrate ./eslint.config.ts",
     "type-check": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
-    "build.debug": "vite build --mode development",
-    "build.release": "vite build --mode production"
+    "debug": "vite build --mode development",
+    "release": "vite build --mode production"
   },
   "devDependencies": {
     "@8hobbies/typedoc-plugin-404": "^3.2.1",

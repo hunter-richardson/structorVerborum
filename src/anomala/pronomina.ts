@@ -10,12 +10,13 @@ import TabulaCircumfixa from '@/tabulae/rescriptae/circumfixa';
 import TabulaPraefixa from '@/tabulae/rescriptae/praefixa';
 import TabulaRescripta from '@/tabulae/rescriptae/rescripta';
 import TabulaSuffixa from '@/tabulae/rescriptae/suffixa';
+import { buildRegExp, endOfString } from 'ts-regex-builder';
 
 @Ultimum @Ignavum @Nuntius.factum
 class Pronomina extends Anomala<Pronomen> {
   @Nuntius.captor get omnia(): Promise<string[]> {
     return new Promise(() => [
-        'aliquid', 'aliquod', 'aliquodpiam', 'ecquid', 'ecquod', 'ego', 'egomet', 'hoc', 'id', 'idem', 'illud', 'ipsum', 'istud', 'quid', 'quidnam', 'quidpiam', 'quidquam', 'quidque', 'quidvīs', 'quod', 'quodnam', 'quodpiam', 'quodvīs', 'sē', 'sēmet', 'tū', 'tūte', 'tūtemet'
+      'aliquid', 'aliquod', 'aliquodpiam', 'ecquid', 'ecquod', 'ego', 'egomet', 'hoc', 'id', 'idem', 'illud', 'ipsum', 'istud', 'quid', 'quidnam', 'quidpiam', 'quidquam', 'quidque', 'quidvīs', 'quidvultis', 'quod', 'quodnam', 'quodpiam', 'quodvīs', 'quodvultis', 'sē', 'sēmet', 'tū', 'tūte', 'tūtemet'
       ].sort().unique())
   }
 
@@ -78,14 +79,19 @@ class Pronomina extends Anomala<Pronomen> {
     this.contenta['quidpiam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'piam'))
     this.contenta['quidquam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'quam'))
     this.contenta['quidque'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], Encliticus.coniugans))
-    this.contenta['quidvis'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quid'], 'vīs'))
     this.contenta['quodnam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'nam'))
     this.contenta['quodpiam'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'piam'))
-    this.contenta['quodvis'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['quod'], 'vīs'))
     this.contenta['semet'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['se'], 'met'))
     this.contenta['tute'] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta['tu'],
       (scriptum: string): string => scriptum === 'tū' ? 'tūte' : scriptum))
     this.contenta['tutemet'] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta['tute'], 'met'))
+    this.contenta[ 'quodvis' ] = new Mantela(new TabulaSuffixa<Pronomen>(this.contenta[ 'quod' ], 'vīs'));
+    this.contenta[ 'quidvis' ] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta[ 'quodvis' ],
+      (scriptum: string) => scriptum.replace('o', 'i')))
+    this.contenta[ 'quodvultis' ] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta[ 'quodvis' ],
+      (scriptum: string) => scriptum.replace(buildRegExp([ 'vīs', endOfString ]), 'vultis')));
+    this.contenta[ 'quidvultis' ] = new Mantela(new TabulaRescripta<Pronomen>(this.contenta[ 'quidvis' ],
+      (scriptum: string) => scriptum.replace(buildRegExp([ 'vīs', endOfString ]), 'vultis')))
   }
 }
 

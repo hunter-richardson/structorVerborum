@@ -27,7 +27,7 @@ jobs:
       - name: verificare
         run: tsc --build --clean
       - name: struere
-        run: npm run build-only
+        run: npm run release
 #      - name: tentare
 #        run: npm test
 #        env:

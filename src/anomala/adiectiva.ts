@@ -18,7 +18,7 @@ class Anomalon extends Mixin(Mantela<Adiectivum>, TabulatorAdiectivorum) {}
 class Adiectiva extends Anomala<Adiectivum> {
   @Nuntius.captor get omnia(): Promise<string[]> {
     return new Promise(() => [
-      'aliud', 'ambō', 'duō', 'mīlle', 'meum', 'nōnumdecimum', 'octāvumdecimum', 'quārtumdecimum', 'quīntumdecimum', 'septimumdecimum', 'sextumdecimum', 'utrumque', 'utrumcumque', 'utrumvīs'
+      'aliud', 'ambō', 'duō', 'mīlle', 'meum', 'nōnumdecimum', 'octāvumdecimum', 'quārtumdecimum', 'quīntumdecimum', 'septimumdecimum', 'sextumdecimum', 'utrumque', 'utrumcumque', 'utrumvīs', 'utrumvultis'
     ].sort().unique())
   }
 
@@ -105,6 +105,7 @@ class Adiectiva extends Anomala<Adiectivum> {
     this.contenta['utrumque'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, Encliticus.coniugans))
     this.contenta['utrumcumque'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, `cum${Encliticus.coniugans}`))
     this.contenta['utrumvis'] = new Anomalon(new TabulaSuffixa<Adiectivum>(utrum, 'vīs'))
+    this.contenta[ 'utrumvultis' ] = new Mantela(new TabulaSuffixa<Adiectivum>(utrum, 'vultis'))
   }
 }
 
