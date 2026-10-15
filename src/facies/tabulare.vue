@@ -22,7 +22,7 @@
   const haec: Hoc[] = await omnia()
 
   const seligenda: Fulta = new Fulta(...haec.map((illud: Hoc): Fulta =>
-      illud.valores).flat().unique())
+      illud.valores).flat().unique)
 
   const columnae: Columnae = categoricum<Hoc>({
     categoria: categoria,
@@ -39,13 +39,13 @@
 
   async function forsInflectat() {
     await reoneretur()
-    hoc.value = haec.random()
+    hoc.value = haec.random
     return await exoneretur()
   }
 
   async function cole(selecta: string[]) {
     await reoneretur()
-    haec.length = 0;
+    haec.clear();
     (await omnia())?.filter((illud: Hoc) =>
         selecta.every((selectum) =>
            illud.valores.some((istud) => istud.valor === selectum)))
@@ -61,7 +61,7 @@
   <Specere v-else-if='hoc !== undefined' :verbum='hoc' @blur='hoc = undefined' />
   <Specere v-else-if='haec.length == 1' :verbum='haec.first()' @blur='haec.clear()' />
   <template v-else-if='haec.length > 1'>
-    <div v-if='seligenda.length > 0' id='colamina'>
+    <div v-if='!seligenda.empty' id='colamina'>
       <v-chip-group v-model='selecta' selected-class='text-primary' filter multiple>
         <v-chip v-for='seligendum in seligenda'
                 :id='`colamen_${seligendum.nomen}_${seligendum.valor}`'

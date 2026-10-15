@@ -42,7 +42,7 @@
 <template>
   <inflectere v-if='nomen !== undefined' :agendum='nomen'
               @blur='nomen = undefined' />
-  <tabulare v-else :agendum='agendum' :categoria='Adiectivum.name.toLowerCase()' />
+  <tabulare v-else :agendum='agendum' :categoria='Adiectivum.name.lowercase' />
   <v-select id='genus' v-model='et.genus' density='compact'
             :label="$t('partes.genus_singulare', 'capital')"
             :items='generum' chips flat open-on-clear />

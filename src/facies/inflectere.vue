@@ -20,7 +20,7 @@
       startOfString,
       choiceOf(...[
         Adverbium, Numeramen, Pronomen
-      ].map(classis => classis.name.toLowerCase())),
+      ].map(classis => classis.name.lowercase)),
       endOfString ]).test(categoria);
   }
 </script>
@@ -28,11 +28,11 @@
 <template>
   <template v-if='referendum !== undefined && categoria !== undefined'>
     <v-dialog @blur='referendum = undefined; eventus = undefined'>
-      <Actuum v-if='categoria === Actus.name.toLowerCase()'
+      <Actuum v-if='categoria === Actus.name.lowercase'
               :agendum='referendum as TabulatorActuum' />
-      <Nominum v-else-if='categoria === Nomen.name.toLowerCase()'
+      <Nominum v-else-if='categoria === Nomen.name.lowercase'
                :agendum='referendum as Tabulator<Nomen>' />
-      <Adiectivorum v-else-if='categoria === Adiectivum.name.toLowerCase()'
+      <Adiectivorum v-else-if='categoria === Adiectivum.name.lowercase'
                     :agendum='referendum as Tabulator<Adiectivum>' />
       <Tabulare v-else-if='aliust()' :categoria='categoria'
                 :agendum='referendum as TabulatorumDirectorum' />

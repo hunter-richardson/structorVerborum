@@ -28,7 +28,7 @@ export function comparison<T>(...extractors: Extractor<T>[]): Comparator<T> {
 } }
 
 export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: PropertyKey[]): boolean {
-  if(keys.length > 0) {
+  if(!keys.empty) {
     const ignored: Set<PropertyKey> = new Set(keys)
     const customizer: Customizer =
         (_: unknown, __: unknown, key: PropertyKey | undefined): true | undefined =>

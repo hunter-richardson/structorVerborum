@@ -35,7 +35,7 @@ abstract class Crustulum<Hoc extends Valor> {
   @Nuntius.modus
   concoctast (valor: string): boolean { return this.massa === valor }
 
-  private get nomen(): string { return this.constructor.name.toLowerCase() }
+  private get nomen(): string { return this.constructor.name.lowercase }
 
   @Nuntius.captor
   get massa(): string {

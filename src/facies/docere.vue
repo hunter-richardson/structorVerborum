@@ -37,7 +37,7 @@
             ?.getAttribute('href') ?? undefined
     if(parma !== undefined) {
       if(parma.endsWith('.md')) {
-        const res: string = parma.split('/').last().split('.').first();
+        const res: string = parma.split('/').last()?.split('.').first() ?? '';
         monstranda.value.push(await doceatur(res));
       } else return await new Promise<void>(() => {
           if(transduceretne()) transducatur(parma)
@@ -65,7 +65,7 @@
       <v-card-title>{{ monstrandum.res }}</v-card-title>
       <v-skeleton-loader v-if='monstrandum.onerans' type='paragraph'
                          :loading-text='$t(`scripta.docere.onerans`)' />
-      <div v-else-if='monstrandum.doctum !== undefined && monstrandum.doctum.length > 0'
+      <div v-else-if='monstrandum.doctum !== undefined && !monstrandum.doctum.empty'
            :id='`doctum.${monstrandum.res}`' class='markdown'>
         <Markdown :source='monstrandum.doctum' breaks />
       </div>

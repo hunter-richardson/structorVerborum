@@ -29,7 +29,7 @@
   const validator: ((pars: string) => boolean | string)[] = [
     function(pars: string): boolean | string {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
-      return licta.test(pars.toLowerCase()) || t('errores.quaerere.deLitteris')
+      return licta.test(pars.lowercase) || t('errores.quaerere.deLitteris')
     }
   ]
 
@@ -82,7 +82,7 @@
   }
 
   async function aperi (lemma: Lemma) {
-    const res: Eventus | null = await dictionarium.referatur(lemma)
+    const res: Eventus | undefined = await dictionarium.referatur(lemma)
     if (res) {
       if (inflectenda(res.categoria)) eventus.value = res
       else verbum.value = res as Referendum
@@ -91,7 +91,7 @@
 
   function removeApices (): void {
     if (validator[ 0 ](quaerenda.value.pars)) {
-      quaerenda.value.pars = quaerenda.value.pars.toLowerCase().removeMacra()
+      quaerenda.value.pars = quaerenda.value.pars.lowercase.removeMacra
       error.value = false
     } else error.value = true
   }

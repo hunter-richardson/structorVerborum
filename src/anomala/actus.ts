@@ -18,7 +18,7 @@ class ActusAnomali extends Anomala<Actus> {
   @Nuntius.captor get omnia(): Promise<string[]> {
     return new Promise(() => [
       'abdare', 'abesse', 'abīre', 'afferre', 'aiere', 'ārefacere', 'ārfacere', 'auferre', 'benefacere', 'calfacere', 'calefacere', 'coesse', 'coīre', 'collabefierī', 'commonefacere', 'condocefacere', 'confervēfacere', 'cōnsuēfacere', 'conferre', 'cōnfierī', 'dēdare', 'dēferre', 'dēfervēfacere', 'dēfervēfierī', 'dēesse', 'dēīre', 'dīdare', 'diferre', 'efferre', 'esse', 'expergēfacere', 'exīre', 'facere', 'ferre', 'fervēfacere', 'fierī', 'incalfacere', 'infervefacere', 'īnfierī', 'īnquiī', 'interesse', 'intrōferre', 'īnesse', 'īnferre', 'īnīre', 'interīre', 'introīre', 'īre', 'madefacere', 'malefacere', 'mālle', 'mānsuēfacere', 'meminisse', 'mollifacere', 'multifacere', 'nōlle', 'nequīre', 'obesse', 'obstupefacere', 'offerre', 'olfacere', 'obsolefierī', 'patefacere', 'pavefacere', 'percalfacere', 'perferre', 'perīre', 'permadefacere', 'pervelle', 'posse', 'postferre', 'praeesse', 'praeterferre', 'praeterīre', 'prōdesse', 'prōferre', 'prōdīre', 'putrefacere', 'quīre', 'rārefacere', 'redīre', 'referre', 'recalfacere', 'satisfacere', 'stupefacere', 'subesse', 'subīre', 'subolfacere', 'sufferre', 'suffierī', 'superesse', 'superfierī', 'tepefacere', 'trānsabīre', 'trānsīre', 'tremefacere', 'vacuēfacere', 'velle', 'vēnīre'
-    ].sort().unique())
+    ].sort().unique)
   }
 
   @Nuntius.promittum

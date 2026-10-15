@@ -70,18 +70,18 @@ export default class Nuntius implements Disposable {
     return function (this: Hoc, valor: Valor) {
       Nuntius.noto({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Initu'st positor ${contextus.name.toString()}`
       }); try { positor.call(this, valor) }
       catch(error) {
         Nuntius.timeo({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
         }); throw error
       } Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Exitu'st positor ${contextus.name.toString()}`
   } )} }
 
@@ -91,19 +91,19 @@ export default class Nuntius implements Disposable {
     return function (this: Hoc): Illud {
       Nuntius.noto({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Initu'st captor ${contextus.name.toString()}`
       }); try {
         const illud: Illud = captor.call(this)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Exitu'st captor ${contextus.name.toString()}`
         }); return illud
       } catch(error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
@@ -116,7 +116,7 @@ export default class Nuntius implements Disposable {
         super(...parametra)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: 'Fit'
   } )} } }
 
@@ -127,19 +127,19 @@ export default class Nuntius implements Disposable {
     return function (this: Hoc, ...parametra: Parametra): Illud {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Initu'st modus ${contextus.name.toString()}`
       }); try {
         const illud: Illud = modus.call(this, ...parametra)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Exitu'st modus ${contextus.name.toString()}`
         }); return illud
       } catch (error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
@@ -151,19 +151,19 @@ export default class Nuntius implements Disposable {
     return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Initu'st promittum ${contextus.name.toString()}`
       }); try {
         const illud: Promise<Illud> = promittum.apply(this, parametra)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Exitu'st promittum ${contextus.name.toString()}`
         }); return illud
       } catch (error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-          nomen: (this as any).constructor.name.toLowerCase(),
+          nomen: (this as any).constructor.name.lowercase,
           nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
         }); throw error
   } } }
@@ -174,7 +174,7 @@ export default class Nuntius implements Disposable {
       exutor.call(this)
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-        nomen: (this as any).constructor.name.toLowerCase(),
+        nomen: (this as any).constructor.name.lowercase,
         nuntium: `Exutu'st ${contextus.name.toString()}`
   } )} }
 

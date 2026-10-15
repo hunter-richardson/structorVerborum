@@ -13,7 +13,7 @@
     {
       actus: () => refer(agendum.nomen()),
       scriptum: 'partes.gerundium_singularis',
-      ipsum: Nomen.name.toLowerCase(),
+      ipsum: Nomen.name.lowercase,
       icon: 'subject'
     }, {
       actus: () => refer(agendum.actor('masculinum')),
@@ -36,7 +36,7 @@
   <inflectere v-if='referendum !== undefined' :agendum='referendum'
               @blur='referendum = undefined' />
   <tabulare v-else-if='agendum !== undefined' :agendum='agendum'
-            :categoria='Actus.name.toLowerCase()' />
+            :categoria='Actus.name.lowercase' />
   <v-btn-toggle>
     <v-btn v-for='res in tria' :id='res.ipsum' :key='res.ipsum'
            :text="$tf(res.scriptum, 'capitalize')"

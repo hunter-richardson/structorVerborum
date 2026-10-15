@@ -53,11 +53,13 @@ export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
 
   get inhaesust (): boolean { return this._valor === this.inhaesus }
 
-  aequatur (valor: string): valor is Valores[ number ] { return this._valor === valor }
+  aequatur (valor: string): valor is Valores[ number ]
+  { return (this._valor ?? '') === valor }
 
-  reponatur (res: Res<Vexillum, Valores>) { this.valor = res.valor || this.inhaesus }
+  reponatur (res: Res<Vexillum, Valores>)
+  { if(!this.aequatur(res.valor ?? '')) this.valor = res.valor || this.inhaesus }
 
-  get nomen (): string { return this.constructor.name.toLowerCase() }
+  get nomen (): string { return this.constructor.name.lowercase }
 
   get valor (): Valor<Vexillum, Valores> {
     Nuntius.noto({
@@ -94,13 +96,11 @@ export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
   }
 }
 
-export class Fultum<Valores extends Lineae> extends Res<true, Valores> {
-  constructor (_valores: Valores) { super(true, _valores) }
-}
+export class Fultum<Valores extends Lineae> extends Res<true, Valores>
+{ constructor (_valores: Valores) { super(true, _valores) } }
 
-class Fictum<Valores extends Lineae> extends Res<false, Valores> {
-  constructor (_valores: Valores) { super(false, _valores) }
-}
+class Fictum<Valores extends Lineae> extends Res<false, Valores>
+{ constructor (_valores: Valores) { super(false, _valores) } }
 
 type FultiStructor<Hoc extends Fultum<Lineae>> = new (valores: Lineae) => Hoc
 
@@ -115,7 +115,7 @@ export class Fulta extends Array<Fultum<Lineae>> {
       fultum = this.find((fultum) => fultum.nomen === valor)
       if (!fultum) throw new TypeError(`Nullu'st fultum nomine ${valor}`)
     } else {
-      fultum = this.find((fultum) => fultum.nomen === valor.name.toLowerCase())
+      fultum = this.find((fultum) => fultum.nomen === valor.name.lowercase)
       if (!fultum) throw new TypeError(`Nullu'st fultum nomine ${valor.name}`)
       if (!this.nominatur(fultum, valor))
         throw new TypeError(`Malu'st fultum ${fultum.nomen} in classem ${valor.name}`)
@@ -126,16 +126,19 @@ export class Fulta extends Array<Fultum<Lineae>> {
 }
 
 export const categoriae: Lineae = [
-  'actus', 'adiectivum', 'adverbium', 'coniunctio', 'nomen', 'numerale', 'numeramen', 'praepositio', 'pronomen'
+  'actus', 'adiectivum', 'adverbium', 'coniunctio', 'nomen',
+  'numerale', 'numeramen', 'praepositio', 'pronomen'
 ] as const
 export const casus: Lineae = [
-  'derectus', 'nominativus', 'genitivus', 'dativus', 'accusativus', 'ablativus', 'vocativus', 'locativus'
+  'derectus', 'nominativus', 'genitivus', 'dativus',
+  'accusativus', 'ablativus', 'vocativus', 'locativus'
 ] as const
 export const modi: Lineae = [
   'infinitivus', 'indicativus', 'subiunctivus', 'imperativus', 'participium'
 ] as const
 export const relaturi: Lineae = [
-  'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum', 'distributivum', 'fractionale'
+  'numerus', 'ordinale', 'cardinale', 'adverbium', 'multiplicativum',
+  'distributivum', 'proportionale', 'fractionale', 'collectivum'
 ] as const
 export const tempora: Lineae = [
   'nullum', 'praesens', 'infectum', 'futurum', 'perfectum', 'plusquamperfectum', 'exigendum'
@@ -147,15 +150,22 @@ export const numeri: Lineae = [ 'nullus', 'singularis', 'pluralis' ] as const
 export const voces: Lineae = [ 'nulla', 'activa', 'passiva' ] as const
 export const facti: Lineae = [ 'nullus', 'infinitivus', 'gerundius', 'supinus' ] as const
 export const nomina: string[] = [
-  'casus', 'categoria', 'factus', 'genus', 'gradus', 'modus', 'numerus', 'persona', 'relaturus', 'tempus', 'vox'
+  'casus', 'categoria', 'factus', 'genus', 'gradus', 'modus',
+  'numerus', 'persona', 'relaturus', 'tempus', 'vox'
 ] as const
-export const valores: string[] = [ casus, facti, genera, gradus, modi, numeri, personae, relaturi, voces ].flat().unique()
+export const valores: string[] = [
+  casus, facti, genera, gradus, modi,
+  numeri, personae, relaturi, voces
+].flat().unique
 
 export function inflectenda (categoria: string) {
   return [
     'coniunctio', 'numerale', 'praepositio'
   ].excludes(categoria)
 }
+
+export const inflectendae: linea<string>[] =
+  categoriae.filter((categoria) => inflectenda(categoria))
 
 export class Categoria extends Fictum<typeof categoriae> {
   static categoria (valor: string): Categoria {
@@ -263,14 +273,11 @@ export class Vox extends Fultum<typeof voces> {
   constructor () { super(voces) }
 }
 
-export const inflectendae: linea<string>[] =
-  categoriae.filter((categoria) => inflectenda(categoria))
-
 export class Categoricum { categoria: Categoria = new Categoria }
 
-export class Encliticum { protected _encliticus: Encliticus = Encliticus.nullus }
-
 export class Casuale { casus: Casus = new Casus }
+
+export class Encliticum { encliticus: Encliticus = Encliticus.nullus }
 
 export class Factum { factus: Factus = new Factus }
 

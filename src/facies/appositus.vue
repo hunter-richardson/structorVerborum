@@ -17,7 +17,7 @@
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]
   const annuli: string[] = [ 'quaerere', 'numerare', 'calculare' ]
 
-  const annulus: Ref<string> = ref(annuli.first());
+  const annulus: Ref<string> = ref(annuli.first() ?? '');
   const trahens: Ref<boolean> = ref(false)
 
   const duo = [

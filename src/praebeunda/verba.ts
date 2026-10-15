@@ -70,42 +70,42 @@ export class Verbum extends Categoricum implements Lectum {
   readonly unicum: string = crypto.randomUUID()
   protected _scriptum!: string
 
-  actust(): this is Actus { return this.categoria.aequatur(Actus.name.toLowerCase()) }
-  adiectivust(): this is Adiectivum { return this.categoria.aequatur(Adiectivum.name.toLowerCase()) }
-  adverbiust(): this is Adverbium { return this.categoria.aequatur(Adverbium.name.toLowerCase()) }
-  nomest(): this is Nomen { return this.categoria.aequatur(Nomen.name.toLowerCase()) }
-  numeramest(): this is Numeramen { return this.categoria.aequatur(Numeramen.name.toLowerCase()) }
-  pronomest(): this is Pronomen { return this.categoria.aequatur(Pronomen.name.toLowerCase()) }
+  actust(): this is Actus { return this.categoria.aequatur(Actus.name.lowercase) }
+  adiectivust(): this is Adiectivum { return this.categoria.aequatur(Adiectivum.name.lowercase) }
+  adverbiust(): this is Adverbium { return this.categoria.aequatur(Adverbium.name.lowercase) }
+  nomest(): this is Nomen { return this.categoria.aequatur(Nomen.name.lowercase) }
+  numeramest(): this is Numeramen { return this.categoria.aequatur(Numeramen.name.lowercase) }
+  pronomest(): this is Pronomen { return this.categoria.aequatur(Pronomen.name.lowercase) }
 
   get scriptum(): string { return this._scriptum }
 
   set scriptum(valor: string) {
     valor = valor.trim()
-    if (valor.length > 0) this._scriptum = valor
+    if (!valor.empty) this._scriptum = valor
     else throw errator({ scriptum: valor })
   }
 
-  paratust(): boolean { return this.scriptum.length > 0 }
+  paratust(): boolean { return !this.scriptum.empty }
 
   monstretur(): string {
     let monstrandum: string = this.scriptum
     if(dominus.utendaU.signum) {
       const subsituendae = { U: 'V', u: 'v', Ū: 'V̄', ū: 'v̄' }
-      if([...monstrandum].intersection(Object.keys(subsituendae)).any()) {
+      if([...monstrandum].intersection(Object.keys(subsituendae)).any) {
         Object.entries(subsituendae).forEach(([clavis, valor]: [string, string]) =>
             monstrandum = monstrandum.replace(clavis, valor))
     } }
     if(dominus.apices.signum)
-          monstrandum = monstrandum.removeMacra()
+          monstrandum = monstrandum.removeMacra
     if(dominus.magnas.signum)
-          monstrandum = monstrandum.toUpperCase()
+          monstrandum = monstrandum.uppercase
     return monstrandum
   }
 }
 
 class Praedicandum extends Verbum {
   constructor()
-  { super(); this.categoria.valor = this.constructor.name.toLowerCase() }
+  { super(); this.categoria.valor = this.constructor.name.lowercase }
 }
 
 @Ultimum export class Numerale extends Praedicandum {
@@ -171,15 +171,16 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
     else return this._valores.sort(Res.ordinentur)
   }
 
-  get encliticus(): Encliticus { return this._encliticus }
-
-  set encliticus (valor: Encliticus) {
-    if(this._encliticus != Encliticus.nullus)
-      this.scriptum = this.scriptum.slice(0, -this._encliticus.length)
-    this._encliticus = valor
-    if(this._encliticus != Encliticus.nullus)
-      this.scriptum += this._encliticus
+  override get scriptum(): string {
+    if(this._scriptum.endsWith(this.encliticus))
+       this.encliticus =   Encliticus.nullus
+    if(this.encliticus === Encliticus.nullus)
+      return this._scriptum
+    else return `${this._scriptum}${this.encliticus}`
   }
+
+  override set scriptum(valor: string)
+  { super.scriptum = valor }
 
   componatur(agendum: Agendum<Multiplex>) {
     if(!agendum.scriptum) throw errator({ scriptum: agendum.scriptum })
@@ -241,12 +242,13 @@ export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
   async refer(): Promise<Eventus | undefined> {
     let nova: '' | 'numerus' | 'nomen' | 'adverbium' | 'adiectivum' = ''
     switch(this.relaturus.valor) {
-      case    'numerus':
-      case  'adverbium':
+      case     'numerus':
+      case   'adverbium':
         nova = this.relaturus.valor; break
-      case 'fractional':
+      case  'fractional':
+      case 'collectivum':
         nova = 'nomen'; break
-      default          :
+      default           :
         nova = 'adiectivum'; break
     } return await dictionarium.referatur({
       categoria: nova,
@@ -355,8 +357,8 @@ export abstract class TabulatorAdiectivorum extends Tabulator<Adiectivum> {
       }).first();
     if (!_nominativum || !_genitivum) return undefined;
     const structor: Structor<TabulamenNominis> = new Structor(TabulamenNominis)
-      .ponatur((hoc) => (hoc.nominativus = _nominativum.scriptum.capitalize()))
-      .ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalize()));
+      .ponatur((hoc) => (hoc.nominativus = _nominativum.scriptum.capitalized))
+      .ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalized));
     switch (_genitivum.scriptum.slice(-2)) {
       case 'ae':
         structor.ponatur((nomen) => (nomen.principium = 'prima'))

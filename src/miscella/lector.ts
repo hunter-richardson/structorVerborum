@@ -24,7 +24,7 @@ import { CsvError, type Options, parse, type Parser } from 'csv-parse';
 import { pipeline, type PipelineCallback } from 'node:stream';
 
 export class Ulla<Hoc> extends Array<Hoc> {
-  get unum (): Hoc { return this.first(); }
+  get unum (): Hoc | undefined { return this.first() }
   get multa (): Hoc[] { return [ ...this ]; }
 
   constructor (haec?: Hoc | Hoc[])
@@ -103,7 +103,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
       encoding: 'utf-8',
       recursive: false
     }, () => (error: Error | null, valores: string[]) =>{
-        if(valores.length > 0)
+        if(!valores.empty)
           valores.forEach((valor: string) => omnia.push(valor))
         if(error !== null) {
           Nuntius.timeo({
@@ -131,7 +131,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
   constructor(private scapum: string, private readonly structor: new () => Hoc)
   { this.scapum = path.join('@res', scapum) }
 
-  [Symbol.dispose]() { this.haec.length = 0 }
+  [Symbol.dispose]() { this.haec.clear() }
 }
 
 @Ignavum @Ultimum @Nuntius.factum export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {

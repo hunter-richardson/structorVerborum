@@ -37,7 +37,7 @@ class Gustulator {
       const structor = new Structor(Gustulus)
               .ponatur((hoc) => (hoc.vita = valor.vita || 3000))
               .ponatur((hoc) => (hoc.color = valor.error ? 'red' : 'green'));
-      if (valor.nuntium.length > 0)
+      if (!valor.nuntium.empty)
         structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium))
       this._gustulus = structor.struatur
     } if(this.gustulus !== undefined && this.gustulus.visibile === true) {

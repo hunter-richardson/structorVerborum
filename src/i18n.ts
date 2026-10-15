@@ -29,8 +29,8 @@ const deTransferendo: InitOptions = {
 
 i18next.use(FsBackend).init(deTransferendo)
 
-i18next.services.formatter?.add('uppercase', (valor: string, _, __) => valor.toUpperCase())
-i18next.services.formatter?.add('lowercase', (valor: string, _, __) => valor.toLowerCase())
-i18next.services.formatter?.add('capitalize', (valor: string, _, __) => valor.capitalize())
+i18next.services.formatter?.add('uppercase', (valor: string, _, __) => valor.uppercase)
+i18next.services.formatter?.add('lowercase', (valor: string, _, __) => valor.lowercase)
+i18next.services.formatter?.add('capitalize', (valor: string, _, __) => valor.capitalized)
 
 export default i18next

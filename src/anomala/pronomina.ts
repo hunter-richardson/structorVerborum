@@ -17,7 +17,7 @@ class Pronomina extends Anomala<Pronomen> {
   @Nuntius.captor get omnia(): Promise<string[]> {
     return new Promise(() => [
       'aliquid', 'aliquod', 'aliquodpiam', 'ecquid', 'ecquod', 'ego', 'egomet', 'hoc', 'id', 'idem', 'illud', 'ipsum', 'istud', 'quid', 'quidnam', 'quidpiam', 'quidquam', 'quidque', 'quidvīs', 'quidvultis', 'quod', 'quodnam', 'quodpiam', 'quodvīs', 'quodvultis', 'sē', 'sēmet', 'tū', 'tūte', 'tūtemet'
-      ].sort().unique())
+      ].sort().unique)
   }
 
   @Nuntius.promittum

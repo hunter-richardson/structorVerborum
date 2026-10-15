@@ -6,7 +6,7 @@
   function recipatur() { useRouter().back() }
 
   onMounted(() => {
-    if ([ location.href, location.href !== '404' ].all()) {
+    if(location.href.endsWith('404.html')) {
       Nuntius.timeo({
         nomen: '404.vue',
         error: new Error(`CDIV effectu'st loco ${location.href}`)

@@ -1,0 +1,9 @@
+{
+  "exclude": [ "src/cypress/**" ],
+  "extends": "tsconfig.json",
+  "compilerOptions": {
+    "extendedDiagnostics": false,
+    "noUncheckedIndexedAccess": true,
+    "removeComments": true
+  }
+}

@@ -16,9 +16,10 @@ class Locutor {
 
   @Nuntius.modus
   addatur(verbum: Verbum): void {
-    const praevium: Verbum = this._verba.last()
+    const praevium: Verbum | undefined = this._verba.last()
+    if(praevium === undefined) return
     if (praevium.categoria.valor === 'praepositio') {
-      if(verbum.scriptum.startsWithVowel()){
+      if(verbum.scriptum.startsWithVowel){
         const adaequatur: boolean = /^(ab|ex)$/iu.test(praevium.scriptum)
         if(adaequatur) {
           this.removeatur(praevium.unicum)
@@ -47,7 +48,7 @@ class Locutor {
   get locutio(): string {
     const locutio: string = this.verba.map((verba) =>
         verba.monstretur()).join(dominus.separator.signum)
-    return locutio[dominus.magnas.signum ? 'toUpperCase' : 'capitalize']()
+    return  locutio[dominus.magnas.signum ? 'uppercase' : 'capitalized']
 } }
 
 export const locutor: Locutor = new Locutor

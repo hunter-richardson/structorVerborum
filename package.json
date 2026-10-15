@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "lint": "eslint src",
+    "lint": "eslint src && vue-tsc --noEmit -p ./tsconfig.typecheck.json",
     "oxlint": "@oxlint/migrate ./eslint.config.ts",
-    "type-check": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
-    "debug": "vite build --mode development",
-    "release": "vite build --mode production"
+    "debug": "tsc -p tsconfig.dev.json && vite build --mode development",
+    "release": "tsc -p tsconfig.prod.json && vite build --mode production"
   },
   "devDependencies": {
     "@8hobbies/typedoc-plugin-404": "^3.2.1",
@@ -41,6 +40,7 @@
     "csv-parser": "^3.2.1",
     "cypress": "^16.1.0",
     "cypress-map": "^1.56.0",
+    "cypress-terminal-report": "^7.4.0",
     "dependabot": "^0.1.1",
     "esbuild": "^0.28.2",
     "eslint": "^10.0.0",
@@ -63,6 +63,7 @@
     "npm-run-all": "^4.1.5",
     "oxc-minify": "^0.153.0",
     "pleasejs": "^0.4.2",
+    "prettier": "^3.9.10",
     "ts-mixer": "^6.0.4",
     "ts-regex-builder": "^1.8.2",
     "tsconfig-paths": "^4.2.0",
@@ -91,8 +92,8 @@
   },
   "allowScripts": {
     "highlight.js@9.18.5": true,
-    "cypress@16.1.1": true,
-    "esbuild@0.28.2": true
+    "esbuild@0.28.2": true,
+    "cypress@16.2.0": true
   },
   "dependencies": {
     "oxlint": "^1.83.0",

@@ -19,7 +19,7 @@ class Adiectiva extends Anomala<Adiectivum> {
   @Nuntius.captor get omnia(): Promise<string[]> {
     return new Promise(() => [
       'aliud', 'ambō', 'duō', 'mīlle', 'meum', 'nōnumdecimum', 'octāvumdecimum', 'quārtumdecimum', 'quīntumdecimum', 'septimumdecimum', 'sextumdecimum', 'utrumque', 'utrumcumque', 'utrumvīs', 'utrumvultis'
-    ].sort().unique())
+    ].sort().unique)
   }
 
   @Nuntius.promittum

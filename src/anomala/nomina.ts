@@ -14,7 +14,7 @@ class Nomina extends Anomala<Nomen> {
   @Nuntius.captor get omnia (): Promise<string[]> {
     return new Promise(() => [
       'Athōs', 'balneum', 'dea', 'domus', 'Iēsūs', 'iūgerum', 'lexis', 'sēmidea', 'vīs'
-    ].sort().unique());
+    ].sort().unique);
   }
 
   @Nuntius.promittum

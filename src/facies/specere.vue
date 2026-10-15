@@ -16,14 +16,14 @@
 
   const verbum: Ref<Verbum | undefined> = ref()
   const eventus: Ref<Eventus | undefined> = ref()
-  const multiplex: boolean = verbum.value !== undefined && verbum.value instanceof Multiplex
+  const multiplex: boolean =
+      verbum.value !== undefined && verbum.value instanceof Multiplex
   const propriabile: boolean = [
-      [
-        Adiectivum, Nomen
-      ].map((classis) => (classis.name.toLowerCase()))
+      [ Adiectivum, Nomen ]
+      .map((classis) => (classis.name.lowercase))
       .includes(verbum.value?.categoria.valor ?? ''),
-      verbum.value?.scriptum.isCapitalized() || false
-    ].all()
+      verbum.value?.scriptum.isCapitalized || false
+    ].all
 
   const { t, tf } = translation()
 
@@ -69,7 +69,7 @@
       if(verbum.value.actust())
         eventus.value = {
           ...(await verbum.value.participialis()),
-          categoria: Adiectivum.name.toLowerCase()
+          categoria: Adiectivum.name.lowercase
         }
       else if(verbum.value.numeramest()) {
         const referendus: Eventus | undefined = await verbum.value.refer();
@@ -80,19 +80,19 @@
 
   function adde() {
     if(verbum.value !== undefined) {
-      if([ multiplex, valorEnclitici.value.length > 0 ].all())
+      if([ multiplex, !valorEnclitici.value.empty ].all)
         (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
-      verbum.value.scriptum = verbum.value.scriptum.toLowerCase()
+      verbum.value.scriptum = verbum.value.scriptum.lowercase
       locutor.addatur(verbum.value)
     }
   }
 
   function addeProprium() {
     if (verbum.value !== undefined) {
-      if ([ multiplex, valorEnclitici.value.length > 0 ].all())
+      if ([ multiplex, !valorEnclitici.value.empty ].all)
         (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
       if(propriabile)
-        verbum.value.scriptum = verbum.value.scriptum.capitalize()
+        verbum.value.scriptum = verbum.value.scriptum.capitalized
       locutor.addatur(verbum.value)
     }
   }

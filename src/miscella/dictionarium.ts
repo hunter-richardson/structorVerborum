@@ -50,61 +50,61 @@ class Dictionarium {
 
   private get relata(): Promise<Relatum[]> {
     return new Promise((seratur: (valor: Relatum[]) => void) => {
-      if (!this._relata.length) this.perscribantur()
+      if (this._relata.empty) this.perscribantur()
       seratur(this._relata)
   } )}
 
   @Nuntius.promittum
   async perscribantur(): Promise<void> {
-    if (!this._relata.length) {
+    if (this._relata.empty) {
       (await adverbiorum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Adverbium.name.toLowerCase(),
+          categoria: Adverbium.name.lowercase,
           scriptum: res,
           lecta: true
       })}); (await adiectivorum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Adiectivum.name.toLowerCase(),
+          categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: true
       })}); (await incomparabilium.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Adiectivum.name.toLowerCase(),
+          categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: true
       })}); (await nominum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Nomen.name.toLowerCase(),
+          categoria: Nomen.name.lowercase,
           scriptum: res,
           lecta: true
       })}); (await numeraminum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Numeramen.name.toLowerCase(),
+          categoria: Numeramen.name.lowercase,
           scriptum: res,
           lecta: true
       })}); (await pronomina.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Pronomen.name.toLowerCase(),
+          categoria: Pronomen.name.lowercase,
           scriptum: res,
           lecta: false
       })}); (await actuum.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Actus.name.toLowerCase(),
+          categoria: Actus.name.lowercase,
           scriptum: res,
           lecta: false
       })}); (await actus.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Actus.name.toLowerCase(),
+          categoria: Actus.name.lowercase,
           scriptum: res,
           lecta: false
       })}); (await adiectiva.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Adiectivum.name.toLowerCase(),
+          categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: false
       })}); (await nomina.omnia).forEach((res: string) => {
         this._relata.push({
-          categoria: Nomen.name.toLowerCase(),
+          categoria: Nomen.name.lowercase,
           scriptum: res,
           lecta: false
       })}); (await verborum.omnia).forEach((res: string) => {
@@ -135,11 +135,11 @@ class Dictionarium {
   }
 
   @Nuntius.promittum
-  async referatur(lemma: Lemma): Promise<Eventus | null> {
-    let referendum: Referendum | undefined = undefined
+  async referatur(lemma: Lemma): Promise<Eventus | undefined> {
+    let referendum: Referendum | undefined
     const lecta: boolean =
       (await this.relata).first((relatum) => equal(lemma, relatum as Lemma))?.lecta ?? false
-    switch (lemma.categoria.toLowerCase()) {
+    switch (lemma.categoria.lowercase) {
       case      'actus': referendum =  await this._referaturActus(lemma.scriptum, lecta); break
       case 'adiectivum': referendum =  await this._referaturAdiectivum(lemma.scriptum, lecta); break
       case      'nomen': referendum =  await this._referaturNomen(lemma.scriptum, lecta); break
@@ -147,50 +147,50 @@ class Dictionarium {
       case  'numeramen': referendum = (await numeraminum.legatur(lemma.scriptum)).unum; break
       case   'promomen': referendum =  await pronomina.feratur(lemma.scriptum); break
       default          : referendum = (await verborum.legatur(lemma.scriptum)).unum; break
-    } return referendum ? { ...referendum, categoria: lemma.categoria.toLowerCase() } : null
+    } return referendum ? { ...referendum, categoria: lemma.categoria.lowercase } : undefined
   }
 
   @Nuntius.promittum
   async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
       case [
-            quaerenda.categoriae.length > 0,
-            quaerenda.pars.length > 0
-          ].all():
+            !quaerenda.categoriae.empty,
+            !quaerenda.      pars.empty
+          ].all:
         return (await this.relata)
           .filter((relatum) => [
               relatum.scriptum.includes(quaerenda.pars),
               quaerenda.categoriae.includes(relatum.categoria)
-            ].all()
+            ].all
           ).map((relatum) => relatum)
       case [
-            quaerenda.categoriae.length > 0,
-            quaerenda.pars.length == 0
-          ].all():
+            !quaerenda.categoriae.empty,
+             quaerenda.      pars.empty
+          ].all:
         return (await this.relata)
           .filter((relatum) => quaerenda.categoriae.includes(relatum.categoria))
           .map((relatum) => relatum)
       case [
-            quaerenda.categoriae.length == 0,
-            quaerenda.pars.length > 0
-          ].all():
+             quaerenda.categoriae.empty,
+            !quaerenda.      pars.empty
+          ].all:
         return (await this.relata)
           .filter((relatum) => relatum.scriptum.includes(quaerenda.pars))
           .map((relatum) => relatum)
       case [
-            quaerenda.categoriae.length == 0,
-            quaerenda.pars.length == 0
-          ].all():
+            quaerenda.categoriae.empty,
+            quaerenda.      pars.empty
+          ].all:
         return (await this.relata).map((relatum) => relatum)
       default: return []
   } }
 
   @Nuntius.promittum
   async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
-    let eventus: Eventus | null = null
+    let eventus: Eventus | undefined
     do {
-      if (quaerenda) eventus = await this.referatur((await this.quaeratur(quaerenda)).random())
-      else eventus = await this.referatur((await this.relata).random())
+      if (quaerenda) eventus = await this.referatur((await this.quaeratur(quaerenda)).random)
+      else eventus = await this.referatur((await this.relata).random)
     } while (!eventus)
     return eventus
 } }

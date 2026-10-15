@@ -57,7 +57,7 @@ import { anyOf, buildRegExp, endOfString, startOfString } from 'ts-regex-builder
     <v-btn v-if='Number.isInteger(praevii.arabicus)'
            id='refer' icon='aequa' @click='aequa()' />
     <v-card :text='praevii.romanus' />
-    <v-card v-if='operator.length > 0'
+    <v-card v-if='!operator.empty'
             id='operator' :text='operator' />
   </div>
   <v-card :text='praesentes.romanus' />

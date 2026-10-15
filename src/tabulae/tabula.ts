@@ -24,7 +24,7 @@ export function tabulatorst<Hoc extends Multiplex>
 @Ignavum abstract class Tabula<Hoc extends Multiplex> {
   private static aequantur (par: Par, fultum: Fultum<Lineae>): boolean {
     const [ clavis, valor ]: string[] = Object.entries(par)[ 0 ]
-    return [ clavis === fultum.nomen, valor === fultum.valor ].all()
+    return [ clavis === fultum.nomen, valor === fultum.valor ].all
   }
 
   private static cola<Istud extends Multiplex> (ista: Istud[],
@@ -36,7 +36,7 @@ export function tabulatorst<Hoc extends Multiplex>
       istud.scriptum.startsWith(parametra.radix ?? ''),
       istud.valores.every((valor) =>
         parametra.fulta.every((fultum) => Tabula.aequantur(fultum, valor)))
-    ].all())
+    ].all)
   }
 
   protected _haec: Hoc[] = []
@@ -47,7 +47,7 @@ export function tabulatorst<Hoc extends Multiplex>
     return this._haec.map((hoc) => hoc.valores)
                      .flat().sort(Res.ordinentur)
                      .map((res) => `${res.nomen}: ${res.valor}`)
-                     .unique()
+                     .unique
   }
 
   colantur (radix: string): Hoc[]
@@ -98,10 +98,10 @@ export class TabulaDerecta<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> 
 export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends TabulaLegans<Hoc, Illud> {
   @Nuntius.promittum async tabulentur() {
     let refector: Refector<Hoc> | undefined
-    if (this.illud.scriptura !== undefined && this.illud.scriptura.length > 0)
+    if (this.illud.scriptura !== undefined && !this.illud.scriptura.empty)
       refector = new Refector<Hoc>(this.illud.scriptura)
     const agenda: Agendum<Hoc>[] = await this.legantur();
-    if (this.illud.vices !== undefined && this.illud.vices.length > 0) {
+    if (this.illud.vices !== undefined && !this.illud.vices.empty) {
       const via: string = path.join('tabulae/vices', this.illud.scapum)
       const vicaria: Agendum<Hoc>[] =
       (await new LectorMultiplex<Agendum<Hoc>>(via, this.structor)
@@ -116,10 +116,10 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
     } const caesor: Caesor<Hoc, Illud> = new Caesor<Hoc, Illud>()
     agenda.forEach(async (agendum) => {
       const radix: string = await caesor.caedatur(this.illud, agendum.valores)
-      agendum.scriptum = radix.length > 0 ? `${radix}${agendum.scriptum}` : ''
+      agendum.scriptum = radix.empty ? '' : `${radix}${agendum.scriptum}`
     }); if(refector !== undefined) refector.reficiatur(agenda)
     this._haec.push(
-      ...agenda.filter((agendum) => agendum.scriptum.length > 0)
+      ...agenda.filter((agendum) => !agendum.scriptum.empty)
                .map((agendum) => Multiplex.componatur(this.structor, agendum)))
   }
 

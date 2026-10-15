@@ -49,14 +49,14 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
   private readonly colamen: RegExp =  ///^(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))(?<operator>[<!=>]=?)(?<quaerendus>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
     buildRegExp([
       startOfString,  //^/
-      capture(choiceOf(...nomina.except([ 'categoria' ])), { name: 'nomen' }),  ///(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))/
+      capture(choiceOf(...nomina.except('categoria')), { name: 'nomen' }),  ///(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))/
       capture(choiceOf(anyOf('!='), regex([ anyOf('<>'), optional('=') ]))),  ///(?<operator>[<!=>]=?)/
       capture(choiceOf(...valores), { name: 'quaerendus' }),  ///(?<quaerendus>ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
       endOfString  //$/
     ])
 
   @Nuntius.modus praedicatur(status: string): Cretor {
-    if(status.length == 0) return (_: Fulta) => true
+    if(status.empty) return (_: Fulta) => true
     const certamen: RegExpExecArray | undefined = this.colamen.exec(status) ?? undefined
     if(!certamen || !certamen.groups) throw errator({ status: status })
     const { nomen, operator, quaerendus } = certamen.groups
@@ -79,7 +79,7 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
 
   @Nuntius.modus praedicantur(status: string): Cretor {
     status = status.replace(this.deSpatiis, '')
-    if(status.length == 0) return (_: Fulta) => true
+    if(status.empty) return (_: Fulta) => true
     else return (fulta: Fulta) =>
         status.split('&').every((ullus) =>
           this.praedicantur(ullus)(fulta))

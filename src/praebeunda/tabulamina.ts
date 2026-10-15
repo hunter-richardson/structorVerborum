@@ -27,7 +27,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenActus extends Mixin(Tabulamen<Actus>, TabulatorActuum) {
-  override categoria = Actus.name.toLowerCase()
+  override categoria = Actus.name.lowercase
   praesens!: string
   perfectum!: string
   supinum!: string
@@ -37,7 +37,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenAdiectivi extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
-  override categoria = Adiectivum.name.toLowerCase()
+  override categoria = Adiectivum.name.lowercase
   positivus!: string
   comparativus!: string
   superlativus!: string
@@ -47,7 +47,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenAdverbii extends Tabulamen<Adverbium> {
-  override categoria = Adverbium.name.toLowerCase()
+  override categoria = Adverbium.name.lowercase
   positivus!: string
   comparativus!: string
   superlativus!: string
@@ -57,7 +57,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum export class TabulamenIncomparabilis extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
-  override categoria = Adiectivum.name.toLowerCase()
+  override categoria = Adiectivum.name.lowercase
   nominativus!: string
   genitivus!: string
 
@@ -69,7 +69,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenNominis extends Tabulamen<Nomen> {
-  override categoria = Nomen.name.toLowerCase()
+  override categoria = Nomen.name.lowercase
   nominativus!: string
   genitivus!: string
 
@@ -81,7 +81,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenFacti extends Tabulamen<Nomen> {
-  override categoria = Nomen.name.toLowerCase()
+  override categoria = Nomen.name.lowercase
   infinitivum!: string
   gerundium!: string
   supinum!: string
@@ -98,7 +98,7 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
 }
 
 @Ultimum @Nuntius.factum export class TabulamenNumeraminis extends Tabulamen<Numeramen> {
-  override categoria: string = Numeramen.name.toLowerCase()
+  override categoria: string = Numeramen.name.lowercase
   multiplicativum?: string;
   distributivum?: string;
   fractionale?: string;

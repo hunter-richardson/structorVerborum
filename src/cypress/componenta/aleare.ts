@@ -26,7 +26,7 @@ function ullum (res: {
       // cy.wait(1000)
       cy.get('#quaerenda.categoriae')
         .find('option:selected')
-        .should('have.text', res.categoria.capitalize())
+        .should('have.text', res.categoria.capitalized)
       cy.get('#fortuna').click()
       // cy.wait(1000)
 
@@ -37,7 +37,7 @@ function ullum (res: {
       }
 
       cy.get('v-card')
-        .should('have.subtitle', res.categoria.capitalize())
+        .should('have.subtitle', res.categoria.capitalized)
         .its('title').should('not.be.empty')
       cy.get(`#doctum.${res.categoria}`).should('exist')
     })
@@ -55,20 +55,20 @@ describe('omnia invenire', () => {
     categoria: 'praepositio',
     accusativa: 'praepositionem'
   }); ullum({
-    categoria: Actus.name.toLowerCase(),
+    categoria: Actus.name.lowercase,
     accusativa: 'actum'
   }); ullum({
-    categoria: Adiectivum.name.toLowerCase(),
-    accusativa: Adiectivum.name.toLowerCase(),
+    categoria: Adiectivum.name.lowercase,
+    accusativa: Adiectivum.name.lowercase,
   }); ullum({
-    categoria: Adverbium.name.toLowerCase(),
-    accusativa: Adverbium.name.toLowerCase(),
+    categoria: Adverbium.name.lowercase,
+    accusativa: Adverbium.name.lowercase,
   }); ullum({
-    categoria: Nomen.name.toLowerCase(),
-    accusativa: Nomen.name.toLowerCase(),
+    categoria: Nomen.name.lowercase,
+    accusativa: Nomen.name.lowercase,
   }); ullum({
-    categoria: Pronomen.name.toLowerCase(),
-    accusativa: Pronomen.name.toLowerCase(),
+    categoria: Pronomen.name.lowercase,
+    accusativa: Pronomen.name.lowercase,
   }); it('numeramen inveniret', () => {
     const cy: Cypress.Chainable = mount(Quaerere)
     // cy.wait(1000)
@@ -97,12 +97,12 @@ describe('omnia invenire', () => {
       cy.get('fortuna').click()
       // cy.wait(1000)
     } if (relaturus === 'fractionale') {
-      categoria = Nomen.name.toLowerCase()
+      categoria = Nomen.name.lowercase
     } else if (/(o|ca)rdinale|(distribu|multiplica)tivum$/.test(relaturus)) {
-      categoria = Adiectivum.name.toLowerCase()
+      categoria = Adiectivum.name.lowercase
     }
 
-    cy.get('v-card').should('have.subtitle', categoria.capitalize())
+    cy.get('v-card').should('have.subtitle', categoria.capitalized)
       .its('title').should('not.be.empty')
     cy.get(`[id^="doctum."]`).should('exist')
   })
