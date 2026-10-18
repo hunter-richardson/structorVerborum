@@ -3,8 +3,12 @@ import Nuntius from '@/miscella/nuntius';
 import Refector from '@/miscella/refector';
 import { Ignavum, Ultimum } from '@/miscella/usus';
 import { Tabulator } from '@/praebeunda/interfecta';
+import { Colligendum } from './collata';
 import { Tabula, tabulast, tabulatorst } from './tabula';
-import { Multiplex, type Agendum } from '@/praebeunda/verba';
+import { type Agendum, Multiplex } from '@/praebeunda/verba';
+
+export class Findendum extends Colligendum
+{ readonly scriptura!: string }
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {

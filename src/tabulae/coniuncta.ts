@@ -1,12 +1,21 @@
 import '@/extensions/array';
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
-import { Tabulator } from '@/praebeunda/interfecta';
 import { Fulta } from '@/praebeunda/valores';
 import { Multiplex } from '@/praebeunda/verba';
 import { areSetsEqual } from '@neoncitylights/sets';
 import equal from 'fast-deep-equal';
 import { Tabula, tabulast, tabulatorst } from './tabula';
+import { type Lectum, LEGIBILE, Tabulator } from '@/praebeunda/interfecta';
+import { type Classis } from '@/miscella/anomala';
+
+export class Coniungendum implements Lectum {
+  readonly [ LEGIBILE ] = true as const
+  readonly primum!: string
+  readonly primi!: Classis
+  readonly secundum!: string
+  readonly secundi!: Classis
+}
 
 function valores<Hoc extends Multiplex>(haec: Hoc[]): Set<Fulta>
 { return new Set(haec.map((hoc) => hoc.valores)) }

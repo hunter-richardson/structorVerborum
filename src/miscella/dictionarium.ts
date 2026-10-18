@@ -1,9 +1,11 @@
-import { actus } from '@/anomala/actus';
-import { adiectiva } from '@/anomala/adiectiva';
-import { nomina } from '@/anomala/nomina';
-import { pronomina } from '@/anomala/pronomina';
 import '@/extensions/array';
 import '@/extensions/string';
+import {
+  actus,
+  adiectiva,
+  nomina,
+  pronomina
+  } from '@/miscella/anomala';
 import {
   actuum,
   adiectivorum,

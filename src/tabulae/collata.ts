@@ -1,10 +1,17 @@
 import '@/extensions/array';
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
-import { Tabulator } from '@/praebeunda/interfecta';
 import { Multiplex } from '@/praebeunda/verba';
+import { Tabula, tabulast, tabulatorst } from '@/tabulae/tabula';
 import equal from 'fast-deep-equal';
-import { Tabula, tabulast, tabulatorst } from './tabula';
+import { type Lectum, LEGIBILE, Tabulator } from '@/praebeunda/interfecta';
+import { type Classis } from '@/miscella/anomala';
+
+export class Colligendum implements Lectum {
+  readonly [ LEGIBILE ] = true as const
+  readonly relatum!: string
+  readonly relati!: Classis
+}
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {

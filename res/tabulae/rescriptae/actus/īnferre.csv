@@ -1,0 +1,7 @@
+relatum, relati, scriptura
+ferre, collata, "switch(scriptum[0]) {
+  case 'f': return `īn${scriptum}`
+  case 't': return `in${scriptum}`
+  case 'l': return `il${scriptum}`
+  default: return ''
+}"

@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.debug.json",
   "compileOnSave": true,
   "compilerOptions": {
     "allowArbitraryExtensions": true,
@@ -43,8 +42,7 @@
       "cypress-map"
       // "node"
     ]
-  }, "files": [],
-  "include": [
+  }, "include": [
     "./src/**/*.ts",
     "./src/facies/*.vue",
     "./src/facies/tabulam/*.vue"

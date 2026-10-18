@@ -1,0 +1,6 @@
+relatum, relati, scriptura
+quid, rescripta, "switch(scriptum) {
+  case 'quid': return 'quod'
+  case 'quis': return 'quī'
+  default: return scriptum
+}"

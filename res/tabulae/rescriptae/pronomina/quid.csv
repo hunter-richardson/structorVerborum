@@ -1,0 +1,8 @@
+relatum, relati, scriptura
+id, irregula, "switch(scriptum) {
+  case 'ea': case 'eae': return 'quae'
+  case 'eum': return 'quem'
+  case 'eius': return 'cuius'
+  case 'eī':  return 'cui'
+  default: return scriptum.replace('e', 'qu')
+}"

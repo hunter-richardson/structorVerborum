@@ -42,3 +42,13 @@ export function Ultimum<Hoc extends { new(...parametra: any[]): object }> (parma
         throw new TypeError(`Ne ultimum inhaereatur ${parma.name}`)
       super(...parametra)
 } } }
+
+export type Confusa<Primum, Secundum> = {
+  [ Clavis in keyof (Primum & Secundum) ]:
+    Clavis extends keyof Primum ?
+    Clavis extends keyof Secundum ?
+      Primum[Clavis] extends Secundum[Clavis] ?
+      Secundum[Clavis] : never : Primum[Clavis] :
+    Clavis extends keyof Secundum ?
+      Secundum[Clavis] : never
+}

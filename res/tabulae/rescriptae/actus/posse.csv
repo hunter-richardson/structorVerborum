@@ -1,0 +1,9 @@
+relatum, relati, scriptura
+esse, irregula, "switch(true) {
+  case /^(est(ō(te)?|e|futūru))/.test(scriptum): return ''
+  case scriptum === 'esse': return 'posse'
+  case scriptum.startsWith('s'): return `pos${scriptum}`
+  case scriptum.startsWith('e'): return `pot${scriptum}`
+  case scriptum.startsWith('f'): return `pot${scriptum.slice(1)}`
+  default: return ''
+}"

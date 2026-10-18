@@ -1,0 +1,5 @@
+relatum, relati, scriptura
+id, irregula, "switch(scriptum) {
+  case 'is': case 'eī': return 'īdem'
+  defualt: return `${scriptum}dem`
+}"

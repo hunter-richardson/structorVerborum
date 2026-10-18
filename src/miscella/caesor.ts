@@ -31,13 +31,13 @@ import { type SortResult } from '../extensions/utils';
 
 type Cretor = (fulta: Fulta) => boolean
 
-class Caesamen {
+class Lamina {
   readonly status!: Cretor
   readonly clavis!: string
   readonly mensura!: number
 }
 
-class Crudum extends (Caesamen as new () => Omit<Caesamen, 'status'>) implements Lectum {
+class Crudum extends (Lamina as new () => Omit<Lamina, 'status'>) implements Lectum {
   readonly [ LEGIBILE ] = true as const
   readonly status!: string
 }
@@ -86,23 +86,23 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
   }
 
   @Nuntius.promittum async caedatur(illud: Illud, fulta: Fulta): Promise<string> {
-    const caesamina: Caesamen[] = await this.oneratur(illud)
-    const caesamen: Caesamen | undefined =
-        caesamina.find((caesamen) => caesamen.status(fulta))
-    return caesamen !== undefined && caesamen.clavis in illud ?
-        (illud[caesamen.clavis as keyof Illud] as string).chop(caesamen.mensura) : ''
+    const laminae: Lamina[] = await this.oneratur(illud)
+    const lamina: Lamina | undefined =
+        laminae.find((caesamen) => caesamen.status(fulta))
+    return lamina !== undefined && lamina.clavis in illud ?
+        (illud[lamina.clavis as keyof Illud] as string).chop(lamina.mensura) : ''
   }
 
-  @Nuntius.promittum async oneratur(illud: Illud): Promise<Caesamen[]> {
-    let via: string = path.join('caesamina', illud.scapum)
+  @Nuntius.promittum async oneratur(illud: Illud): Promise<Lamina[]> {
+    let via: string = path.join('laminae', illud.scapum)
     let filum: string = illud.principium
     if(illud.categoria === 'actus')
-    { via = 'caesamina'; filum = 'actus' }
+    { via = 'laminae'; filum = 'actus' }
     else if(illud.categoria === 'nomen' && illud.scapum.includes('secunda'))
-    { via = 'caesamina/nomina'; filum = 'secunda' }
+    { via = 'laminae/nomina'; filum = 'secunda' }
     return (await new LectorMultiplex<Crudum>(via, Crudum).legatur(filum)).multa
-      .map((crudum): Caesamen => ({
+      .map((crudum): Lamina => ({
           status: this.praedicantur(crudum.status),
           clavis: crudum.clavis, mensura: crudum.mensura
-        } as Caesamen))
+        } as Lamina))
 } }

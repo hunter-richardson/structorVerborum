@@ -1,0 +1,7 @@
+relatum, relati, scriptura
+esse, irregula, "switch(scriptum[0]) {
+  case 'e': return `co${scriptum}`
+  case 'f': return `cō${scriptum}`
+  case 's': return `cōn${scriptum}`
+  default: return ''
+}"

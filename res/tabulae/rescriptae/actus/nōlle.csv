@@ -1,0 +1,5 @@
+relatum, relati, scriptura
+velle, collata, "swtich(scriptum) {
+  case 'vīs': case 'vult': case 'vultis': return ''
+  default return scriptum.replace('ve', 'nō')
+}"
