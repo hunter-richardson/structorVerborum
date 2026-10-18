@@ -78,6 +78,7 @@ export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
     return  this.contenta[nomen]
   }
 
+  // oxlint-disable complexity -- Inflectio nodosissima'st
   @Nuntius.promittum protected async oneretur (nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
     if(this.contenta[nomen] !== undefined) return this.contenta[nomen]
     const via: string = path.join('tabulae/${classis}e', this.categoria)
@@ -146,6 +147,7 @@ export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
       default: return new TabulaIrregula(this._huius, nomen)
     }
   }
+  // oxlint-enable complexity
 
   @Nuntius.promittum async onerentur() {
     (Object.entries(this._omnia) as [string, Classis][])
