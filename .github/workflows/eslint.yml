@@ -10,6 +10,7 @@
 name: ESLint
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, reopened, edited, ready_for_review, review_requested, auto_merge_enabled]
     paths-ignore: [ .github, README.md, LICENSE.md ]

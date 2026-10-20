@@ -1,6 +1,7 @@
 name: aedificare
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: [ ESLint ]
     types: [ completed ]
@@ -23,15 +24,11 @@ jobs:
       - name: inaugurare
         run: npm clean-install
       - name: fundere
-        run: npm run type-check
+        run: npm run lint
       - name: verificare
         run: tsc --build --clean
       - name: struere
         run: npm run release
-#      - name: tentare
-#        run: npm test
-#        env:
-#          CI: true
       - name: invenire
         run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
       - name: emissa
