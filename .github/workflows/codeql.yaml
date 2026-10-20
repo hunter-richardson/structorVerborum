@@ -12,6 +12,7 @@
 name: "CodeQL Progressus"
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "princeps" ]
   pull_request:

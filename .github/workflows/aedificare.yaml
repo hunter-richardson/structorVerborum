@@ -1,6 +1,7 @@
 name: aedificare
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: [ ESLint ]
     types: [ completed ]

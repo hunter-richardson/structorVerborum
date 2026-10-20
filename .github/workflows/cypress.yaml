@@ -1,6 +1,7 @@
 name: Cypress
 
 on:
+  workflow_dispatch:
   push:
     branches-ignore: [ 'princeps']
   pull_request:
