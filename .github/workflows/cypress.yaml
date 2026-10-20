@@ -12,12 +12,12 @@ jobs:
       - name: sarcere
         uses: actions/checkout@v7
       - name: parare
-        run: command mkdir -p cypress/logs
+        run: mkdir -p cypress/logs
       - name: agere
         uses: cypress-io/github-action@v7
         with:
-          build: command npm run debug 2>&1 | command tee cypress/logs/tentamina.log
-          start: command npm start 2>&1 | command tee cypress/log/tentamina.log
+          build: npm run debug 2>&1 | tee cypress/logs/tentamina.log
+          start: npm start 2>&1 | tee cypress/log/tentamina.log
           wait-on: 'https://localhost:4173'
       - name: colligere
         if: always()
