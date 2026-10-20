@@ -1,0 +1,40 @@
+name: Cypress
+
+on:
+  push:
+    branches-ignore: [ 'princeps']
+  pull_request:
+    branches-ignore: [ 'princeps' ]
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: sarcere
+        uses: actions/checkout@v7
+      - name: parare
+        run: command mkdir -p cypress/logs
+      - name: agere
+        uses: cypress-io/github-action@v7
+        with:
+          build: command npm run debug 2>&1 | command tee cypress/logs/tentamina.log
+          start: command npm start 2>&1 | command tee cypress/log/tentamina.log
+          wait-on: 'https://localhost:4173'
+      - name: colligere
+        if: always()
+        shell: bash
+        run: |
+          if [ -d nuntia ]; then
+            scp -v $(find nuntia -type f -name '*.log') cypress/logs/
+          else
+            printf 'Nuntia nulla generata sunt\n'
+          fi
+      - name:
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: cypress-artifacts
+          if-no-files-found: warn
+          path: |
+            cypress/screenshots
+            cypress/videos
+            cypress/logs

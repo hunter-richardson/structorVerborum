@@ -222,7 +222,7 @@ export default class Nuntius implements Disposable {
       navigium = new DailyRotateFile({
         datePattern: '',
         dirname: '/nuntia',
-        filename: `StructorVerborum${Temporis.hodie()}.log)`,
+        filename: `StructorVerborum_${Temporis.hodie()}.log)`,
         frequency: '1d',
         maxSize: '20m',
         maxFiles: '30d',

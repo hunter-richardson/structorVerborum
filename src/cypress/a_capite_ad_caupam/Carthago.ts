@@ -1,4 +1,4 @@
-import { loquatur } from '@/cypress/caput_ad_caupam/locutio';
+import { loquatur } from '@/cypress/a_capite_ad_caupam/locutio';
 import 'cypress';
 
 describe('Carthago delendast', () => {
