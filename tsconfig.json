@@ -1,5 +1,10 @@
 {
-  "compileOnSave": true,
+  "exclude": [ "./src/cypress/*/**" ],
+  "include": [
+    "./src/**/*.ts",
+    "./src/facies/*.vue",
+    "./src/facies/tabulam/*.vue"
+  ], "compileOnSave": true,
   "compilerOptions": {
     "allowArbitraryExtensions": true,
     "allowImportingTsExtensions": true,
@@ -37,18 +42,8 @@
     "sourceMap": true,
     "target": "ES2023",
     "types": [
-      "@types/node",
-      "cypress",
-      "cypress-map"
+      "@types/node"
       // "node"
     ]
-  }, "include": [
-    "./src/**/*.ts",
-    "./src/facies/*.vue",
-    "./src/facies/tabulam/*.vue"
-  ], "exclude": [
-    "./src/cypress/e2e/**",
-    "./src/cypress/fixtures/*.json",
-    "./src/cypress/support/*.ts"
-  ]
+  }
 }
