@@ -88,7 +88,7 @@ Object.defineProperty(String.prototype, 'removeMacra', {
   get: function(): string {
     if ([ ...this ].intersection(Object.values(macra)).any) {
       // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias -- This allows copying the string
-      let copy: String = this;
+      let copy: String = this;  //  nosonar: This allows copying the string
       (Object.entries(macra))
         .forEach(([ key, value ]: [ string, string ]) =>
           { copy = copy.replace(value, key); });

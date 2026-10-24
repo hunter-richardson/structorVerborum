@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: sarcere
-        uses: actions/checkout@v7
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
       - name: parare
         run: mkdir -p cypress/logs
       - name: agere
-        uses: cypress-io/github-action@v7
+        uses: cypress-io/github-action@207a8be0f8937a6587fa45d1fde56f66dcc85566
         with:
           build: npm run debug 2>&1 | tee cypress/logs/tentamina.log
           start: npm start 2>&1 | tee cypress/log/tentamina.log
@@ -30,7 +30,7 @@ jobs:
             printf 'Nuntia nulla generata sunt\n'
           fi
       - name:
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66
         if: always()
         with:
           name: cypress-artifacts

@@ -12,6 +12,12 @@ import {
 import 'cypress';
 import 'cypress-map';
 import { mount } from 'cypress/vue';
+import {
+  buildRegExp,
+  choiceOf,
+  endOfString,
+  startOfString
+  } from 'ts-regex-builder';
 
 function ullum (res: {
   categoria: string,
@@ -96,9 +102,9 @@ describe('omnia invenire', () => {
       cy.get('#tabula').should('exist')
       cy.get('fortuna').click()
       // cy.wait(1000)
-    } if (relaturus === 'fractionale') {
+    } else if (buildRegExp([ startOfString, choiceOf('fractionale', 'collectivum'), endOfString ]).test(relaturus)) {
       categoria = Nomen.name.lowercase
-    } else if (/(o|ca)rdinale|(distribu|multiplica)tivum$/.test(relaturus)) {
+    } else if (buildRegExp([ startOfString, choiceOf('ordinale', 'cardinale', 'distributivum', 'multiplicativum', 'proportionale'), endOfString ]).test(relaturus)) {
       categoria = Adiectivum.name.lowercase
     }
 

@@ -8,6 +8,6 @@ jobs:
   dependabot:
     runs-on: ubuntu-latest
     steps:
-      - uses: mitto98/dependabot-automerge-action@master
+      - uses: mitto98/dependabot-automerge-action@8b1967ecba1d3ab4ac89cd5b07e09bbb1a94b67c
         with:
           token: ${{ github.token }}

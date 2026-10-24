@@ -17,5 +17,5 @@ import { type Agendum, Multiplex } from '@/praebeunda/verba';
 
   constructor(private readonly structor: new () => Hoc,
               private readonly lemma: string)
-  { super(); this.tabulentur() }
+  { super() }
 }

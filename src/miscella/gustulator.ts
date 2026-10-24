@@ -40,9 +40,10 @@ class Gustulator {
       if (!valor.nuntium.empty)
         structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium))
       this._gustulus = structor.struatur
-    } if(this.gustulus !== undefined && this.gustulus.visibile === true) {
+    }
+    if(this.gustulus !== undefined && this.gustulus.visibile === true)
       setTimeout(this.gustulus.vita + 500)
             .then(() => this.extricetur())
-} } }
+} }
 
 export const gustulator: Gustulator = new Gustulator

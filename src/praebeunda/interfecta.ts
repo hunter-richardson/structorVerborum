@@ -15,5 +15,5 @@ export interface Lectum {
 
 export abstract class Tabulator<Hoc extends Multiplex> implements Referendum {
   readonly [ LATIBILE ] = true as const
-  abstract get tabula(): Tabula<Hoc>
+  abstract get tabula(): Promise<Tabula<Hoc>>
 }

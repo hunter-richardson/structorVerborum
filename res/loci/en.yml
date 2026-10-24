@@ -105,10 +105,6 @@ an:
       nulla: "$t(partes.nullum)"
       activa: "active"
       passiva: "passive"
-    inflectere:
-      actus:
-        actor: "agent ($t(partes.genera.masculinum))"
-        actrix: "agent ($t(partes.genera.femininum))"
   annuli:
     appositus:
       quaerere: "Search"
@@ -147,6 +143,12 @@ an:
       onerans: "Topic $t(scripta.onerans)"
     onerare:
       onerans: "$t({{pittacium}}_singulare, capitalize) $t(scripta.onerans)"
+    inflectere:
+      actus:
+        actor: "agent ($t(partes.genera.masculinum))"
+        actrix: "agent ($t(partes.genera.femininum))"
+    tabulare:
+      radicis: "What does the word start with?"
     appositus:
       titula: "Phrase Factory"
       rogatum: "What would you like to do or say?"

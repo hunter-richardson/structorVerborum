@@ -15,19 +15,23 @@ export class Colligendum implements Lectum {
 
 @Ignavum @Ultimum @Nuntius.factum
 export default class TabulaCollata<Hoc extends Multiplex> extends Tabula<Hoc> {
-  tabulae: Tabula<Hoc>[] = []
-
-  @Nuntius.promittum async tabulentur() {
-    this.tabulae.forEach((tabula) => {
-      tabula.haec.forEach((illud) => {
-        if(this._haec.none((hoc) => equal(hoc.valores, illud.valores)))
-          this._haec.push(illud)
-  }) }) }
-
-  constructor(...colligenda: (Tabula<Hoc> | Tabulator<Hoc>)[]) {
-    super(); colligenda.forEach((colligendum) => {
-      if(tabulatorst(colligendum)) this.tabulae.push(colligendum.tabula)
-      if(tabulast(colligendum)) this.tabulae.push(colligendum)
-    }); this.tabulentur()
+  impellantur(illa: Hoc[]) {
+    illa.forEach((illud) => {
+      if(this._haec.none((hoc) => equal(hoc.valores, illud.valores)))
+         this._haec.push(illud)
+    })
   }
+
+  @Nuntius.promittum tabulentur() {
+    this.colligenda.forEach(async (colligendum) => {
+      if(tabulatorst(colligendum)) {
+        this.impellantur((await colligendum.tabula).haec)
+      } else if(tabulast(colligendum)) {
+        this.impellantur(colligendum.haec)
+      }
+    }); return Promise.resolve()
+  }
+
+  constructor(private readonly colligenda: (Tabula<Hoc> | Tabulator<Hoc>)[])
+  { super() }
 }

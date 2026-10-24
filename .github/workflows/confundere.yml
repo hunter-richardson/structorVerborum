@@ -9,7 +9,7 @@ jobs:
     if: ${{ github.event.review.state == 'APPROVED' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: nikhilaii93/pr-autobuild@master
+      - uses: nikhilaii93/pr-autobuild@65de94f882699e9ecc480a22cb7c52959be0d248
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_NAME: hunter-richardson/structorVerborum

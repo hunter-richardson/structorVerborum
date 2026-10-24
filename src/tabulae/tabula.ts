@@ -6,12 +6,21 @@ import Refector from '@/miscella/refector';
 import { Ignavum, Ultimum } from '@/miscella/usus';
 import { Tabulator } from '@/praebeunda/interfecta';
 import { Tabulamen } from '@/praebeunda/tabulamina';
+import TabulaBifissa from '@/tabulae/bifissa';
+import TabulaCircumfixa from '@/tabulae/circumfixa';
+import TabulaCollata from '@/tabulae/collata';
+import TabulaConiuncta from '@/tabulae/coniuncta';
+import TabulaFissa from '@/tabulae/fissa';
+import TabulaIrregula from '@/tabulae/irregula';
+import TabulaPraefixa from '@/tabulae/praefixa';
+import TabulaRescripta from '@/tabulae/rescripta';
+import TabulaSuffixa from '@/tabulae/suffixa';
 import equal from 'fast-deep-equal';
 import path from 'path';
 import { type Agendum, Multiplex } from '@/praebeunda/verba';
-import { Fultum, Res, type Lineae } from '@/praebeunda/valores'
+import { Fultum, Res, type Lineae, type Numeratum } from '@/praebeunda/valores'
 
-export type Par = { [ clavis: string ]: string }
+type Par = { [ clavis: string ]: string }
 
 export function tabulast<Hoc extends Multiplex>
 (tabulendum: Tabula<Hoc> | Tabulator<Hoc>): tabulendum is Tabula<Hoc>
@@ -22,6 +31,83 @@ export function tabulatorst<Hoc extends Multiplex>
 { return 'tabula' in tabulendum }
 
 @Ignavum abstract class Tabula<Hoc extends Multiplex> {
+  static async regula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
+  (structor: new () => Hoc, illud: Illud): Promise<TabulaRegula<Hoc, Illud>> {
+    const ista = new TabulaRegula(structor, illud)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async derecta<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
+  (structor: new () => Hoc, illud: Illud): Promise<TabulaDerecta<Hoc, Illud>> {
+    const ista = new TabulaDerecta(structor, illud)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async bifissa<Hoc extends Multiplex & Numeratum>
+  (singularis: Tabula<Hoc> | Tabulator<Hoc>, pluralis: Tabula<Hoc> | Tabulator<Hoc>): Promise<TabulaBifissa<Hoc>> {
+    const ista = new TabulaBifissa(singularis, pluralis)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async collata<Hoc extends Multiplex>
+  (...colligenda: (Tabula<Hoc> | Tabulator<Hoc>)[]): Promise<TabulaCollata<Hoc>> {
+    const ista = new TabulaCollata(colligenda)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async coniuncta<Hoc extends Multiplex>
+  (prima: Tabula<Hoc> | Tabulator<Hoc>, secunda: Tabula<Hoc> | Tabulator<Hoc>): Promise<TabulaConiuncta<Hoc>> {
+    const ista = new TabulaConiuncta(prima, secunda)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async fissa<Hoc extends Multiplex>
+  (relata: Tabula<Hoc> | Tabulator<Hoc>, scriptura: string) {
+    const ista = new TabulaFissa(relata, scriptura)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async rescripta<Hoc extends Multiplex>
+  (relata: Tabula<Hoc> | Tabulator<Hoc>, rescriptor: (scriptum: string) => string): Promise<TabulaRescripta<Hoc>> {
+    const ista = new TabulaRescripta(relata, rescriptor)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async irregula<Hoc extends Multiplex>
+  (structor: new () => Hoc, lemma: string): Promise<TabulaIrregula<Hoc>> {
+    const ista = new TabulaIrregula(structor, lemma);
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async praefixa<Hoc extends Multiplex>
+  (praefixum: string, relata: Tabula<Hoc> | Tabulator<Hoc>): Promise<TabulaPraefixa<Hoc>> {
+    const ista = new TabulaPraefixa(praefixum, relata)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async suffixa<Hoc extends Multiplex>
+  (relata: Tabula<Hoc> | Tabulator<Hoc>, suffixum: string): Promise<TabulaSuffixa<Hoc>> {
+    const ista = new TabulaSuffixa(relata, suffixum)
+    await ista.tabulentur()
+    return ista
+  }
+
+  static async circumfixa<Hoc extends Multiplex>
+  (praefixum: string, relata: Tabula<Hoc> | Tabulator<Hoc>, suffixum: string): Promise<TabulaCircumfixa<Hoc>> {
+    const ista = new TabulaCircumfixa(praefixum, relata, suffixum)
+    await ista.tabulentur()
+    return ista
+  }
+
   private static aequantur (par: Par, fultum: Fultum<Lineae>): boolean {
     const [ clavis, valor ]: string[] = Object.entries(par)[ 0 ]
     return [ clavis === fultum.nomen, valor === fultum.valor ].all
@@ -29,40 +115,33 @@ export function tabulatorst<Hoc extends Multiplex>
 
   private static cola<Istud extends Multiplex> (ista: Istud[],
     parametra: {
-      radix?: string,
-      fulta: Par[]
+      radix: string,
+      fulta: Record<string, string>
     }): Istud[] {
     return ista.filter((istud) => [
-      istud.scriptum.startsWith(parametra.radix ?? ''),
+      istud.scriptum.startsWith(parametra.radix),
       istud.valores.every((valor) =>
-        parametra.fulta.every((fultum) => Tabula.aequantur(fultum, valor)))
+        Object.entries(parametra.fulta).every(([clavis, clavus]) =>
+          Tabula.aequantur({ [clavis]: clavus }, valor)))
     ].all)
   }
 
   protected _haec: Hoc[] = []
   get haec (): Hoc[] { return this._haec }
 
-  @Nuntius.captor
-  get monstrentur (): string[] {
+  @Nuntius.captor get monstrentur (): string[] {
     return this._haec.map((hoc) => hoc.valores)
                      .flat().sort(Res.ordinentur)
                      .map((res) => `${res.nomen}: ${res.valor}`)
                      .unique
   }
 
-  colantur (radix: string): Hoc[]
-  colantur (...fulta: Par[]): Hoc[]
-  colantur (radix: string, ...fulta: Par[]): Hoc[]
-
-  @Nuntius.modus
-  colantur (valor?: (string | Par), ...cetera: Par[]): Hoc[] {
-    const temporalia: Hoc[] =
-      Tabula.cola(this._haec,
-        typeof valor === 'string' ?
-          { radix: valor, fulta: cetera } :
-          { fulta: [ valor as Par, ...cetera ] })
+  @Nuntius.modus colantur (parametra: {
+    radix: string,
+    fulta: Record<string, string>
+  }): Hoc[] {
     this._haec.clear()
-    temporalia.forEach((hoc) => this._haec.push(hoc))
+    Tabula.cola(this._haec, parametra).forEach((hoc) => this._haec.push(hoc))
     return this._haec
   }
 
@@ -70,8 +149,7 @@ export function tabulatorst<Hoc extends Multiplex>
 }
 
 abstract class TabulaLegans<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends Tabula<Hoc> {
-  @Nuntius.promittum
-  protected legantur (): Promise<Agendum<Hoc>[]> {
+  @Nuntius.promittum protected legantur (): Promise<Agendum<Hoc>[]> {
     return (async () => {
       const via: string = path.join('tabulae/principia', this.illud.scapum)
       return (await new LectorMultiplex<Agendum<Hoc>>(via, this.structor)

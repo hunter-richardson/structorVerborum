@@ -2,40 +2,39 @@ import { execa, type Options, type Result } from 'execa';
 
 type Eventus = Result<Options>
 
-async function aguntur(imperia: string[]): Promise<boolean> {
+function aguntur(imperia: string[]): boolean {
   imperia.forEach(async (imperium) => {
     const eventus: Eventus = await execa`${imperium}`
     if (eventus.failed) throw new Error(eventus.shortMessage ?? eventus.stderr?.toString())
   }); return true
 }
 
-(async (): Promise<void> => {
-  try {
-    if (await aguntur([
-      'sudo apt-get install -y secure-delete',
-      'git checkout --orgphan gh-pages'
-    ])) {
-       
-      console.log('Inceptust collegi')
-      if (await aguntur([
-          'npm run build',
-          'git --work-tree build add --all',
-          "git --work-tree commit -m 'expedire'"
+try {
+  if (aguntur([
+    'sudo apt-get install -y secure-delete',
+    'git checkout --orgphan gh-pages'
+  ])) {
+
+    console.log('Inceptust collegi')
+    if (aguntur([
+        'npm run build',
+        'git --work-tree build add --all',
+        "git --work-tree commit -m 'expedire'"
+      ])) {
+
+      console.log('Successu collectust')
+
+      console.log('Inceptust expediri')
+      if (aguntur([
+          'git push origin HEAD:gh-pages --force --verbose',
+          'srm -dfrv -ll build',
+          'git checkout -f princeps',
+          'git branch -D gh-pages'
         ])) {
-         
-        console.log('Successu collectust')
-         
-        console.log('Inceptust expediri')
-        if (await aguntur([
-            'git push origin HEAD:gh-pages --force --verbose',
-            'srm -dfrv -ll build',
-            'git checkout -f princeps',
-            'git branch -D gh-pages'
-          ])) {
-           
-          console.log('Expeditust successu')
-  } } } } catch (error) {
-     
-    console.log(error)
-    process.exit(1)
-} })()
+
+        console.log('Expeditust successu')
+} } } } catch (error) {
+
+  console.log(error)
+  process.exit(1)
+}

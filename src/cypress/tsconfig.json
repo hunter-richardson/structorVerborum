@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {
+  "paths": { "@/*": [ "../*" ] },
+  "rootDir": "..",
+  "include": [
+    "../**/*.ts",
+    "../facies/*.vue",
+    "../facies/tabulam/*.vue"
+  ], "compilerOptions": {
     "types": [
       "cypress",
       "cypress-map"

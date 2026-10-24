@@ -69,7 +69,7 @@ Object.defineProperty(Array.prototype, 'empty', {
 Object.defineProperty(Array.prototype, 'random', {
   configurable: true, enumerable: false,
   get: function<T>(): T
-  { return this[Math.floor(Math.random() * this.length)] }
+  { return this[ Math.floor(Math.random() * this.length) ] }  //  nosonar: Math.random is safe here; this is for general array picking
 })
 
 Object.defineProperty(Array.prototype, 'all', {

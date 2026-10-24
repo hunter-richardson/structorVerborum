@@ -18,9 +18,9 @@
     "importHelpers": true,
     "incremental": true,
     "lib": [ "dom" ],
-    "module": "esnext",
+    "module": "NodeNext",
     "moduleDetection": "auto",
-    "moduleResolution": "bundler",
+    "moduleResolution": "NodeNext",
     "newLine": "lf",
     "noEmit": false,
     "noEmitOnError": true,
@@ -36,11 +36,12 @@
     "rootDir": "./src",
     "paths": {
       "@res": [ "./res/*" ],
-      "@/*": [ "./src/*" ]
+      "@/*": [ "./src/*" ],
+      "@f3ve/vue-markdown-it": [ "./node_modules/@f3ve/vue-markdown-it/dist/vue-markdown-it.d.ts" ]
     }, "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "target": "ES2023",
+    "target": "ESNext",
     "types": [
       "@types/node"
       // "node"

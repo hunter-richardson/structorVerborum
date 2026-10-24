@@ -112,7 +112,7 @@
     <div class='text-center'>
       <v-btn v-for='res in duo' :id='res.scriptum'
              :key='res.scriptum' :disabled='onerans'
-             :text='$t(`annuli.quaerere.${res.scriptum}`)'
+             :text='t(`annuli.quaerere.${res.scriptum}`)'
              :append-icon='res.icon' @click='res.actus()' />
     </div>
   </template>
@@ -132,19 +132,21 @@
                     :loading='onerans' density='compact' :disabled='onerans'
                     :label='columna.title' :items='categoriae'
                     chips flat multiple open-on-clear />
-          <span :id='`ordina_${columna.key}`' class='mr-2 cursor-pointer' @click='toggleSort(columna)' />
+          <v-btn :id='`ordina_${columna.key}`' append-icon='swap_vert'
+                 class='mr-2 cursor-pointer border-none bg-transparent p-0'
+                 type='button' @click='toggleSort(columna)' />
         </td>
       </tr>
     </template>
     <Onerare v-if='onerans' :onerans='onerans' pittacium='lemmae' />
-    <template v-else-if='!onerans'>
+    <template v-else>
       <template v-for='lemma in lemmae' :key='`${lemma.categoria}_${lemma.scriptum}`'>
         <tr v-for="clavis in [ 'categoria', 'scriptum' ]" :key='clavis'>
           <td>{{ lemma[clavis] }}</td>
         </tr>
         <tr><td>
           <v-btn id='aperi' :disabled='error'
-                 :text="$t('annuli.quaerere.aperire')"
+                 :text="t('annuli.quaerere.aperire')"
                  append-icon='open_in_full' @click='aperi(lemma)' />
         </td></tr>
       </template>

@@ -15,8 +15,7 @@ const source = {
       ...globals.node
     }, parserOptions: {
       ecmaVersion: 'latest',
-      tsconfigRootDir: import.meta.dirname,
-      projectService: true
+      tsconfigRootDir: import.meta.dirname
     }
   }, rules: {
     'vue/html-quotes': [ 'error', 'single', { 'avoidEscape': true } ],
@@ -28,6 +27,7 @@ const source = {
     'vue/multi-word-component-names': 'off',
     'vue/first-attribute-linebreak': 'off',
     'vue/max-attributes-per-line': 'off',
+    'vue/html-self-closing': 'off',
     '@typescript-eslint/no-unused-vars': [
       'error', {
         varsIgnorePattern: '^_+$',
@@ -38,10 +38,18 @@ const source = {
   }
 }
 
+const typescript = {
+  files: [ 'src/**/*.ts' ],
+  ignores: [ 'src/cypress/{e2e,fixtures,support}/*' ],
+  languageOptions: {
+    parserOptions:
+      { project: './tsconfig.eslint.json' }
+  }
+}
 
 export default withVueTs(
   jslint.configs.recommended,
   cypresslint.configs.recommended,
   vuelint.configs['flat/recommended'],
-  vuetslint.recommended, source
+  vuetslint.recommended, source, typescript
 )

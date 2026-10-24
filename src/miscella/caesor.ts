@@ -1,6 +1,6 @@
 import '@/extensions/array';
 import '@/extensions/string';
-import { LectorMultiplex } from '@/miscella/lector';
+import { Lector } from '@/miscella/lector';
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
 import { Multiplex } from '@/praebeunda/verba';
@@ -100,7 +100,7 @@ export default class Caesor<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
     { via = 'laminae'; filum = 'actus' }
     else if(illud.categoria === 'nomen' && illud.scapum.includes('secunda'))
     { via = 'laminae/nomina'; filum = 'secunda' }
-    return (await new LectorMultiplex<Crudum>(via, Crudum).legatur(filum)).multa
+    return (await new Lector<Crudum>(via, Crudum).legatur(filum)).multa
       .map((crudum): Lamina => ({
           status: this.praedicantur(crudum.status),
           clavis: crudum.clavis, mensura: crudum.mensura

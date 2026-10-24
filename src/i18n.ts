@@ -1,8 +1,8 @@
 import '@/extensions/string';
-import fs from 'fs';
 import FsBackend from 'i18next-fs-backend';
 import yaml from 'js-yaml';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import i18next, { type InitOptions } from 'i18next';
 
 const deTransferendo: InitOptions = {

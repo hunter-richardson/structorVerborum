@@ -1,14 +1,25 @@
 import '@/extensions/env';
+import '@/extensions/error';
 import Nuntius from '@/miscella/nuntius';
 import { Ignavum, Ultimum } from '@/miscella/usus';
 import i18next from 'i18next';
 import * as Please from 'pleasejs';
 import { getCookie, removeCookie, setCookie } from 'typescript-cookie';
 import { useTheme } from 'vuetify';
+import { createFireAndForgetInvoker, type FireAndForgetInvoker } from '@enormora/fire-and-forget';
 
 type Valor = string | boolean | number | undefined
 
 abstract class Crustulum<Hoc extends Valor> {
+  private static readonly _invocator: FireAndForgetInvoker =
+    createFireAndForgetInvoker({
+      reportError(error: unknown) {
+        if(Error.isError(error))
+          Nuntius.timeo({
+            nomen: this.constructor.name,
+            error: error
+    } )}  })
+
   protected valores!: string[]
   protected vita: number = 365
   private _finis: Date = new Date
@@ -19,38 +30,36 @@ abstract class Crustulum<Hoc extends Valor> {
 
   inhaereatur() { this.massa = this.inhaesa }
 
-  @Nuntius.promittum
-  protected async coquatur(valor: string) {
+  @Nuntius.promittum protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
     if(this.coctast) this._finis.setDate(this._finis.getDate() + this.vita)
     else this._finis.setDate(Date.now() + this.vita)
-    return dominus.ponam(this.nomen, valor, this._finis)
-                  .then(() => { if(mutatast) this.responsus() })
-                  .then(() => { if(mutatast) window.location.reload() })
+    return await dominus.ponam(this.nomen, valor, this._finis)
+                        .then(async () => { if(mutatast) await this.responsus() })
+                        .then(() => { if(mutatast) window.location.reload() })
   }
 
-  @Nuntius.captor
-  get coctast(): boolean { return dominus.quaeram(this.nomen) }
+  @Nuntius.captor get coctast(): boolean { return dominus.quaeram(this.nomen) }
 
-  @Nuntius.modus
-  concoctast (valor: string): boolean { return this.massa === valor }
+  @Nuntius.modus concoctast (valor: string): boolean { return this.massa === valor }
 
   private get nomen(): string { return this.constructor.name.lowercase }
 
-  @Nuntius.captor
-  get massa(): string {
+  @Nuntius.captor get massa(): string {
     if(this._finis !== undefined && this._finis.getTime() >= Date.now()) {
       this.deleatur()
       return this.inhaesa
     } else return dominus.inveniam(this.nomen) ?? this.inhaesa
   }
 
-  @Nuntius.positor
-  set massa(valor: string)
-  { this.coquatur(this.massa !== valor && this.valores.includes(valor) ? valor : this.inhaesa) }
+  @Nuntius.positor set massa(valor: string) {
+    Crustulum._invocator.fireAndForget(async () => {
+      const novus = this.massa !== valor && this.valores.includes(valor) ? valor : this.inhaesa
+      await this.coquatur(novus)
+    })
+  }
 
-  @Nuntius.modus
-  interverteUtrum() {
+  @Nuntius.modus interverteUtrum() {
     const valor: string = this.massa
     if(this.valores.length == 2)
       this.massa = this.valores[ +!this.valores.indexOf(valor) ]
@@ -101,7 +110,8 @@ class Sessio extends Crustulum<boolean> {
   override set massa(valor: string) { this.coquatur(valor) }
   get signum(): boolean { return this.coctast }
   get scriptum(): '' { return '' }
-  async responsus() { dominus[this.coctast ? 'inhaereantur' : 'deleantur']() }
+  responsus(): Promise<void>
+  { return Promise.resolve(dominus[this.coctast ? 'inhaereantur' : 'deleantur']()) }
 }
 
 @Ultimum @Ignavum
@@ -111,7 +121,8 @@ class Assensus extends Crustulum<boolean | undefined> {
   get scriptum(): '' { return ''; }
   get signum(): boolean | undefined
   { return this.coctast ? this.concoctast('assensit') : undefined }
-  async responsus() { dominus[this.signum === true ? 'inhaereantur' : 'deleantur']() }
+  responsus(): Promise<void>
+  { return Promise.resolve(dominus[this.coctast ? 'inhaereantur' : 'deleantur']()) }
 }
 
 @Ultimum @Ignavum
@@ -119,7 +130,8 @@ class Lingua extends Crustulum<string> {
   override valores = [ 'latina', 'anglica' ]
   get signum (): 'en' | 'la' { return this.massa === 'anglica' ? 'en' : 'la' }
   get scriptum (): string { return `@res/picta/${this.massa}.png` }
-  async responsus () { i18next.changeLanguage(this.signum) }
+  responsus (): Promise<void>
+  { return Promise.resolve(i18next.changeLanguage(this.signum)).then() }
 }
 
 @Ultimum @Ignavum

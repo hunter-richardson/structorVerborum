@@ -11,9 +11,9 @@ import {
   TabulatorActuum,
   TabulatorAdiectivorum
   } from '@/praebeunda/verba';
+import { Tabula } from '@/tabulae/tabula';
 import { Mixin } from 'ts-mixer';
 import { LEGIBILE, Tabulator } from './interfecta';
-import { TabulaDerecta, TabulaRegula, type Tabula } from '@/tabulae/tabula';
 import { dictionarium, type Eventus } from '@/miscella/dictionarium';
 
 export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
@@ -32,8 +32,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   perfectum!: string
   supinum!: string
 
-  @Nuntius.captor get tabula(): Tabula<Actus>
-  { return new TabulaRegula<Actus, TabulamenActus>(Actus, this) }
+  @Nuntius.captor get tabula(): Promise<Tabula<Actus>>
+  { return Tabula.regula(Actus, this) }
 }
 
 @Ultimum @Nuntius.factum export class TabulamenAdiectivi extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
@@ -42,8 +42,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   comparativus!: string
   superlativus!: string
 
-  @Nuntius.captor get tabula (): Tabula<Adiectivum>
-  { return new TabulaRegula<Adiectivum, TabulamenAdiectivi>(Adiectivum, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Adiectivum>>
+  { return Tabula.regula(Adiectivum, this) }
 }
 
 @Ultimum @Nuntius.factum export class TabulamenAdverbii extends Tabulamen<Adverbium> {
@@ -52,8 +52,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   comparativus!: string
   superlativus!: string
 
-  @Nuntius.captor get tabula (): Tabula<Adverbium>
-  { return new TabulaDerecta<Adverbium, TabulamenAdverbii>(Adverbium, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Adverbium>>
+  { return Tabula.derecta(Adverbium, this) }
 }
 
 @Ultimum export class TabulamenIncomparabilis extends Mixin(Tabulamen<Adiectivum>, TabulatorAdiectivorum) {
@@ -64,8 +64,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   override get scapum(): string
   { return `${super.scapum}/incomparabilia` }
 
-  @Nuntius.captor get tabula (): Tabula<Adiectivum>
-  { return new TabulaRegula<Adiectivum, TabulamenIncomparabilis>(Adiectivum, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Adiectivum>>
+  { return Tabula.regula(Adiectivum, this) }
 }
 
 @Ultimum @Nuntius.factum export class TabulamenNominis extends Tabulamen<Nomen> {
@@ -76,8 +76,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   override get scapum(): string
   { return `${super.scapum}/facta` }
 
-  @Nuntius.captor get tabula (): Tabula<Nomen>
-  { return new TabulaRegula<Nomen, TabulamenNominis>(Nomen, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Nomen>>
+  { return Tabula.regula(Nomen, this) }
 }
 
 @Ultimum @Nuntius.factum export class TabulamenFacti extends Tabulamen<Nomen> {
@@ -93,8 +93,8 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
     }) || undefined
   }
 
-  @Nuntius.captor get tabula (): Tabula<Nomen>
-  { return new TabulaRegula<Nomen, TabulamenFacti>(Nomen, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Nomen>>
+  { return Tabula.regula(Nomen, this) }
 }
 
 @Ultimum @Nuntius.factum export class TabulamenNumeraminis extends Tabulamen<Numeramen> {
@@ -108,6 +108,6 @@ export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   numerus!: string;
 
 
-  @Nuntius.captor get tabula (): Tabula<Numeramen>
-  { return new TabulaDerecta<Numeramen, TabulamenNumeraminis>(Numeramen, this) }
+  @Nuntius.captor get tabula (): Promise<Tabula<Numeramen>>
+  { return Tabula.derecta(Numeramen, this) }
 }

@@ -53,21 +53,23 @@ import { anyOf, buildRegExp, endOfString, startOfString } from 'ts-regex-builder
 <template>
   <specere v-if='numerus !== undefined' :verbum='numerus'
            @blur='numerus = undefined' />
-  <div class='text-center'>
-    <v-btn v-if='Number.isInteger(praevii.arabicus)'
-           id='refer' icon='aequa' @click='aequa()' />
-    <v-card :text='praevii.romanus' />
-    <v-card v-if='!operator.empty'
-            id='operator' :text='operator' />
-  </div>
-  <v-card :text='praesentes.romanus' />
-  <div v-for="linea in (actus.split(' ') as string[])"
-       :key='linea' class='text-center'>
-    <span v-for='littera in Array.from(linea)'
-          :key='littera' class='text-center'>
-      <v-card :id='`actus_${littera}`' :text='` ${littera} `'
-              density='comfortable' position='absolute' border hover
-              :disabled='licta(littera)' @click='ponatur(littera)' />
-    </span>
-  </div>
+  <template v-else>
+    <div class='text-center'>
+      <v-btn v-if='Number.isInteger(praevii.arabicus)'
+             id='refer' icon='aequa' @click='aequa()' />
+      <v-card :text='praevii.romanus' />
+      <v-card v-if='!operator.empty'
+              id='operator' :text='operator' />
+    </div>
+    <v-card :text='praesentes.romanus' />
+    <div v-for="linea in (actus.split(' ') as string[])"
+         :key='linea' class='text-center'>
+      <span v-for='littera in Array.from(linea)'
+            :key='littera' class='text-center'>
+        <v-card :id='`actus_${littera}`' :text='` ${littera} `'
+                density='comfortable' position='absolute' border hover
+                :disabled='licta(littera)' @click='ponatur(littera)' />
+      </span>
+    </div>
+  </template>
 </template>

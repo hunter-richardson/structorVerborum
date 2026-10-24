@@ -1,5 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "exclude": [ "./src/cypress/**" ],
   "include": [
     "./env.d.ts",
     "./src/**/*.ts",
@@ -7,9 +8,6 @@
     "./src/facies/tabulam/*.vue",
     "./src/vue-shim.d.ts",
     "./src/figura.ts"
-  ],
-  "exclude": [
-    "./src/cypress/**"
   ],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",

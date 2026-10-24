@@ -152,7 +152,7 @@ export default class Numerator {
         if(!fractus.empty) {
           const numerator: string = claves.first((clavis: Fractus) =>
               (fracti[clavis] === fractus)) as string ?? '0'
-          return (parseInt(numerator.lowercase, 12.0) / 12.0) + this.arabicus(integer || 'N')
+          return (Number.parseInt(numerator.lowercase, 12.0) / 12.0) + this.arabicus(integer || 'N')
         } else return new RomanNumeral(integer || 'N').toInt()
       } else return new RomanNumeral(certamen.groups['minor']).toInt()
     } else return -1

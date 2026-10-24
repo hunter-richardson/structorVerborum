@@ -56,60 +56,59 @@ class Dictionarium {
       seratur(this._relata)
   } )}
 
-  @Nuntius.promittum
-  async perscribantur(): Promise<void> {
+  @Nuntius.promittum async perscribantur(): Promise<void> {
     if (this._relata.empty) {
-      (await adverbiorum.omnia).forEach((res: string) => {
+      (adverbiorum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Adverbium.name.lowercase,
           scriptum: res,
           lecta: true
-      })}); (await adiectivorum.omnia).forEach((res: string) => {
+      })}); (adiectivorum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: true
-      })}); (await incomparabilium.omnia).forEach((res: string) => {
+      })}); (incomparabilium.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: true
-      })}); (await nominum.omnia).forEach((res: string) => {
+      })}); (nominum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Nomen.name.lowercase,
           scriptum: res,
           lecta: true
-      })}); (await numeraminum.omnia).forEach((res: string) => {
+      })}); (numeraminum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Numeramen.name.lowercase,
           scriptum: res,
           lecta: true
-      })}); (await pronomina.omnia).forEach((res: string) => {
+      })}); (pronomina.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Pronomen.name.lowercase,
           scriptum: res,
           lecta: false
-      })}); (await actuum.omnia).forEach((res: string) => {
+      })}); (actuum.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Actus.name.lowercase,
           scriptum: res,
           lecta: false
-      })}); (await actus.omnia).forEach((res: string) => {
+      })}); (actus.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Actus.name.lowercase,
           scriptum: res,
           lecta: false
-      })}); (await adiectiva.omnia).forEach((res: string) => {
+      })}); (adiectiva.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Adiectivum.name.lowercase,
           scriptum: res,
           lecta: false
-      })}); (await nomina.omnia).forEach((res: string) => {
+      })}); (nomina.omnia).forEach((res: string) => {
         this._relata.push({
           categoria: Nomen.name.lowercase,
           scriptum: res,
           lecta: false
-      })}); (await verborum.omnia).forEach((res: string) => {
+      })}); (verborum.omnia).forEach((res: string) => {
         const [categoria, scriptum] = res.split('/')
         this._relata.push({
           categoria: categoria,
@@ -136,8 +135,7 @@ class Dictionarium {
     } else return  await nomina .feratur(lemma)
   }
 
-  @Nuntius.promittum
-  async referatur(lemma: Lemma): Promise<Eventus | undefined> {
+  @Nuntius.promittum async referatur(lemma: Lemma): Promise<Eventus | undefined> {
     let referendum: Referendum | undefined
     const lecta: boolean =
       (await this.relata).first((relatum) => equal(lemma, relatum as Lemma))?.lecta ?? false
@@ -152,8 +150,7 @@ class Dictionarium {
     } return referendum ? { ...referendum, categoria: lemma.categoria.lowercase } : undefined
   }
 
-  @Nuntius.promittum
-  async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
+  @Nuntius.promittum async quaeratur(quaerenda: Quaerenda): Promise<Lemma[]> {
     switch (true) {
       case [
             !quaerenda.categoriae.empty,
@@ -187,8 +184,7 @@ class Dictionarium {
       default: return []
   } }
 
-  @Nuntius.promittum
-  async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
+  @Nuntius.promittum async forsReferatur(quaerenda?: Quaerenda): Promise<Eventus> {
     let eventus: Eventus | undefined
     do {
       if (quaerenda) eventus = await this.referatur((await this.quaeratur(quaerenda)).random)

@@ -10,9 +10,9 @@ import {
   TabulamenNumeraminis
   } from '@/praebeunda/tabulamina';
 import { Verbum } from '@/praebeunda/verba';
-import fs from 'fs';
-import path from 'path';
 import { buildRegExp, choiceOf } from 'ts-regex-builder';
+import fs from 'node:fs';
+import path from 'node:path';
 import { type Lectum } from '@/praebeunda/interfecta';
 import {
   errator,
@@ -21,7 +21,7 @@ import {
   Res
   } from '@/praebeunda/valores';
 import { CsvError, type Options, parse, type Parser } from 'csv-parse';
-import { pipeline, type PipelineCallback } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
 
 export class Ulla<Hoc> extends Array<Hoc> {
   get unum (): Hoc | undefined { return this.first() }
@@ -61,35 +61,36 @@ export class Lector<Hoc extends Lectum> implements Disposable {
       }); return undefined
   } }
 
-  private async aperiatur(): Promise<void> {
+  private async aperiatur() {
     this[Symbol.dispose]()
     Nuntius.noto({
       nomen: this.constructor.name,
       nuntium: `Lego lemmam ${this.via}`
-    }); const vocator: PipelineCallback<Parser> = (error: Error | null, res?: Record<string, string>) => {
-      if(error !== null) {
-        Nuntius.timeo({
-          nomen: this.constructor.name,
-          error: error
-        }); throw error
-      } else if(res !== undefined) {
-        const hoc: Hoc = new this.structor();
-        for (const [ columna, crudum ] of Object.entries(res)) {
-          try { this.ponatur(hoc, columna, crudum); }
+    }); try {
+      const res: Parser = parse(this.optanda)
+      const flumen = pipeline(fs.createReadStream(this.via, { flags: 'r' }), res)
+      for await (const illud of res) {
+        const hoc: Hoc = new this.structor()
+        for (const [ columna, crudum ] of Object.entries(illud as Record<string, string>)) {
+          try { this.ponatur(hoc, columna, crudum) }
           catch (error) {
             Nuntius.timeo({
               nomen: this.constructor.name,
               error: error as Error
-            });
+            })
           }
         } this.haec.push(hoc)
-      }
-    }; await pipeline(fs.createReadStream(this.via, { flags: 'r' }),
-                      parse(this.optanda), vocator)
-    Nuntius.noto({
-      nomen: this.constructor.name,
-      nuntium: `Legere finitu'st lemmam ${this.via}`
-    })
+      } await flumen
+      Nuntius.noto({
+        nomen: this.constructor.name,
+        nuntium: `Legere finitu'st lemmam ${this.via}`
+      })
+    } catch(error) {
+      Nuntius.timeo({
+        nomen: this.constructor.name,
+        error: error as Error
+      })
+    }
   }
 
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {

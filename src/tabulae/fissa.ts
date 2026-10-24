@@ -15,14 +15,15 @@ export default class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
   @Nuntius.promittum async tabulentur(): Promise<void> {
     const refector: Refector<Hoc> = new Refector<Hoc>(this.scriptura)
     let _relata: Tabula<Hoc> | undefined
-    if(tabulatorst(this.relata)) _relata = this.relata.tabula
+    if(tabulatorst(this.relata)) _relata = await this.relata.tabula
     else if(tabulast(this.relata)) _relata = this.relata
     else throw new Error('Inflexionis tabulae mala\'st')
     refector.reficiatur(_relata.haec as Agendum<Hoc>[])
     _relata.haec.forEach((hoc) => this._haec.push(hoc))
+    return Promise.resolve()
   }
 
   constructor(private readonly relata: Tabula<Hoc> | Tabulator<Hoc>,
               private scriptura: string)
-  { super(); this.tabulentur() }
+  { super() }
 }

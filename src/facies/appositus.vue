@@ -4,7 +4,7 @@
   import { dominus } from '@/miscella/dominus';
   import { useTranslation } from 'i18next-vue';
   import { referatur, referretne } from '@/scriptura/referre';
-  import { transducatur, transduceretne } from '@/scriptura/transducere';
+  import { transducatur } from '@/scriptura/transducere';
   import Calculare from '@/facies/calculare.vue';
   import Numerare from '@/facies/numerare.vue';
   import Quaerere from '@/facies/quaerere.vue';
@@ -12,7 +12,9 @@
   import { locutor } from '@/miscella/locutor';
   import { gustulator } from '@/miscella/gustulator';
   import Gustulare from '@/facies/gustulare.vue';
+  import translation from '@/extensions/i18next';
 
+  const { t } = translation()
   const separatores: string[] = Object.keys(dominus.separatores)
   const vexilla: string[] = [ 'apices', 'magnas', 'utendaU' ]
   const annuli: string[] = [ 'quaerere', 'numerare', 'calculare' ]
@@ -27,7 +29,7 @@
       ipsum: refer.name,
       actus: refer,
     }, {
-      status: transduceretne(),
+      status: true,
       icon: 'file_open',
       ipsum: transduc.name,
       actus: transduc,
@@ -51,8 +53,7 @@
   async function refer()
   { if(referretne()) gustulator.proponatur(await referatur(locutor.locutio)) }
 
-  function transduc()
-  { if(transduceretne()) transducatur(locutor.locutio) }
+  function transduc() { transducatur(locutor.locutio) }
 
   onMounted(() => { document.title = useTranslation().t('appositus.title') })
 </script>
@@ -61,7 +62,7 @@
   <Gustulare />
   <v-card>
     <v-app-bar density='compact' location='top' absolute flat tile>
-      <v-app-bar-title :text="$t('scripta.appositus.titula')" />
+      <v-app-bar-title :text="t('scripta.appositus.titula')" />
       <v-card v-if='locutor.locutust' location='right'>
         <v-btn-toggle density='compact'>
           <template v-for='res in duo' :key='res.ipsum'>
@@ -71,14 +72,14 @@
         </v-btn-toggle>
       </v-card>
       <div v-else id='subiciendum' class='text-center'>
-        <v-card :text="$t('scripta.appositus.rogatum')" />
+        <v-card :text="t('scripta.appositus.rogatum')" />
       </div>
       <v-avatar image='https://avatars.githubusercontent.com/u/22331463'>
         <v-hover>
           <template #default='{ isHovering, props }'>
             <a v-if='isHovering' target='_blank'
                href='https://github.com/hunter-richardson/structorverborum/issues'>
-              <v-card v-bind='props' :text="$t('scripta.appositus.colloqui')" />
+              <v-card v-bind='props' :text="t('scripta.appositus.colloqui')" />
             </a>
           </template>
         </v-hover>
@@ -128,13 +129,13 @@
           <v-col>
             <v-sheet class='pa-1'>
               <div id='titulus.latinus'>
-                {{ $t('scripta.appositus.deCrustulis', { lng: 'la' }) }}
+                {{ t('scripta.appositus.deCrustulis', { lng: 'la' }) }}
               </div>
               <v-btn-toggle>
                 <v-btn v-for='assentiendum in assentienda'
                        :id='`crustula.${assentiendum.notendum}.latina`'
                        :key='assentiendum.clavis' :append-icon='assentiendum.videndum'
-                       :text="`$t('annuli.appositus.${assentiendum.notendum}', { lng: 'la' })`"
+                       :text="t(`annuli.appositus.${assentiendum.notendum}`, { lng: 'la' })"
                        @click='dominus.assensus.massa = assentiendum.massa' />
               </v-btn-toggle>
             </v-sheet>
@@ -142,13 +143,13 @@
           <v-col>
             <v-sheet class='pa-1'>
               <div id='titulus.anglicus'>
-                {{ $t('scripta.appositus.deCrustulis', { lng: 'en' }) }}
+                {{ t('scripta.appositus.deCrustulis', { lng: 'en' }) }}
               </div>
               <v-btn-toggle>
                 <v-btn v-for='assentiendum in assentienda'
                        :id='`crustula.${assentiendum.notendum}.anglica`'
                        :key='assentiendum.clavis' :append-icon='assentiendum.videndum'
-                       :text="`$t('annuli.appositus.${assentiendum.notendum}', { lng: 'en' })`"
+                       :text="t(`annuli.appositus.${assentiendum.notendum}`, { lng: 'en' })"
                        @click='dominus.assensus.massa = assentiendum.massa' />
               </v-btn-toggle>
             </v-sheet>

@@ -102,7 +102,7 @@
   <Inflectere v-if='eventus !== undefined' :eventus='eventus' @blur='eventus = undefined' />
   <v-dialog v-else-if='verbum !== undefined && verbum.categoria.valor !== undefined'>
     <v-card :title='verbum.monstretur()'
-            :subtitle="$t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
+            :subtitle="t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
       <v-chip-group v-if='multiplex'>
         <v-chip v-for='valor in valores' :id='`valor_${valor}`' :key='valor' :text='valor'
                 selected-class='text-primary' prepend-icon='category' />

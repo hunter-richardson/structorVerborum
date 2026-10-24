@@ -14,6 +14,8 @@ jobs:
       - name: aedificare
         uses: ./.github/workflows/aedificare.yaml
       - name: inaugurare
-        run: npm install @vue/cli
+        run: |
+          VUECLI_VER=$(npm pkg get devDependencies["@vue/cli"] --json | tr -d '"')
+          npm install @vue/cli@$VUECLI_VER --ignore-scripts
 #      - name: expedire
 #        run: npm run deploy
