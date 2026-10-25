@@ -1,4 +1,4 @@
-fnpm-debug.log*
+*.log
 
 node_modules
 .DS_Store
@@ -40,3 +40,5 @@ src/**/*.js
 *.config.js
 !.oxlintrc.json
 !eslint.config.ts
+
+pnpm-lock.yaml

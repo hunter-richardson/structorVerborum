@@ -1,6 +1,7 @@
 {
   "exclude": [ "./src/cypress/*/**" ],
   "include": [
+    "./*.config.ts",
     "./src/**/*.ts",
     "./src/facies/*.vue",
     "./src/facies/tabulam/*.vue"
@@ -18,9 +19,9 @@
     "importHelpers": true,
     "incremental": true,
     "lib": [ "dom" ],
-    "module": "NodeNext",
+    "module": "ESNext",
     "moduleDetection": "auto",
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "bundler",
     "newLine": "lf",
     "noEmit": false,
     "noEmitOnError": true,
@@ -33,11 +34,10 @@
     "outDir": "./dist/js",
     "removeComments": true,
     "rewriteRelativeImportExtensions": true,
-    "rootDir": "./src",
+    "rootDir": ".",
     "paths": {
       "@res": [ "./res/*" ],
-      "@/*": [ "./src/*" ],
-      "@f3ve/vue-markdown-it": [ "./node_modules/@f3ve/vue-markdown-it/dist/vue-markdown-it.d.ts" ]
+      "@/*": [ "./src/*" ]
     }, "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,

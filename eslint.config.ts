@@ -1,15 +1,17 @@
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments';
-import jslint from '@eslint/js';
 import { vueTsConfigs as vuetslint, withVueTs } from '@vue/eslint-config-typescript';
 import cypresslint from 'eslint-plugin-cypress';
 import vuelint from 'eslint-plugin-vue';
+import { globalIgnores } from 'eslint/config';
 import globals from 'globals';
 
 const source = {
   files: [ 'src/**/*.{ts,vue}' ],
-  ignores: [ 'src/cypress/{e2e,fixtures,support}/*' ],
   plugins: { '@eslint-community/eslint-comments': eslintComments },
-  languageOptions: {
+  ignores: [
+    'src/cypress/{e2e,fixtures,support}/*',
+    'src/**/*.js'
+  ], languageOptions: {
     globals: {
       ...globals.browser,
       ...globals.node
@@ -40,15 +42,22 @@ const source = {
 
 const typescript = {
   files: [ 'src/**/*.ts' ],
-  ignores: [ 'src/cypress/{e2e,fixtures,support}/*' ],
-  languageOptions: {
+  ignores: [
+    'src/cypress/{e2e,fixtures,support}/*',
+    'src/**/*.js'
+  ], languageOptions: {
     parserOptions:
       { project: './tsconfig.eslint.json' }
   }
 }
 
+const ignores = globalIgnores([
+  'src/cypress/{e2e,fixtures,support}/*',
+  '**/*.js', '**/*.cjs', '**/*.mjs'
+])
+
 export default withVueTs(
-  jslint.configs.recommended,
+  ignores,
   cypresslint.configs.recommended,
   vuelint.configs['flat/recommended'],
   vuetslint.recommended, source, typescript

@@ -1,9 +1,10 @@
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
 import VueDevTools from 'vite-plugin-vue-devtools';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { configDefaults, defineConfig, type ConfigEnv } from 'vitest/config';
+import { configDefaults, type ConfigEnv } from 'vitest/config';
 import { fileURLToPath, URL } from 'node:url';
 
 // https://vitejs.dev/config/
@@ -41,7 +42,12 @@ const figura: Figura = (env: ConfigEnv) => {
           minify: minifaciendi.sistenda
         }
       }
-    }, plugins: [
+    }, resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }, tsconfigPaths: true
+    }
+    , plugins: [
       checker({ typescript: true }), tsconfigPaths(),
       vue(), vueJsx(), operandi ? [] : VueDevTools()
     ], test: {
