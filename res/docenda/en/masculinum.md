@@ -1,2 +1,5 @@
-<!-- markdownlint-disable MD041 -->>
-The **masculine** is a possible value of [gender](genus.md). It denotes a [noun](nomen.md), [adjective](adiectivum.md), [pronoun](pronomen.md) that refers to a subject often associated with men by ancient Roman society. For an animate subject of undetermined or mixed gender, like a group of people, most Latin authors assumed the masculine gender, thanks largely to ancient Rome's highly sexist sociocultural norms.
+<!-- markdownlint-disable MD041 -->
+
+## MASCULINE
+
+The **masculine** is a possible value of [gender](genus.md). It denotes a [noun](nomen.md), [adjective](adiectivum.md), [pronoun](pronomen.md) that refers to a subject often associated with men by ancient Roman society. For an animate subject of undetermined or mixed gender, like a group of people, most Latin authors assumed the masculine gender, thanks largely to ancient Rome's highly sexist sociocultural norms. For this reason, many grammarians consider the masculine gender to mean "animate but not obviously feminine".

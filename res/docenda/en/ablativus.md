@@ -1,2 +1,5 @@
-<!-- markdownlint-disable MD041 -->>
+<!-- markdownlint-disable-next-line MD041 -->>
+
+## ABLATIVE
+
 The **ablative** is a possible value of [case](casus.md). It describes the given [noun](nomen.md), [adjective](adiectivum.md), or [pronomen](pronomen.md) as the subject of a [prepositional](praepositio.md) phrase. The prepositions that were used commonly enough were often deemed unnecessary and left unstated in attested Latin literature, which allowed an ablative identifier to connote several prepositions at once.

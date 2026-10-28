@@ -1,3 +1,4 @@
 allowBuilds:
+  '@apollo/protobufjs': true
   cypress: true
   esbuild: true

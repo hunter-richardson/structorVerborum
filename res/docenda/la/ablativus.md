@@ -1,2 +1,4 @@
-<!-- markdownlint-disable MD041 -->>
+<!-- markdownlint-disable MD041 -->
+## ABLATTIVUS
+
 **Ablativus** est [casus](casus.md) possibilis. Datum [actum](actus.md) contextualem transitivum peragit [nomen](nomen.md) aut [adiectivum](adiectivum.md) aut [pronomen](pronomen.md) ut res locutionis [praepositionalis](praepositio.md). Saepe supervacaneae dictae tacitaeque litteris testatis Latinis sunt praepositiones usae vulgo satis quod res ablativa praepositiones aliquot simul signare liceret.

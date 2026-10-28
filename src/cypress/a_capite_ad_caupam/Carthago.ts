@@ -1,35 +1,46 @@
-import { loquatur } from '@/cypress/a_capite_ad_caupam/locutio';
-import 'cypress';
+import 'cypress'
+import { loquatur } from '@/cypress/a_capite_ad_caupam/locutio'
 
 describe('Carthago delendast', () => {
   it('Carthaginem delerendi loqueretur', () => {
     loquatur({
       locutio: 'Cēterum autem cēnseō Carthāginem esse dēlendam',
-      verba: [ {
+      verba: [
+        {
           categoria: 'nomen',
           lemma: 'cēterum',
-          valores: [ 'singularis', 'nominativus' ]
-        }, {
+          valores: ['singularis', 'nominativus'],
+        },
+        {
           categoria: 'coniunctio',
-          lemma: 'autem'
-        }, {
+          lemma: 'autem',
+        },
+        {
           categoria: 'actus',
           lemma: 'cēnsēre',
-          valores: [ 'indicativus', 'activa', 'praesens', 'singularis', 'prima' ]
-        }, {
+          valores: ['indicativus', 'activa', 'praesens', 'singularis', 'prima'],
+        },
+        {
           categoria: 'nomen',
           lemma: 'Carthāgō',
-          valores: [ 'singularis', 'accusativus' ]
-        }, {
+          valores: ['singularis', 'accusativus'],
+        },
+        {
           categoria: 'actus',
           lemma: 'esse',
-          valores: [ 'infinitivus', 'praesens' ]
-        }, {
+          valores: ['infinitivus', 'praesens'],
+        },
+        {
           categoria: 'actus',
           lemma: 'dēlēre',
-          valores: [ 'participium', 'passiva', 'futurum' ],
+          valores: ['participium', 'passiva', 'futurum'],
           sequendum: {
             categoria: 'adiectivum',
             lemma: 'participium',
-            valores: [ 'singularis', 'accusativus', 'femininum' ]
-} } ] })})})
+            valores: ['singularis', 'accusativus', 'femininum'],
+          },
+        },
+      ],
+    })
+  })
+})

@@ -4,11 +4,8 @@ declare global {
   }
 }
 
-Error.isError =
-  function(error: unknown): error is Error {
-    return typeof error === 'object' &&
-           error !== null &&
-           'message' in error
-  }
+Error.isError = function (error: unknown): error is Error {
+  return typeof error === 'object' && error !== null && 'message' in error
+}
 
 export {}

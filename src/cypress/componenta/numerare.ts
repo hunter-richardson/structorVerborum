@@ -1,6 +1,6 @@
-import Numerare from '@/facies/numerare.vue';
-import 'cypress';
-import { mount } from 'cypress/vue';
+import 'cypress'
+import { mount } from 'cypress/vue'
+import Numerare from '@/facies/numerare.vue'
 
 describe('Romano Anglicum numerum convertere', () => {
   it('converteret', () => {
@@ -18,8 +18,7 @@ describe('Romano Anglicum numerum convertere', () => {
     //    cy.wait(1000)
     cy.get('#aequa').click()
     //    cy.wait(10000)
-    cy.get('v-card').should('have.subtitle', 'Numerus')
-                    .should('have.title', 'XLIIS·')
+    cy.get('v-card').should('have.subtitle', 'Numerus').should('have.title', 'XLIIS·')
     cy.get('#doctum.numerus').should('exist')
   })
 })

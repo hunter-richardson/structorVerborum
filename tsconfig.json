@@ -1,11 +1,7 @@
 {
-  "exclude": [ "./src/cypress/*/**" ],
-  "include": [
-    "./*.config.ts",
-    "./src/**/*.ts",
-    "./src/facies/*.vue",
-    "./src/facies/tabulam/*.vue"
-  ], "compileOnSave": true,
+  "exclude": ["./src/cypress/*/**"],
+  "include": ["./*.config.ts", "./src/**/*.ts", "./src/facies/*.vue", "./src/facies/tabulas/*.vue"],
+  "compileOnSave": true,
   "compilerOptions": {
     "allowArbitraryExtensions": true,
     "allowImportingTsExtensions": true,
@@ -18,7 +14,7 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "incremental": true,
-    "lib": [ "dom" ],
+    "lib": ["dom"],
     "module": "ESNext",
     "moduleDetection": "auto",
     "moduleResolution": "bundler",
@@ -36,9 +32,10 @@
     "rewriteRelativeImportExtensions": true,
     "rootDir": ".",
     "paths": {
-      "@res": [ "./res/*" ],
-      "@/*": [ "./src/*" ]
-    }, "pretty": true,
+      "@res": ["./res/*"],
+      "@/*": ["./src/*"]
+    },
+    "pretty": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "ESNext",

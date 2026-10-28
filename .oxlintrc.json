@@ -1,12 +1,7 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": [
-    "vue",
-    "typescript"
-  ],
-  "jsPlugins": [
-    "eslint-plugin-cypress"
-  ],
+  "plugins": ["vue", "typescript"],
+  "jsPlugins": ["eslint-plugin-cypress"],
   "categories": {
     "correctness": "off"
   },
@@ -92,13 +87,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "**/*.ts",
-        "**/*.tsx",
-        "**/*.mts",
-        "**/*.cts",
-        "**/*.vue"
-      ],
+      "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.vue"],
       "rules": {
         "constructor-super": "off",
         "getter-return": "off",
@@ -123,9 +112,7 @@
       }
     },
     {
-      "files": [
-        "src/**/*.{ts,vue}"
-      ],
+      "files": ["src/**/*.{ts,vue}"],
       "rules": {
         "@eslint-community/eslint-comments/require-description": "error",
         "typescript/no-useless-empty-export": "off",
@@ -138,9 +125,7 @@
           }
         ]
       },
-      "jsPlugins": [
-        "@eslint-community/eslint-plugin-eslint-comments"
-      ],
+      "jsPlugins": ["@eslint-community/eslint-plugin-eslint-comments"],
       "env": {
         "node": true
       }

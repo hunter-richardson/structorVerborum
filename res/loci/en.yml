@@ -1,160 +1,160 @@
 an:
   suffixum:
-    plurale: "s"
+    plurale: 's'
   partes:
-    actus_singulare: "verb"
-    actus_plurale: "$t(partes.actus_singulare)$t(suffixum.plurale)"
-    adiectivum_singulare: "adiective"
-    adiectivum_plurale: "$t(partes.adiectivum_singulare)$t(suffixum.plurale)"
-    adverbium_singulare: "adverb"
-    adverbium_plurale: "$t(partes.adveribum_singulare)$t(suffixum.plurale)"
-    casus_singulare: "case"
-    casus_pluralis: "$t(partes.case_singulare)$t(suffixa.plurale)"
-    categoria_radix: "categor"
-    categoria_singulare: "$t(partes.categoria_radix)y"
-    categoria_plurale: "$t(partes.categoria_radix)ie$t(suffixum.plurale)"
-    coniunctio_singulare: "conjunction"
-    coniunctio_plurale: "$t(partes.coniunctio_singulare)$t(suffixum.plurale)"
-    encliticum_singulare: "enclitic"
-    encliticum_plurale: "$t(partes.encliticum_singulare)$t(suffixum.plurale)"
-    factum_singulare: "gerund"
-    factum_plurale: "$t(partes.factum_singulare)$t(suffixa.plurale)"
-    genus_singulare: "gender"
-    genus_pluurale: "$t(partes.genus_singulare)$t(suffixa.plurale)"
-    gradus_singulare: "grade"
+    actus_singulare: 'verb'
+    actus_plurale: '$t(partes.actus_singulare)$t(suffixum.plurale)'
+    adiectivum_singulare: 'adiective'
+    adiectivum_plurale: '$t(partes.adiectivum_singulare)$t(suffixum.plurale)'
+    adverbium_singulare: 'adverb'
+    adverbium_plurale: '$t(partes.adveribum_singulare)$t(suffixum.plurale)'
+    casus_singulare: 'case'
+    casus_pluralis: '$t(partes.case_singulare)$t(suffixa.plurale)'
+    categoria_radix: 'categor'
+    categoria_singulare: '$t(partes.categoria_radix)y'
+    categoria_plurale: '$t(partes.categoria_radix)ie$t(suffixum.plurale)'
+    coniunctio_singulare: 'conjunction'
+    coniunctio_plurale: '$t(partes.coniunctio_singulare)$t(suffixum.plurale)'
+    encliticum_singulare: 'enclitic'
+    encliticum_plurale: '$t(partes.encliticum_singulare)$t(suffixum.plurale)'
+    factum_singulare: 'gerund'
+    factum_plurale: '$t(partes.factum_singulare)$t(suffixa.plurale)'
+    genus_singulare: 'gender'
+    genus_pluurale: '$t(partes.genus_singulare)$t(suffixa.plurale)'
+    gradus_singulare: 'grade'
     gradus_plurale: $t(partes.gradus_singulare)$t(suffixa.plurale)"
-    infinitivum: "infinitive"
-    lemma_singulare: "term"
-    lemma_plurale: "$t(partes.lemma_singulare)$t(suffixum.plurale)"
-    modus_singulare: "mode"
-    modus_plurale: "$t(partes.modus_singulare)$t(suffixa.plurale)"
-    nomen_singulare: "noun"
-    nomen_plurale: "$t(partes.nomen_singulare)$t(suffixum.plurale)"
-    nullum: "none"
-    numeramen_singulare: "numeral"
-    numeramen_plurale: "$t(partes.numeramen_singulare)$t(suffixum.plurale)"
-    numerus_singulare: "numeral"
+    infinitivum: 'infinitive'
+    lemma_singulare: 'term'
+    lemma_plurale: '$t(partes.lemma_singulare)$t(suffixum.plurale)'
+    modus_singulare: 'mode'
+    modus_plurale: '$t(partes.modus_singulare)$t(suffixa.plurale)'
+    nomen_singulare: 'noun'
+    nomen_plurale: '$t(partes.nomen_singulare)$t(suffixum.plurale)'
+    nullum: 'none'
+    numeramen_singulare: 'numeral'
+    numeramen_plurale: '$t(partes.numeramen_singulare)$t(suffixum.plurale)'
+    numerus_singulare: 'numeral'
     numerus_plurale: $t(partes.numerus_singulare)$t(suffixa.plurale)"
-    participium_singulare: "pariciple"
-    participium_plurale: "$t(partes.paricipium_singulare)$t(suffixum.plurale)"
-    praepositio_singulare: "preposition"
-    praepositio_plurale: "$t(partes.praepositio_singulare)$t(suffixum.plurale)"
-    pronomen_singulare: "pro$t(partes.nomen_singulare)"
-    pronomen_plurale: "$t(partes.pronomen_singulare)$t(suffixum.plurale)"
-    referendum_singulare: "reference"
+    participium_singulare: 'pariciple'
+    participium_plurale: '$t(partes.paricipium_singulare)$t(suffixum.plurale)'
+    praepositio_singulare: 'preposition'
+    praepositio_plurale: '$t(partes.praepositio_singulare)$t(suffixum.plurale)'
+    pronomen_singulare: 'pro$t(partes.nomen_singulare)'
+    pronomen_plurale: '$t(partes.pronomen_singulare)$t(suffixum.plurale)'
+    referendum_singulare: 'reference'
     referendum_plurale: $t(partes.referendum_singulare).$t(suffixa.plurale)"
-    persona_singulare: "person"
-    persona_plurale: "$t(partes.persona_singulare)$t(suffixa.plurale)"
-    tempus_singulare: "tense"
-    tempus_plurale: "$t(partes.tempus_singulare)$t(suffixa.plurale)"
-    vox_singulare: "voice"
-    vox_plurale: "$t(partes.vox_singulare)$t(suffixa.plurale)"
+    persona_singulare: 'person'
+    persona_plurale: '$t(partes.persona_singulare)$t(suffixa.plurale)'
+    tempus_singulare: 'tense'
+    tempus_plurale: '$t(partes.tempus_singulare)$t(suffixa.plurale)'
+    vox_singulare: 'voice'
+    vox_plurale: '$t(partes.vox_singulare)$t(suffixa.plurale)'
     casus:
-      derectus: "direct"
-      nominativus: "nominative"
-      genitivus: "genitive"
-      dativus: "dative"
-      accusativus: "accusative"
-      ablativus: "ablative"
-      vocativus: "vocative"
-      locativus: "locative"
+      derectus: 'direct'
+      nominativus: 'nominative'
+      genitivus: 'genitive'
+      dativus: 'dative'
+      accusativus: 'accusative'
+      ablativus: 'ablative'
+      vocativus: 'vocative'
+      locativus: 'locative'
     facta:
-      nullum: "$t(partes.nullum)"
-      infinitivum: "$t(partes.infinitivum)"
+      nullum: '$t(partes.nullum)'
+      infinitivum: '$t(partes.infinitivum)'
       gerundium: $t(partes.factum_singulare)
-      supinum: "supine"
+      supinum: 'supine'
     genera:
-      neutrum: "neuter"
-      masculinum: "masculine"
-      femininum: "feminine"
+      neutrum: 'neuter'
+      masculinum: 'masculine'
+      femininum: 'feminine'
     gradus:
-      positivus: "positive"
-      comparativus: "comparative"
-      superlativus: "superlative"
+      positivus: 'positive'
+      comparativus: 'comparative'
+      superlativus: 'superlative'
     modi:
-      infinitivus: "$t(partes.infinitivum)"
-      indicativus: "indicative"
-      subiunctivus: "subiunctive"
-      imperativus: "imperative"
-      participium: "$t(partes.participium_singulare)"
+      infinitivus: '$t(partes.infinitivum)'
+      indicativus: 'indicative'
+      subiunctivus: 'subiunctive'
+      imperativus: 'imperative'
+      participium: '$t(partes.participium_singulare)'
     numeri:
-      nullus: "$t(partes.nullum)"
-      singularis: "singular"
-      pluralis: "plural"
+      nullus: '$t(partes.nullum)'
+      singularis: 'singular'
+      pluralis: 'plural'
     personae:
-      prima: "first"
-      secunda: "second"
-      tertia: "third"
+      prima: 'first'
+      secunda: 'second'
+      tertia: 'third'
     referenda:
-      numerus: "$t(partes.numerus_singulare)"
-      ordinale: "ordinal"
-      cardinale: "cardinal"
-      adverbium: "$t(partes.adverbium_singulare)"
-      multiplicativum: "multiplicative"
-      distributivum: "distributive"
-      fractionale: "fraction"
+      numerus: '$t(partes.numerus_singulare)'
+      ordinale: 'ordinal'
+      cardinale: 'cardinal'
+      adverbium: '$t(partes.adverbium_singulare)'
+      multiplicativum: 'multiplicative'
+      distributivum: 'distributive'
+      fractionale: 'fraction'
     tempora:
-      nullum: "$t(partes.nullum)"
-      praesens: "present"
-      infectum: "im$t(partes.tempora.perfectum)"
-      futurum: "future"
-      perfectum: "perfect"
-      plusquamperfectum: "plu-$t(partes.tempora.perfectum)"
-      exigendum: "future-$t(partes.tempora.perfectum)"
+      nullum: '$t(partes.nullum)'
+      praesens: 'present'
+      infectum: 'im$t(partes.tempora.perfectum)'
+      futurum: 'future'
+      perfectum: 'perfect'
+      plusquamperfectum: 'plu-$t(partes.tempora.perfectum)'
+      exigendum: 'future-$t(partes.tempora.perfectum)'
     voces:
-      nulla: "$t(partes.nullum)"
-      activa: "active"
-      passiva: "passive"
+      nulla: '$t(partes.nullum)'
+      activa: 'active'
+      passiva: 'passive'
   annuli:
     appositus:
-      quaerere: "Search"
-      numerare: "Enumerate"
-      calculare: "Calculate"
-      assentire: "Agree"
-      negare: "Deny"
+      quaerere: 'Search'
+      numerare: 'Enumerate'
+      calculare: 'Calculate'
+      assentire: 'Agree'
+      negare: 'Deny'
       colloqui: "Let's talk!"
     quaerere:
-      aperire: "Open"
-      sarcire: "Search"
+      aperire: 'Open'
+      sarcire: 'Search'
       seligere: "I'm Feeling Lucky'"
     tabulare:
-      aForte: "$t(annuli.quaerere.seligere)"
-      aMemet: "Inflect"
-      probare: "Substantiate"
+      aForte: '$t(annuli.quaerere.seligere)'
+      aMemet: 'Inflect'
+      probare: 'Substantiate'
     specere:
-      addere: "Add this to my phrase"
-      addereProprium: "$t(annuli.specere.addere) as a proper name"
-      adire: "$t(annuli.quaerere.aperire)"
+      addere: 'Add this to my phrase'
+      addereProprium: '$t(annuli.specere.addere) as a proper name'
+      adire: '$t(annuli.quaerere.aperire)'
   errores:
-    soli: "only"
-    licuntur: "allowed!"
+    soli: 'only'
+    licuntur: 'allowed!'
     numerare:
-      deNumeris: "$t(soli, capitalize) Arabic numerals $t(errores.licuntur)"
+      deNumeris: '$t(soli, capitalize) Arabic numerals $t(errores.licuntur)'
     quaerere:
-      deLitteris: "$t(soli, capitalize) Latin letters $t(errores.licuntur)"
+      deLitteris: '$t(soli, capitalize) Latin letters $t(errores.licuntur)'
   scripta:
-    onerans: "loading..."
+    onerans: 'loading...'
     404:
-      titula: "Absent Page"
-      caput: "Oops, 404!"
-      nuntium: "The requested resource is missing"
-      actum: "Go Back"
+      titula: 'Absent Page'
+      caput: 'Oops, 404!'
+      nuntium: 'The requested resource is missing'
+      actum: 'Go Back'
     docere:
-      onerans: "Topic $t(scripta.onerans)"
+      onerans: 'Topic $t(scripta.onerans)'
     onerare:
-      onerans: "$t({{pittacium}}_singulare, capitalize) $t(scripta.onerans)"
+      onerans: '$t({{pittacium}}_singulare, capitalize) $t(scripta.onerans)'
     inflectere:
       actus:
-        actor: "agent ($t(partes.genera.masculinum))"
-        actrix: "agent ($t(partes.genera.femininum))"
+        actor: 'agent ($t(partes.genera.masculinum))'
+        actrix: 'agent ($t(partes.genera.femininum))'
     tabulare:
-      radicis: "What does the word start with?"
+      radicis: 'What does the word start with?'
     appositus:
-      titula: "Phrase Factory"
-      rogatum: "What would you like to do or say?"
+      titula: 'Phrase Factory'
+      rogatum: 'What would you like to do or say?'
       referrendi:
-        successus: "Successfully copied your phrase"
-        defectus: "Failed to copy your phrase"
+        successus: 'Successfully copied your phrase'
+        defectus: 'Failed to copy your phrase'
       deCrustulis: |
         - Here cookies are used so that you may choose details for your own experience; or you can choose not to store cookies and use the site unchanged in this case, the only cookie stored would be your refusal of them.
         -

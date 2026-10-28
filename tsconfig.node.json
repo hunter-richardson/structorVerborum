@@ -1,16 +1,10 @@
 {
   "extends": "@tsconfig/node20/tsconfig.json",
-  "include": [
-    "vite.config.*",
-    "vitest.config.*",
-    "cypress.config.*",
-    "nightwatch.conf.*",
-    "playwright.config.*",
-    "vite.ts"
-  ], "compilerOptions": {
+  "include": ["vite.config.*", "vitest.config.*", "cypress.config.*", "nightwatch.conf.*", "playwright.config.*", "vite.ts"],
+  "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "incremental": true,
-    "types": [ "node" ]
+    "types": ["node"]
   }
 }

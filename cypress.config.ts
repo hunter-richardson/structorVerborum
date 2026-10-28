@@ -1,5 +1,5 @@
-import { defineConfig } from 'cypress';
-import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter';
+import installLogsPrinter from 'cypress-terminal-report/src/installLogsPrinter'
+import { defineConfig } from 'cypress'
 
 export default defineConfig({
   e2e: {
@@ -10,8 +10,9 @@ export default defineConfig({
         outputRoot: `${figura.projectRoot}/cypress/logs`,
         outputTarget: { 'tentamina.log': 'txt' },
         printLogsToFile: 'always',
-        compactLogs: undefined
-      }); return figura
-    }
-  }
+        compactLogs: undefined,
+      })
+      return figura
+    },
+  },
 })

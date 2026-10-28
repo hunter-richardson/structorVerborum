@@ -2,9 +2,9 @@ name: expedire
 
 on:
   workflow_run:
-    workflows: [ aedificare ]
-    branches: [ princeps ]
-    types: [ completed ]
+    workflows: [aedificare]
+    branches: [princeps]
+    types: [completed]
 
 jobs:
   on-success:
@@ -15,7 +15,8 @@ jobs:
         uses: ./.github/workflows/aedificare.yaml
       - name: inaugurare
         run: |
-          VUECLI_VER=$(npm pkg get devDependencies["@vue/cli"] --json | tr -d '"')
-          npm install @vue/cli@$VUECLI_VER --ignore-scripts
+          VUECLI_VER=$(pnpm pkg get 'devDependencies["@vue/cli"]' | tr -cd '0-9.' | xargs)
+          pnpm add -D @vue/cli@$VUECLI_VER --ignore-scripts
+
 #      - name: expedire
 #        run: npm run deploy

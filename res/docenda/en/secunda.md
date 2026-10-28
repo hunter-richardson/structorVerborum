@@ -1,2 +1,5 @@
-<!-- markdownlint-disable MD041 -->>
+<!-- markdownlint-disable MD041 -->
+
+# SECOND-PERSON
+
 The **second** is a possible value of [person](persona.md). It denotes the author/speaker addresses the subject of the given [verb](actus.md).

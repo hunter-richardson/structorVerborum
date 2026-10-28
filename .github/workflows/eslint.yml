@@ -13,9 +13,9 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, reopened, edited, ready_for_review, review_requested, auto_merge_enabled]
-    paths-ignore: [ .github, README.md, LICENSE.md ]
+    paths-ignore: [.github, README.md, LICENSE.md]
   push:
-    paths-ignore: [ .github, README.md, LICENSE.md ]
+    paths-ignore: [.github, README.md, LICENSE.md]
 
 jobs:
   eslint:
@@ -31,8 +31,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ESLINT_VER=$(npm pkg get devDependencies.eslint --json | tr -d '"')
-          SARIF_VER=$(npm pkg get devDependencies["@microsoft/eslint-formatter-sarif"] --json | tr -d '"')
+          ESLINT_VER=$(pnpm pkg get devDependencies.eslint | tr -cd '0-9.' | xargs)
+          SARIF_VER=$(pnpm pkg get 'devDependencies["@microsoft/eslint-formatter-sarif"]' | tr -cd '0-9.' | xargs)
           npm install eslint@$ESLINT_VER @microsoft/eslint-formatter-sarif@$SARIF_VER --ignore-scripts
 
       - name: Run ESLint

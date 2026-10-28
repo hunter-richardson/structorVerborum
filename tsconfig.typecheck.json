@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.app.json",
-  "exclude": [ "./src/cypress/**" ],
+  "exclude": ["./src/cypress/**"],
   "compilerOptions": {
     "noEmit": true,
     "paths": {
-      "@/*": [ "./src/*" ]
+      "@/*": ["./src/*"]
     }
-  },
+  }
 }

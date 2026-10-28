@@ -1,118 +1,124 @@
-import Nuntius from '@/miscella/nuntius';
-import { Ignavum, Ultimum } from '@/miscella/usus';
-import {
-  TabulamenActus,
-  TabulamenAdiectivi,
-  TabulamenAdverbii,
-  TabulamenFacti,
-  TabulamenIncomparabilis,
-  TabulamenNominis,
-  TabulamenNumeraminis
-  } from '@/praebeunda/tabulamina';
-import { Verbum } from '@/praebeunda/verba';
-import { buildRegExp, choiceOf } from 'ts-regex-builder';
-import fs from 'node:fs';
-import path from 'node:path';
-import { type Lectum } from '@/praebeunda/interfecta';
-import {
-  errator,
-  type Lineae,
-  nomina,
-  Res
-  } from '@/praebeunda/valores';
-import { CsvError, type Options, parse, type Parser } from 'csv-parse';
-import { pipeline } from 'node:stream/promises';
+import { CsvError, type Options, parse, type Parser } from 'csv-parse'
+import { buildRegExp, choiceOf } from 'ts-regex-builder'
+import path from 'node:path'
+import fs from 'node:fs'
+import { TabulamenActus, TabulamenAdiectivi, TabulamenAdverbii, TabulamenIncomparabilis, TabulamenNominis, TabulamenNumeraminis } from '@/praebeunda/tabulamina'
+import { errator, type Lineae, nomina, Res } from '@/praebeunda/valores'
+import { type Lectum } from '@/praebeunda/interfecta'
+import { Ignavum, Ultimum } from '@/miscella/usus'
+import { Verbum } from '@/praebeunda/verba'
+import Nuntius from '@/miscella/nuntius'
+import { pipeline } from 'node:stream/promises'
 
 export class Ulla<Hoc> extends Array<Hoc> {
-  get unum (): Hoc | undefined { return this.first() }
-  get multa (): Hoc[] { return [ ...this ]; }
+  get unum(): Hoc | undefined {
+    return this.first()
+  }
+  get multa(): Hoc[] {
+    return [...this]
+  }
 
-  constructor (haec?: Hoc | Hoc[])
-  { super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [ haec ])) }
+  constructor(haec?: Hoc | Hoc[]) {
+    super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [haec]))
+  }
 }
 
-@Ignavum @Nuntius.factum
+@Ignavum
+@Nuntius.factum
 export class Lector<Hoc extends Lectum> implements Disposable {
   private haec: Hoc[] = []
   private via!: string
 
-  private readonly deConditis: RegExp =  //\p{Control}|\p{Cf}/gu
-      buildRegExp([
-        choiceOf(/\p{Control}/u, /\p{Cf}/u)
-      ], { global: true, unicode: true })
+  private readonly deConditis: RegExp = //\p{Control}|\p{Cf}/gu
+    buildRegExp([choiceOf(/\p{Control}/u, /\p{Cf}/u)], {
+      global: true,
+      unicode: true,
+    })
 
   private readonly optanda: Options = {
     skip_empty_lines: true,
     ignore_last_delimiters: true,
     group_columns_by_name: true,
     skip_records_with_error: true,
-    columns: true, trim: true, comment: '#',
+    columns: true,
+    trim: true,
+    comment: '#',
     cast: (valor: string): string | number => {
       valor = valor.replace(this.deConditis, '')
       return Number.isFinite(+valor) ? +valor : `${valor}`
-    }, on_skip: (error?: CsvError, crudum?: string) => {
-      let nuntium: string = error === undefined ? `Legere defectu'st lemmam ${this.via}` :
-        `Invenita'st codicem ${error.code} ad ${this.via}`
-      if(crudum !== undefined) nuntium = `${nuntium} ab ${crudum}`
+    },
+    on_skip: (error?: CsvError, crudum?: string) => {
+      let nuntium: string = error === undefined ? `Legere defectu'st lemmam ${this.via}` : `Invenita'st codicem ${error.code} ad ${this.via}`
+      if (crudum !== undefined) nuntium = `${nuntium} ab ${crudum}`
       Nuntius.timeo({
         nomen: this.constructor.name,
         nuntium: nuntium,
-        error: error
-      }); return undefined
-  } }
+        error: error,
+      })
+      return undefined
+    },
+  }
 
   private async aperiatur() {
     this[Symbol.dispose]()
     Nuntius.noto({
       nomen: this.constructor.name,
-      nuntium: `Lego lemmam ${this.via}`
-    }); try {
+      nuntium: `Lego lemmam ${this.via}`,
+    })
+    try {
       const res: Parser = parse(this.optanda)
       const flumen = pipeline(fs.createReadStream(this.via, { flags: 'r' }), res)
       for await (const illud of res) {
         const hoc: Hoc = new this.structor()
-        for (const [ columna, crudum ] of Object.entries(illud as Record<string, string>)) {
-          try { this.ponatur(hoc, columna, crudum) }
-          catch (error) {
+        for (const [columna, crudum] of Object.entries(illud as Record<string, string>)) {
+          try {
+            this.ponatur(hoc, columna, crudum)
+          } catch (error) {
             Nuntius.timeo({
               nomen: this.constructor.name,
-              error: error as Error
+              error: error as Error,
             })
           }
-        } this.haec.push(hoc)
-      } await flumen
+        }
+        this.haec.push(hoc)
+      }
+      await flumen
       Nuntius.noto({
         nomen: this.constructor.name,
-        nuntium: `Legere finitu'st lemmam ${this.via}`
+        nuntium: `Legere finitu'st lemmam ${this.via}`,
       })
-    } catch(error) {
+    } catch (error) {
       Nuntius.timeo({
         nomen: this.constructor.name,
-        error: error as Error
+        error: error as Error,
       })
     }
   }
 
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {
-    if(clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
+    if (clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
     else throw errator({ [clavis]: valor })
   }
 
   @Nuntius.captor get omnia(): string[] {
     const omnia: string[] = []
-    fs.readdir(this.scapum, {
-      encoding: 'utf-8',
-      recursive: false
-    }, () => (error: Error | null, valores: string[]) =>{
-        if(!valores.empty)
-          valores.forEach((valor: string) => omnia.push(valor))
-        if(error !== null) {
+    fs.readdir(
+      this.scapum,
+      {
+        encoding: 'utf-8',
+        recursive: false,
+      },
+      () => (error: Error | null, valores: string[]) => {
+        if (!valores.empty) valores.forEach((valor: string) => omnia.push(valor))
+        if (error !== null) {
           Nuntius.timeo({
             nomen: this.constructor.name,
-            error: error
-          }); throw error
+            error: error,
+          })
+          throw error
         }
-      })
+      },
+    )
     return omnia
   }
 
@@ -121,30 +127,46 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     await this.aperiatur()
     const numerus: number = Math.min(this.haec.length, 2)
     const eventus = {
-      numerus: [ 'Nihil', 'Unum', 'Multa' ][numerus],
-      haec: [ undefined, this.haec.first(), this.haec ][numerus]
-    }; Nuntius.noto({
+      numerus: ['Nihil', 'Unum', 'Multa'][numerus],
+      haec: [undefined, this.haec.first(), this.haec][numerus],
+    }
+    Nuntius.noto({
       nomen: this.constructor.name,
-      nuntium: `${eventus.numerus} tulit lemma ${lemma}`
-    }); return new Ulla(eventus.haec)
+      nuntium: `${eventus.numerus} tulit lemma ${lemma}`,
+    })
+    return new Ulla(eventus.haec)
   }
 
-  constructor(private scapum: string, private readonly structor: new () => Hoc)
-  { this.scapum = path.join('@res', scapum) }
+  constructor(
+    private scapum: string,
+    private readonly structor: new () => Hoc,
+  ) {
+    this.scapum = path.join('@res', scapum)
+  }
 
-  [Symbol.dispose]() { this.haec.clear() }
+  [Symbol.dispose]() {
+    this.haec.clear()
+  }
 }
 
-@Ignavum @Ultimum @Nuntius.factum export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {
-  private readonly positores: Record<string, (hoc: Hoc, valor: string | undefined) => void> =
-    Object.fromEntries(nomina.map((nomen) => [ nomen, (hoc: Hoc, valor: string | undefined) => {
-      const res = hoc as unknown as { [ nomen ]: Res<boolean, Lineae>; };
-      if (!res) throw errator({ [ nomen ]: valor ?? '' });
-      else res[ nomen ].valor = valor;
-    } ]))
+@Ignavum
+@Ultimum
+@Nuntius.factum
+export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {
+  private readonly positores: Record<string, (hoc: Hoc, valor: string | undefined) => void> = Object.fromEntries(
+    nomina.map((nomen) => [
+      nomen,
+      (hoc: Hoc, valor: string | undefined) => {
+        const res = hoc as unknown as { [nomen]: Res<boolean, Lineae> }
+        if (!res) throw errator({ [nomen]: valor ?? '' })
+        else res[nomen].valor = valor
+      },
+    ]),
+  )
 
-  override ponatur(hoc: Hoc, clavis: string, valor: string)
-  { return this.positores[clavis]?.(hoc, valor) ?? super.ponatur(hoc, clavis, valor) }
+  override ponatur(hoc: Hoc, clavis: string, valor: string) {
+    return this.positores[clavis]?.(hoc, valor) ?? super.ponatur(hoc, clavis, valor)
+  }
 }
 
 export const verborum = new Lector<Verbum>('lemmae/verba', Verbum)
@@ -153,5 +175,4 @@ export const adiectivorum = new LectorMultiplex<TabulamenAdiectivi>('lemmae/adie
 export const adverbiorum = new LectorMultiplex<TabulamenAdverbii>('lemmae/adverbia', TabulamenAdverbii)
 export const incomparabilium = new LectorMultiplex<TabulamenIncomparabilis>('lemmae/adiectiva/incomparabilia', TabulamenIncomparabilis)
 export const nominum = new LectorMultiplex<TabulamenNominis>('lemmae/nomina', TabulamenNominis)
-export const nominumFactorum = new LectorMultiplex<TabulamenFacti>('lemmae/nomina/facta', TabulamenFacti)
 export const numeraminum = new LectorMultiplex<TabulamenNumeraminis>('lemmae/numeramina', TabulamenNumeraminis)

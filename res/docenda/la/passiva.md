@@ -1,2 +1,4 @@
-<!-- markdownlint-disable MD041 -->>
+<!-- markdownlint-disable MD041 -->
+## PASSIVA
+
 **Passiva** est [vox](vox.md) possibilis. [Actum](actus.md) datum in re suam agi peragit.

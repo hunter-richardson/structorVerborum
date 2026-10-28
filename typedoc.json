@@ -7,10 +7,11 @@
     "@8hobbies/typedoc-plugin-404",
     "@droppedcode/typedoc-plugin-relative-includes",
     "typedoc-plugin-vue",
-    "typedoc-plugin-mdn-links",
+    "typedoc-plugin-mdn-links"
     // "typedoc-plugin-mtos",
     // "typedoc-plugin-coverage"
-  ], "theme": "dark",
+  ],
+  "theme": "dark",
   "includes": "src",
   "useCodeBlocks": true,
   "expandObjects": true,
@@ -18,8 +19,9 @@
   "formatWithPrettier": true,
   "compilerOptions": {
     "alwaysStrict": true,
-    "newLine": "lf",
-  }, "visibilityFilters": {
+    "newLine": "lf"
+  },
+  "visibilityFilters": {
     "protected": false,
     "inherited": true,
     "external": false

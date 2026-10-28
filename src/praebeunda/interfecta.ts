@@ -1,6 +1,6 @@
-import '@/extensions/string';
-import { Multiplex } from '@/praebeunda/verba';
-import { Tabula } from '@/tabulae/tabula';
+import { Multiplex } from '@/praebeunda/verba'
+import { Tabula } from '@/tabulae/tabula'
+import '@/extensions/string'
 
 export const LATIBILE: unique symbol = Symbol('LATIBILE')
 export const LEGIBILE: unique symbol = Symbol('LEGIBILE')
@@ -14,6 +14,6 @@ export interface Lectum {
 }
 
 export abstract class Tabulator<Hoc extends Multiplex> implements Referendum {
-  readonly [ LATIBILE ] = true as const
+  readonly [LATIBILE] = true as const
   abstract get tabula(): Promise<Tabula<Hoc>>
 }

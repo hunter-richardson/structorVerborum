@@ -1,28 +1,14 @@
-import '@/extensions/array';
-import '@/extensions/string';
-import Quaerere from '@/facies/quaerere.vue';
-import { inflectenda } from '@/praebeunda/valores';
-import {
-  Actus,
-  Adiectivum,
-  Adverbium,
-  Nomen,
-  Pronomen
-  } from '@/praebeunda/verba';
-import 'cypress';
-import 'cypress-map';
-import { mount } from 'cypress/vue';
-import {
-  buildRegExp,
-  choiceOf,
-  endOfString,
-  startOfString
-  } from 'ts-regex-builder';
+import { buildRegExp, choiceOf, endOfString, startOfString } from 'ts-regex-builder'
+import { mount } from 'cypress/vue'
+import 'cypress-map'
+import 'cypress'
+import { Actus, Adiectivum, Adverbium, Nomen, Pronomen } from '@/praebeunda/verba'
+import { inflectenda } from '@/praebeunda/valores'
+import Quaerere from '@/facies/quaerere.vue'
+import '@/extensions/string'
+import '@/extensions/array'
 
-function ullum (res: {
-  categoria: string,
-  accusativa: string
-}): void {
+function ullum(res: { categoria: string; accusativa: string }): void {
   describe(`${res.accusativa} invenire`, () => {
     it('inveniret', () => {
       const cy: Cypress.Chainable = mount(Quaerere)
@@ -30,9 +16,7 @@ function ullum (res: {
 
       cy.get('#quaerenda.categoriae').select(res.categoria)
       // cy.wait(1000)
-      cy.get('#quaerenda.categoriae')
-        .find('option:selected')
-        .should('have.text', res.categoria.capitalized)
+      cy.get('#quaerenda.categoriae').find('option:selected').should('have.text', res.categoria.capitalized)
       cy.get('#fortuna').click()
       // cy.wait(1000)
 
@@ -42,9 +26,7 @@ function ullum (res: {
         // cy.wait(1000)
       }
 
-      cy.get('v-card')
-        .should('have.subtitle', res.categoria.capitalized)
-        .its('title').should('not.be.empty')
+      cy.get('v-card').should('have.subtitle', res.categoria.capitalized).its('title').should('not.be.empty')
       cy.get(`#doctum.${res.categoria}`).should('exist')
     })
   })
@@ -53,45 +35,52 @@ function ullum (res: {
 describe('omnia invenire', () => {
   ullum({
     categoria: 'coniunctio',
-    accusativa: 'coniunctionem'
-  }); ullum({
+    accusativa: 'coniunctionem',
+  })
+  ullum({
     categoria: 'interiectio',
-    accusativa: 'interiectionem'
-  }); ullum({
+    accusativa: 'interiectionem',
+  })
+  ullum({
     categoria: 'praepositio',
-    accusativa: 'praepositionem'
-  }); ullum({
+    accusativa: 'praepositionem',
+  })
+  ullum({
     categoria: Actus.name.lowercase,
-    accusativa: 'actum'
-  }); ullum({
+    accusativa: 'actum',
+  })
+  ullum({
     categoria: Adiectivum.name.lowercase,
     accusativa: Adiectivum.name.lowercase,
-  }); ullum({
+  })
+  ullum({
     categoria: Adverbium.name.lowercase,
     accusativa: Adverbium.name.lowercase,
-  }); ullum({
+  })
+  ullum({
     categoria: Nomen.name.lowercase,
     accusativa: Nomen.name.lowercase,
-  }); ullum({
+  })
+  ullum({
     categoria: Pronomen.name.lowercase,
     accusativa: Pronomen.name.lowercase,
-  }); it('numeramen inveniret', () => {
+  })
+  it('numeramen inveniret', () => {
     const cy: Cypress.Chainable = mount(Quaerere)
     // cy.wait(1000)
 
     cy.get('#quaerenda.categoriae').select('numeramen')
     // cy.wait(1000)
-    cy.get('#quaerenda.categoriae')
-      .find('option:selected')
-      .should('have.text', 'Numeramen')
+    cy.get('#quaerenda.categoriae').find('option:selected').should('have.text', 'Numeramen')
     cy.get('#fortuna').click()
     // cy.wait(1000)
 
     let relaturus: string = ''
     cy.get('#tabula').should('exist')
     cy.get('[id^="colamen_"]')
-      .sample().its('id')
-      .then(id => relaturus = id?.replace('^colamen_', '') ?? '')
+      .sample()
+      .its('id')
+      .then((id) => (relaturus = id?.replace('^colamen_', '') ?? ''))
     cy.get(`#colamen_${relaturus}`).click()
     // cy.wait(1000)
     cy.get('[id^="aperi_"]').first().click()
@@ -102,14 +91,13 @@ describe('omnia invenire', () => {
       cy.get('#tabula').should('exist')
       cy.get('fortuna').click()
       // cy.wait(1000)
-    } else if (buildRegExp([ startOfString, choiceOf('fractionale', 'collectivum'), endOfString ]).test(relaturus)) {
+    } else if (buildRegExp([startOfString, choiceOf('fractionale', 'collectivum'), endOfString]).test(relaturus)) {
       categoria = Nomen.name.lowercase
-    } else if (buildRegExp([ startOfString, choiceOf('ordinale', 'cardinale', 'distributivum', 'multiplicativum', 'proportionale'), endOfString ]).test(relaturus)) {
+    } else if (buildRegExp([startOfString, choiceOf('ordinale', 'cardinale', 'distributivum', 'multiplicativum', 'proportionale'), endOfString]).test(relaturus)) {
       categoria = Adiectivum.name.lowercase
     }
 
-    cy.get('v-card').should('have.subtitle', categoria.capitalized)
-      .its('title').should('not.be.empty')
+    cy.get('v-card').should('have.subtitle', categoria.capitalized).its('title').should('not.be.empty')
     cy.get(`[id^="doctum."]`).should('exist')
   })
 })

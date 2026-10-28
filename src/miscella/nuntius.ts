@@ -1,9 +1,9 @@
-import { Mensa } from '@/praebeunda/valores';
-import { makeDirectorySync } from 'make-dir';
-import winston from 'winston';
-import DailyRotateFile from 'winston-daily-rotate-file';
-import Numerator from './numerator';
 import { type TransformableInfo } from 'logform'
+import { makeDirectorySync } from 'make-dir'
+import DailyRotateFile from 'winston-daily-rotate-file'
+import winston from 'winston'
+import { Numerator } from '@/miscella/numerator'
+import { Mensa } from '@/praebeunda/valores'
 
 function scribatur(parametra: TransformableInfo & { nomen?: string }): string {
   const inhaesum: string = `@${Temporis.nunc()} <${parametra.level}> ${parametra.message}`
@@ -25,91 +25,105 @@ export default class Nuntius implements Disposable {
   static timeo(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       error: parametra.error,
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static moneo(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'warn',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static noto(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'info',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static certioro(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'http',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static garrio(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'verbose',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static plusGarrio(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'debug',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
   static plurimumGarrio(parametra: Parametra): void {
     new Nuntius(parametra.nomen).nuntio({
       gradus: 'silly',
-      nuntium: parametra.nuntium
-  } )}
+      nuntium: parametra.nuntium,
+    })
+  }
 
-  static positor<Hoc, Valor> (
-      positor: (this: Hoc, valor: Valor) => void,
-      contextus: ClassSetterDecoratorContext<Hoc, Valor>) {
+  static positor<Hoc, Valor>(positor: (this: Hoc, valor: Valor) => void, contextus: ClassSetterDecoratorContext<Hoc, Valor>) {
     return function (this: Hoc, valor: Valor) {
       Nuntius.noto({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Initu'st positor ${contextus.name.toString()}`
-      }); try { positor.call(this, valor) }
-      catch(error) {
+        nuntium: `Initu'st positor ${contextus.name.toString()}`,
+      })
+      try {
+        positor.call(this, valor)
+      } catch (error) {
         Nuntius.timeo({
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
-        }); throw error
-      } Nuntius.noto({
+          nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`,
+        })
+        throw error
+      }
+      Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Exitu'st positor ${contextus.name.toString()}`
-  } )} }
+        nuntium: `Exitu'st positor ${contextus.name.toString()}`,
+      })
+    }
+  }
 
-  static captor<Hoc, Illud> (
-      captor: (this: Hoc) => Illud,
-      contextus: ClassGetterDecoratorContext<Hoc, Illud>) {
+  static captor<Hoc, Illud>(captor: (this: Hoc) => Illud, contextus: ClassGetterDecoratorContext<Hoc, Illud>) {
     return function (this: Hoc): Illud {
       Nuntius.noto({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Initu'st captor ${contextus.name.toString()}`
-      }); try {
+        nuntium: `Initu'st captor ${contextus.name.toString()}`,
+      })
+      try {
         const illud: Illud = captor.call(this)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Exitu'st captor ${contextus.name.toString()}`
-        }); return illud
-      } catch(error) {
+          nuntium: `Exitu'st captor ${contextus.name.toString()}`,
+        })
+        return illud
+      } catch (error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`
-        }); throw error
-  } } }
+          nuntium: `Invenit positor ${contextus.name.toString()} errorem ${error}`,
+        })
+        throw error
+      }
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
-  static factum<Hoc extends new (...parametra: any[]) => any> (constr: Hoc,) {
+  static factum<Hoc extends new (...parametra: any[]) => any>(constr: Hoc) {
     return class extends constr {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
       constructor(...parametra: any[]) {
@@ -117,56 +131,65 @@ export default class Nuntius implements Disposable {
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: 'Fit'
-  } )} } }
+          nuntium: 'Fit',
+        })
+      }
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
-  static modus<Hoc, Parametra extends any[], Illud> (
-      modus: (this: Hoc, ...parametra: Parametra) => Illud,
-      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
+  static modus<Hoc, Parametra extends any[], Illud>(modus: (this: Hoc, ...parametra: Parametra) => Illud, contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
     return function (this: Hoc, ...parametra: Parametra): Illud {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Initu'st modus ${contextus.name.toString()}`
-      }); try {
+        nuntium: `Initu'st modus ${contextus.name.toString()}`,
+      })
+      try {
         const illud: Illud = modus.call(this, ...parametra)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Exitu'st modus ${contextus.name.toString()}`
-        }); return illud
+          nuntium: `Exitu'st modus ${contextus.name.toString()}`,
+        })
+        return illud
       } catch (error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`
-        }); throw error
-  } } }
+          nuntium: `Invenit modus ${contextus.name.toString()} errorem ${error}`,
+        })
+        throw error
+      }
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
-  static promittum<Hoc, Parametra extends any[], Illud> (
-      promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
-      contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
+  static promittum<Hoc, Parametra extends any[], Illud>(promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>, contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
     return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Initu'st promittum ${contextus.name.toString()}`
-      }); try {
+        nuntium: `Initu'st promittum ${contextus.name.toString()}`,
+      })
+      try {
         const illud: Promise<Illud> = promittum.apply(this, parametra)
         Nuntius.noto({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Exitu'st promittum ${contextus.name.toString()}`
-        }); return illud
+          nuntium: `Exitu'st promittum ${contextus.name.toString()}`,
+        })
+        return illud
       } catch (error) {
         Nuntius.timeo({
           // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
           nomen: (this as any).constructor.name.lowercase,
-          nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`
-        }); throw error
-  } } }
+          nuntium: `Invenit promittum ${contextus.name.toString()} errorem ${error}`,
+        })
+        throw error
+      }
+    }
+  }
 
   static exutor(exutor: () => void, contextus: ClassMethodDecoratorContext) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
@@ -175,21 +198,17 @@ export default class Nuntius implements Disposable {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
         nomen: (this as any).constructor.name.lowercase,
-        nuntium: `Exutu'st ${contextus.name.toString()}`
-  } )} }
+        nuntium: `Exutu'st ${contextus.name.toString()}`,
+      })
+    }
+  }
 
   private readonly _nuntiator: winston.Logger
   private readonly _mundusEvolendum: boolean = true
 
-  nuntio (parametra: {
-    error?: Error
-    gradus?: string
-    nuntium?: string
-  }): void {
-    if (parametra.error)
-        this._nuntiator.error(parametra.error)
-    if (parametra.gradus && parametra.nuntium)
-        this._nuntiator.log(parametra.gradus, parametra.nuntium)
+  nuntio(parametra: { error?: Error; gradus?: string; nuntium?: string }): void {
+    if (parametra.error) this._nuntiator.error(parametra.error)
+    if (parametra.gradus && parametra.nuntium) this._nuntiator.log(parametra.gradus, parametra.nuntium)
   }
 
   private constructor(private readonly _nomen?: string) {
@@ -204,8 +223,10 @@ export default class Nuntius implements Disposable {
         winston.format.printf((res: TransformableInfo) =>
           scribatur({
             ...res,
-            nomen: this._nomen
-      }) ) )
+            nomen: this._nomen,
+          }),
+        ),
+      )
 
       navigium = new winston.transports.Console({ format: forma })
     } else {
@@ -216,8 +237,10 @@ export default class Nuntius implements Disposable {
         winston.format.printf((res) =>
           scribatur({
             ...res,
-            nomen: this._nomen
-      }) ) )
+            nomen: this._nomen,
+          }),
+        ),
+      )
 
       navigium = new DailyRotateFile({
         datePattern: '',
@@ -226,7 +249,7 @@ export default class Nuntius implements Disposable {
         frequency: '1d',
         maxSize: '20m',
         maxFiles: '30d',
-        zippedArchive: true
+        zippedArchive: true,
       })
 
       makeDirectorySync((navigium as DailyRotateFile).dirname)
@@ -241,31 +264,24 @@ export default class Nuntius implements Disposable {
       exitOnError: this._mundusEvolendum,
       format: forma,
       level: this._mundusEvolendum ? 'debug' : 'error',
-      transports: [navigium]
-  } )}
+      transports: [navigium],
+    })
+  }
 
   [Symbol.dispose](): void {
     this._nuntiator.close()
     this._nuntiator.destroy()
-} }
+  }
+}
 
 class Temporis {
   static hodie(): string {
-    const hodie: Date = new Date
-    return [
-      Numerator.romanus(hodie.getUTCDay()),
-      Mensa[hodie.getUTCMonth()],
-      Numerator.romanus(hodie.getUTCFullYear())
-    ].join('')
+    const hodie: Date = new Date()
+    return [Numerator.romanus(hodie.getUTCDay()), Mensa[hodie.getUTCMonth()], Numerator.romanus(hodie.getUTCFullYear())].join('')
   }
 
   static nunc(): string {
-    const nunc: Date = new Date
-    return [
-      nunc.getUTCHours(),
-      nunc.getUTCMinutes(),
-      nunc.getUTCSeconds(),
-      nunc.getUTCMilliseconds()
-    ].map((numerus) => Numerator.romanus(numerus))
-     .join(':')
-} }
+    const nunc: Date = new Date()
+    return [nunc.getUTCHours(), nunc.getUTCMinutes(), nunc.getUTCSeconds(), nunc.getUTCMilliseconds()].map((numerus) => Numerator.romanus(numerus)).join(':')
+  }
+}

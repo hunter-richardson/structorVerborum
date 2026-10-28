@@ -1,8 +1,8 @@
-import '@/extensions/array';
-import { enclitici } from '@/praebeunda/valores';
-import 'cypress';
+import { enclitici } from '@/praebeunda/valores'
+import '@/extensions/array'
+import 'cypress'
 
-export interface  Verbum {
+export interface Verbum {
   categoria: string
   lemma: string
   valores?: string[]
@@ -14,14 +14,14 @@ export interface Res {
   verba: Verbum[]
 }
 
-export function loquatur (res: Res) {
+export function loquatur(res: Res) {
   describe('locutionem facere', () => {
     it('loquitur', () => {
       cy.visit('index.html')
       cy.get('#quaerere').click()
       // cy.wait(1000)
 
-      res.verba.forEach(verbum => {
+      res.verba.forEach((verbum) => {
         let categoria: string = verbum.categoria
         cy.get('#quaerenda.categoriae').select(categoria)
         // cy.wait(1000)
@@ -31,37 +31,29 @@ export function loquatur (res: Res) {
         // cy.wait(1000)
 
         if (verbum.valores) {
-          verbum.valores.except(...enclitici)
-            .forEach(valor => cy.get(`#colamen_${valor}`).click())
+          verbum.valores.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
           cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
-        if (verbum.sequendum &&
-            verbum.sequendum.lemma !== 'participium') {
+        if (verbum.sequendum && verbum.sequendum.lemma !== 'participium') {
           categoria = verbum.sequendum.categoria
           cy.get(`#${verbum.sequendum.lemma}`).click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(...enclitici)
-            .forEach(valor =>
-              cy.get(`#colamen_${valor}`).click())
-              cy.get('[id^="selige_"]').first().click()
+          verbum.sequendum.valores?.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
+          cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
-        cy.get('v-card')
-          .should('have.subtitle', categoria)
-          .its('title').should('not.be.empty')
+        cy.get('v-card').should('have.subtitle', categoria).its('title').should('not.be.empty')
         cy.get(`doctum_${categoria}`).should('exist')
 
         if (verbum.sequendum?.lemma === 'participium') {
           categoria = verbum.sequendum.categoria
           cy.get('#participium').click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(...enclitici)
-            .forEach(valor =>
-              cy.get(`#colamen_${valor}`).click())
-              cy.get('[id^="selige_"]').first().click()
+          verbum.sequendum.valores?.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
+          cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
 
@@ -75,7 +67,11 @@ export function loquatur (res: Res) {
       cy.get('body').click()
       // cy.wait(1000)
       cy.get('#refer').click()
-      cy.window().then(fenestra => {
+      cy.window().then((fenestra) => {
         fenestra.navigator.clipboard.readText().then((scriptum) => {
           expect(scriptum).to.eq(res.locutio)
-})})})}) }
+        })
+      })
+    })
+  })
+}

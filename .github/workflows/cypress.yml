@@ -3,9 +3,9 @@ name: Cypress
 on:
   workflow_dispatch:
   push:
-    branches-ignore: [ 'princeps']
+    branches-ignore: ['princeps']
   pull_request:
-    branches-ignore: [ 'princeps' ]
+    branches-ignore: ['princeps']
 jobs:
   cypress:
     runs-on: ubuntu-latest
@@ -17,8 +17,8 @@ jobs:
       - name: agere
         uses: cypress-io/github-action@207a8be0f8937a6587fa45d1fde56f66dcc85566
         with:
-          build: npm run debug 2>&1 | tee cypress/logs/tentamina.log
-          start: npm start 2>&1 | tee cypress/log/tentamina.log
+          build: pnpm debug 2>&1 | tee cypress/logs/tentamina.log
+          start: pnpm start 2>&1 | tee cypress/logs/tentamina.log
           wait-on: 'https://localhost:4173'
       - name: colligere
         if: always()

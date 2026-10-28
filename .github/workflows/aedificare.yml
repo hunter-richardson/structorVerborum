@@ -3,11 +3,11 @@ name: aedificare
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [ ESLint ]
-    types: [ completed ]
+    workflows: [ESLint]
+    types: [completed]
 jobs:
   on-success:
-    runs-on:  ubuntu-latest
+    runs-on: ubuntu-latest
     name: aedificare
     continue-on-error: false
     strategy:
@@ -22,13 +22,13 @@ jobs:
         with:
           node-version: 'latest'
       - name: inaugurare
-        run: npm clean-install
+        run: pnpm ci
       - name: fundere
-        run: npm run lint
+        run: pnpm lint
       - name: verificare
         run: tsc --build --clean
       - name: struere
-        run: npm run release
+        run: pnpm release
       - name: invenire
         run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
       - name: emissa

@@ -1,2 +1,4 @@
-<!-- markdownlint-disable MD041 -->>
-**Femininum** est [casus](casus.md) possibilis. Datum [nomen](nomen.md) aut [adiectivum](adiectivum.md) aut [pronomen](pronomen.md) relatum rem iunctam cum feminis a cultu Romanorum veterum.
+<!-- markdownlint-disable MD041 -->
+## FEMININUM
+
+**Femininum** est [genus](genus.md) possibilis. Datum [nomen](nomen.md) aut [adiectivum](adiectivum.md) aut [pronomen](pronomen.md) relatum rem iunctam cum feminis a cultu Romanorum veterum.

@@ -1,83 +1,73 @@
-import '@/extensions/array';
-import '@/extensions/string';
-import { dominus } from '@/miscella/dominus';
-import { numeraminum } from '@/miscella/lector';
-import Numerator from '@/miscella/numerator';
-import Nuntius from '@/miscella/nuntius';
-import { Ultimum } from '@/miscella/usus';
-import {
-  TabulamenAdiectivi,
-  TabulamenFacti,
-  TabulamenNominis,
-  TabulamenNumeraminis
-  } from '@/praebeunda/tabulamina';
-import { Mixin } from 'ts-mixer';
-import {
-  buildRegExp,
-  choiceOf,
-  endOfString,
-  lookahead,
-  optional,
-  regex,
-  startOfString
-  } from 'ts-regex-builder';
-import Structor from './structor';
-import { dictionarium, type Eventus } from '@/miscella/dictionarium';
-import {
-  Casuale,
-  Categoricum,
-  Encliticum,
-  Encliticus,
-  errator,
-  Factum,
-  Fulta,
-  Generale,
-  Gradale,
-  Modestum,
-  Numeratum,
-  Personale,
-  Relaturum,
-  Res,
-  Temporale,
-  Vocale,
-  type Fultum,
-  type Lineae,
-  } from './valores';
-import { comparison, type SortResult } from '@/extensions/utils';
-import { LATIBILE, LEGIBILE, Tabulator, type Lectum } from './interfecta';
+import { Mixin } from 'ts-mixer'
+import { dictionarium, type Eventus } from '@/miscella/dictionarium'
+import { comparison, type SortResult } from '@/extensions/utils'
+import { numeraminum } from '@/miscella/lector'
+import { Numerator } from '@/miscella/numerator'
+import Structor from '@/praebeunda/structor'
+import { Ultimum } from '@/miscella/usus'
+import dominus from '@/miscella/dominus'
+import Nuntius from '@/miscella/nuntius'
+import '@/extensions/array'
+import '@/extensions/string'
+import { LATIBILE, LEGIBILE, Tabulator, type Lectum } from '@/praebeunda/interfecta'
+import { TabulamenAdiectivi, TabulamenFacti, TabulamenNominis, TabulamenNumeraminis } from '@/praebeunda/tabulamina'
+import { Casuale, Categoricum, Encliticum, Encliticus, errator, Factum, Fulta, Generale, Gradale, Modestum, Numeratum, Personale, Relaturum, Res, Temporale, Vocale, type Fultum, type Lineae } from '@/praebeunda/valores'
+import { buildRegExp, choiceOf, endOfString, lookahead, optional, regex, startOfString } from 'ts-regex-builder'
 
-export type Agendum<Hoc extends Multiplex> = Lectum &
-    Omit<Hoc, 'categoria' | 'unicum' | '_encliticus' | 'encliticus' | 'monstretur' | 'paratust'>
+export type Agendum<Hoc extends Multiplex> = Lectum & Omit<Hoc, 'categoria' | 'unicum' | '_encliticus' | 'encliticus' | 'monstretur' | 'paratust'>
 
-export const ordinentur: (primum: Verbum, secundum: Verbum) => SortResult =
-      comparison((hoc: Verbum) => hoc instanceof Multiplex ?
-                     hoc.valores.count((valor) =>  ///^(?:null(?:um|us|a))|derectus$//
-                         !buildRegExp([
-                           startOfString,  //^/
-                           choiceOf(  //(?:null(?:um|us|a))|derectus/
-                             regex([
-                               'null', //null/
-                               choiceOf('um', 'us', 'a')  //(?:um|us|a)/
-                             ]), 'derectus'),  //derectus/
-                           endOfString  //$/
-                         ]).test(valor.valor)) : 0,
-                 (hoc: Verbum) => hoc.scriptum,
-                 (hoc: Verbum) => hoc.categoria.valor ?? '')
+export const ordinentur: (primum: Verbum, secundum: Verbum) => SortResult = comparison(
+  (hoc: Verbum) =>
+    hoc instanceof Multiplex
+      ? hoc.valores.count(
+          (valor) =>
+            ///^(?:null(?:um|us|a))|derectus$//
+            !buildRegExp([
+              startOfString, //^/
+              choiceOf(
+                //(?:null(?:um|us|a))|derectus/
+                regex([
+                  'null', //null/
+                  choiceOf('um', 'us', 'a'), //(?:um|us|a)/
+                ]),
+                'derectus',
+              ), //derectus/
+              endOfString, //$/
+            ]).test(valor.valor),
+        )
+      : 0,
+  (hoc: Verbum) => hoc.scriptum,
+  (hoc: Verbum) => hoc.categoria.valor ?? '',
+)
 
 export class Verbum extends Categoricum implements Lectum {
-  readonly [ LATIBILE ] = true as const
-  readonly [ LEGIBILE ] = true as const
+  readonly [LATIBILE] = true as const
+  readonly [LEGIBILE] = true as const
   readonly unicum: string = crypto.randomUUID()
   protected _scriptum!: string
 
-  actust(): this is Actus { return this.categoria.aequatur(Actus.name.lowercase) }
-  adiectivust(): this is Adiectivum { return this.categoria.aequatur(Adiectivum.name.lowercase) }
-  adverbiust(): this is Adverbium { return this.categoria.aequatur(Adverbium.name.lowercase) }
-  nomest(): this is Nomen { return this.categoria.aequatur(Nomen.name.lowercase) }
-  numeramest(): this is Numeramen { return this.categoria.aequatur(Numeramen.name.lowercase) }
-  pronomest(): this is Pronomen { return this.categoria.aequatur(Pronomen.name.lowercase) }
+  actust(): this is Actus {
+    return this.categoria.aequatur(Actus.name.lowercase)
+  }
+  adiectivust(): this is Adiectivum {
+    return this.categoria.aequatur(Adiectivum.name.lowercase)
+  }
+  adverbiust(): this is Adverbium {
+    return this.categoria.aequatur(Adverbium.name.lowercase)
+  }
+  nomest(): this is Nomen {
+    return this.categoria.aequatur(Nomen.name.lowercase)
+  }
+  numeramest(): this is Numeramen {
+    return this.categoria.aequatur(Numeramen.name.lowercase)
+  }
+  pronomest(): this is Pronomen {
+    return this.categoria.aequatur(Pronomen.name.lowercase)
+  }
 
-  get scriptum(): string { return this._scriptum }
+  get scriptum(): string {
+    return this._scriptum
+  }
 
   set scriptum(valor: string) {
     valor = valor.trim()
@@ -85,305 +75,332 @@ export class Verbum extends Categoricum implements Lectum {
     else throw errator({ scriptum: valor })
   }
 
-  paratust(): boolean { return !this.scriptum.empty }
+  paratust(): boolean {
+    return !this.scriptum.empty
+  }
 
   monstretur(): string {
     let monstrandum: string = this.scriptum
-    if(dominus.utendaU.signum) {
+    if (dominus.utendaU.signum) {
       const subsituendae = { U: 'V', u: 'v', Ū: 'V̄', ū: 'v̄' }
-      if([...monstrandum].intersection(Object.keys(subsituendae)).any) {
-        Object.entries(subsituendae).forEach(([clavis, valor]: [string, string]) =>
-            monstrandum = monstrandum.replace(clavis, valor))
-    } }
-    if(dominus.apices.signum)
-          monstrandum = monstrandum.removeMacra
-    if(dominus.magnas.signum)
-          monstrandum = monstrandum.uppercase
+      if ([...monstrandum].intersection(Object.keys(subsituendae)).any) {
+        Object.entries(subsituendae).forEach(([clavis, valor]: [string, string]) => (monstrandum = monstrandum.replace(clavis, valor)))
+      }
+    }
+    if (dominus.apices.signum) monstrandum = monstrandum.removeMacra
+    if (dominus.magnas.signum) monstrandum = monstrandum.uppercase
     return monstrandum
   }
 }
 
 class Praedicandum extends Verbum {
-  constructor()
-  { super(); this.categoria.valor = this.constructor.name.lowercase }
+  constructor() {
+    super()
+    this.categoria.valor = this.constructor.name.lowercase
+  }
 }
 
-@Ultimum export class Numerale extends Praedicandum {
-  override paratust(): boolean
-  { return Numerator.arabicusConvertibilis(this.anglicus) }
+@Ultimum
+export class Numerale extends Praedicandum {
+  override paratust(): boolean {
+    return Numerator.arabicusConvertibilis(this.anglicus)
+  }
 
   constructor(public readonly anglicus: number) {
     super()
-    if (!Numerator.arabicusConvertibilis(anglicus))
-      throw errator({ anglicus: anglicus.toString() })
+    if (!Numerator.arabicusConvertibilis(anglicus)) throw errator({ anglicus: anglicus.toString() })
   }
 
-  override get scriptum(): string { return Numerator.romanus(this.anglicus) }
+  override get scriptum(): string {
+    return Numerator.romanus(this.anglicus)
+  }
 
-  static readonly numerator: (anglicus: number) => Numerale =
-      (anglicus: number): Numerale => new Numerale(anglicus)
+  static readonly numerator: (anglicus: number) => Numerale = (anglicus: number): Numerale => new Numerale(anglicus)
 
-  async numeramen(): Promise<TabulamenNumeraminis | undefined>
-  { return (await numeraminum.legatur(this.scriptum)).unum }
+  async numeramen(): Promise<TabulamenNumeraminis | undefined> {
+    return (await numeraminum.legatur(this.scriptum)).unum
+  }
 }
 
 export abstract class Multiplex extends Mixin(Encliticum, Praedicandum) {
   static ordinentur(primum: Multiplex, secundum: Multiplex): SortResult {
-    const deNullis = buildRegExp([
-      startOfString,
-      choiceOf('derectus', 'nullum', 'nullus', 'nulla'),
-      endOfString ])
-    return comparison((hoc: Multiplex) => hoc.valores.count((valor) =>
-          !deNullis.test(valor.valor)))(primum, secundum)
+    const deNullis = buildRegExp([startOfString, choiceOf('derectus', 'nullum', 'nullus', 'nulla'), endOfString])
+    return comparison((hoc: Multiplex) => hoc.valores.count((valor) => !deNullis.test(valor.valor)))(primum, secundum)
   }
 
-  static componatur<Hoc extends Multiplex> (constructor: new () => Hoc, agendum: Agendum<Hoc>): Hoc {
+  static componatur<Hoc extends Multiplex>(constructor: new () => Hoc, agendum: Agendum<Hoc>): Hoc {
     const structor: Structor<Hoc> = new Structor(constructor)
-    structor.ponatur((hoc) =>
-          hoc.valores.forEach((valor, numerus) =>
-              valor.reponatur(agendum.valores[numerus])))
-    structor.ponatur((hoc) => hoc.scriptum = agendum.scriptum)
+    structor.ponatur((hoc) => hoc.valores.forEach((valor, numerus) => valor.reponatur(agendum.valores[numerus])))
+    structor.ponatur((hoc) => (hoc.scriptum = agendum.scriptum))
     return structor.struatur
   }
 
   static colamina(categoria: string): string[] {
     switch (categoria) {
-      case      'actus':
-        return [ 'modus', 'vox', 'tempus', 'numerus', 'persona', 'scriptum' ]
+      case 'actus':
+        return ['modus', 'vox', 'tempus', 'numerus', 'persona', 'scriptum']
       case 'adiectivum':
-        return [ 'gradus', 'genus', 'numerus', 'casus', 'scriptum' ]
-      case  'adverbium':
-        return [ 'gradus', 'scriptum' ]
-      case      'nomen':
-        return [ 'factus', 'numerus', 'casus', 'scriptum' ]
-      case  'numeramen':
-        return [ 'referendus', 'scriptum' ]
-      case   'pronomen':
-        return [ 'genus', 'numerus', 'casus', 'scriptum' ]
-      default          :
-        return [  ]
-  } }
+        return ['gradus', 'genus', 'numerus', 'casus', 'scriptum']
+      case 'adverbium':
+        return ['gradus', 'scriptum']
+      case 'nomen':
+        return ['factus', 'numerus', 'casus', 'scriptum']
+      case 'numeramen':
+        return ['referendus', 'scriptum']
+      case 'pronomen':
+        return ['genus', 'numerus', 'casus', 'scriptum']
+      default:
+        return []
+    }
+  }
 
   protected _valores!: Fulta
 
   get valores(): Fulta {
-    if(this._valores.length == 1) return this._valores
+    if (this._valores.length == 1) return this._valores
     else return this._valores.sort(Res.ordinentur)
   }
 
   override get scriptum(): string {
-    if(this._scriptum.endsWith(this.encliticus))
-       this.encliticus =   Encliticus.nullus
-    if(this.encliticus === Encliticus.nullus)
-      return this._scriptum
+    if (this._scriptum.endsWith(this.encliticus)) this.encliticus = Encliticus.nullus
+    if (this.encliticus === Encliticus.nullus) return this._scriptum
     else return `${this._scriptum}${this.encliticus}`
   }
 
-  override set scriptum(valor: string)
-  { super.scriptum = valor }
+  override set scriptum(valor: string) {
+    super.scriptum = valor
+  }
 
   componatur(agendum: Agendum<Multiplex>) {
-    if(!agendum.scriptum) throw errator({ scriptum: agendum.scriptum })
+    if (!agendum.scriptum) throw errator({ scriptum: agendum.scriptum })
     this.scriptum = agendum.scriptum
     const fulta: Fulta = agendum.valores
-    this.valores.forEach((valor: Fultum<Lineae>, numerus: number) =>
-        valor.valor = fulta[numerus].valor)
+    this.valores.forEach((valor: Fultum<Lineae>, numerus: number) => (valor.valor = fulta[numerus].valor))
   }
 }
 
-@Ultimum export class Actus extends Mixin(Modestum, Multiplex, Numeratum, Personale, Temporale, Vocale) {
-  constructor()
-  { super(); this._valores = new Fulta(this.modus, this.vox, this.tempus, this.numerus, this.persona) }
+@Ultimum
+export class Actus extends Mixin(Modestum, Multiplex, Numeratum, Personale, Temporale, Vocale) {
+  constructor() {
+    super()
+    this._valores = new Fulta(this.modus, this.vox, this.tempus, this.numerus, this.persona)
+  }
 
-  override paratust(): boolean
-  { return !this.modus.aequatur('participium') && super.paratust() }
+  override paratust(): boolean {
+    return !this.modus.aequatur('participium') && super.paratust()
+  }
 
   participialis(): Promise<TabulamenAdiectivi> {
     if (this.modus.aequatur('participium')) {
       if (this.tempus.aequatur('praesens')) {
-        const structor: Structor<TabulamenAdiectivi> = new Structor(TabulamenAdiectivi)
-          .ponatur((adiectivum) => (adiectivum.principium = 'generanda/cumTruncoVario'))
-          .ponatur((adiectivum) => (adiectivum.positivus = this.scriptum))
+        const structor: Structor<TabulamenAdiectivi> = new Structor(TabulamenAdiectivi).ponatur((adiectivum) => (adiectivum.principium = 'generanda/cumTruncoVario')).ponatur((adiectivum) => (adiectivum.positivus = this.scriptum))
         if (this.scriptum.slice(-3) === 'āre') {
-          structor
-            .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('āns$', 'antior')))
-            .ponatur((adiectivum) => (adiectivum.superlativus = this.scriptum.replace('āns$', 'antissimum')))
+          structor.ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('āns$', 'antior'))).ponatur((adiectivum) => (adiectivum.superlativus = this.scriptum.replace('āns$', 'antissimum')))
         } else {
-          structor
-            .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('ēns$', 'entior')))
-            .ponatur((adiectivum) => (adiectivum.superlativus = this.scriptum.replace('ēns$', 'entissimum')))
-        } return Promise.resolve(structor.struatur)
-      } else return Promise.resolve(
-                new Structor(TabulamenAdiectivi)
-                      .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
-                      .ponatur((adiectivum) => (adiectivum.positivus = this.scriptum))
-                      .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('um$', 'ius')))
-                      .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('um$', 'issimum')))
-                      .struatur)
+          structor.ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('ēns$', 'entior'))).ponatur((adiectivum) => (adiectivum.superlativus = this.scriptum.replace('ēns$', 'entissimum')))
+        }
+        return Promise.resolve(structor.struatur)
+      } else
+        return Promise.resolve(
+          new Structor(TabulamenAdiectivi)
+            .ponatur((adiectivum) => (adiectivum.principium = 'generanda'))
+            .ponatur((adiectivum) => (adiectivum.positivus = this.scriptum))
+            .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('um$', 'ius')))
+            .ponatur((adiectivum) => (adiectivum.comparativus = this.scriptum.replace('um$', 'issimum'))).struatur,
+        )
     } else throw errator({ modus: this.modus.valor })
   }
 }
 
-@Ultimum export class Adiectivum extends Mixin(Casuale, Gradale, Generale, Multiplex, Numeratum) {
-  constructor ()
-  { super(); this._valores = new Fulta(this.gradus, this.genus, this.numerus, this.casus) }
+@Ultimum
+export class Adiectivum extends Mixin(Casuale, Gradale, Generale, Multiplex, Numeratum) {
+  constructor() {
+    super()
+    this._valores = new Fulta(this.gradus, this.genus, this.numerus, this.casus)
+  }
 }
 
-@Ultimum export class Adverbium extends Mixin(Gradale, Multiplex) {
-  constructor()
-  { super(); this._valores = new Fulta(this.gradus) }
+@Ultimum
+export class Adverbium extends Mixin(Gradale, Multiplex) {
+  constructor() {
+    super()
+    this._valores = new Fulta(this.gradus)
+  }
 }
 
-@Ultimum export class Nomen extends Mixin(Casuale, Factum, Multiplex, Numeratum) {
-  constructor()
-  { super(); this._valores = new Fulta(this.factus, this.numerus, this.casus) }
+@Ultimum
+export class Nomen extends Mixin(Casuale, Factum, Multiplex, Numeratum) {
+  constructor() {
+    super()
+    this._valores = new Fulta(this.factus, this.numerus, this.casus)
+  }
 }
 
-@Ultimum export class Numeramen extends Mixin(Multiplex, Relaturum) {
+@Ultimum
+export class Numeramen extends Mixin(Multiplex, Relaturum) {
   async refer(): Promise<Eventus | undefined> {
     let nova: '' | 'numerus' | 'nomen' | 'adverbium' | 'adiectivum' = ''
-    switch(this.relaturus.valor) {
-      case     'numerus':
-      case   'adverbium':
-        nova = this.relaturus.valor; break
-      case  'fractional':
+    switch (this.relaturus.valor) {
+      case 'numerus':
+      case 'adverbium':
+        nova = this.relaturus.valor
+        break
+      case 'fractional':
       case 'collectivum':
-        nova = 'nomen'; break
-      default           :
-        nova = 'adiectivum'; break
-    } return await dictionarium.referatur({
-      categoria: nova,
-      scriptum: this.scriptum
-    }) ?? undefined
+        nova = 'nomen'
+        break
+      default:
+        nova = 'adiectivum'
+        break
+    }
+    return (
+      (await dictionarium.referatur({
+        categoria: nova,
+        scriptum: this.scriptum,
+      })) ?? undefined
+    )
   }
 
-  constructor()
-  { super(); this._valores = new Fulta(this.relaturus) }
+  constructor() {
+    super()
+    this._valores = new Fulta(this.relaturus)
+  }
 }
 
-@Ultimum export class Pronomen extends Mixin(Casuale, Generale, Multiplex, Numeratum) {
-  constructor ()
-  { super(); this._valores = new Fulta(this.genus, this.numerus, this.casus) }
+@Ultimum
+export class Pronomen extends Mixin(Casuale, Generale, Multiplex, Numeratum) {
+  constructor() {
+    super()
+    this._valores = new Fulta(this.genus, this.numerus, this.casus)
+  }
 }
 
 export abstract class TabulatorActuum extends Tabulator<Actus> {
   @Nuntius.promittum async actor(genus: 'masculinum' | 'femininum' | 'neutrum'): Promise<TabulamenNominis | undefined> {
-    const _supinus: Actus | undefined =
-      (await this.tabula).colantur({
+    const _supinus: Actus | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
           modus: 'participium',
           tempus: 'perfectum',
-          vox: 'passiva'
-        }
-      }).first()
-    const _infinitivus: Actus | undefined =
-      (await this.tabula).colantur({
+          vox: 'passiva',
+        },
+      })
+      .first()
+    const _infinitivus: Actus | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
           modus: 'infinitivus',
           tempus: 'praesens',
-          vox: 'activa'
-        }
-      }).first()
+          vox: 'activa',
+        },
+      })
+      .first()
     const optanda = {
       masculinum: {
         actus: _supinus,
         principium: 'animata',
-        repositum: buildRegExp([ 'um', endOfString ]),  //um$/
+        repositum: buildRegExp(['um', endOfString]), //um$/
         nominativus: 'or',
-        genitivus: 'ōris'
-      }, femininum: {
+        genitivus: 'ōris',
+      },
+      femininum: {
         actus: _supinus,
         principium: 'animata',
-        repositum: buildRegExp([ optional('t'), 'um', endOfString ]),  //t?um$/
+        repositum: buildRegExp([optional('t'), 'um', endOfString]), //t?um$/
         nominativus: 'trīx',
-        genitivus: 'trīcis'
-      }, neutrum: {
+        genitivus: 'trīcis',
+      },
+      neutrum: {
         actus: _infinitivus,
         principium: 'neutra',
-        repositum: buildRegExp([ 're', endOfString ]),  //re$/
+        repositum: buildRegExp(['re', endOfString]), //re$/
         nominativus: 'āmen',
-        genitivus: 'āminis'
-      }
-    }; if(optanda[genus].actus === undefined)
-        return Promise.resolve(undefined)
+        genitivus: 'āminis',
+      },
+    }
+    if (optanda[genus].actus === undefined) return Promise.resolve(undefined)
     const optandum = optanda[genus]
     return Promise.resolve(
-              new Structor(TabulamenNominis)
-                    .ponatur((nomen) => (nomen.principium = `tertia/${optandum.principium}`))
-                    .ponatur((nomen) => (nomen.nominativus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.nominativus) ?? ''))
-                    .ponatur((nomen) => (nomen.genitivus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.genitivus) ?? ''))
-                    .struatur)
+      new Structor(TabulamenNominis)
+        .ponatur((nomen) => (nomen.principium = `tertia/${optandum.principium}`))
+        .ponatur((nomen) => (nomen.nominativus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.nominativus) ?? ''))
+        .ponatur((nomen) => (nomen.genitivus = optandum.actus?.scriptum.replace(optandum.repositum, optandum.genitivus) ?? '')).struatur,
+    )
   }
 
   @Nuntius.promittum async nomen(): Promise<TabulamenFacti> {
-    const _infinitivus: Actus | undefined =
-      (await this.tabula).colantur({
+    const _infinitivus: Actus | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
           modus: 'infinitivus',
           tempus: 'praesens',
-          vox: 'activa'
-        }
-      }).first()
-    const _gerundius: Actus | undefined =
-      (await this.tabula).colantur({
+          vox: 'activa',
+        },
+      })
+      .first()
+    const _gerundius: Actus | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
           modus: 'participium',
           tempus: 'futurum',
-          vox: 'passiva'
-        }
-      }).first()
-    const _supinus: Actus | undefined =
-        (await this.tabula).colantur({
-          radix: '',
-          fulta: {
-            modus: 'participium',
-            tempus: 'perfectum',
-            vox: 'passiva'
-          }
-        }).first()
-    const deVacuis: RegExp = buildRegExp([ '; ', lookahead(choiceOf(';', endOfString)) ], { global: true })
+          vox: 'passiva',
+        },
+      })
+      .first()
+    const _supinus: Actus | undefined = (await this.tabula)
+      .colantur({
+        radix: '',
+        fulta: {
+          modus: 'participium',
+          tempus: 'perfectum',
+          vox: 'passiva',
+        },
+      })
+      .first()
+    const deVacuis: RegExp = buildRegExp(['; ', lookahead(choiceOf(';', endOfString))], { global: true })
     const structor: Structor<TabulamenFacti> = new Structor(TabulamenFacti)
-            .ponatur((nomen) => (nomen.infinitivum = _infinitivus?.scriptum ?? ''))
-            .ponatur((nomen) => (nomen.gerundium = _gerundius?.scriptum ?? ''))
-            .ponatur((nomen) => (nomen.supinum = _supinus?.scriptum ?? ''))
-            .ponatur((nomen) => (nomen.principium = 'facta'))
-    if(!_infinitivus) structor.ponatur((nomen) => nomen.scriptura = 'factus = infinitivus: dele; ')
-    if(!_gerundius) structor.ponatur((nomen) => nomen.scriptura = 'factus = gerundius: dele; ')
-    if(!_supinus) structor.ponatur((nomen) => nomen.scriptura = 'factus = supinus: dele; ')
-    structor.ponatur((nomen) => nomen.scriptura = nomen.scriptura?.replace(deVacuis, ''))
+      .ponatur((nomen) => (nomen.infinitivum = _infinitivus?.scriptum ?? ''))
+      .ponatur((nomen) => (nomen.gerundium = _gerundius?.scriptum ?? ''))
+      .ponatur((nomen) => (nomen.supinum = _supinus?.scriptum ?? ''))
+      .ponatur((nomen) => (nomen.principium = 'facta'))
+    if (!_infinitivus) structor.ponatur((nomen) => (nomen.scriptura = 'factus = infinitivus: dele; '))
+    if (!_gerundius) structor.ponatur((nomen) => (nomen.scriptura = 'factus = gerundius: dele; '))
+    if (!_supinus) structor.ponatur((nomen) => (nomen.scriptura = 'factus = supinus: dele; '))
+    structor.ponatur((nomen) => (nomen.scriptura = nomen.scriptura?.replace(deVacuis, '')))
     return structor.struatur
   }
 }
 
 export abstract class TabulatorAdiectivorum extends Tabulator<Adiectivum> {
-  async probetur({ genus, gradus }: { genus: 'neutrum' | 'masculinum' | 'femininum', gradus: 'positivus' | 'comparativus' | 'superlativus' }): Promise<TabulamenNominis | undefined> {
-    const _nominativum: Adiectivum | undefined =
-      (await this.tabula).colantur({
+  async probetur({ genus, gradus }: { genus: 'neutrum' | 'masculinum' | 'femininum'; gradus: 'positivus' | 'comparativus' | 'superlativus' }): Promise<TabulamenNominis | undefined> {
+    const _nominativum: Adiectivum | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
-          genus: genus, gradus: gradus,
+          genus: genus,
+          gradus: gradus,
           numerus: 'singularis',
-          casus: 'nominativus'
-        }
-      }).first()
-    const _genitivum: Adiectivum | undefined =
-      (await this.tabula).colantur({
+          casus: 'nominativus',
+        },
+      })
+      .first()
+    const _genitivum: Adiectivum | undefined = (await this.tabula)
+      .colantur({
         radix: '',
         fulta: {
-          genus: genus, gradus: gradus,
+          genus: genus,
+          gradus: gradus,
           numerus: 'singularis',
-          casus: 'genitivus'
-        }
-      }).first()
-    if (!_nominativum || !_genitivum)
-      return undefined
-    const structor: Structor<TabulamenNominis> = new Structor(TabulamenNominis)
-      .ponatur((hoc) => (hoc.nominativus = _nominativum.scriptum.capitalized))
-      .ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalized));
+          casus: 'genitivus',
+        },
+      })
+      .first()
+    if (!_nominativum || !_genitivum) return undefined
+    const structor: Structor<TabulamenNominis> = new Structor(TabulamenNominis).ponatur((hoc) => (hoc.nominativus = _nominativum.scriptum.capitalized)).ponatur((hoc) => (hoc.genitivus = _genitivum.scriptum.capitalized))
     switch (_genitivum.scriptum.slice(-2)) {
       case 'ae':
         structor.ponatur((nomen) => (nomen.principium = 'prima'))
@@ -391,8 +408,9 @@ export abstract class TabulatorAdiectivorum extends Tabulator<Adiectivum> {
       case 'is':
         structor.ponatur((nomen) => (nomen.principium = 'tertia'))
         break
-      default  :
+      default:
         structor.ponatur((nomen) => (nomen.principium = 'secunda'))
-    } return structor.struatur
+    }
+    return structor.struatur
   }
 }

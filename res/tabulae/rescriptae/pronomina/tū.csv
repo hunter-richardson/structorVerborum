@@ -1,2 +1,2 @@
 relatum, relati, scriptura
-sē, irregula, "scriptum.replate('s', 't')"
+sē, irregula, "scriptum.replace('s', 't')"

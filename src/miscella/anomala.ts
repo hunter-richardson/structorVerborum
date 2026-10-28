@@ -1,35 +1,19 @@
-import { Lector, LectorMultiplex } from '@/miscella/lector';
-import Nuntius from '@/miscella/nuntius';
-import { Ignavum, Ultimum } from '@/miscella/usus';
-import {
-  Tabulamen,
-  TabulamenActus,
-  TabulamenIncomparabilis,
-  TabulamenNominis
-  } from '@/praebeunda/tabulamina';
-import { errator } from '@/praebeunda/valores';
-import {
-  Actus,
-  Adiectivum,
-  Multiplex,
-  Nomen,
-  Pronomen
-  } from '@/praebeunda/verba';
-import { Circumfigendum } from '@/tabulae/circumfixa';
-import { Colligendum } from '@/tabulae/collata';
-import { Coniungendum } from '@/tabulae/coniuncta';
-import { Findendum } from '@/tabulae/fissa';
-import { Praefigendum } from '@/tabulae/praefixa';
-import { Suffigendum } from '@/tabulae/suffixa';
-import { Tabula, tabulast, tabulatorst } from '@/tabulae/tabula';
-import i18next from 'i18next';
-import path from 'path';
-import {
-  LATIBILE,
-  type Lectum,
-  LEGIBILE,
-  Tabulator
-  } from '@/praebeunda/interfecta';
+import i18next from 'i18next'
+import path from 'path'
+import { Tabulamen, TabulamenActus, TabulamenIncomparabilis, TabulamenNominis } from '@/praebeunda/tabulamina'
+import { LATIBILE, type Lectum, LEGIBILE, Tabulator } from '@/praebeunda/interfecta'
+import { Actus, Adiectivum, Multiplex, Nomen, Pronomen } from '@/praebeunda/verba'
+import { Tabula, tabulast, tabulatorst } from '@/tabulae/tabula'
+import { Lector, LectorMultiplex } from '@/miscella/lector'
+import { Circumfigendum } from '@/tabulae/circumfixa'
+import { Coniungendum } from '@/tabulae/coniuncta'
+import { Ignavum, Ultimum } from '@/miscella/usus'
+import { Praefigendum } from '@/tabulae/praefixa'
+import { Suffigendum } from '@/tabulae/suffixa'
+import { Colligendum } from '@/tabulae/collata'
+import { errator } from '@/praebeunda/valores'
+import { Findendum } from '@/tabulae/fissa'
+import Nuntius from '@/miscella/nuntius'
 
 export enum Classis {
   Bifissa = 'bifissa',
@@ -41,138 +25,147 @@ export enum Classis {
   Praefixa = 'praefixa',
   Rescripta = 'rescripta',
   Suffixa = 'suffixa',
-  Tabulamen = 'tabulamen'
+  Tabulamen = 'tabulamen',
 }
 
 export class Crudum implements Lectum {
-  readonly [ LEGIBILE ] = true as const
+  readonly [LEGIBILE] = true as const
   readonly nomen!: string
   readonly classis!: Classis
 }
 
 type Tabulendum<Hoc extends Multiplex> = Tabula<Hoc> | Tabulator<Hoc> | undefined
 
-@Ignavum @Ultimum @Nuntius.factum
+@Ignavum
+@Ultimum
+@Nuntius.factum
 export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
-  readonly [ LATIBILE ] = true as const
-  constructor (private readonly _tabula: Tabula<Hoc>) { }
-  get tabula (): Promise<Tabula<Hoc>> { return Promise.resolve(this._tabula) }
+  readonly [LATIBILE] = true as const
+  constructor(private readonly _tabula: Tabula<Hoc>) {}
+  get tabula(): Promise<Tabula<Hoc>> {
+    return Promise.resolve(this._tabula)
+  }
 }
 
-@Ignavum @Ultimum @Nuntius.factum class Anomala<Hoc extends Multiplex> {
-  static erratorAnomali: (via: string, nomen: string) => Error =
-      (via, nomen) => new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
+@Ignavum
+@Ultimum
+@Nuntius.factum
+class Anomala<Hoc extends Multiplex> {
+  static erratorAnomali: (via: string, nomen: string) => Error = (via, nomen) => new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
 
   protected readonly contenta: Record<string, Tabulator<Hoc>> = {}
 
-  get categoria(): string
-  { return i18next.t(`partes.${this._huius.name.lowercase}_singulare`, { lng: 'la' }) }
+  get categoria(): string {
+    return i18next.t(`partes.${this._huius.name.lowercase}_singulare`, {
+      lng: 'la',
+    })
+  }
 
-  get omnia (): string[] { return Object.keys(this._omnia) }
+  get omnia(): string[] {
+    return Object.keys(this._omnia)
+  }
 
   @Nuntius.modus feratur(nomen: string): Promise<Tabulator<Hoc> | undefined> {
-    if(this.omnia.length > Object.keys(this.contenta).length) this.onerentur()
+    if (this.omnia.length > Object.keys(this.contenta).length) this.onerentur()
     return Promise.resolve(this.contenta[nomen])
   }
 
   // oxlint-disable complexity -- Inflectio irregula nodosissima'st
-  @Nuntius.promittum protected async oneretur (nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
-    if(this.contenta[nomen] !== undefined) return this.contenta[nomen]
+  @Nuntius.promittum protected async oneretur(nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
+    if (this.contenta[nomen] !== undefined) return this.contenta[nomen]
     const via: string = path.join('tabulae/${classis}e', this.categoria)
-    switch(classis) {
+    switch (classis) {
       case Classis.Circumfixa: {
-        const crudum =
-            (await new Lector<Circumfigendum>(via, Circumfigendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const crudum = (await new Lector<Circumfigendum>(via, Circumfigendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
         const relatum: Tabulendum<Hoc> = await this.oneretur(crudum.relatum, crudum.relati)
-        if(relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
         return Tabula.circumfixa(crudum.praefixum, relatum, crudum.suffixum)
       }
       case Classis.Collata: {
-        const cruda =
-            (await new Lector<Colligendum>(via, Colligendum).legatur(nomen)).multa
-        if(cruda.empty) throw Anomala.erratorAnomali(via, nomen)
+        const cruda = (await new Lector<Colligendum>(via, Colligendum).legatur(nomen)).multa
+        if (cruda.empty) throw Anomala.erratorAnomali(via, nomen)
         const relata: (Tabula<Hoc> | Tabulator<Hoc>)[] = []
         cruda.forEach(async (crudum) => {
           const relatum: Tabulendum<Hoc> = await this.oneretur(crudum.relatum, crudum.relati)
-          if(relatum !== undefined) relata.push(relatum)
-        }); return Tabula.collata(...relata)
+          if (relatum !== undefined) relata.push(relatum)
+        })
+        return Tabula.collata(...relata)
       }
       case Classis.Coniuncta: {
-        const crudum =
-            (await new Lector<Coniungendum>(via, Coniungendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
-        const primum   = await this.oneretur(crudum.primum, crudum.primi)
+        const crudum = (await new Lector<Coniungendum>(via, Coniungendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const primum = await this.oneretur(crudum.primum, crudum.primi)
         const secundum = await this.oneretur(crudum.secundum, crudum.secundi)
-        if(primum === undefined || secundum === undefined)
-          throw Anomala.erratorAnomali(via, nomen)
+        if (primum === undefined || secundum === undefined) throw Anomala.erratorAnomali(via, nomen)
         return Tabula.coniuncta(primum, secundum)
       }
       case Classis.Fissa: {
-        const crudum =
-            (await new Lector<Findendum>(via, Findendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const crudum = (await new Lector<Findendum>(via, Findendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
         const relatum = await this.oneretur(crudum.relatum, crudum.relati)
-        if(relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
         return Tabula.fissa(relatum, crudum.scriptura)
       }
       case Classis.Praefixa: {
-        const crudum =
-            (await new Lector<Praefigendum>(via, Praefigendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const crudum = (await new Lector<Praefigendum>(via, Praefigendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
         const relatum = await this.oneretur(crudum.relatum, crudum.relati)
-        if(relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
         return Tabula.praefixa(crudum.praefixum, relatum)
       }
       case Classis.Rescripta: {
-        const crudum =
-            (await new Lector<Findendum>(via, Findendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const crudum = (await new Lector<Findendum>(via, Findendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
         const relatum = await this.oneretur(crudum.relatum, crudum.relati)
-        if(relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
         /**
          * A re CSV hoc scribit modum recensum ab auctore
          * Gitte temperantur apposituque colliguntur res
          * Scripta hoc numquam ab usufracturis utatur
          * */
-        return Tabula.rescripta(relatum,
-            //  nosonar: Haec scriptura tutast
-            new Function('scriptum', crudum.scriptura) as (scriptum: string) => string)
+        return Tabula.rescripta(
+          relatum,
+          //  nosonar: Haec scriptura tutast
+          new Function('scriptum', crudum.scriptura) as (scriptum: string) => string,
+        )
       }
       case Classis.Suffixa: {
-        const crudum =
-            (await new Lector<Suffigendum>(via, Suffigendum).legatur(nomen)).unum
-        if(crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        const crudum = (await new Lector<Suffigendum>(via, Suffigendum).legatur(nomen)).unum
+        if (crudum === undefined) throw Anomala.erratorAnomali(via, nomen)
         const relatum = await this.oneretur(crudum.relatum, crudum.relati)
-        if(relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (relatum === undefined) throw Anomala.erratorAnomali(via, nomen)
         return Tabula.suffixa(relatum, crudum.suffixum)
       }
-      default: return Tabula.irregula(this._huius, nomen)
+      default:
+        return Tabula.irregula(this._huius, nomen)
     }
   }
   // oxlint-enable complexity
 
   @Nuntius.modus onerentur() {
-    (Object.entries(this._omnia) as [string, Classis][])
-           .forEach(async ([nomen, classis]: [string, Classis]) => {
+    ;(Object.entries(this._omnia) as [string, Classis][]).forEach(async ([nomen, classis]: [string, Classis]) => {
       const tabulendum = await this.oneretur(nomen, classis)
-      if(tabulendum === undefined) throw errator({ nomen: nomen })
-      if(tabulatorst(tabulendum)) this.contenta[nomen] = tabulendum
-      if(tabulast(tabulendum)) this.contenta[nomen] = new Mantela(tabulendum)
+      if (tabulendum === undefined) throw errator({ nomen: nomen })
+      if (tabulatorst(tabulendum)) this.contenta[nomen] = tabulendum
+      if (tabulast(tabulendum)) this.contenta[nomen] = new Mantela(tabulendum)
     })
   }
 
-  constructor(protected readonly _huius: new () => Hoc,
-              protected readonly _omnia: Record<string, Classis>)
-  { this.onerentur() }
+  constructor(
+    protected readonly _huius: new () => Hoc,
+    protected readonly _omnia: Record<string, Classis>,
+  ) {
+    this.onerentur()
+  }
 }
 
 class AnomalaMultiplex<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends Anomala<Hoc> {
-  @Nuntius.promittum override async oneretur (nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
-    switch(classis) {
+  @Nuntius.promittum override async oneretur(nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
+    switch (classis) {
       case Classis.Tabulamen: {
         const via: string = path.join('tabulae/tabulamina', this.categoria)
-        if(this._illius === undefined) throw Anomala.erratorAnomali(via, nomen)
+        if (this._illius === undefined) throw Anomala.erratorAnomali(via, nomen)
         return (await new LectorMultiplex<Illud>(via, this._illius).legatur(nomen)).unum
       }
       default:
@@ -180,13 +173,16 @@ class AnomalaMultiplex<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> exte
     }
   }
 
-  constructor(_huius: new () => Hoc,
-              protected readonly _illius: new () => Illud,
-              _omnia: Record<string, Classis>) { super(_huius, _omnia) }
+  constructor(
+    _huius: new () => Hoc,
+    protected readonly _illius: new () => Illud,
+    _omnia: Record<string, Classis>,
+  ) {
+    super(_huius, _omnia)
+  }
 }
 
-export const actus: AnomalaMultiplex<Actus, TabulamenActus> =
-                new AnomalaMultiplex(Actus, TabulamenActus, {
+export const actus: AnomalaMultiplex<Actus, TabulamenActus> = new AnomalaMultiplex(Actus, TabulamenActus, {
   aiere: Classis.Irregula,
   esse: Classis.Irregula,
   facere: Classis.Collata,
@@ -293,8 +289,7 @@ export const actus: AnomalaMultiplex<Actus, TabulamenActus> =
   vēnīre: Classis.Praefixa,
 })
 
-export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> =
-                    new AnomalaMultiplex(Adiectivum, TabulamenIncomparabilis, {
+export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> = new AnomalaMultiplex(Adiectivum, TabulamenIncomparabilis, {
   decimum: Classis.Tabulamen,
   utrum: Classis.Tabulamen,
   aliud: Classis.Collata,
@@ -319,7 +314,7 @@ export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> =
   utrumque: Classis.Suffixa,
   utrumcumque: Classis.Suffixa,
   utrumvīs: Classis.Suffixa,
-  utrumvultis: Classis.Suffixa
+  utrumvultis: Classis.Suffixa,
 })
 
 export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMultiplex(Nomen, TabulamenNominis, {
@@ -333,7 +328,7 @@ export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMult
   domus: Classis.Collata,
   rēspūblica: Classis.Coniuncta,
   iūgerum: Classis.Collata,
-  sēmidea: Classis.Praefixa
+  sēmidea: Classis.Praefixa,
 })
 
 export const pronomina: Anomala<Pronomen> = new Anomala(Pronomen, {
@@ -366,5 +361,5 @@ export const pronomina: Anomala<Pronomen> = new Anomala(Pronomen, {
   quodvīs: Classis.Suffixa,
   quidvīs: Classis.Rescripta,
   quodvultis: Classis.Rescripta,
-  quidvultis: Classis.Rescripta
+  quidvultis: Classis.Rescripta,
 })

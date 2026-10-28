@@ -1,2 +1,4 @@
-<!-- markdownlint-disable MD041 -->>
+<!-- markdownlint-disable MD041 -->
+## DATIVUS
+
 **Dativus** est [casus](casus.md) possibilis. Datum accipere aliquem peragit [nomen](nomen.md) aut [adiectivum](adiectivum.md) aut [pronomen](pronomen.md).
