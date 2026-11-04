@@ -34,20 +34,20 @@ const rules: RulesConfig = {
   'no-barrel-files/prefer-source-imports': 'error',
   'vue/multi-word-component-names': 'off',
   'vue/first-attribute-linebreak': 'off',
-  '@typescript-eslint/no-unused-vars': [
-    'error',
-    {
-      varsIgnorePattern: '^_+$',
-      argsIgnorePattern: '^_+$',
-      caughtErrorsIgnorePattern: '^_+$'
-    }
-  ],
   'no-relative-import-paths/no-relative-import-paths': [
     'error',
     {
       allowSameFolder: false,
       rootDir: 'src',
       prefix: '@'
+    }
+  ],
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    {
+      varsIgnorePattern: '^_+$',
+      argsIgnorePattern: '^_+$',
+      caughtErrorsIgnorePattern: '^_+$'
     }
   ]
 }
