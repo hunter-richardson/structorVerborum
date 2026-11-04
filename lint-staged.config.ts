@@ -5,13 +5,13 @@ import Path from '@/extensions/path'
 const fontana: string[] = ['ts', 'vue'] //  NOSONAR: Vere aciem hic volo
 const linabile: string[] = ['json', 'yaml', 'yml', ...fontana] //  NOSONAR: Vere aciem hic volo
 
-const omnibus = [
+const omnibus: [string, string[]][] = [
   ['prettier --write --ignore-unknown', []],
   ['eslint --config ./eslint.config.ts', linabile],
   ['vue-tsc-files -p ./tsconfig.typecheck.json', fontana]
 ]
 
-const uni = [
+const uni: string[] = [
   'rm ./.oxlintrc.json',
   'node ./node_modules/@oxlint/migrate/dist/bin/oxlint-migrate.mjs ./eslint.config.ts',
   "sed -i 's|no-unused-vars|eslint/no-unused-vars|g' ./.oxlintrc.json",
