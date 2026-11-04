@@ -23,12 +23,11 @@ export class TabulaFissa<Hoc extends Multiplex> extends Tabula<Hoc> {
     else throw new Error("Inflexionis tabulae mala'st")
     refector.reficiatur(_relata.haec as Agendum<Hoc>[])
     _relata.haec.forEach((hoc) => this._haec.push(hoc))
-    return Promise.resolve()
   }
 
   constructor(
     private readonly relata: Tabula<Hoc> | Tabulator<Hoc>,
-    private scriptura: string,
+    private readonly scriptura: string
   ) {
     super()
   }

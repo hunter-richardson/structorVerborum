@@ -56,7 +56,7 @@ describe('mathematicas calculare', () => {
       primus: 'I',
       operator: '+',
       secundus: 'II',
-      eventus: 'III',
+      eventus: 'III'
     })
   })
 
@@ -65,7 +65,7 @@ describe('mathematicas calculare', () => {
       primus: 'V',
       operator: '-',
       secundus: 'III',
-      eventus: 'II',
+      eventus: 'II'
     })
   })
 
@@ -74,7 +74,7 @@ describe('mathematicas calculare', () => {
       primus: 'II',
       operator: '•',
       secundus: 'III',
-      eventus: 'VI',
+      eventus: 'VI'
     })
   })
 
@@ -83,7 +83,7 @@ describe('mathematicas calculare', () => {
       primus: 'X',
       operator: '÷',
       secundus: 'II',
-      eventus: 'V',
+      eventus: 'V'
     })
   })
 
@@ -92,7 +92,7 @@ describe('mathematicas calculare', () => {
       primus: 'XII',
       operator: '%',
       secundus: 'V',
-      eventus: 'II',
+      eventus: 'II'
     })
   })
 })

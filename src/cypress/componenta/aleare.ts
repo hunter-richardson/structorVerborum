@@ -35,35 +35,35 @@ function ullum(res: { categoria: string; accusativa: string }): void {
 describe('omnia invenire', () => {
   ullum({
     categoria: 'coniunctio',
-    accusativa: 'coniunctionem',
+    accusativa: 'coniunctionem'
   })
   ullum({
     categoria: 'interiectio',
-    accusativa: 'interiectionem',
+    accusativa: 'interiectionem'
   })
   ullum({
     categoria: 'praepositio',
-    accusativa: 'praepositionem',
+    accusativa: 'praepositionem'
   })
   ullum({
     categoria: Actus.name.lowercase,
-    accusativa: 'actum',
+    accusativa: 'actum'
   })
   ullum({
     categoria: Adiectivum.name.lowercase,
-    accusativa: Adiectivum.name.lowercase,
+    accusativa: Adiectivum.name.lowercase
   })
   ullum({
     categoria: Adverbium.name.lowercase,
-    accusativa: Adverbium.name.lowercase,
+    accusativa: Adverbium.name.lowercase
   })
   ullum({
     categoria: Nomen.name.lowercase,
-    accusativa: Nomen.name.lowercase,
+    accusativa: Nomen.name.lowercase
   })
   ullum({
     categoria: Pronomen.name.lowercase,
-    accusativa: Pronomen.name.lowercase,
+    accusativa: Pronomen.name.lowercase
   })
   it('numeramen inveniret', () => {
     const cy: Cypress.Chainable = mount(Quaerere)

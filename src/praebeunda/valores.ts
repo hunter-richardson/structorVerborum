@@ -7,7 +7,7 @@ export enum Encliticus {
   nullus = '',
   interrogans = 'ne',
   coniugans = 'que',
-  eligens = 've',
+  eligens = 've'
 }
 
 export const enclitici: string[] = Object.keys(Encliticus)
@@ -24,7 +24,7 @@ export enum Mensa {
   September,
   October,
   November,
-  December,
+  December
 }
 
 type linea<littera extends string> = littera extends '' ? never : littera
@@ -39,9 +39,9 @@ export const errator: (res: { [clavis: PropertyKey]: string }) => Error = (res: 
 }
 
 export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
-  static ordinentur: <Hoc extends Res<boolean, Lineae>>(primum: Hoc, secundum: Hoc) => SortResult = comparison(
+  static readonly ordinentur: <Hoc extends Res<boolean, Lineae>>(primum: Hoc, secundum: Hoc) => SortResult = comparison(
     (hoc) => hoc.nomen,
-    (hoc) => `${hoc.valor}`,
+    (hoc) => `${hoc.valor}`
   )
 
   private _valor: Valor<Vexillum, Valores>
@@ -73,7 +73,7 @@ export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
   get valor(): Valor<Vexillum, Valores> {
     Nuntius.noto({
       nomen: this.nomen,
-      nuntium: `Reddo rem { ${this.nomen}: ${this._valor} }`,
+      nuntium: `Reddo rem { ${this.nomen}: ${this._valor} }`
     })
     return this._valor
   }
@@ -81,18 +81,18 @@ export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
   set valor(valor: string | undefined) {
     Nuntius.noto({
       nomen: this.nomen,
-      nuntium: `Initu'st positor ${this.nomen}`,
+      nuntium: `Initu'st positor ${this.nomen}`
     })
     if (!valor || this.valet(valor)) {
       this._valor = valor || this.inhaesus
       Nuntius.noto({
         nomen: this.nomen,
-        nuntium: `Posui rem { ${this.nomen}: ${this._valor} }`,
+        nuntium: `Posui rem { ${this.nomen}: ${this._valor} }`
       })
     } else {
       Nuntius.timeo({
         nomen: this.nomen,
-        nuntium: `Invalidu'st { ${this.nomen}: ${this._valor} }`,
+        nuntium: `Invalidu'st { ${this.nomen}: ${this._valor} }`
       })
       throw errator({ [this.nomen]: valor })
     }
@@ -104,13 +104,13 @@ export abstract class Res<Vexillum extends boolean, Valores extends Lineae> {
 
   constructor(
     private readonly _fultum: Vexillum,
-    protected readonly _valores: Valores,
+    protected readonly _valores: Valores
   ) {
     this._valor = this.inhaesus
     Object.defineProperty(this, this.nomen, {
       value: this._valor,
       enumerable: true,
-      writable: true,
+      writable: true
     })
   }
 }
@@ -147,10 +147,6 @@ export class Fulta extends Array<Fultum<Lineae>> {
       if (!this.nominatur(fultum, valor)) throw new TypeError(`Malu'st fultum ${fultum.nomen} in classem ${valor.name}`)
     }
     return fultum
-  }
-
-  constructor(...fulta: Fultum<Lineae>[]) {
-    super(...fulta)
   }
 }
 

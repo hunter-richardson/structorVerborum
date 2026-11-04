@@ -7,9 +7,6 @@ dist-ssr
 coverage
 *.local
 
-/cypress/videos/
-/cypress/screenshots/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -25,13 +22,12 @@ coverage
 nuntia
 dist
 
-codeql-agent-results
-
 /.vscode
 
 src/cypress/e2e
 src/cypress/fixtures
 src/cypress/support
+cypress
 
 res/loci/*.errata.yml
 
@@ -40,5 +36,3 @@ src/**/*.js
 *.config.js
 !.oxlintrc.json
 !eslint.config.ts
-
-pnpm-lock.yaml

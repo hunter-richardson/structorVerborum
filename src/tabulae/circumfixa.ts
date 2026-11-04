@@ -17,7 +17,7 @@ export class TabulaCircumfixa<Hoc extends Multiplex> extends TabulaRescripta<Hoc
   constructor(
     private readonly praefixum: string,
     relata: Tabula<Hoc> | Tabulator<Hoc>,
-    private readonly suffixum: string,
+    private readonly suffixum: string
   ) {
     super(relata, (scriptum: string) => `${this.praefixum}${scriptum}${this.suffixum}`)
   }

@@ -23,11 +23,11 @@
   const tabula: Tabula<Hoc> = await agendum.tabula
   const haec: Hoc[] = tabula.haec
 
-  const seligenda: Fulta = new Fulta(...haec.map((illud: Hoc): Fulta => illud.valores).flat().unique)
+  const seligenda: Fulta = new Fulta(...haec.flatMap((illud: Hoc): Fulta => illud.valores).unique)
 
   const columnae: Columnae = categoricum<Hoc>({
     categoria: categoria,
-    haec: haec,
+    haec: haec
   })
 
   const selecta: `${string}_${string}`[] = []
@@ -54,7 +54,7 @@
     tabula
       .colantur({
         radix: radix.value,
-        fulta: pares,
+        fulta: pares
       })
       .forEach((illud: Hoc) => haec.push(illud))
     exoneretur()
@@ -69,6 +69,7 @@
   <Specere v-else-if="haec.length == 1" :verbum="haec.first()" @blur="haec.clear()" />
   <template v-else-if="haec.length > 1">
     <input id="radix" v-model.trim="radix" type="text" :placeholder="t(`scriptum.tabulare.radicis`)" />
+    <!--  //NOSONAR:  Nil moror -->>
     <div v-if="!seligenda.empty" id="colamina">
       <v-chip-group v-model="selecta" selected-class="text-primary" filter multiple>
         <v-chip v-for="seligendum in seligenda" :id="`colamen_${seligendum.nomen}_${seligendum.valor}`" :key="`${seligendum.nomen}_${seligendum.valor}`" :text="`${t(`partes.${seligendum.nomen}_singularis`)}: ${t(`partes.${seligendum.nomen}.${seligendum.valor}`)}`" @change="cole(selecta)" />

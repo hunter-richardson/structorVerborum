@@ -1,4 +1,6 @@
-import path from 'path'
+import { anyOf, buildRegExp, capture, choiceOf, endOfString, oneOrMore, optional, regex, startOfString, whitespace } from 'ts-regex-builder'
+import path from 'node:path'
+import { errator, Fulta, nomina, valores, type Fultum, type Lineae } from '@/praebeunda/valores'
 import { LEGIBILE, type Lectum } from '@/praebeunda/interfecta'
 import { type Tabulamen } from '@/praebeunda/tabulamina'
 import { type SortResult } from '@/extensions/utils'
@@ -8,8 +10,6 @@ import { Lector } from '@/miscella/lector'
 import Nuntius from '@/miscella/nuntius'
 import '@/extensions/string'
 import '@/extensions/array'
-import { errator, Fulta, nomina, valores, type Fultum, type Lineae } from '@/praebeunda/valores'
-import { anyOf, buildRegExp, capture, choiceOf, endOfString, oneOrMore, optional, regex, startOfString, whitespace } from 'ts-regex-builder'
 
 type Cretor = (fulta: Fulta) => boolean
 
@@ -36,15 +36,15 @@ export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
       capture(choiceOf(...nomina.except('categoria')), { name: 'nomen' }), ///(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))/
       capture(choiceOf(anyOf('!='), regex([anyOf('<>'), optional('=')]))), ///(?<operator>[<!=>]=?)/
       capture(choiceOf(...valores), { name: 'quaerendus' }), ///(?<quaerendus>ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
-      endOfString, //$/
+      endOfString //$/
     ])
 
   @Nuntius.modus praedicatur(status: string): Cretor {
     if (status.empty) return (_: Fulta) => true
     const certamen: RegExpExecArray | undefined = this.colamen.exec(status) ?? undefined
-    if (!certamen || !certamen.groups) throw errator({ status: status })
+    if (certamen?.groups === undefined) throw errator({ status: status })
     const { nomen, operator, quaerendus } = certamen.groups
-    if (!nomen || !operator || !quaerendus) throw errator({ status: status })
+    if (nomen === undefined || operator === undefined || quaerendus === undefined) throw errator({ status: status })
     return (fulta: Fulta) => {
       const fultum: Fultum<Lineae> | undefined = fulta.inveni(nomen)
       if (!fultum) return false
@@ -97,8 +97,8 @@ export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
         ({
           status: this.praedicantur(crudum.status),
           clavis: crudum.clavis,
-          mensura: crudum.mensura,
-        }) as Lamina,
+          mensura: crudum.mensura
+        }) as Lamina
     )
   }
 }

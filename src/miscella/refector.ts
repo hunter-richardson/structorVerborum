@@ -1,4 +1,5 @@
 import { anyOf, buildRegExp, capture, type CaptureOptions, choiceOf, type EncodedRegex, endOfString, optional, regex, startOfString, whitespace, zeroOrMore } from 'ts-regex-builder'
+import { inspect } from 'node:util'
 import { errator, Fultum, type Lineae, nomina, valores } from '@/praebeunda/valores'
 import { type Agendum, Multiplex } from '@/praebeunda/verba'
 import { type SortResult } from '@/extensions/utils'
@@ -8,7 +9,7 @@ import '@/extensions/array'
 
 enum Actus {
   Dele = 'dele',
-  Pone = 'pone',
+  Pone = 'pone'
 }
 
 type Praedicendum<Hoc extends Multiplex> = (agendum: Agendum<Hoc>) => boolean
@@ -38,7 +39,7 @@ const deStatu: EncodedRegex = regex([
   ///(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)(?:[!=]|[<>]=?)(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)/
   deNominibus, ///(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)/
   deOperatoribus, ///(?:[!=]|[<>]=?)/
-  deQuaerendis,
+  deQuaerendis
 ]) ///(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)/
 const deActus: EncodedRegex = choiceOf(...(Object.keys(Actus) as string[])) ///(?:dele|pone)/
 const deOpere: EncodedRegex = ///\(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)(\)/
@@ -48,7 +49,7 @@ const deOpere: EncodedRegex = ///\(?:casus|factus|genus|gradus|modus|numerus|per
     deNominibus, ///(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)/
     ':', ///:/
     deQuaerendis, ///(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)/
-    ')',
+    ')'
   ]) ///\)/
 
 const colamenStatus: RegExp = buildRegExp([
@@ -57,7 +58,7 @@ const colamenStatus: RegExp = buildRegExp([
   capture(deNominibus, nomenCapiendum), ///(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))/
   capture(deOperatoribus, operatorCapiendus), ///(?<operator>[<!=>]=?)/
   capture(deQuaerendis, quaerendusCapiendus), ///(?<quaerendus>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))/
-  endOfString, ///$/
+  endOfString ///$/
 ])
 const colamenOperis: RegExp = buildRegExp([
   ///^(?<actus>(?:dele|pone))\((?<nomenNovi>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)):(?<valorNovi>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))\)$/
@@ -68,7 +69,7 @@ const colamenOperis: RegExp = buildRegExp([
   ':', ///:/
   capture(deQuaerendis, valorNoviCapiendus), ///(?<valorNovi>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))/
   ')', ////)/
-  endOfString,
+  endOfString
 ]) ///$/
 
 const colamen: RegExp = buildRegExp([
@@ -77,25 +78,25 @@ const colamen: RegExp = buildRegExp([
   capture(
     regex([
       deStatu, ///(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)(?:[!=]|[<>]=?)(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)/
-      zeroOrMore(regex(['&', deStatu])),
+      zeroOrMore(regex(['&', deStatu]))
     ]), ///(?:&(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)(?:[!=]|[<>]=?)(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))*/
-    statusCapiendus,
+    statusCapiendus
   ), ///(?<status>)/
   ':', ///:/
   capture(deOpere, opusCapiendum), ///(?<opus>(?:dele|pone)\(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox)(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus)\))/
-  endOfString,
+  endOfString
 ]) ///$/
 
 @Ignavum
 @Ultimum
 @Nuntius.factum
 export default class<Hoc extends Multiplex> {
-  private ista: Istud<Hoc>[] = []
+  private readonly ista: Istud<Hoc>[] = []
 
   private praedicatur(nomen: string, operator: string, quaerendus: string): Praedicendum<Hoc> {
     return (agendum: Agendum<Hoc>): boolean => {
       const fultum: Fultum<Lineae> | undefined = agendum.valores.inveni(nomen)
-      if (!fultum) throw new Error(`Nullum ${nomen} in ${agendum}`)
+      if (!fultum) throw new Error(`Nullum ${nomen} in ${inspect(agendum)}`)
       const valoris: number = fultum.valores.indexOf(fultum.valor)
       const quaerendi: number = fultum.valores.indexOf(quaerendus)
       if (valoris == -1) throw errator({ [nomen]: fultum.valor })
@@ -126,7 +127,7 @@ export default class<Hoc extends Multiplex> {
       const omnes: string[] = status.split('&')
       omnes.forEach((ullus) => {
         const certamenStatus: RegExpExecArray | undefined = colamenStatus.exec(ullus) ?? undefined
-        if (certamenStatus !== undefined && certamenStatus.groups !== undefined) {
+        if (certamenStatus?.groups !== undefined) {
           const { nomen, operator, quaerendus } = certamenStatus.groups
           if (!nomen.empty && !operator.empty && !quaerendus.empty) praedicenda.push(this.praedicatur(nomen, operator, quaerendus))
         }
@@ -142,8 +143,8 @@ export default class<Hoc extends Multiplex> {
       case Actus.Pone:
         return (agenda: Agendum<Hoc>[], numerus: number) => {
           if (nomen !== undefined && !nomen.empty && novus !== undefined && !novus.empty) {
-            const fultum: Fultum<Lineae> | undefined = agenda[numerus].valores.inveni(nomen)
-            if (!fultum) throw new Error(`Nullum ${nomen} in ${agenda[numerus]}`)
+            const fultum: Fultum<Lineae> | undefined = agenda[Number(numerus)].valores.inveni(nomen)
+            if (fultum === undefined) throw new Error(`Nullum ${nomen} in ${inspect(agenda[Number(numerus)])}`)
             fultum.valor = novus
           }
         }
@@ -153,25 +154,25 @@ export default class<Hoc extends Multiplex> {
   reficiatur(agenda: Agendum<Hoc>[]) {
     for (let numerus = 0; numerus < agenda.length; numerus++) {
       this.ista.forEach((istud) => {
-        if (istud.praedicendum(agenda[numerus])) istud.opus(agenda, numerus)
+        if (istud.praedicendum(agenda[Number(numerus)])) istud.opus(agenda, numerus)
       })
     }
   }
 
-  constructor(readonly scriptura: string) {
+  constructor(scriptura: string) {
     const scripturae: string[] = scriptura.replace(whitespace.pattern, '').split(';')
     scripturae.forEach((scriptura: string) => {
       const certamen: RegExpExecArray | undefined = colamen.exec(scriptura) ?? undefined
-      if (certamen !== undefined && certamen.groups !== undefined) {
+      if (certamen?.groups !== undefined) {
         const { status, opus } = certamen.groups
         if (!status.empty && !opus.empty) {
           const certamenOperis: RegExpExecArray | undefined = colamenOperis.exec(opus) ?? undefined
-          if (certamenOperis !== undefined && certamenOperis.groups !== undefined) {
+          if (certamenOperis?.groups !== undefined) {
             const { actus, nomenNovi, valorNovi } = certamenOperis.groups
             if (!actus.empty && !nomenNovi.empty && !valorNovi.empty)
               this.ista.push({
                 praedicendum: this.praedicantur(status),
-                opus: this.agatur(actus as Actus, nomenNovi, valorNovi),
+                opus: this.agatur(actus as Actus, nomenNovi, valorNovi)
               })
           }
         }

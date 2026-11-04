@@ -1,1 +1,1 @@
-module.exports = { publicPath: '/structorVerborum/' }
+export default { publicPath: '/structorVerborum/' }

@@ -10,7 +10,7 @@ import Nuntius from '@/miscella/nuntius'
 @Nuntius.factum
 export default class<Hoc extends Multiplex & Numeratum> extends Tabula<Hoc> {
   private readonly _singularis: Record<string, string> = {
-    numerus: 'singularis',
+    numerus: 'singularis'
   }
   private readonly _pluralis: Record<string, string> = { numerus: 'pluralis' }
 
@@ -25,21 +25,20 @@ export default class<Hoc extends Multiplex & Numeratum> extends Tabula<Hoc> {
     _singularis
       .colantur({
         radix: '',
-        fulta: this._singularis,
+        fulta: this._singularis
       })
       .forEach((hoc) => this._haec.push(hoc))
     _pluralis
       .colantur({
         radix: '',
-        fulta: this._pluralis,
+        fulta: this._pluralis
       })
       .forEach((hoc) => this._haec.push(hoc))
-    return Promise.resolve()
   }
 
   constructor(
     private readonly singularis: Tabula<Hoc> | Tabulator<Hoc>,
-    private readonly pluralis: Tabula<Hoc> | Tabulator<Hoc>,
+    private readonly pluralis: Tabula<Hoc> | Tabulator<Hoc>
   ) {
     super()
   }

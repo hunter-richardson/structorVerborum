@@ -2,11 +2,12 @@
   import { buildRegExp, charRange, endOfString, oneOrMore, startOfString } from 'ts-regex-builder'
   import { VueMarkdownIt as Markdown } from '@f3ve/vue-markdown-it'
   import { ref, type Ref } from 'vue'
-  import fs from 'node:fs'
-  import path from 'node:path'
+  import { open } from 'node:fs/promises'
+  import { resolve } from 'node:path'
   import transducatur from '@/scriptura/transducere'
   import translation from '@/extensions/i18next'
   import dominus from '@/miscella/dominus'
+  import { valores } from '@/praebeunda/valores'
   import '@/extensions/string'
   import '@/extensions/array'
 
@@ -23,13 +24,16 @@
   const concitatust: Ref<boolean> = ref(false)
 
   async function doceatur(res: string): Promise<Monstrandum> {
-    const via: string = `${path.join('/res/docenda', dominus.lingua.signum, res)}.md`
     let doctum: string = ''
-    fs.createReadStream(via).on('data', (pars) => (doctum += typeof pars === 'string' ? pars.trim() : pars))
+    if (valores.includes(res)) {
+      const via: string = resolve('@/res/docenda', dominus.lingua.signum, `${res}.md`)
+      //  eslint-disable-next-line security/detect-non-literal-fs-filename -- Hoc filum validust
+      ;(await open(via, 'r')).createReadStream({ encoding: 'utf8' }).on('data', (pars) => (doctum += typeof pars === 'string' ? pars.trim() : pars))
+    } else res = ''
     return {
       onerans: false,
       doctum: doctum,
-      res: res,
+      res: res
     }
   }
 

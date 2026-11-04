@@ -29,7 +29,7 @@
     return valores.map((valor) => {
       return {
         title: tf(`${valor}_singulare`, 'capital'),
-        value: valor,
+        value: valor
       }
     })
   }
@@ -38,7 +38,7 @@
     nomen.value =
       (await (agendum as TabulamenAdiectivi).probetur({
         gradus: et.gradus as 'positivus' | 'comparativus' | 'superlativus',
-        genus: et.genus as 'neutrum' | 'masculinum' | 'femininum',
+        genus: et.genus as 'neutrum' | 'masculinum' | 'femininum'
       })) ?? undefined
   }
 </script>

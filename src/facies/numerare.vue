@@ -14,7 +14,7 @@
   const validator: ((arabicus: number) => boolean | string)[] = [
     (arabicus: number): boolean | string => {
       return Number.isInteger(arabicus) || useTranslation().t('errores.numerare.deNumeris')
-    },
+    }
   ]
 
   const numerale: Ref<Numerale | undefined> = ref()
@@ -23,7 +23,7 @@
   const arabicus: Ref<Arabicus> = ref({
     integer: 0,
     numerator: 0,
-    denominator: 12,
+    denominator: 12
   })
 
   function effiat(): void {

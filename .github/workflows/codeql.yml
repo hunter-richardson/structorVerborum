@@ -9,16 +9,18 @@
 # the `language` matrix defined below to confirm you have the correct set of
 # supported CodeQL languages.
 #
-name: 'CodeQL Progressus'
+name: CodeQL Progressus
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: "null"
   push:
-    branches: ['princeps']
+    branches:
+      - princeps
   pull_request:
-    branches: ['princeps']
+    branches:
+      - princeps
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: 0 0 * * 0
 
 jobs:
   analyze:
@@ -28,7 +30,7 @@ jobs:
     #   - https://gh.io/supported-runners-and-hardware-resources
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
     permissions:
       # required for all workflows
       security-events: write
@@ -41,7 +43,7 @@ jobs:
       contents: read
 
     strategy:
-      fail-fast: false
+      fail-fast: "false"
       matrix:
         include:
           - language: actions
@@ -77,13 +79,13 @@ jobs:
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
-      # If the analyze step fails for one of the languages you are analyzing with
-      # "We were unable to automatically build your code", modify the matrix above
-      # to set the build mode to "manual" for that language. Then modify this step
-      # to build your code.
-      # ℹ️ Command-line programs to run using the OS shell.
-      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+          # If the analyze step fails for one of the languages you are analyzing with
+          # "We were unable to automatically build your code", modify the matrix above
+          # to set the build mode to "manual" for that language. Then modify this step
+          # to build your code.
+          # ℹ️ Command-line programs to run using the OS shell.
+          # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
       - name: agere
         uses: github/codeql-action/analyze@f0489abddd4e5e9dff53ed28a45b1d6f88978a1b
         with:
-          category: '/language:${{matrix.language}}'
+          category: /language:${{matrix.language}}

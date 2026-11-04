@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "paths": { "@/*": ["./*"] },
+  "rootDir": ".",
+  "include": ["src/cypress/{a_capite_ad_caupam,componenta}/*.ts"],
+  "compilerOptions": {
+    "types": ["cypress", "cypress-map"]
+  }
+}

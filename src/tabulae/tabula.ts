@@ -1,5 +1,5 @@
 import equal from 'fast-deep-equal'
-import path from 'path'
+import path from 'node:path'
 import { Fultum, Res, type Lineae, type Numeratum } from '@/praebeunda/valores'
 import { type Agendum, Multiplex } from '@/praebeunda/verba'
 import { TabulaCircumfixa } from '@/tabulae/circumfixa'
@@ -108,7 +108,7 @@ abstract class Tabula<Hoc extends Multiplex> {
     parametra: {
       radix: string
       fulta: Record<string, string>
-    },
+    }
   ): Istud[] {
     return ista.filter((istud) => [istud.scriptum.startsWith(parametra.radix), istud.valores.every((valor) => Object.entries(parametra.fulta).every(([clavis, clavus]) => Tabula.aequantur({ [clavis]: clavus }, valor)))].all)
   }
@@ -120,8 +120,7 @@ abstract class Tabula<Hoc extends Multiplex> {
 
   @Nuntius.captor get monstrentur(): string[] {
     return this._haec
-      .map((hoc) => hoc.valores)
-      .flat()
+      .flatMap((hoc) => hoc.valores)
       .sort(Res.ordinentur)
       .map((res) => `${res.nomen}: ${res.valor}`).unique
   }
@@ -145,7 +144,7 @@ abstract class TabulaLegans<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>
 
   constructor(
     protected readonly structor: new () => Hoc,
-    protected readonly illud: Illud,
+    protected readonly illud: Illud
   ) {
     super()
   }
@@ -161,7 +160,6 @@ export class TabulaDerecta<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> 
 
   constructor(structor: new () => Hoc, illud: Illud) {
     super(structor, illud)
-    this.tabulentur()
   }
 }
 
@@ -198,7 +196,6 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
 
   constructor(structor: new () => Hoc, illud: Illud) {
     super(structor, illud)
-    this.tabulentur()
   }
 }
 

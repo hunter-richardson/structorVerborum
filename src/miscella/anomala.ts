@@ -1,5 +1,5 @@
 import i18next from 'i18next'
-import path from 'path'
+import path from 'node:path'
 import { Tabulamen, TabulamenActus, TabulamenIncomparabilis, TabulamenNominis } from '@/praebeunda/tabulamina'
 import { LATIBILE, type Lectum, LEGIBILE, Tabulator } from '@/praebeunda/interfecta'
 import { Actus, Adiectivum, Multiplex, Nomen, Pronomen } from '@/praebeunda/verba'
@@ -14,6 +14,7 @@ import { Colligendum } from '@/tabulae/collata'
 import { errator } from '@/praebeunda/valores'
 import { Findendum } from '@/tabulae/fissa'
 import Nuntius from '@/miscella/nuntius'
+import '@/extensions/array'
 
 export enum Classis {
   Bifissa = 'bifissa',
@@ -25,7 +26,7 @@ export enum Classis {
   Praefixa = 'praefixa',
   Rescripta = 'rescripta',
   Suffixa = 'suffixa',
-  Tabulamen = 'tabulamen',
+  Tabulamen = 'tabulamen'
 }
 
 export class Crudum implements Lectum {
@@ -51,13 +52,13 @@ export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
 @Ultimum
 @Nuntius.factum
 class Anomala<Hoc extends Multiplex> {
-  static erratorAnomali: (via: string, nomen: string) => Error = (via, nomen) => new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
+  static readonly erratorAnomali: (via: string, nomen: string) => Error = (via, nomen) => new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
 
   protected readonly contenta: Record<string, Tabulator<Hoc>> = {}
 
   get categoria(): string {
     return i18next.t(`partes.${this._huius.name.lowercase}_singulare`, {
-      lng: 'la',
+      lng: 'la'
     })
   }
 
@@ -65,14 +66,20 @@ class Anomala<Hoc extends Multiplex> {
     return Object.keys(this._omnia)
   }
 
+  scit(nomen: PropertyKey): nomen is keyof Record<string, Tabulator<Hoc>> {
+    return nomen in this.contenta
+  }
+
   @Nuntius.modus feratur(nomen: string): Promise<Tabulator<Hoc> | undefined> {
     if (this.omnia.length > Object.keys(this.contenta).length) this.onerentur()
-    return Promise.resolve(this.contenta[nomen])
+    //  eslint-disable-next-line security/detect-object-injection -- nomen validust
+    return Promise.resolve(this.scit(nomen) ? this.contenta[nomen] : undefined)
   }
 
   // oxlint-disable complexity -- Inflectio irregula nodosissima'st
-  @Nuntius.promittum protected async oneretur(nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
-    if (this.contenta[nomen] !== undefined) return this.contenta[nomen]
+  @Nuntius.promittum protected async oneretur(nomen: string, classis: Classis): /* NOSONAR: Inflectio irregula nodosissima'st*/ Promise<Tabulendum<Hoc>> {
+    //  eslint-disable-next-line security/detect-object-injection -- nomen validust
+    if (this.scit(nomen)) return this.contenta[nomen]
     const via: string = path.join('tabulae/${classis}e', this.categoria)
     switch (classis) {
       case Classis.Circumfixa: {
@@ -126,8 +133,7 @@ class Anomala<Hoc extends Multiplex> {
          * */
         return Tabula.rescripta(
           relatum,
-          //  nosonar: Haec scriptura tutast
-          new Function('scriptum', crudum.scriptura) as (scriptum: string) => string,
+          new Function('scriptum', crudum.scriptura) as (scriptum: string) => string //  NOSONAR: Haec scriptura tutast
         )
       }
       case Classis.Suffixa: {
@@ -147,14 +153,16 @@ class Anomala<Hoc extends Multiplex> {
     ;(Object.entries(this._omnia) as [string, Classis][]).forEach(async ([nomen, classis]: [string, Classis]) => {
       const tabulendum = await this.oneretur(nomen, classis)
       if (tabulendum === undefined) throw errator({ nomen: nomen })
+      //  eslint-disable-next-line security/detect-object-injection -- nomen validust
       if (tabulatorst(tabulendum)) this.contenta[nomen] = tabulendum
+      //  eslint-disable-next-line security/detect-object-injection -- nomen validust
       if (tabulast(tabulendum)) this.contenta[nomen] = new Mantela(tabulendum)
     })
   }
 
   constructor(
     protected readonly _huius: new () => Hoc,
-    protected readonly _omnia: Record<string, Classis>,
+    protected readonly _omnia: Record<string, Classis>
   ) {
     this.onerentur()
   }
@@ -162,21 +170,17 @@ class Anomala<Hoc extends Multiplex> {
 
 class AnomalaMultiplex<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends Anomala<Hoc> {
   @Nuntius.promittum override async oneretur(nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
-    switch (classis) {
-      case Classis.Tabulamen: {
-        const via: string = path.join('tabulae/tabulamina', this.categoria)
-        if (this._illius === undefined) throw Anomala.erratorAnomali(via, nomen)
-        return (await new LectorMultiplex<Illud>(via, this._illius).legatur(nomen)).unum
-      }
-      default:
-        return super.oneretur(nomen, classis)
-    }
+    if (classis === Classis.Tabulamen) {
+      const via: string = path.join('tabulae/tabulamina', this.categoria)
+      if (this._illius === undefined) throw Anomala.erratorAnomali(via, nomen)
+      return (await new LectorMultiplex<Illud>(via, this._illius).legatur(nomen)).unum
+    } else return super.oneretur(nomen, classis)
   }
 
   constructor(
     _huius: new () => Hoc,
     protected readonly _illius: new () => Illud,
-    _omnia: Record<string, Classis>,
+    _omnia: Record<string, Classis>
   ) {
     super(_huius, _omnia)
   }
@@ -286,7 +290,7 @@ export const actus: AnomalaMultiplex<Actus, TabulamenActus> = new AnomalaMultipl
   tremefacere: Classis.Praefixa,
   tupefacere: Classis.Praefixa,
   vacuēfacere: Classis.Praefixa,
-  vēnīre: Classis.Praefixa,
+  vēnīre: Classis.Praefixa
 })
 
 export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> = new AnomalaMultiplex(Adiectivum, TabulamenIncomparabilis, {
@@ -314,7 +318,7 @@ export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> = 
   utrumque: Classis.Suffixa,
   utrumcumque: Classis.Suffixa,
   utrumvīs: Classis.Suffixa,
-  utrumvultis: Classis.Suffixa,
+  utrumvultis: Classis.Suffixa
 })
 
 export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMultiplex(Nomen, TabulamenNominis, {
@@ -328,7 +332,7 @@ export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMult
   domus: Classis.Collata,
   rēspūblica: Classis.Coniuncta,
   iūgerum: Classis.Collata,
-  sēmidea: Classis.Praefixa,
+  sēmidea: Classis.Praefixa
 })
 
 export const pronomina: Anomala<Pronomen> = new Anomala(Pronomen, {
@@ -361,5 +365,5 @@ export const pronomina: Anomala<Pronomen> = new Anomala(Pronomen, {
   quodvīs: Classis.Suffixa,
   quidvīs: Classis.Rescripta,
   quodvultis: Classis.Rescripta,
-  quidvultis: Classis.Rescripta,
+  quidvultis: Classis.Rescripta
 })

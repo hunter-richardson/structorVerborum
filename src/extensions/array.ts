@@ -28,7 +28,7 @@ Array.prototype.first = function <T>(predicate?: (param: T) => boolean): T | und
 Array.prototype.last = function <T>(predicate?: (param: T) => boolean): T | undefined {
   if (!predicate) return this[this.length - 1]
   for (let index = this.length - 1; index >= 0; index--) {
-    if (predicate(this[index])) return this[index]
+    if (predicate(this[Number(index)])) return this[Number(index)]
   }
   return undefined
 }
@@ -77,7 +77,7 @@ Object.defineProperty(Array.prototype, 'empty', {
   enumerable: false,
   get: function (): boolean {
     return this.length === 0
-  },
+  }
 })
 
 Object.defineProperty(Array.prototype, 'random', {
@@ -85,7 +85,7 @@ Object.defineProperty(Array.prototype, 'random', {
   enumerable: false,
   get: function <T>(): T {
     return this[Math.floor(Math.random() * this.length)]
-  }, //  nosonar: Math.random is safe here; this is for general array picking
+  } //  NOSONAR: Math.random is safe here; this is for general array picking
 })
 
 Object.defineProperty(Array.prototype, 'all', {
@@ -93,7 +93,7 @@ Object.defineProperty(Array.prototype, 'all', {
   enumerable: false,
   get: function <T>(): boolean {
     return this.every((value: T) => !!value)
-  },
+  }
 })
 
 Object.defineProperty(Array.prototype, 'any', {
@@ -101,7 +101,7 @@ Object.defineProperty(Array.prototype, 'any', {
   enumerable: false,
   get: function <T>(): boolean {
     return this.some((value: T) => !!value)
-  },
+  }
 })
 
 Object.defineProperty(Array.prototype, 'unique', {
@@ -109,7 +109,7 @@ Object.defineProperty(Array.prototype, 'unique', {
   enumerable: false,
   get: function <T>(): T[] {
     return [...new Set(this)] as T[]
-  },
+  }
 })
 
 export {}

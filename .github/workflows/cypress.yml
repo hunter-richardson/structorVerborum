@@ -1,11 +1,13 @@
 name: Cypress
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: "null"
   push:
-    branches-ignore: ['princeps']
+    branches-ignore:
+      - princeps
   pull_request:
-    branches-ignore: ['princeps']
+    branches-ignore:
+      - princeps
 jobs:
   cypress:
     runs-on: ubuntu-latest
@@ -19,23 +21,25 @@ jobs:
         with:
           build: pnpm debug 2>&1 | tee cypress/logs/tentamina.log
           start: pnpm start 2>&1 | tee cypress/logs/tentamina.log
-          wait-on: 'https://localhost:4173'
+          wait-on: https://localhost:4173
       - name: colligere
         if: always()
         shell: bash
-        run: |
+        run: >
           if [ -d nuntia ]; then
             scp -v $(find nuntia -type f -name '*.log') cypress/logs/
           else
             printf 'Nuntia nulla generata sunt\n'
           fi
-      - name:
+      - name: "null"
         uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66
         if: always()
         with:
           name: cypress-artifacts
           if-no-files-found: warn
-          path: |
+          path: >
             cypress/screenshots
+            
             cypress/videos
+            
             cypress/logs

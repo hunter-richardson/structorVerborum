@@ -16,12 +16,11 @@ export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
       relatum.scriptum = this.rescriptor(relatum.scriptum)
       this._haec.push(relatum)
     })
-    return Promise.resolve()
   }
 
   constructor(
     private readonly relata: Tabula<Hoc> | Tabulator<Hoc>,
-    protected readonly rescriptor: (scriptum: string) => string,
+    protected readonly rescriptor: (scriptum: string) => string
   ) {
     super()
   }

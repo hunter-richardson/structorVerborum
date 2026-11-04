@@ -1,33 +1,26 @@
-import { buildRegExp, choiceOf, endOfString } from 'ts-regex-builder'
 import { defineConfig, type Configuration } from 'lint-staged/config'
 import '@/extensions/array'
+import Path from '@/extensions/path'
+
+const fontana: string[] = ['ts', 'vue'] //  NOSONAR: Vere aciem hic volo
+const linabile: string[] = ['json', 'yaml', 'yml', ...fontana] //  NOSONAR: Vere aciem hic volo
+
+function seligantur(fila: string[], linguae: string[]): string[] {
+  return linguae.any ? fila.filter((filum) => linguae.includes(new Path(filum).lastExtension)) : fila
+}
+
+const imperia: [string, string[]][] = [
+  ['prettier --write --ignore-unknown', []],
+  ['eslint --config ./eslint.config.ts', linabile],
+  ['vue-tsc-files -p ./tsconfig.typecheck.json', fontana]
+]
 
 export default defineConfig(((fila: string[]) => {
-  const linabile: RegExp = buildRegExp([ '.',
-    choiceOf('ts', 'vue', 'json', 'md', 'yaml', 'yml'),
-    endOfString
-  ])
-
-  const imperia: string[] = [
-    {
-      scena: fila,
-      imperium: 'prettier --write --ignore-unknown'
-    }, {
-      scena: fila.filter((filum) => linabile.test(filum)),
-      imperium: 'eslint --config ./eslint.config.ts'
-    }, {
-      scena: fila.filter((filum) => filum.endsWith('.ts')),
-      imperium: 'tsc-files --noEmit -p ./tsconfig.typecheck.ts'
-    }, {
-      scena: fila.filter((filum) => filum.endsWith('.vue')),
-      imperium: 'vue-tsc-files --noEmit -p ./tsconfig.typecheck.ts'
-    },
-  ].filter((res) => res.scena.any)
-   .map((res) => `${res.imperium} ${res.scena.join(' ')}`)
-   if(fila.includes('eslint.config.ts')) {
-    imperia.push('node ./node_modules/@oxlint/migrate/dist/bin/oxlint-migrate.mjs ./eslint.config.ts')
-    imperia.push('prettier --write ./.oxlintrc.json')
-   }
-
-  return imperia
+  return [
+    ...imperia
+      .map(([imperium, scena]) => [imperium, seligantur(fila, scena)])
+      .filter(([_, scena]: [string, string[]]) => scena.any)
+      .map(([imperium, scena]: [string, string[]]) => `${imperium} ${scena.join(' ')}`),
+    ...(fila.includes('eslint.config.ts') ? ['node ./node_modules/@oxlint/migrate/dist/bin/oxlint-migrate.mjs ./eslint.config.ts', 'prettier --write ./.oxlintrc.json'] : [])
+  ]
 }) as Configuration)

@@ -5,5 +5,5 @@ export default {
   install: (app: App) => {
     app.config.globalProperties['$dominus'] = dominus
     app.provide('dominus', dominus)
-  },
+  }
 }

@@ -29,35 +29,35 @@ export default createVuetify({
       ripple: true,
       VNumberInput: {
         controlVariant: 'stacked',
-        inset: true,
+        inset: true
       },
       VBtnToggle: {
         rounded: true,
-        tile: true,
+        tile: true
       },
       VEmptyState: {
         height: '80%',
-        width: '80%',
+        width: '80%'
       },
       VDataTableHeader: {
         align: 'start',
         sortable: true,
-        sticky: true,
+        sticky: true
       },
       VDialog: {
         height: '80%',
         width: '80%',
         location: 'center',
         scrim: false,
-        scrollable: true,
+        scrollable: true
       },
       VChip: {
         closeable: true,
         filter: true,
         pill: true,
         rounded: true,
-        tile: true,
-      },
-    },
-  },
+        tile: true
+      }
+    }
+  }
 })

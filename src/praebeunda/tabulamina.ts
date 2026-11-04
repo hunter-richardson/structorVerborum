@@ -100,7 +100,7 @@ export class TabulamenFacti extends Tabulamen<Nomen> {
     return (
       (await dictionarium.referatur({
         scriptum: this.infinitivum,
-        categoria: 'actus',
+        categoria: 'actus'
       })) || undefined
     )
   }

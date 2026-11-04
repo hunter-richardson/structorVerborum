@@ -14,20 +14,20 @@
       actus: () => refer(agendum.nomen()),
       scriptum: 'partes.gerundium_singularis',
       ipsum: Nomen.name.lowercase,
-      icon: 'subject',
+      icon: 'subject'
     },
     {
       actus: () => refer(agendum.actor('masculinum')),
       scriptum: 'scripta.inflectere.actus.actor',
       ipsum: 'actor',
-      icon: 'man',
+      icon: 'man'
     },
     {
       actus: () => refer(agendum.actor('femininum')),
       scriptum: 'scripta.inflectere.actus.actrix',
       ipsum: 'actrix',
-      icon: 'woman',
-    },
+      icon: 'woman'
+    }
   ]
 
   async function refer(hoc: Promise<Referendum | undefined>) {

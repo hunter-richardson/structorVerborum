@@ -17,12 +17,7 @@
     "assert": "readonly",
     "chai": "readonly"
   },
-  "ignorePatterns": [
-    "src/cypress/{e2e,fixtures,support}/*",
-    "**/*.js",
-    "**/*.cjs",
-    "**/*.mjs"
-  ],
+  "ignorePatterns": ["src/cypress/{e2e,fixtures,support}/*", "**/*.js", "**/*.cjs", "**/*.mjs"],
   "rules": {
     "cypress/no-assigning-return-values": "error",
     "cypress/no-unnecessary-waiting": "error",

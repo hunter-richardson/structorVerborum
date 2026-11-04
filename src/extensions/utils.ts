@@ -37,6 +37,7 @@ export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: Pro
 
 export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
   const result: T = { ...obj }
-  keys.forEach((key) => delete result[key])
+  //  eslint-disable-next-line security/detect-object-injection -- key is verified
+  keys.filter((key) => key in result).forEach((key) => delete result[key])
   return result as Omit<T, K>
 }

@@ -19,10 +19,10 @@ const figura: Figura = (env: ConfigEnv) => {
     sistenda: operandi
       ? {
           mangle: {
-            reserved: ['Sessio', 'Apices', 'UtendaU', 'Magnas', 'Assensus', 'Facies', 'Lingua', 'Separator', 'Actus', 'Adiectivum', 'Adverbium', 'Nomen', 'Numerale', 'Numeramen', 'Pronomen', 'Categoria', 'Casus', 'Factus', 'Genus', 'Gradus', 'Modus', 'Numerus', 'Persona', 'Referendus', 'Tempus', 'Vox'],
-          },
+            reserved: ['Sessio', 'Apices', 'UtendaU', 'Magnas', 'Assensus', 'Facies', 'Lingua', 'Separator', 'Actus', 'Adiectivum', 'Adverbium', 'Nomen', 'Numerale', 'Numeramen', 'Pronomen', 'Categoria', 'Casus', 'Factus', 'Genus', 'Gradus', 'Modus', 'Numerus', 'Persona', 'Referendus', 'Tempus', 'Vox']
+          }
         }
-      : {},
+      : {}
   }
 
   return {
@@ -36,21 +36,21 @@ const figura: Figura = (env: ConfigEnv) => {
         output: {
           codeSplitting: false,
           entryFilenames: 'fascis.min.js',
-          minify: minifaciendi.sistenda,
-        },
-      },
+          minify: minifaciendi.sistenda
+        }
+      }
     },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '@': fileURLToPath(new URL('./src', import.meta.url))
       },
-      tsconfigPaths: true,
+      tsconfigPaths: true
     },
-    plugins: [checker({ typescript: true }), tsconfigPaths(), vue(), vueJsx(), operandi ? [] : VueDevTools()],
+    plugins: [checker({ typescript: true }), tsconfigPaths(), vueJsx(), vue(), operandi ? [] : VueDevTools()],
     test: {
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/**'],
-      root: fileURLToPath(new URL('/', import.meta.url)),
+      root: fileURLToPath(new URL('/', import.meta.url))
     },
     css: {
       logLevel: operandi ? 'error' : 'info', //  development:warn after consistent builds
@@ -58,9 +58,9 @@ const figura: Figura = (env: ConfigEnv) => {
       devTools: !operandi,
       appType: 'mpa',
       server: {
-        open: true,
-      },
-    },
+        open: true
+      }
+    }
   }
 }
 

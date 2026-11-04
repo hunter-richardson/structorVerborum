@@ -1,8 +1,8 @@
 import i18next, { type InitOptions } from 'i18next'
 import FsBackend from 'i18next-fs-backend'
-import path from 'node:path'
-import yaml from 'js-yaml'
-import fs from 'node:fs'
+import { appendFileSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { load } from 'js-yaml'
 import '@/extensions/string'
 
 const deTransferendo: InitOptions = {
@@ -14,11 +14,11 @@ const deTransferendo: InitOptions = {
   saveMissing: true,
   load: 'languageOnly',
   backend: {
-    loadPath: path.resolve('@res/loci/{{lng}}.yml'),
-    addPath: path.resolve('@res/loci/{{lng}}.errata.yml'),
+    loadPath: resolve('@res/loci/{{lng}}.yml'),
+    addPath: resolve('@res/loci/{{lng}}.errata.yml'),
     parse: function (data: string) {
-      return yaml.load(data)
-    },
+      return load(data)
+    }
   },
   parseMissingKeyHandler: (clavis: string): string => {
     return clavis
@@ -27,12 +27,13 @@ const deTransferendo: InitOptions = {
     linguae.forEach((lingua) => {
       if (spatium) clavis = `${spatium}:${clavis}`
       const linea: string = inhaesum ? `${clavis}: ${JSON.stringify(inhaesum)}` : `${clavis}: ""`
-      fs.appendFileSync(path.resolve(`@res/loci/${lingua}.errata.yml`), linea)
+      //  eslint-disable-next-line security/detect-non-literal-fs-filename -- Hoc filum validust
+      appendFileSync(resolve('@/res/loci', `${lingua}.errata.yml`), linea)
     })
-  },
+  }
 }
 
-i18next.use(FsBackend).init(deTransferendo)
+await i18next.use(FsBackend).init(deTransferendo)
 
 i18next.services.formatter?.add('uppercase', (valor: string, _, __) => valor.uppercase)
 i18next.services.formatter?.add('lowercase', (valor: string, _, __) => valor.lowercase)

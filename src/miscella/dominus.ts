@@ -11,19 +11,19 @@ import '@/extensions/env'
 type Valor = string | boolean | number | undefined
 
 abstract class Crustulum<Hoc extends Valor> {
-  private static readonly _invocator: FireAndForgetInvoker = createFireAndForgetInvoker({
+  protected static readonly _invocator: FireAndForgetInvoker = createFireAndForgetInvoker({
     reportError(error: unknown) {
       if (Error.isError(error))
         Nuntius.timeo({
           nomen: this.constructor.name,
-          error: error,
+          error: error
         })
-    },
+    }
   })
 
+  private readonly _finis: Date = new Date()
   protected valores!: string[]
   protected vita: number = 365
-  private _finis: Date = new Date()
 
   get inhaesa(): string {
     return this.valores[0]
@@ -40,7 +40,7 @@ abstract class Crustulum<Hoc extends Valor> {
   @Nuntius.promittum protected async coquatur(valor: string) {
     const mutatast: boolean = this.massa === valor
     if (this.coctast) this._finis.setDate(this._finis.getDate() + this.vita)
-    else this._finis.setDate(Date.now() + this.vita)
+    else this._finis.setTime(Date.now() + this.vita * 8.64e7)
     return await dominus
       .ponam(this.nomen, valor, this._finis)
       .then(async () => {
@@ -64,7 +64,7 @@ abstract class Crustulum<Hoc extends Valor> {
   }
 
   @Nuntius.captor get massa(): string {
-    if (this._finis !== undefined && this._finis.getTime() >= Date.now()) {
+    if (this._finis !== undefined && this._finis?.getTime() >= Date.now()) {
       this.deleatur()
       return this.inhaesa
     } else return dominus.inveniam(this.nomen) ?? this.inhaesa
@@ -153,7 +153,7 @@ class Sessio extends Crustulum<boolean> {
   override valores = ['']
   override vita = 30
   override set massa(valor: string) {
-    this.coquatur(valor)
+    Crustulum._invocator.fireAndForget(() => this.coquatur(valor))
   }
   get signum(): boolean {
     return this.coctast
@@ -162,7 +162,8 @@ class Sessio extends Crustulum<boolean> {
     return ''
   }
   responsus(): Promise<void> {
-    return Promise.resolve(dominus[this.coctast ? 'inhaereantur' : 'deleantur']())
+    if (this.coctast) return Promise.resolve(dominus.inhaereantur())
+    else return Promise.resolve(dominus.deleantur())
   }
 }
 
@@ -177,8 +178,9 @@ class Assensus extends Crustulum<boolean | undefined> {
   get signum(): boolean | undefined {
     return this.coctast ? this.concoctast('assensit') : undefined
   }
-  responsus(): Promise<void> {
-    return Promise.resolve(dominus[this.coctast ? 'inhaereantur' : 'deleantur']())
+  responsus() {
+    if (this.coctast) return Promise.resolve(dominus.inhaereantur())
+    else return Promise.resolve(dominus.deleantur())
   }
 }
 
@@ -207,27 +209,18 @@ class Facies extends Crustulum<string> {
   get scriptum(): 'light_mode' | 'dark_mode' {
     return `${this.signum}_mode`
   }
-  async responsus() {
-    useTheme().global.name.value = this.signum
+  responsus(): Promise<void> {
+    return Promise.resolve((useTheme().global.name.value = this.signum)).then() //  NOSONAR:  Nil moror
   }
 
   get tonus(): Please.MakeColorResult {
-    if (this.inhaesast)
-      return Please.make_color({
-        colors_returned: 1,
-        saturation: 0.65,
-        format: 'hex',
-        value: 0.9,
-        golden: true,
-      })
-    else
-      return Please.make_color({
-        colors_returned: 1,
-        saturation: 0.75,
-        format: 'hex',
-        value: 0.55,
-        golden: true,
-      })
+    return Please.make_color({
+      colors_returned: 1,
+      saturation: this.inhaesast ? 0.65 : 0.75,
+      format: 'hex',
+      value: this.inhaesast ? 0.9 : 0.55,
+      golden: true
+    })
   }
 }
 
@@ -261,7 +254,7 @@ class Dominus {
   readonly separatores = {
     interpunctum: ' • ',
     inane: ' _ ',
-    nullum: '   ',
+    nullum: '   '
   } as const
 
   private readonly _sessio: Sessio = new Sessio()
@@ -283,13 +276,15 @@ class Dominus {
     return getCookie(nomen)
   }
 
-  async ponam(nomen: string, valor: string, finis: Date) {
-    setCookie(nomen, valor, {
-      secure: process.env['NODE_ENV'] === 'production',
-      domain: 'conans',
-      sameSite: 'strict',
-      expires: finis,
-    })
+  ponam(nomen: string, valor: string, finis: Date): Promise<void> {
+    return Promise.resolve(
+      setCookie(nomen, valor, {
+        secure: process.env['NODE_ENV'] === 'production',
+        domain: 'conans',
+        sameSite: 'strict',
+        expires: finis
+      })
+    ).then()
   }
 
   inhaereantur() {
@@ -305,8 +300,8 @@ class Dominus {
   }
 
   proferantur() {
-    this.crustula.forEach((crustulum) => {
-      if (crustulum.coctast) crustulum.proferatur()
+    this.crustula.forEach(async (crustulum) => {
+      if (crustulum.coctast) await crustulum.proferatur()
     })
   }
 

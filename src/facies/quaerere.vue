@@ -17,7 +17,7 @@
   const columnae: Columnae = ['lemma', 'categoriae'].map(function (columna: string) {
     return {
       title: tf(`partes.${columna}_singularis`, 'capitalize'),
-      key: columna,
+      key: columna
     }
   })
 
@@ -25,7 +25,7 @@
     function (pars: string): boolean | string {
       const licta: RegExp = /[āabcdēefghīijklmnōopqrstūuvxȳyz|]/
       return licta.test(pars.lowercase) || t('errores.quaerere.deLitteris')
-    },
+    }
   ]
 
   const eventus: Ref<Eventus | undefined> = ref()
@@ -36,20 +36,20 @@
   const lemmae: Ref<Lemma[]> = ref([])
   const quaerenda: Ref<Quaerenda> = ref({
     categoriae: [],
-    pars: '',
+    pars: ''
   })
 
   const duo = [
     {
       actus: sarci,
       scriptum: 'seligere',
-      icon: 'search',
+      icon: 'search'
     },
     {
       actus: forsSeligat,
       scriptum: 'sarcire',
-      icon: 'casino',
-    },
+      icon: 'casino'
+    }
   ]
 
   function reoneratur() {

@@ -10,9 +10,9 @@ export default defineConfig({
         outputRoot: `${figura.projectRoot}/cypress/logs`,
         outputTarget: { 'tentamina.log': 'txt' },
         printLogsToFile: 'always',
-        compactLogs: undefined,
+        compactLogs: undefined
       })
       return figura
-    },
-  },
+    }
+  }
 })

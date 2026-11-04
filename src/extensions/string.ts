@@ -15,7 +15,7 @@ const macra = {
   o: 'ō',
   u: 'ū',
   v: 'v̄',
-  y: 'ȳ',
+  y: 'ȳ'
 } as const
 
 declare global {
@@ -47,7 +47,7 @@ Object.defineProperty(String.prototype, 'empty', {
   enumerable: false,
   get: function (): boolean {
     return this.length === 0
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'lowercase', {
@@ -55,7 +55,7 @@ Object.defineProperty(String.prototype, 'lowercase', {
   enumerable: false,
   get: function (): string {
     return this.toLowerCase()
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'uppercase', {
@@ -63,7 +63,7 @@ Object.defineProperty(String.prototype, 'uppercase', {
   enumerable: false,
   get: function (): string {
     return this.toUpperCase()
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'capitalized', {
@@ -72,7 +72,7 @@ Object.defineProperty(String.prototype, 'capitalized', {
   get: function (): string {
     if (this.empty) return ''
     return `${this[0].uppercase}${this.slice(1).lowercase}`
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'isCapitalized', {
@@ -80,7 +80,7 @@ Object.defineProperty(String.prototype, 'isCapitalized', {
   enumerable: false,
   get: function (): boolean {
     return !this.empty && this[0] !== this[0].lowercase
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'startsWithConsonant', {
@@ -92,7 +92,7 @@ Object.defineProperty(String.prototype, 'startsWithConsonant', {
     if ('ij'.includes(first)) return this.slice(1).startsWithConsonant
     else if ('bcdfgklmnpqrstxz'.includes(first)) return true
     else return true
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'startsWithVowel', {
@@ -100,7 +100,7 @@ Object.defineProperty(String.prototype, 'startsWithVowel', {
   enumerable: false,
   get: function (): boolean {
     return !this.empty && !this.startsWithConsonant
-  },
+  }
 })
 
 Object.defineProperty(String.prototype, 'removeMacra', {
@@ -109,13 +109,13 @@ Object.defineProperty(String.prototype, 'removeMacra', {
   get: function (): string {
     if ([...this].intersection(Object.values(macra)).any) {
       // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias -- This allows copying the string
-      let copy: String = this //  nosonar: This allows copying the string
+      let copy: String = this //  NOSONAR: This allows copying the string
       Object.entries(macra).forEach(([key, value]: [string, string]) => {
         copy = copy.replace(value, key)
       })
       return copy as string
     } else return this as string
-  },
+  }
 })
 
-export {}
+export {} //  NOSONAR: This allows extension methods

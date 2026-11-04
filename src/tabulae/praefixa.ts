@@ -16,7 +16,7 @@ export class Praefigendum extends Colligendum {
 export class TabulaPraefixa<Hoc extends Multiplex> extends TabulaRescripta<Hoc> {
   constructor(
     private readonly praefixum: string,
-    relata: Tabula<Hoc> | Tabulator<Hoc>,
+    relata: Tabula<Hoc> | Tabulator<Hoc>
   ) {
     super(relata, (scriptum: string) => `${this.praefixum}${scriptum}`)
   }

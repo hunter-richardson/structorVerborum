@@ -1,4 +1,12 @@
 allowBuilds:
-  '@apollo/protobufjs': true
-  cypress: true
-  esbuild: true
+  "@apollo/protobufjs": "true"
+permissions:
+  cypress:
+    build: true
+    skills: true
+  esbuild:
+    build: true
+    skills: true
+  eslint:
+    build: true
+    skills: true

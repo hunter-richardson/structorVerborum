@@ -1,5 +1,5 @@
 import i18n from '@/i18n'
-import path from 'path'
+import path from 'node:path'
 import { type Agendum, Multiplex } from '@/praebeunda/verba'
 import { LectorMultiplex } from '@/miscella/lector'
 import { Ignavum, Ultimum } from '@/miscella/usus'
@@ -13,7 +13,7 @@ export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
   @Nuntius.promittum async tabulentur() {
     const categoria: string = this.structor.name.lowercase
     const pluralis: string = i18n.t(`partes.${categoria}_pluralis`, {
-      lng: 'la',
+      lng: 'la'
     })
     const via: string = path.join('tabulae/irregulae', pluralis)
     const agenda: Agendum<Hoc>[] = (await new LectorMultiplex<Agendum<Hoc>>(via, this.structor).legatur(this.lemma)).multa
@@ -22,7 +22,7 @@ export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
 
   constructor(
     private readonly structor: new () => Hoc,
-    private readonly lemma: string,
+    private readonly lemma: string
   ) {
     super()
   }

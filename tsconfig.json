@@ -1,5 +1,5 @@
 {
-  "exclude": ["./src/cypress/*/**"],
+  "exclude": ["./src/cypress"],
   "include": ["./*.config.ts", "./src/**/*.ts", "./src/facies/*.vue", "./src/facies/tabulas/*.vue"],
   "compileOnSave": true,
   "compilerOptions": {

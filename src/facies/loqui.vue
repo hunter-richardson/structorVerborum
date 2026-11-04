@@ -7,15 +7,15 @@
 
   const trahens: Ref<boolean> = ref(false)
   const delectum: string = cfx({
-    background: dominus.facies.tonus,
+    background: dominus.facies.tonus
   })
   const tractum: string = cfx({
     backgrounnd: delectum,
-    opacity: 0.5,
+    opacity: 0.5
   })
   const pellucidum: string = cfx({
     background: delectum,
-    opacity: 0.25,
+    opacity: 0.25
   })
 </script>
 

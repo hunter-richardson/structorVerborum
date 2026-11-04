@@ -27,29 +27,29 @@
       status: verbum.value?.paratust() === true,
       icon: 'chat_add_on',
       ipsum: 'addere',
-      actus: adde,
+      actus: adde
     },
     {
       scriptum: t('annuli.specere.addereProprium'),
       status: propriabile && verbum.value?.paratust() === true,
       icon: 'chat_add_on',
       ipsum: 'proprium.addere',
-      actus: addeProprium,
+      actus: addeProprium
     },
     {
       scriptum: t('annuli.specere.aperire'),
       status: verbum.value?.numeramest() === true,
       icon: 'quick_reference',
       ipsum: 'aperire.numeramen',
-      actus: aperi,
+      actus: aperi
     },
     {
       scriptum: tf('categoriae.participium_singulare', 'capitalize'),
       status: verbum.value?.actust() === true && verbum.value.modus.aequatur('participium'),
       icon: 'quick_reference',
       ipsum: 'aperire.actum',
-      actus: aperi,
-    },
+      actus: aperi
+    }
   ]
 
   if (verbum.value !== undefined && multiplex) {
@@ -63,7 +63,7 @@
       if (verbum.value.actust())
         eventus.value = {
           ...(await verbum.value.participialis()),
-          categoria: Adiectivum.name.lowercase,
+          categoria: Adiectivum.name.lowercase
         }
       else if (verbum.value.numeramest()) {
         const referendus: Eventus | undefined = await verbum.value.refer()

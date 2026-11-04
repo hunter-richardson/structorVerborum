@@ -1,0 +1,16 @@
+name: OSV
+
+on:
+  pull_request: "null"
+  push:
+    branches:
+      - princeps
+
+jobs:
+  contemplari:
+    runs-on: ubuntu-latest
+    steps:
+      - name: vellere
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
+      - name: agere
+        uses: google/osv-scanner-action@9a96bc4d2b09685b6142bcfe25a3dc17cb2d7347

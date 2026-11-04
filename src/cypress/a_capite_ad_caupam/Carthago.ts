@@ -9,26 +9,26 @@ describe('Carthago delendast', () => {
         {
           categoria: 'nomen',
           lemma: 'cēterum',
-          valores: ['singularis', 'nominativus'],
+          valores: ['singularis', 'nominativus']
         },
         {
           categoria: 'coniunctio',
-          lemma: 'autem',
+          lemma: 'autem'
         },
         {
           categoria: 'actus',
           lemma: 'cēnsēre',
-          valores: ['indicativus', 'activa', 'praesens', 'singularis', 'prima'],
+          valores: ['indicativus', 'activa', 'praesens', 'singularis', 'prima']
         },
         {
           categoria: 'nomen',
           lemma: 'Carthāgō',
-          valores: ['singularis', 'accusativus'],
+          valores: ['singularis', 'accusativus']
         },
         {
           categoria: 'actus',
           lemma: 'esse',
-          valores: ['infinitivus', 'praesens'],
+          valores: ['infinitivus', 'praesens']
         },
         {
           categoria: 'actus',
@@ -37,10 +37,10 @@ describe('Carthago delendast', () => {
           sequendum: {
             categoria: 'adiectivum',
             lemma: 'participium',
-            valores: ['singularis', 'accusativus', 'femininum'],
-          },
-        },
-      ],
+            valores: ['singularis', 'accusativus', 'femininum']
+          }
+        }
+      ]
     })
   })
 })

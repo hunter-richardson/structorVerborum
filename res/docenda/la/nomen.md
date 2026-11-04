@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD041 -->
+
 # NOMEN
 
 **Nomen** est verbum fingens rei. Latine nomina plura de [numero](numerus.md) [casuque](casus.md) inflectuntur. Nomina Latina [trigenera](genus.md) sunt, tamen genera hic non notantur.

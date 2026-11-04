@@ -32,22 +32,21 @@ export class TabulaConiuncta<Hoc extends Multiplex> extends Tabula<Hoc> {
     else if (tabulast(this.prima)) _prima = this.prima.haec
     if (tabulatorst(this.secunda)) _secunda = (await this.secunda.tabula).haec
     else if (tabulast(this.secunda)) _secunda = this.secunda.haec
-    if (!_prima || !_secunda || !areSetsEqual(valores(_prima), valores(_secunda))) throw new Error("Inflexionis tabulae malae'st")
+    if (_prima === undefined || _secunda === undefined || !areSetsEqual(valores(_prima), valores(_secunda))) throw new Error("Inflexionis tabulae malae'st")
     else
       _prima.forEach((primum) => {
         const secundum: Hoc | undefined = _secunda.first((hoc) => equal(primum.valores, hoc.valores))
-        if (!secundum) throw new Error("Inflexionis tabulae malae'st")
+        if (secundum === undefined) throw new Error("Inflexionis tabulae malae'st")
         else {
           primum.scriptum = `${primum.scriptum}${secundum.scriptum}`
           this._haec.push(primum)
         }
       })
-    return Promise.resolve()
   }
 
   constructor(
     private readonly prima: Tabula<Hoc> | Tabulator<Hoc>,
-    private readonly secunda: Tabula<Hoc> | Tabulator<Hoc>,
+    private readonly secunda: Tabula<Hoc> | Tabulator<Hoc>
   ) {
     super()
   }

@@ -9,47 +9,28 @@
   import Calculare from '@/facies/calculare.vue'
   import Numerare from '@/facies/numerare.vue'
   import Quaerere from '@/facies/quaerere.vue'
-  import draggable from 'vue-draggable-next'
-  import dominus from '@/miscella/dominus'
+  import Coquere from '@/facies/coquere.vue'
   import locutor from '@/miscella/locutor'
   import '@/extensions/array'
 
   const { t } = translation()
-  const separatores: string[] = Object.keys(dominus.separatores)
-  const vexilla: string[] = ['apices', 'magnas', 'utendaU']
   const annuli: string[] = ['quaerere', 'numerare', 'calculare']
 
   const annulus: Ref<string> = ref(annuli.first() ?? '')
-  const trahens: Ref<boolean> = ref(false)
 
   const duo = [
     {
       status: referretne(),
       icon: 'content_copy',
       ipsum: refer.name,
-      actus: refer,
+      actus: refer
     },
     {
       status: true,
       icon: 'file_open',
       ipsum: transduc.name,
-      actus: transduc,
-    },
-  ]
-
-  const assentienda = [
-    {
-      notendum: 'assentio',
-      videndum: 'handshake',
-      clavis: 'assentire',
-      massa: 'assensit',
-    },
-    {
-      notendum: 'nego',
-      videndum: 'block',
-      clavis: 'negare',
-      massa: 'negavit',
-    },
+      actus: transduc
+    }
   ]
 
   async function refer() {
@@ -99,73 +80,5 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-card>
-  <template v-if="dominus.assensus.signum === true">
-    <draggable @start="trahens = true" @end="trahens = false">
-      <v-speed-dial id="crustula" transition="fade-transition" location="bottom center" open-on-click>
-        <template #activator="{ props: activator }">
-          <v-fab v-bind="activator" size="medium" icon="cake" />
-        </template>
-        <v-btn id="crustula.lingua" key="lingua" icon @click="dominus.lingua.interverteUtrum()">
-          <v-img height="36px" width="36px" :src="dominus.lingua.scriptum" />
-        </v-btn>
-        <v-btn id="crustula.facies" :icon="dominus.facies.scriptum" @click="dominus.facies.interverteUtrum()" />
-        <v-btn v-for="vexillum in vexilla" :id="`crustula.${vexillum}`" :key="vexillum" :text="`dominus.hoc[${vexillum}].scribatur()`" @click="`dominus.hoc[${vexillum}].interverteUtrum()`" />
-        <v-btn v-for="separator in separatores" :id="`crustula.separator.${separator}`" :key="separator" :text="`dominus.separatores[${separator}]`" @click="`dominus.separator.massa = ${separator}`" />
-      </v-speed-dial>
-    </draggable>
-  </template>
-  <template v-if="dominus.assensus.inhaesast === undefined">
-    <v-footer absolute>
-      <v-container>
-        <v-row no-gutters>
-          <v-col>
-            <v-sheet class="pa-1">
-              <div id="titulus.latinus">
-                {{ t('scripta.appositus.deCrustulis', { lng: 'la' }) }}
-              </div>
-              <v-btn-toggle>
-                <v-btn
-                  v-for="assentiendum in assentienda"
-                  :id="`crustula.${assentiendum.notendum}.latina`"
-                  :key="assentiendum.clavis"
-                  :append-icon="assentiendum.videndum"
-                  :text="
-                    t(`annuli.appositus.${assentiendum.notendum}`, {
-                      lng: 'la',
-                    })
-                  "
-                  @click="dominus.assensus.massa = assentiendum.massa" />
-              </v-btn-toggle>
-            </v-sheet>
-          </v-col>
-          <v-col>
-            <v-sheet class="pa-1">
-              <div id="titulus.anglicus">
-                {{ t('scripta.appositus.deCrustulis', { lng: 'en' }) }}
-              </div>
-              <v-btn-toggle>
-                <v-btn
-                  v-for="assentiendum in assentienda"
-                  :id="`crustula.${assentiendum.notendum}.anglica`"
-                  :key="assentiendum.clavis"
-                  :append-icon="assentiendum.videndum"
-                  :text="
-                    t(`annuli.appositus.${assentiendum.notendum}`, {
-                      lng: 'en',
-                    })
-                  "
-                  @click="dominus.assensus.massa = assentiendum.massa" />
-              </v-btn-toggle>
-            </v-sheet>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-footer>
-  </template>
+  <Coquere />
 </template>
-
-<style>
-  .v-btn--floating {
-    position: relative;
-  }
-</style>

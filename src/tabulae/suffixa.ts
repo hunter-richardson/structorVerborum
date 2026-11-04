@@ -16,7 +16,7 @@ export class Suffigendum extends Colligendum {
 export class TabulaSuffixa<Hoc extends Multiplex> extends TabulaRescripta<Hoc> {
   constructor(
     relata: Tabula<Hoc> | Tabulator<Hoc>,
-    private readonly suffixum: string,
+    private readonly suffixum: string
   ) {
     super(relata, (scriptum: string) => `${scriptum}${this.suffixum}`)
   }

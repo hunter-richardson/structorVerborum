@@ -1,7 +1,7 @@
 import { CsvError, type Options, parse, type Parser } from 'csv-parse'
 import { buildRegExp, choiceOf } from 'ts-regex-builder'
 import path from 'node:path'
-import fs from 'node:fs'
+import { access, constants, open, readdir } from 'node:fs/promises'
 import { TabulamenActus, TabulamenAdiectivi, TabulamenAdverbii, TabulamenIncomparabilis, TabulamenNominis, TabulamenNumeraminis } from '@/praebeunda/tabulamina'
 import { errator, type Lineae, nomina, Res } from '@/praebeunda/valores'
 import { type Lectum } from '@/praebeunda/interfecta'
@@ -19,20 +19,20 @@ export class Ulla<Hoc> extends Array<Hoc> {
   }
 
   constructor(haec?: Hoc | Hoc[]) {
-    super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [haec]))
+    super(...(haec === undefined ? [] : Array.isArray(haec) ? haec : [haec])) //  NOSONAR:  Nil moror
   }
 }
 
 @Ignavum
 @Nuntius.factum
 export class Lector<Hoc extends Lectum> implements Disposable {
-  private haec: Hoc[] = []
+  private readonly haec: Hoc[] = []
   private via!: string
 
   private readonly deConditis: RegExp = //\p{Control}|\p{Cf}/gu
     buildRegExp([choiceOf(/\p{Control}/u, /\p{Cf}/u)], {
       global: true,
-      unicode: true,
+      unicode: true
     })
 
   private readonly optanda: Options = {
@@ -53,95 +53,85 @@ export class Lector<Hoc extends Lectum> implements Disposable {
       Nuntius.timeo({
         nomen: this.constructor.name,
         nuntium: nuntium,
-        error: error,
+        error: error
       })
       return undefined
-    },
+    }
   }
 
   private async aperiatur() {
     this[Symbol.dispose]()
     Nuntius.noto({
       nomen: this.constructor.name,
-      nuntium: `Lego lemmam ${this.via}`,
+      nuntium: `Lego lemmam ${this.via}`
     })
-    try {
-      const res: Parser = parse(this.optanda)
-      const flumen = pipeline(fs.createReadStream(this.via, { flags: 'r' }), res)
-      for await (const illud of res) {
-        const hoc: Hoc = new this.structor()
-        for (const [columna, crudum] of Object.entries(illud as Record<string, string>)) {
-          try {
-            this.ponatur(hoc, columna, crudum)
-          } catch (error) {
-            Nuntius.timeo({
-              nomen: this.constructor.name,
-              error: error as Error,
-            })
+    if (this.via.startsWith('@/res'))
+      try {
+        await access(this.via, constants.F_OK)
+        const res: Parser = parse(this.optanda)
+        //  eslint-disable-next-line security/detect-non-literal-fs-filename -- via validast
+        const flumen = pipeline((await open(this.via, 'r')).createReadStream({ encoding: 'utf8' }), res)
+        for await (const illud of res) {
+          const hoc: Hoc = new this.structor()
+          for (const [columna, crudum] of Object.entries(illud as Record<string, string>)) {
+            try {
+              this.ponatur(hoc, columna, crudum)
+            } catch (error) {
+              Nuntius.timeo({
+                nomen: this.constructor.name,
+                error: error as Error
+              })
+            }
           }
+          this.haec.push(hoc)
         }
-        this.haec.push(hoc)
+        await flumen
+        Nuntius.noto({
+          nomen: this.constructor.name,
+          nuntium: `Legere finitu'st lemmam ${this.via}`
+        })
+      } catch (error) {
+        Nuntius.timeo({
+          nomen: this.constructor.name,
+          error: error as Error
+        })
       }
-      await flumen
-      Nuntius.noto({
-        nomen: this.constructor.name,
-        nuntium: `Legere finitu'st lemmam ${this.via}`,
-      })
-    } catch (error) {
-      Nuntius.timeo({
-        nomen: this.constructor.name,
-        error: error as Error,
-      })
-    }
   }
 
   protected ponatur(hoc: Hoc, clavis: string, valor: string) {
+    //  eslint-disable-next-line security/detect-object-injection -- clavis validast
     if (clavis in hoc) (hoc as unknown as { [clavis]: string })[clavis] = valor
     else throw errator({ [clavis]: valor })
   }
 
-  @Nuntius.captor get omnia(): string[] {
-    const omnia: string[] = []
-    fs.readdir(
-      this.scapum,
-      {
-        encoding: 'utf-8',
-        recursive: false,
-      },
-      () => (error: Error | null, valores: string[]) => {
-        if (!valores.empty) valores.forEach((valor: string) => omnia.push(valor))
-        if (error !== null) {
-          Nuntius.timeo({
-            nomen: this.constructor.name,
-            error: error,
-          })
-          throw error
-        }
-      },
-    )
-    return omnia
+  @Nuntius.captor get omnia(): Promise<string[]> {
+    //  eslint-disable-next-line security/detect-non-literal-fs-filename -- scapum validust
+    return readdir(this.scapum, {
+      encoding: 'utf-8',
+      recursive: false
+    })
   }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
-    this.via = path.join(this.scapum, `${lemma}.csv`)
+    this.via = path.resolve(this.scapum, `${lemma}.csv`)
     await this.aperiatur()
     const numerus: number = Math.min(this.haec.length, 2)
     const eventus = {
-      numerus: ['Nihil', 'Unum', 'Multa'][numerus],
-      haec: [undefined, this.haec.first(), this.haec][numerus],
+      numerus: ['Nihil', 'Unum', 'Multa'][Number(numerus)],
+      haec: [undefined, this.haec.first(), this.haec][Number(numerus)]
     }
     Nuntius.noto({
       nomen: this.constructor.name,
-      nuntium: `${eventus.numerus} tulit lemma ${lemma}`,
+      nuntium: `${eventus.numerus} tulit lemma ${lemma}`
     })
     return new Ulla(eventus.haec)
   }
 
   constructor(
-    private scapum: string,
-    private readonly structor: new () => Hoc,
+    private readonly scapum: string,
+    private readonly structor: new () => Hoc
   ) {
-    this.scapum = path.join('@res', scapum)
+    this.scapum = path.resolve('@res', scapum)
   }
 
   [Symbol.dispose]() {
@@ -159,12 +149,14 @@ export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {
       (hoc: Hoc, valor: string | undefined) => {
         const res = hoc as unknown as { [nomen]: Res<boolean, Lineae> }
         if (!res) throw errator({ [nomen]: valor ?? '' })
+        //  eslint-disable-next-line security/detect-object-injection -- nomen validust
         else res[nomen].valor = valor
-      },
-    ]),
+      }
+    ])
   )
 
   override ponatur(hoc: Hoc, clavis: string, valor: string) {
+    //  eslint-disable-next-line security/detect-object-injection -- clavis validast
     return this.positores[clavis]?.(hoc, valor) ?? super.ponatur(hoc, clavis, valor)
   }
 }

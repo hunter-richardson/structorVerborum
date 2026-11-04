@@ -1,0 +1,7 @@
+#!/usr/bin/fish --no-config
+
+set -q GITHUB_ACTIONS;
+  and exit
+
+set -x NODE_OPTIONS '--import tsx'
+./node_modules/.bin/lint-staged --config ./lint-staged.config.ts
