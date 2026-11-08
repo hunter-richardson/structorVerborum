@@ -93,7 +93,7 @@
     "typedoc-plugin-vue": "^1.5.1",
     "typescript": "^5.9.3",
     "typescript-cookie": "^1.0.6",
-    "vite": "^8.3.5",
+    "vite": "^8.3.6",
     "vite-plugin-checker": "^0.14.5",
     "vite-plugin-oxlint": "^2.2.1",
     "vite-plugin-vue-devtools": "^8.2.1",
