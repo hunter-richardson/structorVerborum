@@ -91,7 +91,7 @@
     "typedoc-plugin-coverage": "^4.0.3",
     "typedoc-plugin-mdn-links": "^5.1.1",
     "typedoc-plugin-vue": "^1.5.1",
-    "typescript": "^7.0.2",
+    "typescript": "~6.0.3",
     "typescript-cookie": "^1.0.6",
     "vite": "^8.3.6",
     "vite-plugin-checker": "^0.14.5",
@@ -120,7 +120,8 @@
     "vue-draggable-next": "^2.3.0"
   },
   "overrides": {
-    "@fastify/busboy": "^3.2.2"
+    "@fastify/busboy": "^3.2.2",
+    "typescript": "6.0.3"
   },
   "sideEffects": [
     "src/extensions/array.ts",
