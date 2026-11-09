@@ -1,0 +1,18 @@
+name: knip
+on: push
+
+jobs:
+  knip:
+    runs-on: ubuntu-latest
+    name: knip
+    steps:
+      - name: vellere
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
+      - name: tollere
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: latest
+      - name: inaugurare
+        run: pnpm ci
+      - name: agere
+        run: pnpm knip

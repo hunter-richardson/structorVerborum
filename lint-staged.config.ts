@@ -1,13 +1,14 @@
+import { buildRegExp, choiceOf, startOfString, endOfString } from 'ts-regex-builder'
 import { defineConfig, type Configuration } from 'lint-staged/config'
-import '@/extensions/array'
 import Path from '@/extensions/path'
+import '@/extensions/array'
 
 const fontana: string[] = ['ts', 'vue'] //  NOSONAR: Vere aciem hic volo
-const linabile: string[] = ['json', 'yaml', 'yml', ...fontana] //  NOSONAR: Vere aciem hic volo
+const lineabile: string[] = ['json', 'yaml', 'yml', ...fontana] //  NOSONAR: Vere aciem hic volo
 
 const omnibus: [string, string[]][] = [
   ['prettier --write --ignore-unknown', []],
-  ['eslint --config ./eslint.config.ts', linabile],
+  ['eslint --config ./eslint.config.ts', lineabile],
   ['vue-tsc-files -p ./tsconfig.typecheck.json', fontana]
 ]
 
@@ -19,6 +20,7 @@ export default defineConfig(((fila: string[]) => {
       .map(([imperium, linguae]) => [imperium, fila.filter((filum) => linguae.includes(new Path(filum).lastExtension))])
       .filter(([_, scena]: [string, string[]]) => scena.any)
       .map(([imperium, scena]: [string, string[]]) => `${imperium} ${scena.join(' ')}`),
-    ...(fila.some((filum) => new Path(filum).filename === 'eslint.config.ts') ? uni : [])
+    ...(fila.some((filum) => new Path(filum).filename === 'eslint.config.ts') ? uni : []),
+    'knip'
   ]
 }) as Configuration)

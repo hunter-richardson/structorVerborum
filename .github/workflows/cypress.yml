@@ -39,7 +39,5 @@ jobs:
           if-no-files-found: warn
           path: >
             cypress/screenshots
-            
             cypress/videos
-            
             cypress/logs

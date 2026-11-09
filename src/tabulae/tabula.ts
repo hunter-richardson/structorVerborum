@@ -31,7 +31,7 @@ export function tabulatorst<Hoc extends Multiplex>(tabulendum: Tabula<Hoc> | Tab
 }
 
 @Ignavum
-abstract class Tabula<Hoc extends Multiplex> {
+export abstract class Tabula<Hoc extends Multiplex> {
   static async regula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>>(structor: new () => Hoc, illud: Illud): Promise<TabulaRegula<Hoc, Illud>> {
     const ista = new TabulaRegula(structor, illud)
     await ista.tabulentur()
@@ -198,5 +198,3 @@ export class TabulaRegula<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> e
     super(structor, illud)
   }
 }
-
-export { Tabula }

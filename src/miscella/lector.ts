@@ -1,6 +1,6 @@
 import { CsvError, type Options, parse, type Parser } from 'csv-parse'
 import { buildRegExp, choiceOf } from 'ts-regex-builder'
-import path from 'node:path'
+import { resolve } from 'node:path'
 import { access, constants, open, readdir } from 'node:fs/promises'
 import { TabulamenActus, TabulamenAdiectivi, TabulamenAdverbii, TabulamenIncomparabilis, TabulamenNominis, TabulamenNumeraminis } from '@/praebeunda/tabulamina'
 import { errator, type Lineae, nomina, Res } from '@/praebeunda/valores'
@@ -9,6 +9,7 @@ import { Ignavum, Ultimum } from '@/miscella/usus'
 import { Verbum } from '@/praebeunda/verba'
 import Nuntius from '@/miscella/nuntius'
 import { pipeline } from 'node:stream/promises'
+import Path from '@/extensions/path'
 
 export class Ulla<Hoc> extends Array<Hoc> {
   get unum(): Hoc | undefined {
@@ -106,14 +107,12 @@ export class Lector<Hoc extends Lectum> implements Disposable {
 
   @Nuntius.captor get omnia(): Promise<string[]> {
     //  eslint-disable-next-line security/detect-non-literal-fs-filename -- scapum validust
-    return readdir(this.scapum, {
-      encoding: 'utf-8',
-      recursive: false
-    })
+    return readdir(this.scapum, { withFileTypes: true })
+             .filter((filum) => filum.isFile() && new Path(filum).extension === 'csv')
   }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
-    this.via = path.resolve(this.scapum, `${lemma}.csv`)
+    this.via = resolve(this.scapum, `${lemma}.csv`)
     await this.aperiatur()
     const numerus: number = Math.min(this.haec.length, 2)
     const eventus = {
@@ -131,7 +130,7 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     private readonly scapum: string,
     private readonly structor: new () => Hoc
   ) {
-    this.scapum = path.resolve('@res', scapum)
+    this.scapum = resolve('@res', scapum)
   }
 
   [Symbol.dispose]() {

@@ -24,15 +24,8 @@ dist
 
 /.vscode
 
-src/cypress/e2e
-src/cypress/fixtures
-src/cypress/support
-cypress
-
 res/loci/*.errata.yml
 
 src/**/*.js
 
 *.config.js
-!.oxlintrc.json
-!eslint.config.ts

@@ -25,19 +25,9 @@ jobs:
           node-version: latest
       - name: inaugurare
         run: pnpm ci
-      - name: fundere
-        run: pnpm lint
       - name: verificare
-        run: tsc --build --clean
+        run: pnpm lint && typecheck
       - name: struere
         run: pnpm release
       - name: invenire
-        run: local locus=$(grep 'outDir' ./tsconfig.json | awk '{ print $2 }') | tr -dc '[:alpha:]\n'
-      - name: emissa
-        run: local emissa=$(find ${locus} -type f | wc -l)
-      - name: delere
-        if: ${{ env.emissa == 0 }}
-        run: >
-          printf '::error title=aedificare::defectust'
-          
-          exit 1
+        run: pnpm tsx ${{ github.workspace }}/scriptura/invenire.ts

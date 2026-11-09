@@ -3,6 +3,6 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "exclude": ["src/cypress/{e2e,support}/*.ts", "node_modules"],
+  "exclude": ["node_modules"],
   "include": ["*.config.ts", "src/**/*.ts", "src/cypress/{a_capite_ad_caupam,componenta}/*.ts", "src/facies{,tabulam}/*.vue"]
 }

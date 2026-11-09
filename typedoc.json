@@ -5,7 +5,6 @@
     "typedoc-plugin-markdown",
     "typedoc-github-wiki-theme",
     "@8hobbies/typedoc-plugin-404",
-    "@droppedcode/typedoc-plugin-relative-includes",
     "typedoc-plugin-vue",
     "typedoc-plugin-mdn-links"
     // "typedoc-plugin-mtos",
