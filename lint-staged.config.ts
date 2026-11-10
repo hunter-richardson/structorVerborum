@@ -31,6 +31,6 @@ export default defineConfig(((fila: string[]) => {
       .map(([imperium, scena]: [string, string[]]) => `${imperium} ${scena.join(' ')}`),
     ...(fila.some((filum) => new Path(filum).filename === 'eslint.config.ts') ? lineatori : []),
     ...(fila.some((filum) => new Path(filum).filename === 'README.md') ? scribendo : [])
-    // 'knip'
+    //  TODO: implement knip
   ]
 }) as Configuration)
