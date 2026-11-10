@@ -72,7 +72,10 @@ export default class Nuntius implements Disposable {
     })
   }
 
-  static positor<Hoc, Valor>(positor: (this: Hoc, valor: Valor) => void, contextus: ClassSetterDecoratorContext<Hoc, Valor>) {
+  static positor<Hoc, Valor>(
+    positor: (this: Hoc, valor: Valor) => void,
+    contextus: ClassSetterDecoratorContext<Hoc, Valor>
+  ) {
     return function (this: Hoc, valor: Valor) {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
@@ -97,7 +100,10 @@ export default class Nuntius implements Disposable {
     }
   }
 
-  static captor<Hoc, Illud>(captor: (this: Hoc) => Illud, contextus: ClassGetterDecoratorContext<Hoc, Illud>) {
+  static captor<Hoc, Illud>(
+    captor: (this: Hoc) => Illud,
+    contextus: ClassGetterDecoratorContext<Hoc, Illud>
+  ) {
     return function (this: Hoc): Illud {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus parametrae arbitrariae sunt
@@ -139,7 +145,10 @@ export default class Nuntius implements Disposable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
-  static modus<Hoc, Parametra extends any[], Illud>(modus: (this: Hoc, ...parametra: Parametra) => Illud, contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>) {
+  static modus<Hoc, Parametra extends any[], Illud>(
+    modus: (this: Hoc, ...parametra: Parametra) => Illud,
+    contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Illud>
+  ) {
     return function (this: Hoc, ...parametra: Parametra): Illud {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
@@ -166,7 +175,13 @@ export default class Nuntius implements Disposable {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae modis generalibus parametrae arbitrariae sunt
-  static promittum<Hoc, Parametra extends any[], Illud>(promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>, contextus: ClassMethodDecoratorContext<Hoc, (this: Hoc, ...parametra: Parametra) => Promise<Illud>>) {
+  static promittum<Hoc, Parametra extends any[], Illud>(
+    promittum: (this: Hoc, ...parametra: Parametra) => Promise<Illud>,
+    contextus: ClassMethodDecoratorContext<
+      Hoc,
+      (this: Hoc, ...parametra: Parametra) => Promise<Illud>
+    >
+  ) {
     return async function (this: Hoc, ...parametra: Parametra): Promise<Illud> {
       Nuntius.noto({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Alendae structoribus generalibus arbitrariae sunt
@@ -209,7 +224,8 @@ export default class Nuntius implements Disposable {
 
   nuntio(parametra: { error?: Error; gradus?: string; nuntium?: string }): void {
     if (parametra.error) this._nuntiator.error(parametra.error)
-    if (parametra.gradus && parametra.nuntium) this._nuntiator.log(parametra.gradus, parametra.nuntium)
+    if (parametra.gradus && parametra.nuntium)
+      this._nuntiator.log(parametra.gradus, parametra.nuntium)
   }
 
   private constructor(private readonly _nomen?: string) {
@@ -278,11 +294,22 @@ export default class Nuntius implements Disposable {
 class Temporis {
   static hodie(): string {
     const hodie: Date = new Date()
-    return [Numerator.romanus(hodie.getUTCDay()), Mensa[hodie.getUTCMonth()], Numerator.romanus(hodie.getUTCFullYear())].join('')
+    return [
+      Numerator.romanus(hodie.getUTCDay()),
+      Mensa[hodie.getUTCMonth()],
+      Numerator.romanus(hodie.getUTCFullYear())
+    ].join('')
   }
 
   static nunc(): string {
     const nunc: Date = new Date()
-    return [nunc.getUTCHours(), nunc.getUTCMinutes(), nunc.getUTCSeconds(), nunc.getUTCMilliseconds()].map((numerus) => Numerator.romanus(numerus)).join(':')
+    return [
+      nunc.getUTCHours(),
+      nunc.getUTCMinutes(),
+      nunc.getUTCSeconds(),
+      nunc.getUTCMilliseconds()
+    ]
+      .map((numerus) => Numerator.romanus(numerus))
+      .join(':')
   }
 }

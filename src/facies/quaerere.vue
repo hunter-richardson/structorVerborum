@@ -56,13 +56,14 @@
     onerans.value = true
   }
 
-  async function exoneratur(): Promise<void> {
+  function exoneratur(): Promise<void> {
     onerans.value = false
+    return Promise.resolve()
   }
 
   async function sarci(): Promise<void> {
     reoneratur()
-    lemmae.value = await dictionarium.quaeratur(quaerenda.value)
+    lemmae.value = dictionarium.quaeratur(quaerenda.value)
     return exoneratur()
   }
 
@@ -71,14 +72,14 @@
     const res: Eventus = await dictionarium.forsReferatur(quaerenda.value)
     if (inflectenda(res.categoria)) eventus.value = res
     else verbum.value = (res as Referendum) ?? undefined
-    return exoneratur()
+    return await exoneratur()
   }
 
   async function omnia(): Promise<void> {
     reoneratur()
     quaerenda.value.categoriae = []
     quaerenda.value.pars = ''
-    sarci()
+    await sarci()
   }
 
   async function aperi(lemma: Lemma) {
@@ -96,28 +97,72 @@
     } else error.value = true
   }
 
-  onMounted(async () => {
-    await omnia().then(() => exoneratur())
-  })
+  onMounted(async () => await omnia())
 </script>
 
 <template>
   <Loqui />
   <Specere v-if="verbum !== undefined" :verbum="verbum as Verbum" @blur="verbum = undefined" />
-  <Inflectere v-else-if="eventus !== undefined" :eventus="eventus as Eventus" @blur="eventus = undefined" />
+  <Inflectere
+    v-else-if="eventus !== undefined"
+    :eventus="eventus as Eventus"
+    @blur="eventus = undefined" />
   <template v-if="!onerans">
     <div class="text-center">
-      <v-btn v-for="res in duo" :id="res.scriptum" :key="res.scriptum" :disabled="onerans" :text="t(`annuli.quaerere.${res.scriptum}`)" :append-icon="res.icon" @click="res.actus()" />
+      <v-btn
+        v-for="res in duo"
+        :id="res.scriptum"
+        :key="res.scriptum"
+        :disabled="onerans"
+        :text="t(`annuli.quaerere.${res.scriptum}`)"
+        :append-icon="res.icon"
+        @click="res.actus()" />
     </div>
   </template>
-  <v-data-table id="tabula" :items-per-page="10" density="compact" :loading="onerans" :disabled="onerans" :headers="columnae">
+  <v-data-table
+    id="tabula"
+    :items-per-page="10"
+    density="compact"
+    :loading="onerans"
+    :disabled="onerans"
+    :headers="columnae">
     <template #headers="{ headers, isSorted, getSortIcon, toggleSort }">
       <tr>
         <td v-for="columna in headers.flat()" :key="columna.key ?? ''">
           <v-icon v-if="isSorted(columna)" :icon="getSortIcon(columna)" />
-          <v-text-field v-if="columna.key === 'lemma'" id="quaerenda.pars" v-model="quaerenda.pars" :label="columna.title" :disabled="onerans" :loading="onerans" :rules="validator" validate-on="input" density="compact" single-line autofocus flat @blur="removeApices()" />
-          <v-select v-else-if="columna.key === 'categoriae'" id="quaerenda.categoriae" v-model="quaerenda.categoriae" :loading="onerans" density="compact" :disabled="onerans" :label="columna.title" :items="categoriae" chips flat multiple open-on-clear />
-          <v-btn :id="`ordina_${columna.key}`" append-icon="swap_vert" class="mr-2 cursor-pointer border-none bg-transparent p-0" type="button" @click="toggleSort(columna)" />
+          <v-text-field
+            v-if="columna.key === 'lemma'"
+            id="quaerenda.pars"
+            v-model="quaerenda.pars"
+            :label="columna.title"
+            :disabled="onerans"
+            :loading="onerans"
+            :rules="validator"
+            validate-on="input"
+            density="compact"
+            single-line
+            autofocus
+            flat
+            @blur="removeApices()" />
+          <v-select
+            v-else-if="columna.key === 'categoriae'"
+            id="quaerenda.categoriae"
+            v-model="quaerenda.categoriae"
+            :loading="onerans"
+            density="compact"
+            :disabled="onerans"
+            :label="columna.title"
+            :items="categoriae"
+            chips
+            flat
+            multiple
+            open-on-clear />
+          <v-btn
+            :id="`ordina_${columna.key}`"
+            append-icon="swap_vert"
+            class="mr-2 cursor-pointer border-none bg-transparent p-0"
+            type="button"
+            @click="toggleSort(columna)" />
         </td>
       </tr>
     </template>
@@ -129,7 +174,12 @@
         </tr>
         <tr>
           <td>
-            <v-btn id="aperi" :disabled="error" :text="t('annuli.quaerere.aperire')" append-icon="open_in_full" @click="aperi(lemma)" />
+            <v-btn
+              id="aperi"
+              :disabled="error"
+              :text="t('annuli.quaerere.aperire')"
+              append-icon="open_in_full"
+              @click="aperi(lemma)" />
           </td>
         </tr>
       </template>

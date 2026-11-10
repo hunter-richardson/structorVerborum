@@ -1,5 +1,6 @@
 import { type PluginOptions as PrettierYamlOptions } from 'prettier-plugin-yaml'
 import { type Config as PrettierOptions } from 'prettier'
+
 type Options = PrettierOptions & PrettierYamlOptions
 export default {
   bracketSameLine: true,
@@ -7,7 +8,7 @@ export default {
   checkIgnorePragma: true,
   endOfLine: 'lf',
   quoteProps: 'as-needed',
-  printWidth: 10000,
+  printWidth: 100,
   proseWrap: 'never',
   semi: false,
   singleAttributePerLine: false,
@@ -28,6 +29,5 @@ export default {
   plugins: ['prettier-plugin-yaml'],
   yamlBlockStyle: 'folded',
   yamlCollectionStyle: 'block',
-  yamlQuoteKeys: false,
-  yamlQuoteValuesMatching: '^(true|false|null|TRUE|FALSE|NULL|-?([0-9]+)(.[0-9]+)?(.[0-9]+)?)$'
+  yamlQuoteKeys: false
 } satisfies Options

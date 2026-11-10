@@ -1,66 +1,87 @@
-import { configDefaults, type ConfigEnv } from 'vitest/config'
+import { configDefaults, ConfigEnv, defineConfig, PluginOption, UserConfig } from 'vite-plus'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import tsconfigPaths from 'vite-tsconfig-paths'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 import { fileURLToPath, URL } from 'node:url'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import checker from 'vite-plugin-checker'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
 
-// https://vitejs.dev/config/
-/** @type {import ('vite').UserConfig} */
-
-type Figura = NonNullable<Parameters<typeof defineConfig>[0]>
-
-const figura: Figura = (env: ConfigEnv) => {
-  const operandi: boolean = env.mode === 'production'
+const figura = ({ mode }: ConfigEnv): UserConfig => {
+  const operandi: boolean = mode === 'production'
   const minifaciendi = {
     vexillum: operandi ? 'oxc' : false,
     sistenda: operandi
       ? {
           mangle: {
-            reserved: ['Sessio', 'Apices', 'UtendaU', 'Magnas', 'Assensus', 'Facies', 'Lingua', 'Separator', 'Actus', 'Adiectivum', 'Adverbium', 'Nomen', 'Numerale', 'Numeramen', 'Pronomen', 'Categoria', 'Casus', 'Factus', 'Genus', 'Gradus', 'Modus', 'Numerus', 'Persona', 'Referendus', 'Tempus', 'Vox']
+            reserved: [
+              'Sessio',
+              'Apices',
+              'UtendaU',
+              'Magnas',
+              'Assensus',
+              'Facies',
+              'Lingua',
+              'Separator',
+              'Actus',
+              'Adiectivum',
+              'Adverbium',
+              'Nomen',
+              'Numerale',
+              'Numeramen',
+              'Pronomen',
+              'Categoria',
+              'Casus',
+              'Factus',
+              'Genus',
+              'Gradus',
+              'Modus',
+              'Numerus',
+              'Persona',
+              'Referendus',
+              'Tempus',
+              'Vox'
+            ]
           }
         }
       : {}
   }
 
   return {
+    appType: 'mpa',
+    logLevel: operandi ? 'error' : 'info', //  TODO: development:warn after consistent builds
+    server: { open: true },
+    publicDir: './res',
     build: {
       cssMinify: operandi ? 'lightningcss' : false,
+      emptyOutDir: false,
       minify: minifaciendi.vexillum as false | 'oxc',
-      minifyOptions: minifaciendi.sistenda,
-      publicDir: './res',
       sourcemap: !operandi,
       rolldownOptions: {
         output: {
           codeSplitting: false,
-          entryFilenames: 'fascis.min.js',
+          entryFileNames: 'fascis.min.js',
           minify: minifaciendi.sistenda
         }
       }
     },
     resolve: {
-      alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
-      },
+      alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
       tsconfigPaths: true
     },
-    plugins: [checker({ typescript: true }), tsconfigPaths(), vueJsx(), vue(), operandi ? [] : VueDevTools()],
+    plugins: [
+      checker({ typescript: true }),
+      basicSsl(),
+      vueJsx(),
+      vue(),
+      operandi ? [] : VueDevTools()
+    ] as PluginOption[],
     test: {
       environment: 'jsdom',
-      exclude: [...configDefaults.exclude, 'e2e/**'],
-      root: fileURLToPath(new URL('/', import.meta.url))
+      exclude: configDefaults.exclude,
+      root: fileURLToPath(new URL('.', import.meta.url))
     },
-    css: {
-      logLevel: operandi ? 'error' : 'info', //  development:warn after consistent builds
-      devSourcemap: !operandi,
-      devTools: !operandi,
-      appType: 'mpa',
-      server: {
-        open: true
-      }
-    }
+    css: { devSourcemap: !operandi },
+    devtools: { apply: 'serve' }
   }
 }
 

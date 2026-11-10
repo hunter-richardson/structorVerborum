@@ -19,7 +19,10 @@ type OmitByPattern<T, P extends string> = {
 type RulesConfig = ConfigObject['rules']
 type Plugin = NonNullable<ConfigObject['plugins']>[string]
 
-function omitKeys<T extends Record<string, unknown>, P extends string>(obj: T, pattern: RegExp & { __brand?: P }): OmitByPattern<T, P> {
+function omitKeys<T extends Record<string, unknown>, P extends string>(
+  obj: T,
+  pattern: RegExp & { __brand?: P }
+): OmitByPattern<T, P> {
   const result = { ...obj }
   for (const key in result) {
     //  eslint-disable-next-line security/detect-object-injection -- key is verified
@@ -52,7 +55,16 @@ const rules: RulesConfig = {
   ]
 }
 
-const ignores: ConfigObject = globalIgnores(['src/cypress/{e2e,fixtures,support}/*', 'res/loci/{en,la}.errata.yml', 'pnpm-lock.yaml', 'dist/**', '**/*.js', '**/*.cjs', '**/*.mjs', '**.html'])
+const ignores: ConfigObject = globalIgnores([
+  'src/cypress/{e2e,fixtures,support}/*',
+  'res/loci/{en,la}.errata.yml',
+  'pnpm-lock.yaml',
+  'dist/**',
+  '**/*.js',
+  '**/*.cjs',
+  '**/*.mjs',
+  '**.html'
+])
 
 const source: ConfigObject = {
   files: ['{,src/**}/*.{ts,vue}'],
@@ -111,8 +123,8 @@ const vue: ConfigObject[] = vuelint.configs['flat/recommended'].map((config: Con
 }))
 
 const markdown: ConfigObject[] = markdownlint.configs.recommended.map((config) => ({
-  files: ['{,res/docenda/{en,la}}/*.md'],
-  ...config
+  ...config,
+  files: config.files ?? ['{,res/docenda/{en,la}/}*.md']
 }))
 
 const prettier: ConfigObject = {
@@ -120,4 +132,16 @@ const prettier: ConfigObject = {
   ...prettierlint
 }
 
-export default withVueTs(...vue, ...markdown, ...ymllint.configs['flat/standard'], vuetslint.recommended, cypresslint.configs.recommended, security.configs.recommended, ignores, source, typescript, noBarrels, prettier)
+export default withVueTs(
+  ...vue,
+  ...markdown,
+  ...ymllint.configs['flat/standard'],
+  vuetslint.recommended,
+  cypresslint.configs.recommended,
+  security.configs.recommended,
+  ignores,
+  source,
+  typescript,
+  noBarrels,
+  prettier
+)

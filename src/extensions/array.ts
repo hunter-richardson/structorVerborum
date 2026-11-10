@@ -54,7 +54,9 @@ Array.prototype.excludes = function <T>(that?: T): boolean {
 }
 
 Array.prototype.count = function <T>(predicate?: (param: T) => boolean): number {
-  return predicate ? this.reduce((count: number, item: T): number => count + (predicate(item) ? 1 : 0), 0) : this.length
+  return predicate
+    ? this.reduce((count: number, item: T): number => count + (predicate(item) ? 1 : 0), 0)
+    : this.length
 }
 
 Array.prototype.sortRecursive = function <T>(...comparators: Comparator<T>[]): T[] {

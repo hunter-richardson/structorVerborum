@@ -1,7 +1,7 @@
 name: Cypress
 
 on:
-  workflow_dispatch: "null"
+  workflow_dispatch: null
   push:
     branches-ignore:
       - princeps
@@ -31,13 +31,11 @@ jobs:
           else
             printf 'Nuntia nulla generata sunt\n'
           fi
-      - name: "null"
+      - name: mittere
         uses: actions/upload-artifact@0c366cb4fc8897159c94880f94b55bc716ad6a66
         if: always()
         with:
           name: cypress-artifacts
           if-no-files-found: warn
           path: >
-            cypress/screenshots
-            cypress/videos
-            cypress/logs
+            cypress/screenshots cypress/videos cypress/logs

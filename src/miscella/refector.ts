@@ -1,4 +1,17 @@
-import { anyOf, buildRegExp, capture, type CaptureOptions, choiceOf, type EncodedRegex, endOfString, optional, regex, startOfString, whitespace, zeroOrMore } from 'ts-regex-builder'
+import {
+  anyOf,
+  buildRegExp,
+  capture,
+  type CaptureOptions,
+  choiceOf,
+  type EncodedRegex,
+  endOfString,
+  optional,
+  regex,
+  startOfString,
+  whitespace,
+  zeroOrMore
+} from 'ts-regex-builder'
 import { inspect } from 'node:util'
 import { errator, Fultum, type Lineae, nomina, valores } from '@/praebeunda/valores'
 import { type Agendum, Multiplex } from '@/praebeunda/verba'
@@ -91,6 +104,7 @@ const colamen: RegExp = buildRegExp([
 @Ultimum
 @Nuntius.factum
 export default class<Hoc extends Multiplex> {
+  //  NOSONAR: Nil moror
   private readonly ista: Istud<Hoc>[] = []
 
   private praedicatur(nomen: string, operator: string, quaerendus: string): Praedicendum<Hoc> {
@@ -129,7 +143,8 @@ export default class<Hoc extends Multiplex> {
         const certamenStatus: RegExpExecArray | undefined = colamenStatus.exec(ullus) ?? undefined
         if (certamenStatus?.groups !== undefined) {
           const { nomen, operator, quaerendus } = certamenStatus.groups
-          if (!nomen.empty && !operator.empty && !quaerendus.empty) praedicenda.push(this.praedicatur(nomen, operator, quaerendus))
+          if (!nomen.empty && !operator.empty && !quaerendus.empty)
+            praedicenda.push(this.praedicatur(nomen, operator, quaerendus))
         }
       })
       return praedicenda.every((praedicendum) => praedicendum(agendum))
@@ -144,7 +159,8 @@ export default class<Hoc extends Multiplex> {
         return (agenda: Agendum<Hoc>[], numerus: number) => {
           if (nomen !== undefined && !nomen.empty && novus !== undefined && !novus.empty) {
             const fultum: Fultum<Lineae> | undefined = agenda[Number(numerus)].valores.inveni(nomen)
-            if (fultum === undefined) throw new Error(`Nullum ${nomen} in ${inspect(agenda[Number(numerus)])}`)
+            if (fultum === undefined)
+              throw new Error(`Nullum ${nomen} in ${inspect(agenda[Number(numerus)])}`)
             fultum.valor = novus
           }
         }

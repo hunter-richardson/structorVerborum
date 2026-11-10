@@ -8,5 +8,9 @@
 </script>
 
 <template>
-  <v-skeleton-loader v-if="onerans" :loading="onerans" type="table-tbody" :loading-text="t('scripta.onerare.onerans', { pittacium: pittacium })" />
+  <v-skeleton-loader
+    v-if="onerans"
+    :loading="onerans"
+    type="table-tbody"
+    :loading-text="t('scripta.onerare.onerans', { pittacium: pittacium })" />
 </template>

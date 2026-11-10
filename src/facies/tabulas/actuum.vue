@@ -36,11 +36,19 @@
 </script>
 
 <template>
-  <Inflectere v-if="referendum !== undefined" :agendum="referendum" @blur="referendum = undefined" />
+  <Inflectere
+    v-if="referendum !== undefined"
+    :agendum="referendum"
+    @blur="referendum = undefined" />
   <template v-else-if="agendum !== undefined">
     <Tabulare :agendum="agendum" :categoria="Actus.name.lowercase" />
     <v-btn-toggle>
-      <v-btn v-for="res in tria" :id="res.ipsum" :key="res.ipsum" :text="$tf(res.scriptum, 'capitalize')" @click="res.actus()" />
+      <v-btn
+        v-for="res in tria"
+        :id="res.ipsum"
+        :key="res.ipsum"
+        :text="$tf(res.scriptum, 'capitalize')"
+        @click="res.actus()" />
     </v-btn-toggle>
   </template>
 </template>

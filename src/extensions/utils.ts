@@ -1,5 +1,5 @@
-import isEqualWith from 'lodash.isequalwith'
-import equal from 'fast-deep-equal'
+// import isEqualWith from 'lodash.isequalwith'
+// import equal from 'fast-deep-equal'
 import '@/extensions/string'
 import '@/extensions/array'
 
@@ -10,12 +10,13 @@ export type SortResult = -1 | 0 | 1
 type Extractor<T> = ((obj: T) => number) | ((obj: T) => string)
 
 function compareResults<T extends number | string>(first: T, second: T): SortResult {
-  if (typeof first === 'number' && typeof second === 'number') return Math.sign(first - second) as SortResult
+  if (typeof first === 'number' && typeof second === 'number')
+    return Math.sign(first - second) as SortResult
   else if (typeof first === 'string' && typeof second === 'string') return first.compare(second)
   else throw TypeError('Types must match!')
 }
 
-type Customizer = NonNullable<Parameters<typeof isEqualWith>[2]>
+// type Customizer = NonNullable<Parameters<typeof isEqualWith>[2]>
 
 export function comparison<T>(...extractors: Extractor<T>[]): Comparator<T> {
   return (first: T, second: T): SortResult => {
@@ -27,17 +28,25 @@ export function comparison<T>(...extractors: Extractor<T>[]): Comparator<T> {
   }
 }
 
-export function deepEqualExcept(objThis: unknown, objThat: unknown, ...keys: PropertyKey[]): boolean {
-  if (!keys.empty) {
-    const ignored: Set<PropertyKey> = new Set(keys)
-    const customizer: Customizer = (_: unknown, __: unknown, key: PropertyKey | undefined): true | undefined => (key !== undefined && ignored.has(key)) || undefined
-    return isEqualWith(objThis, objThat, customizer)
-  } else return equal(objThis, objThat)
-}
+// export function deepEqualExcept(
+//   objThis: unknown,
+//   objThat: unknown,
+//   ...keys: PropertyKey[]
+// ): boolean {
+//   if (!keys.empty) {
+//     const ignored: Set<PropertyKey> = new Set(keys)
+//     const customizer: Customizer = (
+//       _: unknown,
+//       __: unknown,
+//       key: PropertyKey | undefined
+//     ): true | undefined => (key !== undefined && ignored.has(key)) || undefined
+//     return isEqualWith(objThis, objThat, customizer)
+//   } else return equal(objThis, objThat)
+// }
 
-export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
-  const result: T = { ...obj }
-  //  eslint-disable-next-line security/detect-object-injection -- key is verified
-  keys.filter((key) => key in result).forEach((key) => delete result[key])
-  return result as Omit<T, K>
-}
+// export function omit<T extends object, K extends keyof T>(obj: T, ...keys: K[]): Omit<T, K> {
+//   const result: T = { ...obj }
+//   //  eslint-disable-next-line security/detect-object-injection -- key is verified
+//   keys.filter((key) => key in result).forEach((key) => delete result[key])
+//   return result as Omit<T, K>
+// }

@@ -13,11 +13,24 @@ function aguntur(imperia: string[]): boolean {
 try {
   if (aguntur(['sudo apt-get install -y secure-delete', 'git checkout --orgphan gh-pages'])) {
     console.log('Inceptust collegi')
-    if (aguntur(['npm run build', 'git --work-tree build add --all', "git --work-tree commit -m 'expedire'"])) {
+    if (
+      aguntur([
+        'npm run build',
+        'git --work-tree build add --all',
+        "git --work-tree commit -m 'expedire'"
+      ])
+    ) {
       console.log('Successu collectust')
 
       console.log('Inceptust expediri')
-      if (aguntur(['git push origin HEAD:gh-pages --force --verbose', 'srm -dfrv -ll build', 'git checkout -f princeps', 'git branch -D gh-pages'])) {
+      if (
+        aguntur([
+          'git push origin HEAD:gh-pages --force --verbose',
+          'srm -dfrv -ll build',
+          'git checkout -f princeps',
+          'git branch -D gh-pages'
+        ])
+      ) {
         console.log('Expeditust successu')
       }
     }

@@ -5,6 +5,10 @@ import Nuntius from '@/miscella/nuntius'
 import '@/extensions/string'
 import '@/extensions/array'
 
+function interest<Illud extends string>(verbum: Verbum, ...illa: Illud[]): boolean {
+  return illa.includes(verbum.scriptum as Illud)
+}
+
 @Ultimum
 @Ignavum
 @Nuntius.factum
@@ -25,8 +29,7 @@ class Locutor {
     if (praevium === undefined) return
     if (praevium.categoria.valor === 'praepositio') {
       if (verbum.scriptum.startsWithVowel) {
-        const adaequatur: boolean = /^(ab|ex)$/iu.test(praevium.scriptum)
-        if (adaequatur) {
+        if (interest(praevium, 'ab', 'ex')) {
           this.removeatur(praevium.unicum)
           switch (praevium.scriptum) {
             case 'ab':
@@ -37,21 +40,18 @@ class Locutor {
               break
           }
           this.addatur(praevium)
-        } else {
-          const adaequatur: boolean = /^(ā|ē)$/iu.test(praevium.scriptum)
-          if (adaequatur) {
-            this.removeatur(praevium.unicum)
-            switch (praevium.scriptum) {
-              case 'ā':
-                praevium.scriptum = 'ab'
-                break
-              case 'ē':
-                praevium.scriptum = 'ex'
-                break
-            }
-            this.addatur(praevium)
-          }
         }
+      } else if (interest(praevium, 'ā', 'ē')) {
+        this.removeatur(praevium.unicum)
+        switch (praevium.scriptum) {
+          case 'ā':
+            praevium.scriptum = 'ab'
+            break
+          case 'ē':
+            praevium.scriptum = 'ex'
+            break
+        }
+        this.addatur(praevium)
       }
     }
   }
@@ -66,7 +66,9 @@ class Locutor {
   }
 
   get locutio(): string {
-    const locutio: string = this.verba.map((verba) => verba.monstretur()).join(dominus.separator.signum)
+    const locutio: string = this.verba
+      .map((verba) => verba.monstretur())
+      .join(dominus.separator.signum)
     return locutio[dominus.magnas.signum ? 'uppercase' : 'capitalized']
   }
 }

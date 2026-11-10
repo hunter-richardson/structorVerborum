@@ -1,4 +1,15 @@
-import { anyOf, buildRegExp, capture, choiceOf, endOfString, oneOrMore, optional, regex, startOfString, whitespace } from 'ts-regex-builder'
+import {
+  anyOf,
+  buildRegExp,
+  capture,
+  choiceOf,
+  endOfString,
+  oneOrMore,
+  optional,
+  regex,
+  startOfString,
+  whitespace
+} from 'ts-regex-builder'
 import path from 'node:path'
 import { errator, Fulta, nomina, valores, type Fultum, type Lineae } from '@/praebeunda/valores'
 import { LEGIBILE, type Lectum } from '@/praebeunda/interfecta'
@@ -28,6 +39,7 @@ class Crudum extends (Lamina as new () => Omit<Lamina, 'status'>) implements Lec
 @Ultimum
 @Nuntius.factum
 export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
+  //  NOSONAR: Nil moror
   private readonly deSpatiis: RegExp = //\s+/g
     buildRegExp([oneOrMore(whitespace)], { global: true })
   private readonly colamen: RegExp = ///^(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))(?<operator>[<!=>]=?)(?<quaerendus>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/
@@ -44,7 +56,8 @@ export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
     const certamen: RegExpExecArray | undefined = this.colamen.exec(status) ?? undefined
     if (certamen?.groups === undefined) throw errator({ status: status })
     const { nomen, operator, quaerendus } = certamen.groups
-    if (nomen === undefined || operator === undefined || quaerendus === undefined) throw errator({ status: status })
+    if (nomen === undefined || operator === undefined || quaerendus === undefined)
+      throw errator({ status: status })
     return (fulta: Fulta) => {
       const fultum: Fultum<Lineae> | undefined = fulta.inveni(nomen)
       if (!fultum) return false
@@ -73,13 +86,16 @@ export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
   @Nuntius.modus praedicantur(status: string): Cretor {
     status = status.replace(this.deSpatiis, '')
     if (status.empty) return (_: Fulta) => true
-    else return (fulta: Fulta) => status.split('&').every((ullus) => this.praedicantur(ullus)(fulta))
+    else
+      return (fulta: Fulta) => status.split('&').every((ullus) => this.praedicantur(ullus)(fulta))
   }
 
   @Nuntius.promittum async caedatur(illud: Illud, fulta: Fulta): Promise<string> {
     const laminae: Lamina[] = await this.oneratur(illud)
     const lamina: Lamina | undefined = laminae.find((caesamen) => caesamen.status(fulta))
-    return lamina !== undefined && lamina.clavis in illud ? (illud[lamina.clavis as keyof Illud] as string).chop(lamina.mensura) : ''
+    return lamina !== undefined && lamina.clavis in illud
+      ? (illud[lamina.clavis as keyof Illud] as string).chop(lamina.mensura)
+      : ''
   }
 
   @Nuntius.promittum async oneratur(illud: Illud): Promise<Lamina[]> {

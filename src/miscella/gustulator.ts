@@ -1,4 +1,4 @@
-import { setTimeout } from 'timers/promises'
+import { setTimeout } from 'node:timers/promises'
 import { Ignavum, Ultimum } from '@/miscella/usus'
 import Structor from '@/praebeunda/structor'
 import Nuntius from '@/miscella/nuntius'
@@ -13,7 +13,8 @@ export class Gustulus {
   }
 }
 
-type Gustulamen = Omit<Gustulus, 'color' | 'vita' | 'visibile'> & Partial<Pick<Gustulus, 'vita'>> & { error: boolean }
+type Gustulamen = Omit<Gustulus, 'color' | 'vita' | 'visibile'> &
+  Partial<Pick<Gustulus, 'vita'>> & { error: boolean }
 
 @Ignavum
 @Ultimum
@@ -36,16 +37,19 @@ class Gustulator {
     return 'error' in valor
   }
 
-  proponatur(gustulamen: Gustulamen): void
-  proponatur(gustulus: Gustulus): void
-  proponatur(valor: Gustulus | Gustulamen) {
+  async proponatur(gustulamen: Gustulamen): Promise<void>
+  async proponatur(gustulus: Gustulus): Promise<void>
+  async proponatur(valor: Gustulus | Gustulamen): Promise<void> {
     if (this.#gustulust(valor)) this._gustulus = valor
     else if (this.#gustulamenust(valor)) {
-      const structor = new Structor(Gustulus).ponatur((hoc) => (hoc.vita = valor.vita || 3000)).ponatur((hoc) => (hoc.color = valor.error ? 'red' : 'green'))
+      const structor = new Structor(Gustulus)
+        .ponatur((hoc) => (hoc.vita = valor.vita || 3000))
+        .ponatur((hoc) => (hoc.color = valor.error ? 'red' : 'green'))
       if (!valor.nuntium.empty) structor.ponatur((hoc) => (hoc.nuntium = valor.nuntium))
       this._gustulus = structor.struatur
     }
-    if (this.gustulus !== undefined && this.gustulus.visibile === true) setTimeout(this.gustulus.vita + 500).then(() => this.extricetur())
+    if (this.gustulus?.visibile)
+      await setTimeout(this.gustulus.vita + 500).then(() => this.extricetur())
   }
 }
 

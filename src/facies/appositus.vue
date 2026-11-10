@@ -62,7 +62,10 @@
       <v-avatar image="https://avatars.githubusercontent.com/u/22331463">
         <v-hover>
           <template #default="{ isHovering, props }">
-            <a v-if="isHovering" target="_blank" href="https://github.com/hunter-richardson/structorverborum/issues">
+            <a
+              v-if="isHovering"
+              target="_blank"
+              href="https://github.com/hunter-richardson/structorverborum/issues">
               <v-card v-bind="props" :text="t('scripta.appositus.colloqui')" />
             </a>
           </template>
@@ -70,7 +73,15 @@
       </v-avatar>
     </v-app-bar>
     <v-tabs v-model="annulus" grow hide-slider mandatory align-tabs="center" density="compact">
-      <v-tab v-for="res in annuli" :id="`annulus_${res}`" :key="res" value="res" selected-class="text-primary" text="res.titula" density="compact" tile />
+      <v-tab
+        v-for="res in annuli"
+        :id="`annulus_${res}`"
+        :key="res"
+        value="res"
+        selected-class="text-primary"
+        text="res.titula"
+        density="compact"
+        tile />
     </v-tabs>
     <v-tabs-window v-model="annulus">
       <v-tabs-window-item v-for="valor in annuli" :key="valor" :value="valor">

@@ -9,6 +9,7 @@ import Nuntius from '@/miscella/nuntius'
 @Ultimum
 @Nuntius.factum
 export default class<Hoc extends Multiplex & Numeratum> extends Tabula<Hoc> {
+  //  NOSONAR: Nil moror
   private readonly _singularis: Record<string, string> = {
     numerus: 'singularis'
   }
@@ -21,7 +22,8 @@ export default class<Hoc extends Multiplex & Numeratum> extends Tabula<Hoc> {
     else if (tabulast(this.singularis)) _singularis = this.singularis
     if (tabulatorst(this.pluralis)) _pluralis = await this.pluralis.tabula
     else if (tabulast(this.pluralis)) _pluralis = this.pluralis
-    if (_singularis === undefined || _pluralis === undefined) throw new Error("Inflexionis tabulae mala'st")
+    if (_singularis === undefined || _pluralis === undefined)
+      throw new Error("Inflexionis tabulae mala'st")
     _singularis
       .colantur({
         radix: '',

@@ -31,7 +31,9 @@ export function loquatur(res: Res) {
         // cy.wait(1000)
 
         if (verbum.valores) {
-          verbum.valores.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
+          verbum.valores
+            .except(...enclitici)
+            .forEach((valor) => cy.get(`#colamen_${valor}`).click())
           cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
@@ -40,7 +42,9 @@ export function loquatur(res: Res) {
           categoria = verbum.sequendum.categoria
           cy.get(`#${verbum.sequendum.lemma}`).click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
+          verbum.sequendum.valores
+            ?.except(...enclitici)
+            .forEach((valor) => cy.get(`#colamen_${valor}`).click())
           cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }
@@ -52,7 +56,9 @@ export function loquatur(res: Res) {
           categoria = verbum.sequendum.categoria
           cy.get('#participium').click()
           // cy.wait(1000)
-          verbum.sequendum.valores?.except(...enclitici).forEach((valor) => cy.get(`#colamen_${valor}`).click())
+          verbum.sequendum.valores
+            ?.except(...enclitici)
+            .forEach((valor) => cy.get(`#colamen_${valor}`).click())
           cy.get('[id^="selige_"]').first().click()
           // cy.wait(1000)
         }

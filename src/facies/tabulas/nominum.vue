@@ -23,6 +23,11 @@
   <Inflectere v-if="actus !== undefined" :agendum="actus" @blur="actus = undefined" />
   <template v-else>
     <Tabulare :agendum="agendum" :categoria="Nomen.name.lowercase" />
-    <v-btn v-if="factum" id="actus" append-icon="sprint" :text="t('categoria.actus.singularis', 'capitalize')" @click="refer()" />
+    <v-btn
+      v-if="factum"
+      id="actus"
+      append-icon="sprint"
+      :text="t('categoria.actus.singularis', 'capitalize')"
+      @click="refer()" />
   </template>
 </template>

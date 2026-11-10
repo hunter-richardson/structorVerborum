@@ -8,5 +8,11 @@
 </script>
 
 <template>
-  <v-snackbar v-if="gustulus !== undefined" v-model="gustulus.visibile" :timeout="gustulus.vita" :text="gustulus.nuntium" :color="gustulus.color" @update:model-value="operiatur" />
+  <v-snackbar
+    v-if="gustulus !== undefined"
+    v-model="gustulus.visibile"
+    :timeout="gustulus.vita"
+    :text="gustulus.nuntium"
+    :color="gustulus.color"
+    @update:model-value="operiatur" />
 </template>

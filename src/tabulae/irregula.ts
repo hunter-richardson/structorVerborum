@@ -10,13 +10,16 @@ import Nuntius from '@/miscella/nuntius'
 @Ultimum
 @Nuntius.factum
 export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
+  //  NOSONAR: Nil moror
   @Nuntius.promittum async tabulentur() {
     const categoria: string = this.structor.name.lowercase
     const pluralis: string = i18n.t(`partes.${categoria}_pluralis`, {
       lng: 'la'
     })
     const via: string = path.join('tabulae/irregulae', pluralis)
-    const agenda: Agendum<Hoc>[] = (await new LectorMultiplex<Agendum<Hoc>>(via, this.structor).legatur(this.lemma)).multa
+    const agenda: Agendum<Hoc>[] = (
+      await new LectorMultiplex<Agendum<Hoc>>(via, this.structor).legatur(this.lemma)
+    ).multa
     agenda.forEach((agendum) => this._haec.push(Multiplex.componatur(this.structor, agendum)))
   }
 

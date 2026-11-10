@@ -27,7 +27,9 @@
   })
 
   function effiat(): void {
-    romanus.value = Numerator.romanus(arabicus.value.integer + arabicus.value.numerator / arabicus.value.denominator)
+    romanus.value = Numerator.romanus(
+      arabicus.value.integer + arabicus.value.numerator / arabicus.value.denominator
+    )
   }
 
   function refer(): void {
@@ -43,9 +45,25 @@
       <v-btn v-if="arabicus.numerator === 0" id="aequa" icon="equal" @click="refer()" />
     </div>
     <div class="text-center">
-      <v-number-input id="integer" v-model="arabicus.integer" autofocus :rules="validator" validate-on="input" clearable flat reverse @change="effiat()" />
+      <v-number-input
+        id="integer"
+        v-model="arabicus.integer"
+        autofocus
+        :rules="validator"
+        validate-on="input"
+        clearable
+        flat
+        reverse
+        @change="effiat()" />
       <v-card text=" + " />
-      <v-number-input id="numerator" v-model="arabicus.numerator" :rules="validator" validate-on="input" flat clearable @change="effiat()" />
+      <v-number-input
+        id="numerator"
+        v-model="arabicus.numerator"
+        :rules="validator"
+        validate-on="input"
+        flat
+        clearable
+        @change="effiat()" />
       <v-card :text="` + ${arabicus.denominator.toString()}`" />
     </div>
   </template>

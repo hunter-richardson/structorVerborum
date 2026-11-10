@@ -14,6 +14,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_NAME: hunter-richardson/structorVerborum
-          DEFAULT_APPROVAL_COUNT_ENV: "1"
+          DEFAULT_APPROVAL_COUNT_ENV: 1
           PR_LABEL_ENV: RELEASE
-          DELETE_BRANCH_ENV: "true"
+          DELETE_BRANCH_ENV: true

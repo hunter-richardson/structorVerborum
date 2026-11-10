@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { ref, type Ref } from 'vue'
   import { anyOf, buildRegExp, endOfString, startOfString } from 'ts-regex-builder'
+  import { ref, type Ref } from 'vue'
   import { Numerator, minimum as nihil, type Par } from '@/miscella/numerator'
   import { Numerale } from '@/praebeunda/verba'
   import Specere from '@/facies/specere.vue'
@@ -21,6 +21,7 @@
   }
 
   function ponatur(actus: string) {
+    //  NOSONAR: Romani numeri nodosissimi sunt
     if (actus === 'N') {
       praevii.value = praesentes.value = nihil
     } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {
@@ -77,7 +78,15 @@
     <v-card :text="praesentes.romanus" />
     <div v-for="linea in actus.split(' ') as string[]" :key="linea" class="text-center">
       <span v-for="littera in Array.from(linea)" :key="littera" class="text-center">
-        <v-card :id="`actus_${littera}`" :text="` ${littera} `" density="comfortable" position="absolute" border hover :disabled="licta(littera)" @click="ponatur(littera)" />
+        <v-card
+          :id="`actus_${littera}`"
+          :text="` ${littera} `"
+          density="comfortable"
+          position="absolute"
+          border
+          hover
+          :disabled="licta(littera)"
+          @click="ponatur(littera)" />
       </span>
     </div>
   </template>

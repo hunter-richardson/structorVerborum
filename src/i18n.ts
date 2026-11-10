@@ -23,7 +23,12 @@ const deTransferendo: InitOptions = {
   parseMissingKeyHandler: (clavis: string): string => {
     return clavis
   },
-  missingKeyHandler: (linguae: readonly string[], spatium: string, clavis: string, inhaesum: string = '') => {
+  missingKeyHandler: (
+    linguae: readonly string[],
+    spatium: string,
+    clavis: string,
+    inhaesum: string = ''
+  ) => {
     linguae.forEach((lingua) => {
       if (spatium) clavis = `${spatium}:${clavis}`
       const linea: string = inhaesum ? `${clavis}: ${JSON.stringify(inhaesum)}` : `${clavis}: ""`

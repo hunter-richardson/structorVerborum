@@ -1,7 +1,12 @@
 import i18next from 'i18next'
 import path from 'node:path'
-import { Tabulamen, TabulamenActus, TabulamenIncomparabilis, TabulamenNominis } from '@/praebeunda/tabulamina'
-import { LATIBILE, type Lectum, LEGIBILE, Tabulator } from '@/praebeunda/interfecta'
+import {
+  Tabulamen,
+  TabulamenActus,
+  TabulamenIncomparabilis,
+  TabulamenNominis
+} from '@/praebeunda/tabulamina'
+import { LATIBILE, Tabulator } from '@/praebeunda/interfecta'
 import { Actus, Adiectivum, Multiplex, Nomen, Pronomen } from '@/praebeunda/verba'
 import { Tabula, tabulast, tabulatorst } from '@/tabulae/tabula'
 import { Lector, LectorMultiplex } from '@/miscella/lector'
@@ -29,18 +34,12 @@ export enum Classis {
   Tabulamen = 'tabulamen'
 }
 
-export class Crudum implements Lectum {
-  readonly [LEGIBILE] = true as const
-  readonly nomen!: string
-  readonly classis!: Classis
-}
-
 type Tabulendum<Hoc extends Multiplex> = Tabula<Hoc> | Tabulator<Hoc> | undefined
 
 @Ignavum
 @Ultimum
 @Nuntius.factum
-export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
+class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
   readonly [LATIBILE] = true as const
   constructor(private readonly _tabula: Tabula<Hoc>) {}
   get tabula(): Promise<Tabula<Hoc>> {
@@ -52,7 +51,8 @@ export class Mantela<Hoc extends Multiplex> implements Tabulator<Hoc> {
 @Ultimum
 @Nuntius.factum
 class Anomala<Hoc extends Multiplex> {
-  static readonly erratorAnomali: (via: string, nomen: string) => Error = (via, nomen) => new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
+  static readonly erratorAnomali: (via: string, nomen: string) => Error = (via, nomen) =>
+    new Error(`Legere defectu'st res @res/${via}/${nomen}.csv`)
 
   protected readonly contenta: Record<string, Tabulator<Hoc>> = {}
 
@@ -77,7 +77,10 @@ class Anomala<Hoc extends Multiplex> {
   }
 
   // oxlint-disable complexity -- Inflectio irregula nodosissima'st
-  @Nuntius.promittum protected async oneretur(nomen: string, classis: Classis): /* NOSONAR: Inflectio irregula nodosissima'st*/ Promise<Tabulendum<Hoc>> {
+  @Nuntius.promittum protected async oneretur(
+    nomen: string,
+    classis: Classis
+  ): /* NOSONAR: Inflectio irregula nodosissima'st*/ Promise<Tabulendum<Hoc>> {
     //  eslint-disable-next-line security/detect-object-injection -- nomen validust
     if (this.scit(nomen)) return this.contenta[nomen]
     const via: string = path.join('tabulae/${classis}e', this.categoria)
@@ -150,14 +153,16 @@ class Anomala<Hoc extends Multiplex> {
   // oxlint-enable complexity
 
   @Nuntius.modus onerentur() {
-    ;(Object.entries(this._omnia) as [string, Classis][]).forEach(async ([nomen, classis]: [string, Classis]) => {
-      const tabulendum = await this.oneretur(nomen, classis)
-      if (tabulendum === undefined) throw errator({ nomen: nomen })
-      //  eslint-disable-next-line security/detect-object-injection -- nomen validust
-      if (tabulatorst(tabulendum)) this.contenta[nomen] = tabulendum
-      //  eslint-disable-next-line security/detect-object-injection -- nomen validust
-      if (tabulast(tabulendum)) this.contenta[nomen] = new Mantela(tabulendum)
-    })
+    ;(Object.entries(this._omnia) as [string, Classis][]).forEach(
+      async ([nomen, classis]: [string, Classis]) => {
+        const tabulendum = await this.oneretur(nomen, classis)
+        if (tabulendum === undefined) throw errator({ nomen: nomen })
+        //  eslint-disable-next-line security/detect-object-injection -- nomen validust
+        if (tabulatorst(tabulendum)) this.contenta[nomen] = tabulendum
+        //  eslint-disable-next-line security/detect-object-injection -- nomen validust
+        if (tabulast(tabulendum)) this.contenta[nomen] = new Mantela(tabulendum)
+      }
+    )
   }
 
   constructor(
@@ -169,7 +174,10 @@ class Anomala<Hoc extends Multiplex> {
 }
 
 class AnomalaMultiplex<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> extends Anomala<Hoc> {
-  @Nuntius.promittum override async oneretur(nomen: string, classis: Classis): Promise<Tabulendum<Hoc>> {
+  @Nuntius.promittum override async oneretur(
+    nomen: string,
+    classis: Classis
+  ): Promise<Tabulendum<Hoc>> {
     if (classis === Classis.Tabulamen) {
       const via: string = path.join('tabulae/tabulamina', this.categoria)
       if (this._illius === undefined) throw Anomala.erratorAnomali(via, nomen)
@@ -186,154 +194,163 @@ class AnomalaMultiplex<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> exte
   }
 }
 
-export const actus: AnomalaMultiplex<Actus, TabulamenActus> = new AnomalaMultiplex(Actus, TabulamenActus, {
-  aiere: Classis.Irregula,
-  esse: Classis.Irregula,
-  facere: Classis.Collata,
-  fierī: Classis.Irregula,
-  inquiī: Classis.Irregula,
-  coesse: Classis.Rescripta,
-  dare: Classis.Collata,
-  ferre: Classis.Collata,
-  īre: Classis.Collata,
-  velle: Classis.Collata,
-  meminisse: Classis.Collata,
-  mālle: Classis.Collata,
-  nōlle: Classis.Collata,
-  abdare: Classis.Praefixa,
-  abesse: Classis.Rescripta,
-  abīre: Classis.Praefixa,
-  afferre: Classis.Rescripta,
-  ārefacere: Classis.Praefixa,
-  ārfacere: Classis.Praefixa,
-  auferre: Classis.Rescripta,
-  benefacere: Classis.Praefixa,
-  calfacere: Classis.Praefixa,
-  calefacere: Classis.Praefixa,
-  coīre: Classis.Praefixa,
-  collabefierī: Classis.Praefixa,
-  commonefacere: Classis.Praefixa,
-  condocefacere: Classis.Praefixa,
-  confervefacere: Classis.Praefixa,
-  cōnfierī: Classis.Praefixa,
-  conferre: Classis.Rescripta,
-  cōnsuēfacere: Classis.Praefixa,
-  dēdare: Classis.Praefixa,
-  dēfervefacere: Classis.Praefixa,
-  dēesse: Classis.Praefixa,
-  dēferre: Classis.Praefixa,
-  dēfierī: Classis.Praefixa,
-  deīre: Classis.Praefixa,
-  differre: Classis.Rescripta,
-  disperīre: Classis.Praefixa,
-  dīdare: Classis.Praefixa,
-  efferre: Classis.Rescripta,
-  exīre: Classis.Praefixa,
-  expergēfacere: Classis.Praefixa,
-  fervēfacere: Classis.Praefixa,
-  incalfacere: Classis.Praefixa,
-  infervefacere: Classis.Praefixa,
-  inesse: Classis.Rescripta,
-  īnferre: Classis.Rescripta,
-  īnfierī: Classis.Fissa,
-  interesse: Classis.Praefixa,
-  interferre: Classis.Praefixa,
-  intrōferre: Classis.Praefixa,
-  inīre: Classis.Praefixa,
-  interīre: Classis.Praefixa,
-  introīre: Classis.Praefixa,
-  labefacere: Classis.Praefixa,
-  liquifacere: Classis.Praefixa,
-  madefacere: Classis.Praefixa,
-  malefacere: Classis.Praefixa,
-  mollifacere: Classis.Praefixa,
-  multifacere: Classis.Praefixa,
-  mansuēfacere: Classis.Praefixa,
-  nequīre: Classis.Praefixa,
-  obesse: Classis.Praefixa,
-  obīre: Classis.Praefixa,
-  obsolefierī: Classis.Praefixa,
-  obstupefacere: Classis.Praefixa,
-  offerre: Classis.Praefixa,
-  olfacere: Classis.Praefixa,
-  patefacere: Classis.Praefixa,
-  pavefacere: Classis.Praefixa,
-  percalfacere: Classis.Praefixa,
-  perferre: Classis.Praefixa,
-  perīre: Classis.Fissa,
-  permadefacere: Classis.Praefixa,
-  pervelle: Classis.Praefixa,
-  posse: Classis.Rescripta,
-  postferre: Classis.Praefixa,
-  praeesse: Classis.Praefixa,
-  praeterferre: Classis.Praefixa,
-  praeterīre: Classis.Praefixa,
-  prōdesse: Classis.Rescripta,
-  prōdīre: Classis.Praefixa,
-  prōferre: Classis.Praefixa,
-  putrefacere: Classis.Praefixa,
-  qudīre: Classis.Praefixa,
-  rārefacere: Classis.Praefixa,
-  recalfacere: Classis.Praefixa,
-  redīre: Classis.Praefixa,
-  referre: Classis.Rescripta,
-  satisfacere: Classis.Praefixa,
-  stupefacere: Classis.Praefixa,
-  subesse: Classis.Praefixa,
-  subīre: Classis.Praefixa,
-  subolfacere: Classis.Praefixa,
-  sufferre: Classis.Praefixa,
-  suffierī: Classis.Praefixa,
-  tepefacere: Classis.Praefixa,
-  trānsabīre: Classis.Praefixa,
-  trānsīre: Classis.Praefixa,
-  tremefacere: Classis.Praefixa,
-  tupefacere: Classis.Praefixa,
-  vacuēfacere: Classis.Praefixa,
-  vēnīre: Classis.Praefixa
-})
+export const actus: AnomalaMultiplex<Actus, TabulamenActus> = new AnomalaMultiplex(
+  Actus,
+  TabulamenActus,
+  {
+    aiere: Classis.Irregula,
+    esse: Classis.Irregula,
+    facere: Classis.Collata,
+    fierī: Classis.Irregula,
+    inquiī: Classis.Irregula,
+    coesse: Classis.Rescripta,
+    dare: Classis.Collata,
+    ferre: Classis.Collata,
+    īre: Classis.Collata,
+    velle: Classis.Collata,
+    meminisse: Classis.Collata,
+    mālle: Classis.Collata,
+    nōlle: Classis.Collata,
+    abdare: Classis.Praefixa,
+    abesse: Classis.Rescripta,
+    abīre: Classis.Praefixa,
+    afferre: Classis.Rescripta,
+    ārefacere: Classis.Praefixa,
+    ārfacere: Classis.Praefixa,
+    auferre: Classis.Rescripta,
+    benefacere: Classis.Praefixa,
+    calfacere: Classis.Praefixa,
+    calefacere: Classis.Praefixa,
+    coīre: Classis.Praefixa,
+    collabefierī: Classis.Praefixa,
+    commonefacere: Classis.Praefixa,
+    condocefacere: Classis.Praefixa,
+    confervefacere: Classis.Praefixa,
+    cōnfierī: Classis.Praefixa,
+    conferre: Classis.Rescripta,
+    cōnsuēfacere: Classis.Praefixa,
+    dēdare: Classis.Praefixa,
+    dēfervefacere: Classis.Praefixa,
+    dēesse: Classis.Praefixa,
+    dēferre: Classis.Praefixa,
+    dēfierī: Classis.Praefixa,
+    deīre: Classis.Praefixa,
+    differre: Classis.Rescripta,
+    disperīre: Classis.Praefixa,
+    dīdare: Classis.Praefixa,
+    efferre: Classis.Rescripta,
+    exīre: Classis.Praefixa,
+    expergēfacere: Classis.Praefixa,
+    fervēfacere: Classis.Praefixa,
+    incalfacere: Classis.Praefixa,
+    infervefacere: Classis.Praefixa,
+    inesse: Classis.Rescripta,
+    īnferre: Classis.Rescripta,
+    īnfierī: Classis.Fissa,
+    interesse: Classis.Praefixa,
+    interferre: Classis.Praefixa,
+    intrōferre: Classis.Praefixa,
+    inīre: Classis.Praefixa,
+    interīre: Classis.Praefixa,
+    introīre: Classis.Praefixa,
+    labefacere: Classis.Praefixa,
+    liquifacere: Classis.Praefixa,
+    madefacere: Classis.Praefixa,
+    malefacere: Classis.Praefixa,
+    mollifacere: Classis.Praefixa,
+    multifacere: Classis.Praefixa,
+    mansuēfacere: Classis.Praefixa,
+    nequīre: Classis.Praefixa,
+    obesse: Classis.Praefixa,
+    obīre: Classis.Praefixa,
+    obsolefierī: Classis.Praefixa,
+    obstupefacere: Classis.Praefixa,
+    offerre: Classis.Praefixa,
+    olfacere: Classis.Praefixa,
+    patefacere: Classis.Praefixa,
+    pavefacere: Classis.Praefixa,
+    percalfacere: Classis.Praefixa,
+    perferre: Classis.Praefixa,
+    perīre: Classis.Fissa,
+    permadefacere: Classis.Praefixa,
+    pervelle: Classis.Praefixa,
+    posse: Classis.Rescripta,
+    postferre: Classis.Praefixa,
+    praeesse: Classis.Praefixa,
+    praeterferre: Classis.Praefixa,
+    praeterīre: Classis.Praefixa,
+    prōdesse: Classis.Rescripta,
+    prōdīre: Classis.Praefixa,
+    prōferre: Classis.Praefixa,
+    putrefacere: Classis.Praefixa,
+    qudīre: Classis.Praefixa,
+    rārefacere: Classis.Praefixa,
+    recalfacere: Classis.Praefixa,
+    redīre: Classis.Praefixa,
+    referre: Classis.Rescripta,
+    satisfacere: Classis.Praefixa,
+    stupefacere: Classis.Praefixa,
+    subesse: Classis.Praefixa,
+    subīre: Classis.Praefixa,
+    subolfacere: Classis.Praefixa,
+    sufferre: Classis.Praefixa,
+    suffierī: Classis.Praefixa,
+    tepefacere: Classis.Praefixa,
+    trānsabīre: Classis.Praefixa,
+    trānsīre: Classis.Praefixa,
+    tremefacere: Classis.Praefixa,
+    tupefacere: Classis.Praefixa,
+    vacuēfacere: Classis.Praefixa,
+    vēnīre: Classis.Praefixa
+  }
+)
 
-export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> = new AnomalaMultiplex(Adiectivum, TabulamenIncomparabilis, {
-  decimum: Classis.Tabulamen,
-  utrum: Classis.Tabulamen,
-  aliud: Classis.Collata,
-  ambō: Classis.Collata,
-  duō: Classis.Rescripta,
-  meum: Classis.Collata,
-  mīlle: Classis.Collata,
-  nōnum: Classis.Tabulamen,
-  nōnumdecimum: Classis.Coniuncta,
-  octāvum: Classis.Tabulamen,
-  octāvumdecimum: Classis.Coniuncta,
-  quārtum: Classis.Tabulamen,
-  quārtumdecimum: Classis.Coniuncta,
-  quīntum: Classis.Tabulamen,
-  quīntumdecimum: Classis.Coniuncta,
-  septimum: Classis.Tabulamen,
-  septimumdecimum: Classis.Coniuncta,
-  sextum: Classis.Tabulamen,
-  sextumdecimum: Classis.Coniuncta,
-  tertium: Classis.Tabulamen,
-  tertiumdecimum: Classis.Coniuncta,
-  utrumque: Classis.Suffixa,
-  utrumcumque: Classis.Suffixa,
-  utrumvīs: Classis.Suffixa,
-  utrumvultis: Classis.Suffixa
-})
+export const adiectiva: AnomalaMultiplex<Adiectivum, TabulamenIncomparabilis> =
+  new AnomalaMultiplex(Adiectivum, TabulamenIncomparabilis, {
+    decimum: Classis.Tabulamen,
+    utrum: Classis.Tabulamen,
+    aliud: Classis.Collata,
+    ambō: Classis.Collata,
+    duō: Classis.Rescripta,
+    meum: Classis.Collata,
+    mīlle: Classis.Collata,
+    nōnum: Classis.Tabulamen,
+    nōnumdecimum: Classis.Coniuncta,
+    octāvum: Classis.Tabulamen,
+    octāvumdecimum: Classis.Coniuncta,
+    quārtum: Classis.Tabulamen,
+    quārtumdecimum: Classis.Coniuncta,
+    quīntum: Classis.Tabulamen,
+    quīntumdecimum: Classis.Coniuncta,
+    septimum: Classis.Tabulamen,
+    septimumdecimum: Classis.Coniuncta,
+    sextum: Classis.Tabulamen,
+    sextumdecimum: Classis.Coniuncta,
+    tertium: Classis.Tabulamen,
+    tertiumdecimum: Classis.Coniuncta,
+    utrumque: Classis.Suffixa,
+    utrumcumque: Classis.Suffixa,
+    utrumvīs: Classis.Suffixa,
+    utrumvultis: Classis.Suffixa
+  })
 
-export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMultiplex(Nomen, TabulamenNominis, {
-  Athōs: Classis.Irregula,
-  Iēsūs: Classis.Irregula,
-  lexis: Classis.Irregula,
-  vīs: Classis.Irregula,
-  balneum: Classis.Bifissa,
-  caelum: Classis.Bifissa,
-  dea: Classis.Collata,
-  domus: Classis.Collata,
-  rēspūblica: Classis.Coniuncta,
-  iūgerum: Classis.Collata,
-  sēmidea: Classis.Praefixa
-})
+export const nomina: AnomalaMultiplex<Nomen, TabulamenNominis> = new AnomalaMultiplex(
+  Nomen,
+  TabulamenNominis,
+  {
+    Athōs: Classis.Irregula,
+    Iēsūs: Classis.Irregula,
+    lexis: Classis.Irregula,
+    vīs: Classis.Irregula,
+    balneum: Classis.Bifissa,
+    caelum: Classis.Bifissa,
+    dea: Classis.Collata,
+    domus: Classis.Collata,
+    rēspūblica: Classis.Coniuncta,
+    iūgerum: Classis.Collata,
+    sēmidea: Classis.Praefixa
+  }
+)
 
 export const pronomina: Anomala<Pronomen> = new Anomala(Pronomen, {
   ego: Classis.Irregula,

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { onMounted } from 'vue'
   import { useRouter } from 'vue-router'
+  import { onMounted } from 'vue'
   import translation from '@/extensions/i18next'
   import Nuntius from '@/miscella/nuntius'
 
@@ -22,7 +22,14 @@
 <template>
   <v-app>
     <v-container>
-      <v-empty-state image="@res/picta/latina.png" icon="arrow_back" :action-text="t('scripta.404.actum')" :headline="t('scripta.404.caput')" :text="t('scripta.404.nuntium')" :title="t('scripta.404.titula')" @click:action="recipatur()" />
+      <v-empty-state
+        image="@res/picta/latina.png"
+        icon="arrow_back"
+        :action-text="t('scripta.404.actum')"
+        :headline="t('scripta.404.caput')"
+        :text="t('scripta.404.nuntium')"
+        :title="t('scripta.404.titula')"
+        @click:action="recipatur()" />
     </v-container>
   </v-app>
 </template>

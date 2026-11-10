@@ -4,5 +4,10 @@
     "noEmit": true
   },
   "exclude": ["node_modules"],
-  "include": ["*.config.ts", "src/**/*.ts", "src/cypress/{a_capite_ad_caupam,componenta}/*.ts", "src/facies{,tabulam}/*.vue"]
+  "include": [
+    "*.config.ts",
+    "src/**/*.ts",
+    "src/cypress/{a_capite_ad_caupam,componenta}/*.ts",
+    "src/facies{,tabulam}/*.vue"
+  ]
 }

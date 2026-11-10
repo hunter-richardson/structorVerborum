@@ -1,7 +1,7 @@
 name: aedificare
 
 on:
-  workflow_dispatch: "null"
+  workflow_dispatch: null
   workflow_run:
     workflows:
       - ESLint
@@ -11,14 +11,14 @@ jobs:
   on-success:
     runs-on: ubuntu-latest
     name: aedificare
-    continue-on-error: "false"
+    continue-on-error: false
     strategy:
-      fail-fast: "true"
+      fail-fast: true
     steps:
       - name: vellere
         uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
         with:
-          fetch-depth: "0"
+          fetch-depth: 0
       - name: tollere
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
         with:
@@ -26,8 +26,8 @@ jobs:
       - name: inaugurare
         run: pnpm ci
       - name: verificare
-        run: pnpm lint && typecheck
+        run: pnpm lint && pnpm typecheck
       - name: struere
         run: pnpm release
       - name: invenire
-        run: pnpm tsx ${{ github.workspace }}/scriptura/invenire.ts
+        run: pnpm tsx ${{ github.workspace }}/src/scriptura/invenire.ts

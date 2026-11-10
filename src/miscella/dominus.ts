@@ -266,7 +266,16 @@ class Dominus {
   readonly lingua: Lingua = new Lingua()
   readonly separator: Separator = new Separator()
 
-  readonly crustula: Crustulum<Valor>[] = [this.apices, this.utendaU, this.magnas, this._sessio, this.assensus, this.facies, this.lingua, this.separator] as const
+  readonly crustula: Crustulum<Valor>[] = [
+    this.apices,
+    this.utendaU,
+    this.magnas,
+    this._sessio,
+    this.assensus,
+    this.facies,
+    this.lingua,
+    this.separator
+  ] as const
 
   quaeram(nomen: string): boolean {
     return this.inveniam(nomen) !== undefined

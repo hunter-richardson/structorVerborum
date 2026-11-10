@@ -17,7 +17,12 @@
   const verbum: Ref<Verbum | undefined> = ref()
   const eventus: Ref<Eventus | undefined> = ref()
   const multiplex: boolean = verbum.value !== undefined && verbum.value instanceof Multiplex
-  const propriabile: boolean = [[Adiectivum, Nomen].map((classis) => classis.name.lowercase).includes(verbum.value?.categoria.valor ?? ''), verbum.value?.scriptum.isCapitalized || false].all
+  const propriabile: boolean = [
+    [Adiectivum, Nomen]
+      .map((classis) => classis.name.lowercase)
+      .includes(verbum.value?.categoria.valor ?? ''),
+    verbum.value?.scriptum.isCapitalized || false
+  ].all
 
   const { t, tf } = translation()
 
@@ -55,7 +60,9 @@
   if (verbum.value !== undefined && multiplex) {
     const scriptum: string = verbum.value.scriptum
     ;(verbum.value as Multiplex).valores.forEach((valor) => valores.push(valor.valor))
-    enclitici.filter((valor) => !scriptum.endsWith(valor)).forEach((valor) => valoresEnclitici.push(valor))
+    enclitici
+      .filter((valor) => !scriptum.endsWith(valor))
+      .forEach((valor) => valoresEnclitici.push(valor))
   }
 
   async function aperi() {
@@ -74,7 +81,8 @@
 
   function adde() {
     if (verbum.value !== undefined) {
-      if ([multiplex, !valorEnclitici.value.empty].all) (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
+      if ([multiplex, !valorEnclitici.value.empty].all)
+        (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
       verbum.value.scriptum = verbum.value.scriptum.lowercase
       locutor.addatur(verbum.value)
     }
@@ -82,7 +90,8 @@
 
   function addeProprium() {
     if (verbum.value !== undefined) {
-      if ([multiplex, !valorEnclitici.value.empty].all) (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
+      if ([multiplex, !valorEnclitici.value.empty].all)
+        (verbum.value as Multiplex).encliticus = valorEnclitici.value as Encliticus
       if (propriabile) verbum.value.scriptum = verbum.value.scriptum.capitalized
       locutor.addatur(verbum.value)
     }
@@ -92,17 +101,39 @@
 <template>
   <Inflectere v-if="eventus !== undefined" :eventus="eventus" @blur="eventus = undefined" />
   <v-dialog v-else-if="verbum !== undefined && verbum.categoria.valor !== undefined">
-    <v-card :title="verbum.monstretur()" :subtitle="t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
+    <v-card
+      :title="verbum.monstretur()"
+      :subtitle="t(`partes.${verbum.categoria.valor}_singulare`, 'capitalize')">
       <v-chip-group v-if="multiplex">
-        <v-chip v-for="valor in valores" :id="`valor_${valor}`" :key="valor" :text="valor" selected-class="text-primary" prepend-icon="category" />
+        <v-chip
+          v-for="valor in valores"
+          :id="`valor_${valor}`"
+          :key="valor"
+          :text="valor"
+          selected-class="text-primary"
+          prepend-icon="category" />
       </v-chip-group>
-      <v-select id="enclitici" v-model="valorEnclitici" density="compact" :title="$tf('categoriae.encliticum_plurale', 'capitalize')" :items="valoresEnclitici" chips flat open-on-clear />
+      <v-select
+        id="enclitici"
+        v-model="valorEnclitici"
+        density="compact"
+        :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
+        :items="valoresEnclitici"
+        chips
+        flat
+        open-on-clear />
       <Docere :activator="verbum.categoria.valor" />
       <template v-if="multiplex">
         <Docere v-for="valor in valores" :key="valor" :activator="valor" />
       </template>
       <v-btn-toggle>
-        <v-btn v-for="res in quattuor" :id="res.ipsum" :key="res.ipsum" :icon="res.icon" :text="res.scriptum" @click="res.actus()" />
+        <v-btn
+          v-for="res in quattuor"
+          :id="res.ipsum"
+          :key="res.ipsum"
+          :icon="res.icon"
+          :text="res.scriptum"
+          @click="res.actus()" />
       </v-btn-toggle>
     </v-card>
   </v-dialog>

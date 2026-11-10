@@ -1,23 +1,24 @@
-# name: aedificare
+name: aedificare
 
-# on:
-#   push:
-#     branches: [ princeps ]
-#   pull_request:
-#     types:
-#       - opened
-#       - synchronize
-#       - reopened
+on:
+  push:
+    branches:
+      - princeps
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
 
-# jobs:
-#   sonarqube:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: vellere
-#         uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
-#         with:
-#           fetch-depth: "0"
-#       - name: agere
-#         uses: SonarSource/sonarqube-scan-action@708c7c7110995f73a80a7a0c5cfee4e9961949a0
-#         env:
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+      - name: vellere
+        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
+        with:
+          fetch-depth: 0
+      - name: agere
+        uses: SonarSource/sonarqube-scan-action@708c7c7110995f73a80a7a0c5cfee4e9961949a0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

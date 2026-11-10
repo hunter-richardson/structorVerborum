@@ -1,11 +1,20 @@
 import { Mixin } from 'ts-mixer'
+import {
+  Actus,
+  Adiectivum,
+  Adverbium,
+  Multiplex,
+  Nomen,
+  Numeramen,
+  TabulatorActuum,
+  TabulatorAdiectivorum
+} from '@/praebeunda/verba'
 import { dictionarium, type Eventus } from '@/miscella/dictionarium'
 import { LEGIBILE, Tabulator } from '@/praebeunda/interfecta'
 import translation from '@/extensions/i18next'
 import Nuntius from '@/miscella/nuntius'
 import { Ultimum } from '@/miscella/usus'
 import { Tabula } from '@/tabulae/tabula'
-import { Actus, Adiectivum, Adverbium, Multiplex, Nomen, Numeramen, TabulatorActuum, TabulatorAdiectivorum } from '@/praebeunda/verba'
 
 export abstract class Tabulamen<Hoc extends Multiplex> extends Tabulator<Hoc> {
   readonly [LEGIBILE] = true as const

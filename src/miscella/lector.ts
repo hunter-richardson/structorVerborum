@@ -1,8 +1,16 @@
 import { CsvError, type Options, parse, type Parser } from 'csv-parse'
 import { buildRegExp, choiceOf } from 'ts-regex-builder'
+import { access, constants, open } from 'node:fs/promises'
+import { readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { access, constants, open, readdir } from 'node:fs/promises'
-import { TabulamenActus, TabulamenAdiectivi, TabulamenAdverbii, TabulamenIncomparabilis, TabulamenNominis, TabulamenNumeraminis } from '@/praebeunda/tabulamina'
+import {
+  TabulamenActus,
+  TabulamenAdiectivi,
+  TabulamenAdverbii,
+  TabulamenIncomparabilis,
+  TabulamenNominis,
+  TabulamenNumeraminis
+} from '@/praebeunda/tabulamina'
 import { errator, type Lineae, nomina, Res } from '@/praebeunda/valores'
 import { type Lectum } from '@/praebeunda/interfecta'
 import { Ignavum, Ultimum } from '@/miscella/usus'
@@ -49,7 +57,10 @@ export class Lector<Hoc extends Lectum> implements Disposable {
       return Number.isFinite(+valor) ? +valor : `${valor}`
     },
     on_skip: (error?: CsvError, crudum?: string) => {
-      let nuntium: string = error === undefined ? `Legere defectu'st lemmam ${this.via}` : `Invenita'st codicem ${error.code} ad ${this.via}`
+      let nuntium: string =
+        error === undefined
+          ? `Legere defectu'st lemmam ${this.via}`
+          : `Invenita'st codicem ${error.code} ad ${this.via}`
       if (crudum !== undefined) nuntium = `${nuntium} ab ${crudum}`
       Nuntius.timeo({
         nomen: this.constructor.name,
@@ -70,8 +81,11 @@ export class Lector<Hoc extends Lectum> implements Disposable {
       try {
         await access(this.via, constants.F_OK)
         const res: Parser = parse(this.optanda)
-        //  eslint-disable-next-line security/detect-non-literal-fs-filename -- via validast
-        const flumen = pipeline((await open(this.via, 'r')).createReadStream({ encoding: 'utf8' }), res)
+        const flumen = pipeline(
+          //  eslint-disable-next-line security/detect-non-literal-fs-filename -- Via validast
+          (await open(this.via, 'r')).createReadStream({ encoding: 'utf8' }),
+          res
+        )
         for await (const illud of res) {
           const hoc: Hoc = new this.structor()
           for (const [columna, crudum] of Object.entries(illud as Record<string, string>)) {
@@ -105,10 +119,11 @@ export class Lector<Hoc extends Lectum> implements Disposable {
     else throw errator({ [clavis]: valor })
   }
 
-  @Nuntius.captor get omnia(): Promise<string[]> {
+  @Nuntius.captor get omnia(): string[] {
     //  eslint-disable-next-line security/detect-non-literal-fs-filename -- scapum validust
-    return readdir(this.scapum, { withFileTypes: true })
-             .filter((filum) => filum.isFile() && new Path(filum).extension === 'csv')
+    return readdirSync(this.scapum, { withFileTypes: true })
+      .filter((filum) => filum.isFile() && new Path(filum.name).extension === 'csv')
+      .map((filum) => new Path(filum.name).basename)
   }
 
   @Nuntius.promittum async legatur(lemma: string): Promise<Ulla<Hoc>> {
@@ -142,17 +157,18 @@ export class Lector<Hoc extends Lectum> implements Disposable {
 @Ultimum
 @Nuntius.factum
 export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {
-  private readonly positores: Record<string, (hoc: Hoc, valor: string | undefined) => void> = Object.fromEntries(
-    nomina.map((nomen) => [
-      nomen,
-      (hoc: Hoc, valor: string | undefined) => {
-        const res = hoc as unknown as { [nomen]: Res<boolean, Lineae> }
-        if (!res) throw errator({ [nomen]: valor ?? '' })
-        //  eslint-disable-next-line security/detect-object-injection -- nomen validust
-        else res[nomen].valor = valor
-      }
-    ])
-  )
+  private readonly positores: Record<string, (hoc: Hoc, valor: string | undefined) => void> =
+    Object.fromEntries(
+      nomina.map((nomen) => [
+        nomen,
+        (hoc: Hoc, valor: string | undefined) => {
+          const res = hoc as unknown as { [nomen]: Res<boolean, Lineae> }
+          if (!res) throw errator({ [nomen]: valor ?? '' })
+          //  eslint-disable-next-line security/detect-object-injection -- nomen validust
+          else res[nomen].valor = valor
+        }
+      ])
+    )
 
   override ponatur(hoc: Hoc, clavis: string, valor: string) {
     //  eslint-disable-next-line security/detect-object-injection -- clavis validast
@@ -162,8 +178,20 @@ export class LectorMultiplex<Hoc extends Lectum> extends Lector<Hoc> {
 
 export const verborum = new Lector<Verbum>('lemmae/verba', Verbum)
 export const actuum = new LectorMultiplex<TabulamenActus>('lemmae/actus', TabulamenActus)
-export const adiectivorum = new LectorMultiplex<TabulamenAdiectivi>('lemmae/adiectiva', TabulamenAdiectivi)
-export const adverbiorum = new LectorMultiplex<TabulamenAdverbii>('lemmae/adverbia', TabulamenAdverbii)
-export const incomparabilium = new LectorMultiplex<TabulamenIncomparabilis>('lemmae/adiectiva/incomparabilia', TabulamenIncomparabilis)
+export const adiectivorum = new LectorMultiplex<TabulamenAdiectivi>(
+  'lemmae/adiectiva',
+  TabulamenAdiectivi
+)
+export const adverbiorum = new LectorMultiplex<TabulamenAdverbii>(
+  'lemmae/adverbia',
+  TabulamenAdverbii
+)
+export const incomparabilium = new LectorMultiplex<TabulamenIncomparabilis>(
+  'lemmae/adiectiva/incomparabilia',
+  TabulamenIncomparabilis
+)
 export const nominum = new LectorMultiplex<TabulamenNominis>('lemmae/nomina', TabulamenNominis)
-export const numeraminum = new LectorMultiplex<TabulamenNumeraminis>('lemmae/numeramina', TabulamenNumeraminis)
+export const numeraminum = new LectorMultiplex<TabulamenNumeraminis>(
+  'lemmae/numeramina',
+  TabulamenNumeraminis
+)

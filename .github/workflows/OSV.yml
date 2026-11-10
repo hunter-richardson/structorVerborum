@@ -1,7 +1,7 @@
 name: OSV
 
 on:
-  pull_request: "null"
+  pull_request: null
   push:
     branches:
       - princeps

@@ -1,18 +1,38 @@
+import { createRouter, createWebHistory } from 'vue-router'
 import { createApp, type App } from 'vue'
 import { useFavicon } from '@vueuse/core'
 import { md3 } from 'vuetify/blueprints'
 import { createVuetify } from 'vuetify'
-import { useRouter } from 'vue-router'
 import i18NextVue from 'i18next-vue'
 import Crustula from '@/miscella/crustula'
 import Appositus from '@/facies/appositus.vue'
+import Vacuum from '@/facies/vacuum.vue'
 import translation from '@/extensions/i18next'
 import i18next from '@/i18n'
 import '@/extensions/string'
 
 useFavicon('@res/picta/favicon.png')
 
-export const appositus: App<Element> = createApp(Appositus).use(i18NextVue, { i18next }).use(Crustula).use(useRouter())
+export const appositus: App<Element> = createApp(Appositus)
+  .use(i18NextVue, { i18next })
+  .use(Crustula)
+  .use(
+    createRouter({
+      history: createWebHistory(),
+      routes: [
+        {
+          path: '/index',
+          name: 'Appositus',
+          component: Appositus
+        },
+        {
+          path: '/:pathMatch(.*)*',
+          name: 'Vacuum',
+          component: Vacuum
+        }
+      ]
+    })
+  )
 
 appositus.config.globalProperties['$tf'] = translation().tf
 

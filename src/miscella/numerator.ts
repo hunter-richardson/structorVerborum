@@ -1,7 +1,22 @@
-import { anyOf, buildRegExp, capture, choiceOf, type EncodedRegex, endOfString, lookahead, optional, regex, type RegexConstruct, repeat, startOfString, type CaptureOptions, type RepeatOptions } from 'ts-regex-builder'
+import {
+  anyOf,
+  buildRegExp,
+  capture,
+  choiceOf,
+  type EncodedRegex,
+  endOfString,
+  lookahead,
+  optional,
+  regex,
+  type RegexConstruct,
+  repeat,
+  startOfString,
+  type CaptureOptions,
+  type RepeatOptions
+} from 'ts-regex-builder'
 import RomanNumeral from 'js-roman-numerals'
-import Nuntius from '@/miscella/nuntius'
 import { Ultimum } from '@/miscella/usus'
+import Nuntius from '@/miscella/nuntius'
 
 export interface Par {
   arabicus: number
@@ -50,8 +65,10 @@ const fracti: Fracti = {
   b: 'S×'
 }
 
-//  eslint-disable-next-line security/detect-object-injection -- clavis validast
-const claves: Fractus[] = (Object.keys(fracti) as Array<Fractus>).filter((clavis: Fractus) => !fracti[clavis].empty)
+const claves: Fractus[] = (Object.keys(fracti) as Array<Fractus>).filter(
+  //  eslint-disable-next-line security/detect-object-injection -- Clavis validast
+  (clavis: Fractus) => !fracti[clavis].empty
+)
 
 let spatium: RepeatOptions = { min: 1, max: 2 }
 
@@ -72,7 +89,13 @@ const litterae = [
 
 const deIntegrisPlurimis: EncodedRegex = regex(
   ///(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
-  litterae.map((littera) => choiceOf(`${littera.prima}${littera.secunda}`, `${littera.prima}${littera.tertia}`, regex([optional(littera.tertia), repeat(littera.prima, spatium)])))
+  litterae.map((littera) =>
+    choiceOf(
+      `${littera.prima}${littera.secunda}`,
+      `${littera.prima}${littera.tertia}`,
+      regex([optional(littera.tertia), repeat(littera.prima, spatium)])
+    )
+  )
 )
 
 const deIntegris: EncodedRegex = ///(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})/
@@ -155,13 +178,18 @@ export class Numerator {
     const certamen: RegExpExecArray | undefined = colamen.exec(romanus) ?? undefined
     if (certamen?.groups !== undefined) {
       if (!certamen.groups['nihil'].empty) return 0
-      if (!certamen.groups['maior'].empty) return 1000.0 * this.arabicus(certamen.groups['maior']) + this.arabicus(certamen.groups['minor'] ?? 'N')
+      if (!certamen.groups['maior'].empty)
+        return (
+          1000.0 * this.arabicus(certamen.groups['maior']) +
+          this.arabicus(certamen.groups['minor'] ?? 'N')
+        )
       const certamenMixtum: RegExpExecArray | undefined = colamenMixtum.exec(romanus) ?? undefined
       if (certamenMixtum?.groups !== undefined) {
         const { fractus, integer } = certamenMixtum.groups
         if (!fractus.empty) {
-          //  eslint-disable-next-line security/detect-object-injection -- clavis validast
-          const numerator: string = (claves.first((clavis: Fractus) => fracti[clavis] === fractus) as string) ?? '0'
+          const numerator: string =
+            //  eslint-disable-next-line security/detect-object-injection -- Clavis validast
+            (claves.first((clavis: Fractus) => fracti[clavis] === fractus) as string) ?? '0'
           return Number.parseInt(numerator.lowercase, 12.0) / 12.0 + this.arabicus(integer || 'N')
         } else return new RomanNumeral(integer || 'N').toInt()
       } else return new RomanNumeral(certamen.groups['minor']).toInt()

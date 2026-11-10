@@ -16,11 +16,6 @@ jobs:
     steps:
       - name: aedificare
         uses: ./.github/workflows/aedificare.yaml
-      - name: inaugurare
-        run: >
-          VUECLI_VER=$(pnpm pkg get 'devDependencies["@vue/cli"]' | tr -cd '0-9.' | xargs)
-          
-          pnpm add -D @vue/cli@$VUECLI_VER --ignore-scripts
 
 #      - name: expedire
-#        run: npm run deploy
+#        run: pnpm deploy

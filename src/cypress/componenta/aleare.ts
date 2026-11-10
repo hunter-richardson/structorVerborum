@@ -16,7 +16,9 @@ function ullum(res: { categoria: string; accusativa: string }): void {
 
       cy.get('#quaerenda.categoriae').select(res.categoria)
       // cy.wait(1000)
-      cy.get('#quaerenda.categoriae').find('option:selected').should('have.text', res.categoria.capitalized)
+      cy.get('#quaerenda.categoriae')
+        .find('option:selected')
+        .should('have.text', res.categoria.capitalized)
       cy.get('#fortuna').click()
       // cy.wait(1000)
 
@@ -26,7 +28,10 @@ function ullum(res: { categoria: string; accusativa: string }): void {
         // cy.wait(1000)
       }
 
-      cy.get('v-card').should('have.subtitle', res.categoria.capitalized).its('title').should('not.be.empty')
+      cy.get('v-card')
+        .should('have.subtitle', res.categoria.capitalized)
+        .its('title')
+        .should('not.be.empty')
       cy.get(`#doctum.${res.categoria}`).should('exist')
     })
   })
@@ -91,13 +96,26 @@ describe('omnia invenire', () => {
       cy.get('#tabula').should('exist')
       cy.get('fortuna').click()
       // cy.wait(1000)
-    } else if (buildRegExp([startOfString, choiceOf('fractionale', 'collectivum'), endOfString]).test(relaturus)) {
+    } else if (
+      buildRegExp([startOfString, choiceOf('fractionale', 'collectivum'), endOfString]).test(
+        relaturus
+      )
+    ) {
       categoria = Nomen.name.lowercase
-    } else if (buildRegExp([startOfString, choiceOf('ordinale', 'cardinale', 'distributivum', 'multiplicativum', 'proportionale'), endOfString]).test(relaturus)) {
+    } else if (
+      buildRegExp([
+        startOfString,
+        choiceOf('ordinale', 'cardinale', 'distributivum', 'multiplicativum', 'proportionale'),
+        endOfString
+      ]).test(relaturus)
+    ) {
       categoria = Adiectivum.name.lowercase
     }
 
-    cy.get('v-card').should('have.subtitle', categoria.capitalized).its('title').should('not.be.empty')
+    cy.get('v-card')
+      .should('have.subtitle', categoria.capitalized)
+      .its('title')
+      .should('not.be.empty')
     cy.get(`[id^="doctum."]`).should('exist')
   })
 })

@@ -1,6 +1,10 @@
 <script setup lang="ts">
   import { ref, type Ref } from 'vue'
-  import { TabulamenAdiectivi, TabulamenIncomparabilis, TabulamenNominis } from '@/praebeunda/tabulamina'
+  import {
+    TabulamenAdiectivi,
+    TabulamenIncomparabilis,
+    TabulamenNominis
+  } from '@/praebeunda/tabulamina'
   import { type Lineae, genera, gradus } from '@/praebeunda/valores'
   import Tabulare from '@/facies/tabulas/tabulare.vue'
   import { Tabulator } from '@/praebeunda/interfecta'
@@ -47,8 +51,30 @@
   <Inflectere v-if="nomen !== undefined" :agendum="nomen" @blur="nomen = undefined" />
   <template v-else>
     <Tabulare :agendum="agendum" :categoria="Adiectivum.name.lowercase" />
-    <v-select id="genus" v-model="et.genus" density="compact" :label="t('partes.genus_singulare', 'capital')" :items="generum" chips flat open-on-clear />
-    <v-select v-if="!incomparabilium" id="gradus" v-model="et.gradus" density="compact" :items="graduum" chips flat open-on-clear :label="tf('partes.gradus_singulare', 'capitalize')" />
-    <v-btn v-if="!et.gradus.empty && !et.genus.empty" id="probetur" :text="t('annuli.tabulare.probare')" append-icon="open_in_full" @click="referComparabile()" />
+    <v-select
+      id="genus"
+      v-model="et.genus"
+      density="compact"
+      :label="t('partes.genus_singulare', 'capital')"
+      :items="generum"
+      chips
+      flat
+      open-on-clear />
+    <v-select
+      v-if="!incomparabilium"
+      id="gradus"
+      v-model="et.gradus"
+      density="compact"
+      :items="graduum"
+      chips
+      flat
+      open-on-clear
+      :label="tf('partes.gradus_singulare', 'capitalize')" />
+    <v-btn
+      v-if="!et.gradus.empty && !et.genus.empty"
+      id="probetur"
+      :text="t('annuli.tabulare.probare')"
+      append-icon="open_in_full"
+      @click="referComparabile()" />
   </template>
 </template>

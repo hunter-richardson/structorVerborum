@@ -28,7 +28,9 @@
     if (valores.includes(res)) {
       const via: string = resolve('@/res/docenda', dominus.lingua.signum, `${res}.md`)
       //  eslint-disable-next-line security/detect-non-literal-fs-filename -- Hoc filum validust
-      ;(await open(via, 'r')).createReadStream({ encoding: 'utf8' }).on('data', (pars) => (doctum += typeof pars === 'string' ? pars.trim() : pars))
+      ;(await open(via, 'r'))
+        .createReadStream({ encoding: 'utf8' })
+        .on('data', (pars) => (doctum += typeof pars === 'string' ? pars.trim() : pars))
     } else res = ''
     return {
       onerans: false,
@@ -43,7 +45,11 @@
       eventus.preventDefault()
       const referendum: string | null = parma.getAttribute('href')
       if (referendum !== null && !referendum.empty) {
-        if (buildRegExp([startOfString, oneOrMore(charRange('a', 'z')), '.md', endOfString]).test(referendum)) {
+        if (
+          buildRegExp([startOfString, oneOrMore(charRange('a', 'z')), '.md', endOfString]).test(
+            referendum
+          )
+        ) {
           const res: string = referendum.split('.').first() ?? ''
           monstranda.value.push(await doceatur(res))
         } else transducatur(referendum)
@@ -60,8 +66,15 @@
     <div id="docenda" @click="adliumDoceatur">
       <v-card v-for="monstrandum in monstranda" :key="monstrandum.res">
         <v-card-title>{{ monstrandum.res }}</v-card-title>
-        <v-skeleton-loader v-if="monstrandum.onerans" type="paragraph" :loading-text="t(`scripta.docere.onerans`)" />
-        <Markdown v-else-if="monstrandum.doctum !== undefined && !monstrandum.doctum.empty" :id="`doctum.${monstrandum.res}`" :source="monstrandum.doctum" breaks />
+        <v-skeleton-loader
+          v-if="monstrandum.onerans"
+          type="paragraph"
+          :loading-text="t(`scripta.docere.onerans`)" />
+        <Markdown
+          v-else-if="monstrandum.doctum !== undefined && !monstrandum.doctum.empty"
+          :id="`doctum.${monstrandum.res}`"
+          :source="monstrandum.doctum"
+          breaks />
         <v-spacer />
       </v-card>
     </div>
