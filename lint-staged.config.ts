@@ -18,7 +18,7 @@ const lineatori: string[] = [
   'prettier --write ./.oxlintrc.json'
 ]
 
-const scribendo: string[] = ['npx tsx ./src/scriptura/insignia.ts']
+const insigniendo: string[] = ['npx tsx ./src/scriptura/insignia.ts']
 
 export default defineConfig(((fila: string[]) => {
   return [
@@ -31,7 +31,7 @@ export default defineConfig(((fila: string[]) => {
       .filter(([, scena]) => scena.any)
       .map(([imperium, scena]) => `${imperium} ${scena.join(' ')}`),
     ...(fila.some((filum) => new Path(filum).filename === 'eslint.config.ts') ? lineatori : []),
-    ...(fila.some((filum) => new Path(filum).filename === 'README.md') ? scribendo : [])
-    //  TODO: implement knip
+    ...(fila.some((filum) => ['README.md', 'insignia.ts'].includes(new Path(filum).filename)) ? insigniendo : [])
+    //  TODO: 'knip'
   ]
 }) as Configuration)
