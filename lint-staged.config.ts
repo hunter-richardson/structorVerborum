@@ -18,7 +18,7 @@ const lineatori: string[] = [
   'prettier --write ./.oxlintrc.json'
 ]
 
-const scribendo: string[] = ['node --experimental-strip-types ./src/scriptura/insignia.ts']
+const scribendo: string[] = ['npx tsx ./src/scriptura/insignia.ts']
 
 export default defineConfig(((fila: string[]) => {
   return [
