@@ -8,7 +8,13 @@ import {
   any,
   type RegexConstruct
 } from 'ts-regex-builder'
-import { siLmstudio, siGithub, siTarget, siCodefactor, siSonarqubecloud, type SimpleIcon } from 'simple-icons'
+import {
+  siLmstudio,
+  siGithub,
+  siTarget,
+  siCodefactor,
+  siSonarqubecloud
+} from 'simple-icons'
 import { readFile, writeFile } from 'node:fs/promises'
 import origin from 'git-remote-origin-url'
 import gitUrlParse from 'git-url-parse'
@@ -16,6 +22,8 @@ import { makeBadge } from 'badge-maker'
 import { resolve } from 'node:path'
 import '@/extensions/string'
 import '@/extensions/array'
+
+type Picta = 'sonarqubecloud' | 'codefactor' | 'lmstudio' | 'github' | 'target'
 
 type Localia = NonNullable<ReturnType<typeof gitUrlParse>>
 type Valor = string | number | bigint | boolean | undefined | null
@@ -36,46 +44,48 @@ function validust(valor: Valor): valor is Validum {
   )
 }
 
-const imagines: Record<string, SimpleIcon> = {
-  sonarqubecloud: siSonarqubecloud,
-  codefactor: siCodefactor,
-  lmstudio: siLmstudio,
-  github: siGithub,
-  target: siTarget,
+const imagines: Record<Picta, string> = {
+  sonarqubecloud: siSonarqubecloud.svg,
+  codefactor: siCodefactor.svg,
+  lmstudio: siLmstudio.svg,
+  github: siGithub.svg,
+  target: siTarget.svg,
 }
 
 const partes: Localia = gitUrlParse(await origin())
 const domus: string = partes.source.split('.').first() ?? '' //  github
-const clavis: string = `${partes.owner}/${partes.name}` //  hunter-richardson/structorVerborum
-const clavisSonarQube: string = `${partes.owner}_${partes.name}` //  hunter-richardson_structorVerborum
-const repositorium: string = `https://${partes.source}/${clavis}` //  https://github.com/hunter-richardson/structorVerborum
-const opera: string = `${repositorium}/actions/workflows` // https://github.com/hunter-richardson/structorVerborum/actions/workflows
-const codefactor: string = `https://codefactor.io/repository/${domus}/${clavis}` //  https://codefactor.io/repository/github/hunter-richardson/structorVerborum
-const filum: string = resolve(process.cwd(), 'README.md')
-const deRepositorium: Res = { logo: domus }
-const deRamo: Res = { branch: 'princeps' }
+const clavis: `${string}/${string}` = `${partes.owner}/${partes.name}` //  hunter-richardson/structorVerborum
+const clavisSonarQube: `${string}_${string}` = `${partes.owner}_${partes.name}` //  hunter-richardson_structorVerborum
+const repositorium: `${string}/${string}` = `${partes.source}/${clavis}` //  github.com/hunter-richardson/structorVerborum
+const opera: `${string}/actions/workflows` = `${repositorium}/actions/workflows` // github.com/hunter-richardson/structorVerborum/actions/workflows
+const codefactor: `codefactor.io/repository/${string}/${string}/${string}` = `codefactor.io/repository/${domus}/${clavis}` //  codefactor.io/repository/github/hunter-richardson/structorVerborum
+const ghloc: 'ghloc.dev' = 'ghloc.dev'
+const sonarcloud: 'sonarcloud.io' = 'sonarcloud.io'
+const filum: `${string}/README.md` = resolve(process.cwd(), 'README.md')
+const deRepositorium: Res & { picta: Picta } = { picta: domus as Picta } as const
+const deRamo: Res = { branch: 'princeps' } as const
 
-function via({ locus, res }: { locus: string; res: Res }): string {
+function via({ locus, res }: { locus: string; res?: Res }): string {
+  locus = locus.trim()
+  if (!locus.startsWith('https://'))
+    locus = `https://${locus}`
+  if (res === undefined)
+    return locus
   const illa: [string, string][] = (Object.entries(res) as [string, Valor][])
     .filter(([clavis, valor]) => !clavis.empty && validust(valor))
-    .map(([clavis, valor]) => [clavis, `${valor}`])
+    .map(([clavis, valor]) => [clavis, `${valor}`.trim()])
   if (illa.empty) return locus
   const separator: string = locus.includes('?') ? '&' : '?'
   return `${locus}${separator}${new URLSearchParams(illa).toString()}`
 }
 
-const sonarcloud: string = via({
-  locus: 'https://sonarcloud.io/summary/new_code',
-  res: { id: clavisSonarQube }
-}) //  https://sonarcloud.io/summary/new_code?id=hunter-richardson_structorVerborum
-
 function opus(nomen: string): string {
-  return `${opera}/${nomen}.yml`
+  return `https://${opera}/${nomen}.yml`
 } //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/${nomen}.yml
 
 function operis(nomen: string): string {
   return via({
-    locus: `${opus(nomen)}/badge.svg`,
+    locus: `${opus(nomen)}/badge.svg`,  //  https://github.com/hunter-richardson/structorverborum/workflows/${nomen}.yml/badge.svg
     res: deRamo
   })  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/${nomen}.yml/badge.svg?badge=princeps
 }
@@ -83,62 +93,70 @@ function operis(nomen: string): string {
 type Insigniendum = {
   latinum?: string
   anglicum: string
-  imago: string,
-  picta: string
+  imago: string
   locus: string
+  picta: Picta
 }
 
-function sonarqube(mensura: string): string {
-  return via({
-    locus: 'https://sonarcloud.io/api/project_badges/measure',
-    res: {
-      project: clavisSonarQube,
-      metric: mensura,
-      ...deRamo
-    }
-  })  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=${mensura}&branch=princeps
-}
-
-async function insigne(insigniendum: Insigniendum): Promise<string> {
-  const scriptum: string =
-    insigniendum.latinum === undefined
-      ? insigniendum.anglicum
-      : `${insigniendum.latinum} / ${insigniendum.anglicum}`
-  const responsum: Response = await fetch(insigniendum.imago)
-  if (responsum.ok) {
-    const res: Scutarius = await (responsum.json())
-    return `[![${scriptum}](${makeBadge({
-      logoBase64: `data:image/svg+xml;base64,${Buffer.from(imagines[insigniendum.picta], 'utf8').toString('base64')}`,
-      message: res.message || scriptum,
-      color: res.color || 'grey',
-      label: scriptum
-    })})](${insigniendum.locus})`
-  } else return ''
-}
-
-const primi: string[] = await Promise.all([
-  {
-    latinum: 'Codicilli',
-    picta: 'lmstudio',
-    anglicum: 'SLOC',
+function sonarqube(mensura: string): Omit<Insigniendum, 'anglicum' | 'latinum'> {
+  return {
+    picta: 'sonarqubecloud',
+    locus: via({
+      locus: `${sonarcloud}/summary/new_code`,  //  sonarcloud.io/summary/new_code
+      res: { id: clavisSonarQube }
+    }), //  https://sonarcloud.io/summary/new_code?id=hunter-richardson_structorVerborum
     imago: via({
-      locus: `https://ghloc.dev/api/${clavis}/badge`, //  https://ghloc.dev/api/hunter-richardson/structorVerborum/badge
+      locus: `${sonarcloud}/api/project_badges/measure`,  //  sonarcloud.io/api/project_badges/measure
       res: {
-        filter: ['src', 'res', '.ts'].join(','),  //  src,res,.ts
-        format: 'human',
+        project: clavisSonarQube,
+        metric: mensura,
         ...deRamo
       }
-    }), //  https://ghloc.dev/api/hunter-richardson/structorVerborum/badge?filter=src,res,.ts&format=human&branch=princeps
-    locus: via({
-      locus: `https://ghloc.dev/${clavis}`, //  https://ghloc.dev/hunter-richardson/structorVerborum
-      res: deRamo
-    })  //  https://ghloc.dev/hunter-richardson/structorVerborum?branch=princeps
-  },
+    })  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=${mensura}&branch=princeps
+  }
+}
+
+async function insigniantur(...insignienda: Insigniendum[]): Promise<string[]> {
+  return await Promise.all(insignienda.map(async (insigniendum) => {
+    const scriptum: string =
+      insigniendum.latinum === undefined
+        ? insigniendum.anglicum
+        : `${insigniendum.latinum} / ${insigniendum.anglicum}`
+    const responsum: Response = await fetch(insigniendum.imago)
+    if (responsum.ok) {
+      const res: Scutarius = await (responsum.json())
+      return `[![${scriptum}](${makeBadge({
+        logoBase64: `data:image/svg+xml;base64,${Buffer.from(imagines[insigniendum.picta], 'utf8').toString('base64')}`,
+        message: res.message || scriptum,
+        color: res.color || 'grey',
+        label: scriptum
+      })})](${insigniendum.locus})`
+    } else return ''
+  }))
+}
+
+const primi: string[] = await insigniantur({
+  latinum: 'Codicilli',
+  anglicum: 'SLOC',
+  picta: 'lmstudio',
+  locus: via({
+    locus: `${ghloc}/${clavis}`, //  ghloc.dev/hunter-richardson/structorVerborum
+    res: deRamo
+  }),  //  https://ghloc.dev/hunter-richardson/structorVerborum?branch=princeps
+  imago: via({
+    locus: `${ghloc}/api/${clavis}/badge`, //  ghloc.dev/api/hunter-richardson/structorVerborum/badge
+    res: {
+      filter: ['src', 'res', '.ts'].join(','),  //  src,res,.ts
+      format: 'human',
+      ...deRamo
+    }
+  })  //  https://ghloc.dev/api/hunter-richardson/structorVerborum/badge?filter=src,res,.ts&format=human&branch=princeps
+},
   {
-    locus: `${repositorium}/pulls`,  //  https://github.com/hunter-richardson/structorVerborum/pulls
+    locus: via({ locus: `${repositorium}/pulls` }),  //  https://github.com/hunter-richardson/structorVerborum/pulls
+    picta: domus as 'github',
     anglicum: 'Issues',
     latinum: 'Exitus',
-    picta: domus,
     imago: via({
       locus: `https://img.shields.io/${domus}/issues-raw/${clavis}`, //  https://img.shields.io/github/issues-raw/hunter-richardson/structorVerborum
       res: deRepositorium
@@ -146,60 +164,48 @@ const primi: string[] = await Promise.all([
   },
   {
     locus: opus('aedificare'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/aedificare.yml
+    picta: domus as 'github',
     latinum: 'Aedificare',
     anglicum: 'Build',
-    picta: domus,
     imago: via({
       locus: operis('aedificare'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/aedificare.yml/badge.svg?branch=princeps
       res: deRepositorium
     })  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/aedificare.yml/badge.svg?branch=princeps&logo=github
-  }
-].map(async (insigniendum: Insigniendum) => await insigne(insigniendum)))
+  })
 
-const gentes: string[] = await Promise.all([
+const gentes: string[] = await insigniantur({
+  imago: operis('OSV'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/OSV.yml/badge.svg?badge=princeps
+  locus: opus('OSV'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/OSV.yml
+  anglicum: 'OSV',
+  picta: 'target'
+},
   {
-    imago: operis('OSV'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/OSV.yml/badge.svg?badge=princeps
-    locus: opus('OSV'),  //  https://github.com/hunter-richardson/structorVerborum/actions/workflows/OSV.yml
-    picta: 'target',
-    anglicum: 'OSV',
-  },
-  {
-    imago: `${codefactor}/badge`, //  https://codefactor.io/repository/github/hunter-richardson/structorVerorum/badge
+    imago: via({ locus: `${codefactor}/badge` }), //  https://codefactor.io/repository/github/hunter-richardson/structorVerorum/badge
     picta: 'codefactor',
     anglicum: 'OxLint',
     locus: codefactor
   },
   {
-    imago: sonarqube('alert_status'),  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=alert_status&branch=princeps
-    picta: 'sonarqubecloud',
     anglicum: 'SonarQube',
-    locus: sonarcloud
-  }
-].map(async (insigniendum: Insigniendum) => await insigne(insigniendum)))
+    ...sonarqube('alert_status')
+  })
 
-const sonar: string[] = await Promise.all([
+const sonar: string[] = await insigniantur(
   {
-    locus: sonarcloud,
-    latinum: 'Fiducia',
     anglicum: 'Reliabilty',
-    picta: 'sonarqubecloud',
-    imago: sonarqube('reliability_rating')  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=reliability_rating&branch=princeps
+    latinum: 'Fiducia',
+    ...sonarqube('reliability_rating')
   },
   {
-    locus: sonarcloud,
-    latinum: 'Salus',
     anglicum: 'Security',
-    picta: 'sonarqubecloud',
-    imago: sonarqube('security_rating')  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=security_rating&branch=princeps
+    latinum: 'Salus',
+    ...sonarqube('security_rating')
   },
   {
-    locus: sonarcloud,
-    latinum: 'Servabilitas',
     anglicum: 'Maintainability',
-    picta: 'sonarqubecloud',
-    imago: sonarqube('sqale_rating')  //  https://sonarcloud.io/api/project_badges/measure?project=hunter-richardson_structorVerborum&metric=sqale_rating&branch=princeps
-  }
-].map(async (insigniendum: Insigniendum) => await insigne(insigniendum)))
+    latinum: 'Servabilitas',
+    ...sonarqube('sqale_rating')
+  })
 
 const insignia: string = [
   `# StructorVerborum ${primi.join(' ')}',
