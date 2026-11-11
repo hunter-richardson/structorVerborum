@@ -22,13 +22,14 @@ const scribendo: string[] = ['node --experimental-strip-types ./src/scriptura/in
 
 export default defineConfig(((fila: string[]) => {
   return [
-    ...omnibus
-      .map(([imperium, linguae]) => [
+    ...(
+      omnibus.map(([imperium, linguae]) => [
         imperium,
         fila.filter((filum) => linguae.includes(new Path(filum).lastExtension))
-      ])
-      .filter(([, scena]: [, string[]]) => scena.any)
-      .map(([imperium, scena]: [string, string[]]) => `${imperium} ${scena.join(' ')}`),
+      ]) as [string, string[]][]
+    )
+      .filter(([, scena]) => scena.any)
+      .map(([imperium, scena]) => `${imperium} ${scena.join(' ')}`),
     ...(fila.some((filum) => new Path(filum).filename === 'eslint.config.ts') ? lineatori : []),
     ...(fila.some((filum) => new Path(filum).filename === 'README.md') ? scribendo : [])
     //  TODO: implement knip

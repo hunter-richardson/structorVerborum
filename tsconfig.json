@@ -39,9 +39,6 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "ESNext",
-    "types": [
-      "@types/node"
-      // "node"
-    ]
+    "types": ["@types/node"]
   }
 }

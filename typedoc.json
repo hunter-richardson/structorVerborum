@@ -7,8 +7,6 @@
     "@8hobbies/typedoc-plugin-404",
     "typedoc-plugin-vue",
     "typedoc-plugin-mdn-links"
-    // "typedoc-plugin-mtos",
-    // "typedoc-plugin-coverage"
   ],
   "theme": "dark",
   "includes": "src",
