@@ -1,7 +1,7 @@
 # StructorVerborum
 
 <!-- insignia -->
-## _Status_ / Stats [![Codicilli / SLOC](res/picta/lmstudio.svg)](https://ghloc.dev/hunter-richardson/structorVerborum?branch=princeps) [![Exitus / Issues](res/picta/github.svg)](https://github.com/hunter-richardson/structorVerborum/pulls) [![Aedificare / Build](res/picta/github.svg)](https://actions/workflow/aedificare.yml)
+## _Status_ / Stats [![Codicilli / SLOC](res/picta/lmstudio.svg)](https://ghloc.dev/hunter-richardson/structorVerborum?branch=princeps) [![Exitus / Issues](res/picta/prs.svg)](https://github.com/hunter-richardson/structorVerborum/pulls) [![Aedificare / Build](res/picta/build.svg)](https://actions/workflow/aedificare.yml)
 
 ## _Gens de_ / Quality according to [![OSV](res/picta/target.svg)](https://actions/workflow/OSV.yml) [![OxLint](res/picta/codefactor.svg)](https://codefactor.io/repository/github/hunter-richardson/structorVerborum) [![SonarQube](res/picta/alert.svg)](https://sonarcloud.io/summary/new_code?id=hunter-richardson_structorVerborum)
 
