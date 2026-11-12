@@ -22,7 +22,7 @@ export default defineConfig({
   ], //  TODO: remove
   entry: [
     './src/extensions/{array,env,error,string,{pleasejs,vue-shim}.d}.ts',
-    './src/scriptura/{invenire.ts,quamHocErrat.fish}',
+    './src/scriptura/{invenire.ts,insignia.ts,quamHocErrat.fish}',
     './vite.config.ts',
     './.githooks/*',
     './index.html'
@@ -39,7 +39,7 @@ export default defineConfig({
     './tsconfig.*.json',
     './res/**'
   ],
-  ignore: ['./.oxlintrc.json', './src/scriptura/invenire.ts'],
+  ignore: ['./.oxlintrc.json'],
   paths: {
     '@/*': ['./src/*'],
     '@res': ['./res']
