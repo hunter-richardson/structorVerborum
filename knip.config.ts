@@ -1,29 +1,27 @@
 import { defineConfig } from 'knip/config'
 
 export default defineConfig({
+  // '$schema': 'https://unpkg.com/knip@6/schema.json',
   'vite-plus': false,
+  typescript: {
+    config: [ './tsconfig.*.json' ]
+  },
   ignoreDependencies: [
     'vite-plugin-vue-facing-decorator-hmr',
     'vue-unused-components-checker',
-    '@8hobbies/typedoc-plugin-404',
     '@types/lodash.isequalwith',
-    'typedoc-github-wiki-theme',
-    'typedoc-plugin-mdn-links',
-    'typedoc-plugin-coverage',
-    'typedoc-plugin-markdown',
-    '@mxssfd/typedoc-theme',
     'vue-facing-decorator',
-    'typedoc-plugin-vue',
     'lodash.isequalwith',
     '@types/deep-equal',
     'amphtml-validator',
     'turbo-ts',
-    'typedoc'
+    'execa'
   ], //  TODO: remove
   entry: [
     './src/extensions/{array,env,error,string,{pleasejs,vue-shim}.d}.ts',
-    './src/scriptura/{invenire.ts,insignia.ts,quamHocErrat.fish}',
-    './vite.config.ts',
+    './src/scriptura/{in{signia,venire}.ts,quamHocErrat.fish}',
+    './.github/workflows/*.yml',
+    // './lint-staged.config.ts',
     './.githooks/*',
     './index.html'
   ],
@@ -39,7 +37,7 @@ export default defineConfig({
     './tsconfig.*.json',
     './res/**'
   ],
-  ignore: ['./.oxlintrc.json'],
+  ignore: ['./src/scriptura/expedire.ts', './.{vscode,sonarlint}/*', './.oxlintrc.json'],
   paths: {
     '@/*': ['./src/*'],
     '@res': ['./res']

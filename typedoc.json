@@ -1,14 +1,14 @@
 {
   "$schema": "https://typedoc.org/schema.json",
   "plugin": [
-    "@mxssfd/typedoc-theme",
-    "typedoc-plugin-markdown",
-    "typedoc-github-wiki-theme",
     "@8hobbies/typedoc-plugin-404",
-    "typedoc-plugin-vue",
-    "typedoc-plugin-mdn-links"
+    "typedoc-github-wiki-theme",
+    "typedoc-plugin-mdn-links",
+    "typedoc-plugin-markdown",
+    "typedoc-plugin-coverage",
+    "typedoc-plugin-vue"
   ],
-  "theme": "dark",
+  "theme": "typedoc-github-theme",
   "includes": "src",
   "useCodeBlocks": true,
   "expandObjects": true,
