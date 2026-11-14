@@ -14,4 +14,4 @@ test -f $conf/env.fish;
 vp env default;
   and npx get-pnpm;
   and pnpm install;
-  and git config --local set alias.pull-update "!f() { git pull \"$@\" && pnpm update;git }; f"
+  and git config --local set alias.pull-update "!f() { git pull \"$@\" && pnpm update; }; f"
