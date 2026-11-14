@@ -20,8 +20,7 @@
     return operat(actus) || praesentes.value.arabicus > 0
   }
 
-  function ponatur(actus: string) {
-    //  NOSONAR: Romani numeri nodosissimi sunt
+  function ponatur(actus: string) /* NOSONAR: Romani numeri nodosissimi sunt */ {
     if (actus === 'N') {
       praevii.value = praesentes.value = nihil
     } else if (/^[|MDCLXVIS·:∴×]$/.test(actus)) {

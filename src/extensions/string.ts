@@ -44,7 +44,6 @@ String.prototype.compare = function (other: string): SortResult {
 
 Object.defineProperty(String.prototype, 'empty', {
   configurable: true,
-  enumerable: false,
   get: function (): boolean {
     return this.length === 0
   }
@@ -52,7 +51,6 @@ Object.defineProperty(String.prototype, 'empty', {
 
 Object.defineProperty(String.prototype, 'lowercase', {
   configurable: true,
-  enumerable: false,
   get: function (): string {
     return this.toLowerCase()
   }
@@ -60,7 +58,6 @@ Object.defineProperty(String.prototype, 'lowercase', {
 
 Object.defineProperty(String.prototype, 'uppercase', {
   configurable: true,
-  enumerable: false,
   get: function (): string {
     return this.toUpperCase()
   }
@@ -68,7 +65,6 @@ Object.defineProperty(String.prototype, 'uppercase', {
 
 Object.defineProperty(String.prototype, 'capitalized', {
   configurable: true,
-  enumerable: false,
   get: function (): string {
     if (this.empty) return ''
     return `${this[0].uppercase}${this.slice(1).lowercase}`
@@ -77,7 +73,6 @@ Object.defineProperty(String.prototype, 'capitalized', {
 
 Object.defineProperty(String.prototype, 'isCapitalized', {
   configurable: true,
-  enumerable: false,
   get: function (): boolean {
     return !this.empty && this[0] !== this[0].lowercase
   }
@@ -85,7 +80,6 @@ Object.defineProperty(String.prototype, 'isCapitalized', {
 
 Object.defineProperty(String.prototype, 'startsWithConsonant', {
   configurable: true,
-  enumerable: false,
   get: function (): boolean {
     if (this.empty) return false
     const first: string = this[0].lowercase
@@ -97,7 +91,6 @@ Object.defineProperty(String.prototype, 'startsWithConsonant', {
 
 Object.defineProperty(String.prototype, 'startsWithVowel', {
   configurable: true,
-  enumerable: false,
   get: function (): boolean {
     return !this.empty && !this.startsWithConsonant
   }
@@ -105,7 +98,6 @@ Object.defineProperty(String.prototype, 'startsWithVowel', {
 
 Object.defineProperty(String.prototype, 'removeMacra', {
   configurable: true,
-  enumerable: false,
   get: function (): string {
     if ([...this].intersection(Object.values(macra)).any) {
       // eslint-disable-next-line @typescript-eslint/no-wrapper-object-types, @typescript-eslint/no-this-alias -- This allows copying the string

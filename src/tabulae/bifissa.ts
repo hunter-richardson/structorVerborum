@@ -8,8 +8,9 @@ import Nuntius from '@/miscella/nuntius'
 @Ignavum
 @Ultimum
 @Nuntius.factum
-export default class<Hoc extends Multiplex & Numeratum> extends Tabula<Hoc> {
-  //  NOSONAR: Nil moror
+export default class<
+  Hoc extends Multiplex & Numeratum
+> extends Tabula<Hoc> /* NOSONAR: Nil moror */ {
   private readonly _singularis: Record<string, string> = {
     numerus: 'singularis'
   }

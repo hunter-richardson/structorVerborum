@@ -103,8 +103,7 @@ const colamen: RegExp = buildRegExp([
 @Ignavum
 @Ultimum
 @Nuntius.factum
-export default class<Hoc extends Multiplex> {
-  //  NOSONAR: Nil moror
+export default class<Hoc extends Multiplex> /* NOSONAR: Nil moror */ {
   private readonly ista: Istud<Hoc>[] = []
 
   private praedicatur(nomen: string, operator: string, quaerendus: string): Praedicendum<Hoc> {

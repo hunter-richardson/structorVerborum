@@ -9,8 +9,7 @@ import Nuntius from '@/miscella/nuntius'
 @Ignavum
 @Ultimum
 @Nuntius.factum
-export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
-  //  NOSONAR: Nil moror
+export default class<Hoc extends Multiplex> extends Tabula<Hoc> /* NOSONAR: Nil moror */ {
   @Nuntius.promittum async tabulentur() {
     const categoria: string = this.structor.name.lowercase
     const pluralis: string = i18n.t(`partes.${categoria}_pluralis`, {

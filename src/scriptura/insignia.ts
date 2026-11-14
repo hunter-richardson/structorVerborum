@@ -25,7 +25,15 @@ import '@/extensions/string'
 import '@/extensions/array'
 
 type Picta =
-  'alert' | 'reliability' | 'sqale' | 'security' | 'codefactor' | 'lmstudio' | 'build' | 'prs' | 'target'
+  | 'alert'
+  | 'reliability'
+  | 'sqale'
+  | 'security'
+  | 'codefactor'
+  | 'lmstudio'
+  | 'build'
+  | 'prs'
+  | 'target'
 type Valor = string | number | boolean | undefined | null
 type Validum = string | number | boolean
 type Res = Record<string, Valor>
@@ -53,7 +61,7 @@ const imagines: Record<Picta, SimpleIcon> = {
   lmstudio: siLmstudio,
   target: siTarget,
   build: siGithub,
-  prs: siGithub,
+  prs: siGithub
 }
 
 const partes: GitUrl = gitUrlParse(await origin())
@@ -174,7 +182,13 @@ async function insigniantur(...insignienda: Insigniendum[]): Promise<string[]> {
             nuntium = res.message?.trim() ?? ''
             break
           case (res.component?.measures[0].value.trim().length ?? 0) > 0:
-            nuntium = res.component?.measures[0].value.trim() ?? ''
+            {
+              const gradus: number = Number.parseFloat(
+                res.component?.measures[0].value.trim() ?? '0'
+              )
+              nuntium = Number.isNaN(gradus) ? 'ERROR' : String.fromCodePoint(gradus + 64)
+              if (nuntium === '@') nuntium = 'ERROR'
+            }
             break
         }
         return `[![${scriptum}](${await pingatur({
@@ -253,15 +267,6 @@ const sonar: string[] = await insigniantur(
     ...sonarqube('reliability_rating') /* {
       locus: 'https://sonarcloud.io/summary/new_code?id=hunter-richardson_structorVerborum'
       imago: 'https://sonarcloud.io/api/measures/component?component=hunter-richardson_structorVerborum&metricKeys=reliability_rating&branch=princeps'
-    } */
-  },
-  {
-    anglicum: 'Security',
-    picta: 'security',
-    latinum: 'Salus',
-    ...sonarqube('security_rating') /* {
-      locus: 'https://sonarcloud.io/summary/new_code?id=hunter-richardson_structorVerborum'
-      imago: 'https://sonarcloud.io/api/measures/component?component=hunter-richardson_structorVerborum&metricKeys=security_rating&branch=princeps'
     } */
   },
   {

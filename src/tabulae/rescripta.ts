@@ -6,8 +6,7 @@ import Nuntius from '@/miscella/nuntius'
 
 @Ignavum
 @Nuntius.factum
-export default class<Hoc extends Multiplex> extends Tabula<Hoc> {
-  //  NOSONAR: Nil moror
+export default class<Hoc extends Multiplex> extends Tabula<Hoc> /* NOSONAR: Nil moror */ {
   @Nuntius.promittum async tabulentur(): Promise<void> {
     let _relata: Tabula<Hoc> | undefined
     if (tabulatorst(this.relata)) _relata = await this.relata.tabula

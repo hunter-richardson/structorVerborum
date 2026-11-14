@@ -38,8 +38,7 @@ class Crudum extends (Lamina as new () => Omit<Lamina, 'status'>) implements Lec
 @Ignavum
 @Ultimum
 @Nuntius.factum
-export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> {
-  //  NOSONAR: Nil moror
+export default class<Hoc extends Multiplex, Illud extends Tabulamen<Hoc>> /* NOSONAR: Nil moror */ {
   private readonly deSpatiis: RegExp = //\s+/g
     buildRegExp([oneOrMore(whitespace)], { global: true })
   private readonly colamen: RegExp = ///^(?<nomen>(?:casus|factus|genus|gradus|modus|numerus|persona|relaturus|tempus|vox))(?<operator>[<!=>]=?)(?<quaerendus>(?:ablativus|accusativus|activa|adverbium|cardinale|comparativus|derectus|distributium|exigendum|fractionale|futurum|genitivus|gerundius|imperativus|indicativus|infectum|infinitivus|locativus|multiplicativum|nominativus|nulla|nullum|nullus|numerus|ordinale|participium|passiva|perfectum|pluralis|plusquamperfectum|positivus|praesens|prima|secunda|singularis|subiuntivus|superlativus|supinus|tertia|vocativus))$/

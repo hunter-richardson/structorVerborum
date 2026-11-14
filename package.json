@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "knip": "NODE_OPTIONS='--import tsx' knip",
-    "lint": "NODE_OPTIONS='--import tsx' eslint --config ./eslint.config.ts",
+    "lint": "eslint --config ./eslint.config.ts",
     "lint-staged": "NODE_OPTIONS='--import tsx' ./node_modules/.bin/lint-staged --relative --config ./lint-staged.config.ts",
     "typecheck": "vue-tsc --noEmit -p ./tsconfig.typecheck.json",
     "debug": "tsc -p tsconfig.dev.json && vite build --mode development",

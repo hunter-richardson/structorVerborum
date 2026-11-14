@@ -34,7 +34,7 @@
   ]
 
   async function refer() {
-    if (referretne()) gustulator.proponatur(await referatur(locutor.locutio))
+    if (referretne()) await gustulator.proponatur(await referatur(locutor.locutio))
   }
 
   function transduc() {

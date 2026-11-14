@@ -23,6 +23,18 @@
   const monstranda: Ref<Monstrandum[]> = ref([await doceatur(activator)])
   const concitatust: Ref<boolean> = ref(false)
 
+  function deLittera(eventus: MouseEvent | KeyboardEvent): eventus is KeyboardEvent {
+    return 'key' in eventus
+  }
+
+  function deMure(eventus: MouseEvent | KeyboardEvent): eventus is MouseEvent {
+    return 'button' in eventus
+  }
+
+  function prohibeatur(eventus: MouseEvent) {
+    eventus.preventDefault()
+  }
+
   async function doceatur(res: string): Promise<Monstrandum> {
     let doctum: string = ''
     if (valores.includes(res)) {
@@ -39,10 +51,35 @@
     }
   }
 
-  async function adliumDoceatur(eventus: MouseEvent) {
+  async function aliumDoceatur(eventus: MouseEvent | KeyboardEvent) {
     const parma: HTMLElement = eventus.target as HTMLElement
     if (parma.tagName.lowercase === 'a') {
-      eventus.preventDefault()
+      if (deLittera(eventus)) {
+        switch (eventus.key) {
+          case 'F10':
+            if (eventus.shiftKey) eventus.preventDefault()
+            return
+          case 'Enter':
+          case ' ':
+            eventus.preventDefault()
+            if (eventus.repeat) return
+            else break
+          default:
+            return
+        }
+      } else if (deMure(eventus)) {
+        switch (eventus.button) {
+          case 2:
+            eventus.preventDefault()
+            return
+          case 0:
+            eventus.preventDefault()
+            break
+          default:
+            return
+        }
+      }
+
       const referendum: string | null = parma.getAttribute('href')
       if (referendum !== null && !referendum.empty) {
         if (
@@ -63,7 +100,13 @@
     <template #activator="{ props: res }">
       <v-btn :text="activator" v-bind="res" />
     </template>
-    <div id="docenda" @click="adliumDoceatur">
+    <div
+      id="docenda"
+      @click="aliumDoceatur"
+      @keydown="aliumDoceatur"
+      @contextmenu="prohibeatur"
+      @dragstart="prohibeatur"
+      @auxclick="prohibeatur">
       <v-card v-for="monstrandum in monstranda" :key="monstrandum.res">
         <v-card-title>{{ monstrandum.res }}</v-card-title>
         <v-skeleton-loader

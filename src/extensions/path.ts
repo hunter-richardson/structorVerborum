@@ -9,7 +9,7 @@ const EXT_SEP: `.` = '.'
 
 const handler: typeof path = os.platform() === 'win32' ? path.win32 : path.posix
 
-export default class {
+export default class /* NOSONAR: I don't care */ {
   private readonly _path: path.ParsedPath
 
   get isAbsolute(): boolean {
