@@ -4,7 +4,7 @@ export default defineConfig({
   // '$schema': 'https://unpkg.com/knip@6/schema.json',
   'vite-plus': false,
   typescript: {
-    config: [ './tsconfig.*.json' ]
+    config: ['./tsconfig.*.json']
   },
   ignoreDependencies: [
     'vite-plugin-vue-facing-decorator-hmr',
