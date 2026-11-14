@@ -25,7 +25,7 @@ jobs:
       - name: colligere
         if: always()
         shell: bash
-        run: >
+        run: |
           if [ -d nuntia ]; then
             scp -v $(find nuntia -type f -name '*.log') cypress/logs/
           else
@@ -37,5 +37,7 @@ jobs:
         with:
           name: cypress-artifacts
           if-no-files-found: warn
-          path: >
-            cypress/screenshots cypress/videos cypress/logs
+          path: |
+            cypress/screenshots
+            cypress/videos
+            cypress/logs

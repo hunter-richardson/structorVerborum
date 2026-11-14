@@ -34,6 +34,6 @@ export default defineConfig(((fila: string[]) => {
     ...(fila.some((filum) => ['README.md', 'insignia.ts'].includes(new Path(filum).basename))
       ? insigniendo
       : []),
-    'knip'
+    'knip --no-config-hints'
   ]
 }) as Configuration)

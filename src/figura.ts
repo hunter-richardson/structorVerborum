@@ -6,7 +6,7 @@ import { createVuetify } from 'vuetify'
 import i18NextVue from 'i18next-vue'
 import Crustula from '@/miscella/crustula'
 import Appositus from '@/facies/appositus.vue'
-import Vacuum from '@/facies/vacuum.vue'
+import Inane from '@/facies/inane.vue'
 import translation from '@/extensions/i18next'
 import i18next from '@/i18n'
 import '@/extensions/string'
@@ -27,8 +27,8 @@ export const appositus: App<Element> = createApp(Appositus)
         },
         {
           path: '/:pathMatch(.*)*',
-          name: 'Vacuum',
-          component: Vacuum
+          name: 'Inane',
+          component: Inane
         }
       ]
     })

@@ -30,4 +30,4 @@ jobs:
       - name: struere
         run: pnpm release
       - name: invenire
-        run: pnpm tsx ${{ github.workspace }}/src/scriptura/invenire.ts
+        run: . ${{ github.workspace }}/src/scriptura/invenire.sh

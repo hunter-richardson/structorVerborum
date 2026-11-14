@@ -26,8 +26,8 @@ export default {
     }
   ],
 
-  plugins: ['prettier-plugin-yaml'],
-  yamlBlockStyle: 'folded',
+  plugins: ['prettier-plugin-yaml', 'prettier-plugin-sh'],
+  yamlBlockStyle: 'literal',
   yamlCollectionStyle: 'block',
   yamlQuoteKeys: false
 } satisfies Options
