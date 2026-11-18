@@ -1,12 +1,12 @@
 name: Cypress
 
 on:
-  workflow_dispatch: null
-  push:
-    branches-ignore:
-      - princeps
-  pull_request:
-    branches-ignore:
+  workflow_run:
+    workflows:
+      - aedificare
+    types:
+      - completed
+    branches:
       - princeps
 jobs:
   cypress:
