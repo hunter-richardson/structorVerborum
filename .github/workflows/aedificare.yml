@@ -1,18 +1,17 @@
 name: aedificare
 
 on:
-  workflow_run:
-    workflows:
-      - SonarQube
-    types:
-      - completed
+  push:
     branches:
       - princeps
 jobs:
-  on-success:
+  OSV:
+    uses: ./.github/workflows/OSV.yml
+  SonarQube:
+    uses: ./.github/workflows/sonarqube.yml
+  aedificare:
+    needs: [ OSV, SonarQube ]
     runs-on: ubuntu-latest
-    name: aedificare
-    continue-on-error: false
     strategy:
       fail-fast: true
     steps:
