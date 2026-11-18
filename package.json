@@ -99,7 +99,7 @@
     "typescript": "~5.9.3",
     "typescript-cookie": "^1.0.6",
     "vite": "^8.3.8",
-    "vite-plugin-checker": "^0.14.5",
+    "vite-plugin-checker": "^1.0.0",
     "vite-plugin-vue-devtools": "^8.2.1",
     "vite-plugin-vue-facing-decorator-hmr": "^1.0.1",
     "vite-plus": "^1.7.0",
