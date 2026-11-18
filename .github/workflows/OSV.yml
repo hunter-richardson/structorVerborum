@@ -6,11 +6,11 @@ on:
     branches:
       - princeps
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
 jobs:
   contemplari:
-    runs-on: ubuntu-latest
-    steps:
-      - name: vellere
-        uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
-      - name: agere
-        uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@d3c1414ded37de590f207572e37a7d180f1d0ef7
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@d3c1414ded37de590f207572e37a7d180f1d0ef7
