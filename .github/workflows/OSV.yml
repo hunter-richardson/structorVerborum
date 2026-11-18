@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - princeps
+  pull_request:
+    branches:
+      - princeps
 
 permissions:
   actions: read
