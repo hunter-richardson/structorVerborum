@@ -1,8 +1,11 @@
 name: aedificare
 
 on:
-  workflow_dispatch: null
-  push:
+  workflow_run:
+    workflows:
+      - SonarQube
+    types:
+      - completed
     branches:
       - princeps
 jobs:
