@@ -27,24 +27,29 @@
 name: SonarQube analysis
 
 on:
-  workflow_dispatch: null
-  push:
-    branches:
-      - princeps
-  pull_request:
+  workflow_run:
+    workflows:
+      - OSV
+    types:
+      - completed
     branches:
       - princeps
 
 permissions:
-  pull-requests: read # allows SonarQube to decorate PRs with analysis results
+  pull-requests:
+    - read # allows SonarQube to decorate PRs with analysis results
+    - write
+  checks:
+    - read
+    - write
+  contents:
+    - read
 
 jobs:
   Analysis:
     runs-on: ubuntu-latest
-
     steps:
       - name: Analyze with SonarQube
-
         # You can pin the exact commit or the version.
         # uses: SonarSource/sonarqube-scan-action@v1.1.0
         uses: SonarSource/sonarqube-scan-action@7295e71c9583053f5bf40e9d4068a0c974603ec8
