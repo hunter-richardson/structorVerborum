@@ -3,7 +3,7 @@ name: expedire
 on:
   workflow_run:
     workflows:
-      - aedificare
+      - Cypress
     branches:
       - princeps
     types:
