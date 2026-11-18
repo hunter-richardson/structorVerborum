@@ -35,6 +35,7 @@ const rules: RulesConfig = {
   'no-restricted-imports': ['error', { patterns: ['@/**/index'] }],
   '@eslint-community/eslint-plugin-eslint-comments/require-description': 'error',
   'no-barrel-files/prefer-source-imports': 'error',
+  'yml/spaced-comment': ['error', 'always'],
   'vue/multi-word-component-names': 'off',
   'vue/first-attribute-linebreak': 'off',
   'no-relative-import-paths/no-relative-import-paths': [

@@ -3,7 +3,7 @@ import Path from '@/extensions/path'
 import '@/extensions/array'
 
 const fontana: string[] = ['ts', 'vue'] //  NOSONAR: Vere aciem hic volo
-const lineabile: string[] = ['json', 'yaml', 'yml', ...fontana] //  NOSONAR: Vere aciem hic volo
+const lineabile: string[] = ['yaml', 'yml', ...fontana].unique //  NOSONAR: Vere aciem hic volo
 
 const omnibus: [string, string[]][] = [
   ['prettier --write --ignore-unknown', []],

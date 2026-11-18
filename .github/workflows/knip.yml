@@ -9,10 +9,10 @@ jobs:
       - name: vellere
         uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
       - name: tollere
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        uses: pnpm/action-setup@5eea8caf49c844361c1e9ddc1324e179c54b58e9
         with:
-          node-version: latest
-      - name: inaugurare
-        run: pnpm ci
+          version: 12
+          runtime: node@26
+          install: true
       - name: agere
         run: pnpm knip
