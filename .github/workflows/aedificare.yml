@@ -2,11 +2,9 @@ name: aedificare
 
 on:
   workflow_dispatch: null
-  workflow_run:
-    workflows:
-      - ESLint
-    types:
-      - completed
+  push:
+    branches:
+      - princeps
 jobs:
   on-success:
     runs-on: ubuntu-latest
@@ -20,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: tollere
-        uses: pnpm/setup@5eea8caf49c844361c1e9ddc1324e179c54b58e9
+        uses: pnpm/setup@4a44b91655ebbe28915ef7523b27a4020e18f988
         with:
           version: 12
           runtime: node@26
