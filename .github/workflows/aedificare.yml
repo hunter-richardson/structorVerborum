@@ -5,7 +5,12 @@ on:
     branches:
       - princeps
 
-permissions: write-all
+permissions:
+  security-events: write
+  pull-requests: write
+  contents: read
+  actions: read
+  checks: read
 
 jobs:
   OSV:
