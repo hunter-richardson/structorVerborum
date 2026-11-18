@@ -10,7 +10,7 @@ permissions:
   pull-requests: write
   contents: read
   actions: read
-  checks: read
+  checks: write
 
 jobs:
   OSV:
