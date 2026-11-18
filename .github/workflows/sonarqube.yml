@@ -26,14 +26,7 @@
 
 name: SonarQube
 
-on:
-  workflow_run:
-    workflows:
-      - OSV
-    types:
-      - completed
-    branches:
-      - princeps
+on: workflow_call
 
 permissions:
   pull-requests:
