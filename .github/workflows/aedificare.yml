@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - princeps
+
+permissions: write-all
+
 jobs:
   OSV:
     uses: ./.github/workflows/OSV.yml
