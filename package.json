@@ -10,8 +10,8 @@
     "typecheck:staged": "vue-tsc-files -p ./tsconfig.typecheck.json",
     "prettier": "prettier -uw .",
     "oxlint": "node ./node_modules/@oxlint/migrate/dist/bin/oxlint-migrate.mjs ./eslint.config.ts",
-    "debug": "tsc -p tsconfig.dev.json && vite build --mode development",
-    "release": "tsc -p tsconfig.json && vite build --mode production"
+    "debug": "vite build --mode development --profile",
+    "release": "vite build --mode production"
   },
   "devEngines": {
     "runtime": {
@@ -95,7 +95,7 @@
     "typedoc-plugin-markdown": "^4.14.1",
     "typedoc-plugin-mdn-links": "^5.1.1",
     "typedoc-plugin-vue": "^1.5.1",
-    "typescript": "~6.0.3",
+    "typescript": "~5.9.3",
     "typescript-cookie": "^1.0.6",
     "vite": "^8.3.8",
     "vite-plugin-checker": "^0.14.5",

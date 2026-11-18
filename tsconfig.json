@@ -19,7 +19,7 @@
     "moduleDetection": "auto",
     "moduleResolution": "bundler",
     "newLine": "lf",
-    "noEmit": false,
+    "noEmit": true,
     "noEmitOnError": true,
     "noErrorTruncation": true,
     "noImplicitAny": true,
@@ -29,7 +29,6 @@
     "noUnusedLocals": true,
     "outDir": "./dist/js",
     "removeComments": true,
-    "rewriteRelativeImportExtensions": true,
     "rootDir": ".",
     "paths": {
       "@res": ["./res/*"],
