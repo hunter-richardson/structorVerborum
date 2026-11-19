@@ -5,20 +5,23 @@ on:
     branches:
       - princeps
 
-permissions:
-  security-events: write
-  pull-requests: write
-  contents: read
-  actions: read
-  checks: write
-
 jobs:
   OSV:
     uses: ./.github/workflows/OSV.yml
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
   SonarQube:
     uses: ./.github/workflows/sonarqube.yml
+    permissions:
+      pull-requests: write
+      contents: read
+      checks: write
   aedificare:
-    needs: [ OSV, SonarQube ]
+    needs:
+      - OSV
+      - SonarQube
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true

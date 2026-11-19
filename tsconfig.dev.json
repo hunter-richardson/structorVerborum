@@ -1,7 +1,0 @@
-{
-  "extends": "tsconfig.json",
-  "compilerOptions": {
-    "extendedDiagnostics": true,
-    "generateCpuProfile": "structorverborum.cpuprofile"
-  }
-}
