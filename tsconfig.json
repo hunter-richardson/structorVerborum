@@ -1,6 +1,13 @@
 {
   "exclude": ["./src/cypress"],
-  "include": ["./*.config.ts", "./src/**/*.ts", "./src/facies/*.vue", "./src/facies/tabulas/*.vue"],
+  "include": [
+    "./*.config.ts",
+    "./src/**/*.ts",
+    "./src/**/*.d.ts",
+    "./src/figura.ts",
+    "./src/facies/*.vue",
+    "./src/facies/tabulas/*.vue"
+  ],
   "compileOnSave": true,
   "compilerOptions": {
     "allowArbitraryExtensions": true,
@@ -9,6 +16,7 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "assumeChangesOnlyAffectDirectDependencies": true,
+    "baseUrl": ".",
     "extendedDiagnostics": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

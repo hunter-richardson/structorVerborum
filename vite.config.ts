@@ -22,9 +22,11 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     server: { open: true },
     publicDir: './res',
     plugins: [
-      checker({ typescript: true }),
       vueJsx(),
       vue(),
+      checker({
+        vueTsc: { tsconfigPath: './tsconfig.typecheck.json' }
+      }),
       ...(operandi ? [] : [basicSsl(), VueDevTools()])
     ] as PluginOption[],
     test: {
