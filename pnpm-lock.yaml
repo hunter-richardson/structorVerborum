@@ -306,14 +306,14 @@ importers:
         specifier: ^17.14.0
         version: 17.14.0
       i18next:
-        specifier: ^26.7.2
-        version: 26.7.2(typescript@5.9.3)
+        specifier: ^27.2.1
+        version: 27.2.1(typescript@5.9.3)
       i18next-fs-backend:
         specifier: ^2.7.0
         version: 2.7.0
       i18next-vue:
         specifier: ^5.4.0
-        version: 5.4.0(i18next@26.7.2(typescript@5.9.3))(vue@3.5.46(typescript@5.9.3))
+        version: 5.4.0(i18next@27.2.1(typescript@5.9.3))(vue@3.5.46(typescript@5.9.3))
       jiti:
         specifier: ^2.7.0
         version: 2.7.0
@@ -3595,8 +3595,9 @@ packages:
       i18next: '>=23'
       vue: ^3.4.38
 
-  i18next@26.7.2:
-    resolution: {integrity: sha512-RsOY3BeaCDdkk52NeJSFAXELQ2rQXBO/tOub6L8ue2ICPfR/FRDWDOfEDg4xMPd1SqO5goVYQ6i72qWEUB/PPw==}
+  i18next@27.2.1:
+    resolution: {integrity: sha512-dNYOxb2d+zjmn/vlvx99XribYwtJ/WcIfVY3d61QkOKAiJ1Kgt7Ow+mBq8v7YUC/K3dCr9dDDEjheKbRycWGdA==}
+    engines: {node: '>=22'}
     peerDependencies:
       typescript: ^5 || ^6 || ^7
     peerDependenciesMeta:
@@ -8290,12 +8291,12 @@ snapshots:
 
   i18next-fs-backend@2.7.0: {}
 
-  i18next-vue@5.4.0(i18next@26.7.2(typescript@5.9.3))(vue@3.5.46(typescript@5.9.3)):
+  i18next-vue@5.4.0(i18next@27.2.1(typescript@5.9.3))(vue@3.5.46(typescript@5.9.3)):
     dependencies:
-      i18next: 26.7.2(typescript@5.9.3)
+      i18next: 27.2.1(typescript@5.9.3)
       vue: 3.5.46(typescript@5.9.3)
 
-  i18next@26.7.2(typescript@5.9.3):
+  i18next@27.2.1(typescript@5.9.3):
     optionalDependencies:
       typescript: 5.9.3
 

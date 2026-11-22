@@ -67,7 +67,7 @@
     "git-remote-origin-url": "^4.0.0",
     "git-url-parse": "^16.1.0",
     "globals": "^17.14.0",
-    "i18next": "^26.7.2",
+    "i18next": "^27.2.1",
     "i18next-fs-backend": "^2.7.0",
     "i18next-vue": "^5.4.0",
     "jiti": "^2.7.0",
