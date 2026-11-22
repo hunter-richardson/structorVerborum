@@ -1,5 +1,5 @@
 allowBuilds:
-  "@apollo/protobufjs": "true"
+  "@apollo/protobufjs": true
 permissions:
   cypress:
     build: true
@@ -10,3 +10,10 @@ permissions:
   eslint:
     build: true
     skills: true
+
+overrides:
+  eslint-plugin-no-barrel-files@2.3.0>minimatch: 11.0.9
+  "@vue/language-core@2.2.12>minimatch": 11.0.9
+  micromark-extension-math@3.1.0>katex: ^0.18.2
+  typedoc@0.28.20>minimatch: 11.0.9
+  "@fastify/busboy": ^3.2.2

@@ -125,9 +125,6 @@
     "oxlint": "^1.94.0",
     "vue-draggable-next": "^2.3.0"
   },
-  "overrides": {
-    "@fastify/busboy": "^3.2.2"
-  },
   "sideEffects": [
     "src/extensions/array.ts",
     "src/extensions/env.ts",
