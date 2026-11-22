@@ -48,7 +48,7 @@
           <v-fab v-bind="activator" size="medium" icon="cake" />
         </template>
         <v-btn id="crustula.lingua" key="lingua" icon @click="dominus.lingua.interverteUtrum()">
-          <v-img height="36px" width="36px" :src="dominus.lingua.scriptum" />
+          <v-img :src="dominus.lingua.scriptum" height="36px" width="36px" />
         </v-btn>
         <v-btn
           id="crustula.facies"

@@ -125,11 +125,11 @@
       v-model="radix"
       v-bind="meta"
       :icon-color="radicis.color"
+      :error-messages="radicis.error ?? ''"
       clear-icon="cancel"
       prepend-inner-icon="short_text"
       clearable
       persistent-clear
-      :error-messages="radicis.error ?? ''"
       single-line
       @blur="validetur"
       @update:model-value="validetur"

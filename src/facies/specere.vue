@@ -116,12 +116,12 @@
       <v-select
         id="enclitici"
         v-model="valorEnclitici"
-        density="compact"
         :title="$tf('categoriae.encliticum_plurale', 'capitalize')"
         :items="valoresEnclitici"
+        density="compact"
+        open-on-clear
         chips
-        flat
-        open-on-clear />
+        flat />
       <Docere :activator="verbum.categoria.valor" />
       <template v-if="multiplex">
         <Docere v-for="valor in valores" :key="valor" :activator="valor" />
@@ -131,8 +131,8 @@
           v-for="res in quattuor"
           :id="res.ipsum"
           :key="res.ipsum"
-          :icon="res.icon"
           :text="res.scriptum"
+          :icon="res.icon"
           @click="res.actus()" />
       </v-btn-toggle>
     </v-card>

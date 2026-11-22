@@ -72,7 +72,7 @@
         </v-hover>
       </v-avatar>
     </v-app-bar>
-    <v-tabs v-model="annulus" grow hide-slider mandatory align-tabs="center" density="compact">
+    <v-tabs v-model="annulus" align-tabs="center" density="compact" grow hide-slider mandatory>
       <v-tab
         v-for="res in annuli"
         :id="`annulus_${res}`"

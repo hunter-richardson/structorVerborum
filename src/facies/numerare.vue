@@ -48,12 +48,12 @@
       <v-number-input
         id="integer"
         v-model="arabicus.integer"
-        autofocus
         :rules="validator"
         validate-on="input"
+        autofocus
         clearable
-        flat
         reverse
+        flat
         @change="effiat()" />
       <v-card text=" + " />
       <v-number-input
@@ -61,8 +61,8 @@
         v-model="arabicus.numerator"
         :rules="validator"
         validate-on="input"
-        flat
         clearable
+        flat
         @change="effiat()" />
       <v-card :text="` + ${arabicus.denominator.toString()}`" />
     </div>

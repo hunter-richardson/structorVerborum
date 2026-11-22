@@ -5,11 +5,9 @@
   import Tabulare from '@/facies/tabulas/tabulare.vue'
   import { Tabulator } from '@/praebeunda/interfecta'
   import Inflectere from '@/facies/inflectere.vue'
-  import translation from '@/extensions/i18next'
   import { Nomen } from '@/praebeunda/verba'
   import '@/extensions/array'
 
-  const { t } = translation()
   const { agendum } = defineProps<{ agendum: Tabulator<Nomen> }>()
   const actus: Ref<Eventus | undefined> = ref()
   const factum: boolean = agendum instanceof TabulamenNominis
@@ -27,7 +25,7 @@
       v-if="factum"
       id="actus"
       append-icon="sprint"
-      :text="t('categoria.actus.singularis', 'capitalize')"
+      :text="$tf('categoria.actus.singularis', 'capitalize')"
       @click="refer()" />
   </template>
 </template>

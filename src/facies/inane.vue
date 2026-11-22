@@ -24,12 +24,12 @@
   <v-app>
     <v-container>
       <v-empty-state
-        image="@res/picta/latina.png"
-        icon="arrow_back"
         :action-text="t(`scripta.404.${actum}`)"
         :headline="t('scripta.404.caput')"
         :text="t('scripta.404.nuntium')"
         :title="t('scripta.404.titula')"
+        image="@res/picta/latina.png"
+        icon="arrow_back"
         @click:action="recipatur()" />
     </v-container>
   </v-app>

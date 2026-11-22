@@ -34,11 +34,9 @@
 
 <template>
   <template v-if="referendum !== undefined && categoria !== undefined">
+    <!-- prettier-ignore -->
     <v-dialog
-      @blur="
-        referendum = undefined
-        eventus = undefined
-      ">
+      @blur="referendum = undefined; eventus = undefined">
       <Actuum v-if="categoria === Actus.name.lowercase" :agendum="referendum as TabulatorActuum" />
       <Nominum
         v-else-if="categoria === Nomen.name.lowercase"

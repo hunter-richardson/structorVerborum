@@ -153,10 +153,10 @@
             :disabled="onerans"
             :label="columna.title"
             :items="categoriae"
-            chips
-            flat
+            open-on-clear
             multiple
-            open-on-clear />
+            chips
+            flat />
           <v-btn
             :id="`ordina_${columna.key}`"
             append-icon="swap_vert"

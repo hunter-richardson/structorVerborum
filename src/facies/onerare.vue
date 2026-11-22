@@ -11,6 +11,7 @@
   <v-skeleton-loader
     v-if="onerans"
     :loading="onerans"
+    :loading-text="t('scripta.onerare.onerans', { pittacium: pittacium })"
     type="table-tbody"
-    :loading-text="t('scripta.onerare.onerans', { pittacium: pittacium })" />
+    />
 </template>

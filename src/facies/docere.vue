@@ -51,7 +51,7 @@
     }
   }
 
-  async function aliumDoceatur(eventus: MouseEvent | KeyboardEvent) {
+  async function aliumDoceatur(eventus: MouseEvent | KeyboardEvent) /* NOSONAR: Addere docta nodosissimust */ {
     const parma: HTMLElement = eventus.target as HTMLElement
     if (parma.tagName.lowercase === 'a') {
       if (deLittera(eventus)) {

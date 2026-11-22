@@ -32,10 +32,10 @@
         <template v-for="verbum in locutor.verba" :key="verbum.unicum">
           <v-chip
             :id="verbum.unicum"
-            selected-class="text-primary"
             :text="verbum.monstretur()"
-            close-icon="remove"
             :data-separator="dominus.separator.signum"
+            selected-class="text-primary"
+            close-icon="remove"
             @click:close="locutor.removeatur(verbum.unicum)" />
         </template>
       </span>
