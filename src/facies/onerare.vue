@@ -12,6 +12,5 @@
     v-if="onerans"
     :loading="onerans"
     :loading-text="t('scripta.onerare.onerans', { pittacium: pittacium })"
-    type="table-tbody"
-    />
+    type="table-tbody" />
 </template>
